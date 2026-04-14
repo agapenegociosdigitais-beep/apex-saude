@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Treinamento — ÁPEX Saúde</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+[data-theme="dark"]{--bg:#0a0906;--surface:#111009;--card:#161410;--border:#2a2520;--text:#ede8df;--text2:#a09880;--muted:#7a7060;}
+[data-theme="light"]{--bg:#f9f7f4;--surface:#ffffff;--card:#ffffff;--border:#e8e2d8;--text:#1c1a16;--text2:#5a5448;--muted:#8c8070;}
+:root{--gold:#c9a84c;--gold2:#e8c97a;--gold-dim:#c9a84c22;--ai:#a78bfa;--ai-bg:#a78bfa14;--ai-border:#a78bfa44;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;min-height:100vh;padding:0 0 60px;transition:background .3s,color .3s;}
+
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:200;}
+.topbar-back{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);text-decoration:none;text-transform:uppercase;letter-spacing:1px;opacity:.8;}
+.topbar-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--text);flex:1;}
+.topbar-title span{color:var(--gold);}
+.theme-btn{background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:15px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 16px;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);}
+.header-tag{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;}
+.header-sub{font-size:11px;color:var(--muted);}
+
+.content{padding:14px 16px;}
+
+.sec-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin:16px 0 10px;display:flex;align-items:center;gap:8px;}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* PERFIL SELECTOR */
+.perfil-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;}
+.perfil-btn{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 10px;cursor:pointer;text-align:center;transition:all .2s;-webkit-tap-highlight-color:transparent;}
+.perfil-btn:hover{border-color:var(--gold);}
+.perfil-btn.active{border-color:var(--gold);background:var(--gold-dim);}
+.perfil-icon{font-size:22px;margin-bottom:4px;}
+.perfil-nome{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--text);line-height:1.2;}
+.perfil-equipe{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+
+/* MÓDULO */
+.modulo{display:none;}
+.modulo.active{display:block;}
+
+.modulo-header{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px;position:relative;overflow:hidden;}
+.modulo-header::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);}
+.modulo-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;}
+.modulo-desc{font-size:12px;color:var(--muted);line-height:1.5;}
+
+/* CARD DE CONTEÚDO */
+.content-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;}
+.content-card-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.content-card-body{font-size:12px;color:var(--text2);line-height:1.7;}
+.content-card-body ul{padding-left:14px;margin-top:4px;}
+.content-card-body li{margin-bottom:4px;}
+.content-card-body strong{color:var(--text);}
+
+/* TAG */
+.tag{font-family:'DM Mono',monospace;font-size:8px;padding:2px 7px;border-radius:3px;text-transform:uppercase;letter-spacing:.5px;}
+.tag-critico{background:#c0392b22;color:#e74c3c;border:1px solid #c0392b44;}
+.tag-importante{background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b44;}
+.tag-dica{background:var(--gold-dim);color:var(--gold);border:1px solid #c9a84c44;}
+
+/* BOX */
+.box{border-radius:8px;padding:11px 13px;margin:8px 0;display:flex;gap:9px;font-size:12px;line-height:1.5;}
+.box-icon{font-size:15px;flex-shrink:0;margin-top:1px;}
+.box.tip{background:#27ae6022;border:1px solid #27ae6044;color:#2ecc71;}
+.box.warn{background:#f59e0b22;border:1px solid #f59e0b44;color:#f59e0b;}
+.box.info{background:var(--gold-dim);border:1px solid #c9a84c44;color:var(--gold);}
+
+/* IA ESTRATÉGIA */
+.btn-ia-perfil{width:100%;background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;border:none;border-radius:6px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;padding:13px;cursor:pointer;margin-top:8px;letter-spacing:1px;text-transform:uppercase;transition:opacity .15s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-ia-perfil:hover{opacity:.88;}
+.btn-ia-perfil:disabled{opacity:.45;cursor:not-allowed;}
+
+.ia-box{background:var(--ai-bg);border:1px solid var(--ai-border);border-radius:10px;padding:16px;margin-top:12px;display:none;}
+.ia-box.show{display:block;}
+.ia-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--ai-border);}
+.ia-tag{font-family:'DM Mono',monospace;font-size:8px;background:#7c3aed22;color:var(--ai);border:1px solid var(--ai-border);padding:2px 8px;border-radius:3px;text-transform:uppercase;letter-spacing:1px;}
+.ia-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--ai);}
+.ia-content{font-size:13px;color:var(--text);line-height:1.8;white-space:pre-wrap;}
+
+.loading-dots{display:inline-flex;gap:4px;align-items:center;}
+.loading-dots span{width:6px;height:6px;border-radius:50%;background:#fff;animation:bounce 1.2s infinite;}
+.loading-dots span:nth-child(2){animation-delay:.2s;}
+.loading-dots span:nth-child(3){animation-delay:.4s;}
+@keyframes bounce{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
+
+.checklist{display:grid;gap:6px;margin:10px 0;}
+.ci{display:flex;align-items:flex-start;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:9px 12px;cursor:pointer;transition:all .15s;}
+.ci.done{background:#27ae6018;border-color:#27ae6044;}
+.ci-box{width:17px;height:17px;border:2px solid var(--border);border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.ci.done .ci-box{background:#27ae60;border-color:#27ae60;}
+.ci-ck{display:none;color:#fff;font-size:9px;font-weight:700;}
+.ci.done .ci-ck{display:block;}
+.ci-txt{font-size:12px;line-height:1.4;}
+.ci.done .ci-txt{color:var(--muted);text-decoration:line-through;text-decoration-color:#27ae6044;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="topbar-back" href="apex-saude.html">← Dashboard</a>
+  <div class="topbar-title">Centro de <span>Treinamento</span></div>
+  <button class="theme-btn" id="theme-toggle">🌙</button>
+</div>
+
+<div class="header">
+  <div class="header-tag">Estratégia por Perfil Profissional</div>
+  <div class="header-sub">Selecione seu cargo e receba orientações personalizadas</div>
+</div>
+
+<div class="content">
+
+  <div class="sec-title">Selecione seu perfil</div>
+
+  <div class="perfil-grid">
+    <div class="perfil-btn active" onclick="selectPerfil('medico',this)">
+      <div class="perfil-icon">👨‍⚕️</div>
+      <div class="perfil-nome">Médico</div>
+      <div class="perfil-equipe">eSF / eAP</div>
+    </div>
+    <div class="perfil-btn" onclick="selectPerfil('enfermeiro',this)">
+      <div class="perfil-icon">👩‍⚕️</div>
+      <div class="perfil-nome">Enfermeiro</div>
+      <div class="perfil-equipe">eSF / eAP</div>
+    </div>
+    <div class="perfil-btn" onclick="selectPerfil('tecnico',this)">
+      <div class="perfil-icon">🩺</div>
+      <div class="perfil-nome">Técnico de Enfermagem</div>
+      <div class="perfil-equipe">eSF / eAP</div>
+    </div>
+    <div class="perfil-btn" onclick="selectPerfil('acs',this)">
+      <div class="perfil-icon">🏘️</div>
+      <div class="perfil-nome">ACS</div>
+      <div class="perfil-equipe">eSF / eAP</div>
+    </div>
+    <div class="perfil-btn" onclick="selectPerfil('dentista',this)">
+      <div class="perfil-icon">🦷</div>
+      <div class="perfil-nome">Dentista</div>
+      <div class="perfil-equipe">eSB</div>
+    </div>
+    <div class="perfil-btn" onclick="selectPerfil('psicologo',this)">
+      <div class="perfil-icon">🧠</div>
+      <div class="perfil-nome">Psicólogo</div>
+      <div class="perfil-equipe">eMulti</div>
+    </div>
+    <div class="perfil-btn" onclick="selectPerfil('fisio',this)">
+      <div class="perfil-icon">🏃</div>
+      <div class="perfil-nome">Fisioterapeuta</div>
+      <div class="perfil-equipe">eMulti</div>
+    </div>
+    <div class="perfil-btn" onclick="selectPerfil('nutricionista',this)">
+      <div class="perfil-icon">🥗</div>
+      <div class="perfil-nome">Nutricionista</div>
+      <div class="perfil-equipe">eMulti</div>
+    </div>
+    <div class="perfil-btn" onclick="selectPerfil('assistente',this)">
+      <div class="perfil-icon">🤝</div>
+      <div class="perfil-nome">Assistente Social</div>
+      <div class="perfil-equipe">eMulti</div>
+    </div>
+    <div class="perfil-btn" onclick="selectPerfil('coordenador',this)">
+      <div class="perfil-icon">📋</div>
+      <div class="perfil-nome">Coordenador de UBS</div>
+      <div class="perfil-equipe">Gestão</div>
+    </div>
+    <div class="perfil-btn" onclick="selectPerfil('gestor',this)">
+      <div class="perfil-icon">🏛️</div>
+      <div class="perfil-nome">Gestor Municipal</div>
+      <div class="perfil-equipe">Secretaria</div>
+    </div>
+    <div class="perfil-btn" onclick="selectPerfil('farmaceutico',this)">
+      <div class="perfil-icon">💊</div>
+      <div class="perfil-nome">Farmacêutico</div>
+      <div class="perfil-equipe">eMulti</div>
+    </div>
+  </div>
+
+  <!-- ══ MÉDICO ══ -->
+  <div class="modulo active" id="mod-medico">
+    <div class="modulo-header">
+      <div class="modulo-title">👨‍⚕️ Médico — eSF / eAP</div>
+      <div class="modulo-desc">Seu papel é central nos indicadores de qualidade do cuidado. C4, C5, C6 e C7 dependem diretamente dos seus registros clínicos.</div>
+    </div>
+    <div class="content-card">
+      <div class="content-card-title">🎯 Indicadores sob sua responsabilidade <span class="tag tag-critico">Crítico</span></div>
+      <div class="content-card-body">
+        <ul>
+          <li><strong>C4 – Diabetes:</strong> consultas e HbA1c registradas no prontuário eletrônico</li>
+          <li><strong>C5 – Hipertensão:</strong> PA registrada e plano terapêutico documentado</li>
+          <li><strong>C6 – Pessoa Idosa:</strong> avaliação multidimensional e caderneta atualizada</li>
+          <li><strong>C7 – Prevenção do Câncer:</strong> solicitação de colpocitologia e mamografia documentada</li>
+        </ul>
+      </div>
+    </div>
+    <div class="content-card">
+      <div class="content-card-title">📋 Rotina de registro recomendada <span class="tag tag-importante">Importante</span></div>
+      <div class="content-card-body">
+        <ul>
+          <li>Registrar <strong>100% dos atendimentos</strong> no PEC e-SUS no mesmo dia</li>
+          <li>Incluir CID correto em todo atendimento de crônico (E10-E14 diabetes, I10 hipertensão)</li>
+          <li>Documentar exames solicitados — a solicitação conta mesmo sem o resultado</li>
+          <li>Atualizar plano terapêutico de hipertensos e diabéticos a cada consulta</li>
+          <li>Preencher avaliação geriátrica nos atendimentos de idosos</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box warn">
+      <span class="box-icon">⚠</span>
+      <div>O <strong>C7 (Peso 2)</strong> tem janela de 60 meses — muitos médicos esquecem de solicitar preventivo por "não ser urgente". Organize uma lista de mulheres com exames vencidos e convoque ativamente.</div>
+    </div>
+    <div class="checklist">
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Registrar todos os atendimentos no PEC no mesmo dia</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Incluir CID correto em todo atendimento de crônico</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Documentar solicitação de exames preventivos</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Atualizar caderneta do idoso a cada consulta</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Solicitar colpocitologia para mulheres com exame vencido</span></div>
+    </div>
+    <button class="btn-ia-perfil" onclick="gerarOrientacaoIA('medico')">✦ Gerar plano personalizado com IA</button>
+    <div class="ia-box" id="ia-medico"><div class="ia-header"><span class="ia-tag">✦ IA</span><span class="ia-title">Orientações Personalizadas — Médico</span></div><div class="ia-content" id="ia-content-medico"></div></div>
+  </div>
+
+  <!-- ══ ENFERMEIRO ══ -->
+  <div class="modulo" id="mod-enfermeiro">
+    <div class="modulo-header">
+      <div class="modulo-title">👩‍⚕️ Enfermeiro — eSF / eAP</div>
+      <div class="modulo-desc">Você é o elo entre a equipe e os indicadores. Sua liderança na organização do processo de trabalho define o sucesso nos Componentes II e III.</div>
+    </div>
+    <div class="content-card">
+      <div class="content-card-title">🎯 Seu papel nos indicadores <span class="tag tag-critico">Crítico</span></div>
+      <div class="content-card-body">
+        <ul>
+          <li><strong>C2 – Desenvolvimento Infantil:</strong> puericultura e registro das consultas de acompanhamento</li>
+          <li><strong>C3 – Gestação/Puerpério:</strong> pré-natal e consulta puerperal registrada</li>
+          <li><strong>C1 – Acesso:</strong> organização da agenda e acolhimento</li>
+          <li><strong>Comp. II:</strong> coordenação das atualizações de cadastro com os ACS</li>
+        </ul>
+      </div>
+    </div>
+    <div class="content-card">
+      <div class="content-card-title">📋 Rotina semanal recomendada <span class="tag tag-importante">Importante</span></div>
+      <div class="content-card-body">
+        <ul>
+          <li>Toda segunda: revisar lista de gestantes e agenda de pré-natal da semana</li>
+          <li>Conferir crianças que completam 2 anos no mês — agendar puericultura</li>
+          <li>Verificar fechamento dos registros da semana anterior</li>
+          <li>Reunião de equipe: apresentar indicadores do mês e definir prioridades</li>
+          <li>Supervisionar registros dos técnicos no PEC</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box tip"><span class="box-icon">💡</span><div>C2 e C3 têm <strong>Peso 2</strong> e regra especial de meses válidos. Você precisa saber exatamente quais crianças completam 2 anos e quais gestações encerram o puerpério em cada mês do quadrimestre.</div></div>
+    <div class="checklist">
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Revisar lista de gestantes toda semana</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Identificar crianças completando 2 anos no mês</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Supervisionar registros do PEC diariamente</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Realizar reunião semanal com equipe para monitorar indicadores</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Enviar dados ao Siaps até o dia 8 do mês seguinte</span></div>
+    </div>
+    <button class="btn-ia-perfil" onclick="gerarOrientacaoIA('enfermeiro')">✦ Gerar plano personalizado com IA</button>
+    <div class="ia-box" id="ia-enfermeiro"><div class="ia-header"><span class="ia-tag">✦ IA</span><span class="ia-title">Orientações Personalizadas — Enfermeiro</span></div><div class="ia-content" id="ia-content-enfermeiro"></div></div>
+  </div>
+
+  <!-- ══ TÉCNICO ══ -->
+  <div class="modulo" id="mod-tecnico">
+    <div class="modulo-header">
+      <div class="modulo-title">🩺 Técnico de Enfermagem — eSF / eAP</div>
+      <div class="modulo-desc">Seu papel no registro de procedimentos é fundamental para os indicadores C4, C5 e C6.</div>
+    </div>
+    <div class="content-card">
+      <div class="content-card-title">🎯 O que você precisa registrar <span class="tag tag-critico">Crítico</span></div>
+      <div class="content-card-body">
+        <ul>
+          <li><strong>Aferição de PA:</strong> registrar no PEC com o código correto — conta para C5</li>
+          <li><strong>Glicemia capilar:</strong> registrar o resultado e o CID do paciente</li>
+          <li><strong>Vacinação:</strong> registrar no e-SUS Vacinação — conta para C6 (idosos)</li>
+          <li><strong>Curativos e procedimentos:</strong> sempre com o CID do diagnóstico</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box warn"><span class="box-icon">⚠</span><div>Procedimento feito sem registro = zero para o indicador. Nunca deixe para registrar "depois" — faça no mesmo dia.</div></div>
+    <div class="checklist">
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Registrar toda aferição de PA no PEC no mesmo dia</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Registrar glicemia capilar com CID correto</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Lançar vacinação no sistema e-SUS Vacinação</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Nunca deixar procedimento sem registro</span></div>
+    </div>
+    <button class="btn-ia-perfil" onclick="gerarOrientacaoIA('tecnico')">✦ Gerar plano personalizado com IA</button>
+    <div class="ia-box" id="ia-tecnico"><div class="ia-header"><span class="ia-tag">✦ IA</span><span class="ia-title">Orientações Personalizadas — Técnico</span></div><div class="ia-content" id="ia-content-tecnico"></div></div>
+  </div>
+
+  <!-- ══ ACS ══ -->
+  <div class="modulo" id="mod-acs">
+    <div class="modulo-header">
+      <div class="modulo-title">🏘️ Agente Comunitário de Saúde — eSF / eAP</div>
+      <div class="modulo-desc">Você é a base do Componente II. Sem cadastro atualizado e acompanhamento territorial, nenhum indicador alcança Ótimo.</div>
+    </div>
+    <div class="content-card">
+      <div class="content-card-title">🎯 Seu impacto direto nos indicadores <span class="tag tag-critico">Crítico</span></div>
+      <div class="content-card-body">
+        <ul>
+          <li><strong>Dimensão Cadastro:</strong> qualidade e atualização dos cadastros do território</li>
+          <li><strong>Dimensão Acompanhamento:</strong> visitas domiciliares registradas no e-SUS Território</li>
+          <li><strong>C1 – Acesso:</strong> identificação e encaminhamento de pessoas sem consulta</li>
+          <li><strong>Busca ativa:</strong> faltosos em consultas de crônico, pré-natal e puericultura</li>
+        </ul>
+      </div>
+    </div>
+    <div class="content-card">
+      <div class="content-card-title">📋 Rotina de visita domiciliar <span class="tag tag-importante">Importante</span></div>
+      <div class="content-card-body">
+        <ul>
+          <li>Registrar <strong>toda visita</strong> no aplicativo e-SUS Território antes de sair de campo</li>
+          <li>Atualizar cadastro sempre que houver mudança (telefone, endereço, composição familiar)</li>
+          <li>Identificar e registrar: gestantes, crianças menores de 2 anos, hipertensos, diabéticos, idosos</li>
+          <li>Levar lista de faltosos para busca ativa — priorizar grupos de risco</li>
+          <li>Sincronizar o aplicativo toda vez que chegar na UBS</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box tip"><span class="box-icon">💡</span><div>Cada visita registrada corretamente no e-SUS Território melhora a Dimensão Acompanhamento do Componente II. Registre até quando a pessoa não está em casa — a tentativa conta.</div></div>
+    <div class="checklist">
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Registrar todas as visitas no e-SUS Território no dia</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Atualizar cadastros de famílias com mudanças</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Identificar gestantes e crianças menores de 2 anos</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Realizar busca ativa de faltosos toda semana</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Sincronizar app ao chegar na UBS</span></div>
+    </div>
+    <button class="btn-ia-perfil" onclick="gerarOrientacaoIA('acs')">✦ Gerar plano personalizado com IA</button>
+    <div class="ia-box" id="ia-acs"><div class="ia-header"><span class="ia-tag">✦ IA</span><span class="ia-title">Orientações Personalizadas — ACS</span></div><div class="ia-content" id="ia-content-acs"></div></div>
+  </div>
+
+  <!-- ══ DENTISTA ══ -->
+  <div class="modulo" id="mod-dentista">
+    <div class="modulo-header">
+      <div class="modulo-title">🦷 Dentista — eSB</div>
+      <div class="modulo-desc">Seus 6 indicadores têm todos Peso 1 ou 2. O B3 (exodontias) é invertido — quanto menos extração, melhor sua nota.</div>
+    </div>
+    <div class="content-card">
+      <div class="content-card-title">🎯 Estratégia por indicador <span class="tag tag-critico">Crítico</span></div>
+      <div class="content-card-body">
+        <ul>
+          <li><strong>B1 (Peso 2):</strong> agende primeiras consultas programadas — não apenas urgências</li>
+          <li><strong>B2 (Peso 2):</strong> finalize os tratamentos iniciados — acompanhe lista de pendentes</li>
+          <li><strong>B3 (Peso 2) ⚠️ INVERTIDO:</strong> reduza extrações — ofereça tratamento restaurador primeiro</li>
+          <li><strong>B4 (Peso 2):</strong> aplique flúor e selantes — registre como procedimento preventivo</li>
+          <li><strong>B5 (Peso 1):</strong> realize escovação supervisionada em grupos — escolas, grupos na UBS</li>
+          <li><strong>B6 (Peso 1):</strong> execute e registre o TRA — tratamento restaurador atraumático</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box warn"><span class="box-icon">⚠</span><div><strong>B3 é o único indicador invertido do sistema.</strong> Uma taxa alta de extração significa pontuação BAIXA. Antes de extrair, avalie se há possibilidade de restauração ou TRA.</div></div>
+    <div class="checklist">
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Agendar primeiras consultas programadas semanalmente</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Revisar lista de tratamentos iniciados e não concluídos</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Avaliar restauração antes de indicar extração</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Realizar e registrar aplicação de flúor/selantes</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Organizar atividade de escovação supervisionada no mês</span></div>
+    </div>
+    <button class="btn-ia-perfil" onclick="gerarOrientacaoIA('dentista')">✦ Gerar plano personalizado com IA</button>
+    <div class="ia-box" id="ia-dentista"><div class="ia-header"><span class="ia-tag">✦ IA</span><span class="ia-title">Orientações Personalizadas — Dentista</span></div><div class="ia-content" id="ia-content-dentista"></div></div>
+  </div>
+
+  <!-- ══ PSICÓLOGO ══ -->
+  <div class="modulo" id="mod-psicologo">
+    <div class="modulo-header">
+      <div class="modulo-title">🧠 Psicólogo — eMulti</div>
+      <div class="modulo-desc">Você impacta principalmente o M2 (ações interprofissionais, Peso 4) e contribui para o M1 com atendimentos individuais e em grupo.</div>
+    </div>
+    <div class="content-card">
+      <div class="content-card-title">🎯 Como maximizar M1 e M2 <span class="tag tag-critico">Crítico</span></div>
+      <div class="content-card-body">
+        <ul>
+          <li><strong>M1:</strong> registrar todos atendimentos individuais — consultas, grupos terapêuticos, escuta ativa</li>
+          <li><strong>M2:</strong> documentar cada matriciamento, discussão de caso, PTS e reunião com eSF</li>
+          <li>Grupos de saúde mental contam para M1 — registre cada participante individualmente</li>
+          <li>Visitas domiciliares conjuntas com enfermeiro ou médico = ação interprofissional</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box info"><span class="box-icon">💡</span><div>Um Projeto Terapêutico Singular (PTS) bem documentado conta como ação interprofissional de alto valor para o M2. Priorize casos complexos com PTS formal.</div></div>
+    <div class="checklist">
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Registrar todos os atendimentos no Siaps no mesmo dia</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Documentar matriciamentos realizados com eSF</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Registrar grupos terapêuticos com lista de participantes</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Elaborar e registrar PTS para casos complexos</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Participar das reuniões de equipe e registrar presença</span></div>
+    </div>
+    <button class="btn-ia-perfil" onclick="gerarOrientacaoIA('psicologo')">✦ Gerar plano personalizado com IA</button>
+    <div class="ia-box" id="ia-psicologo"><div class="ia-header"><span class="ia-tag">✦ IA</span><span class="ia-title">Orientações Personalizadas — Psicólogo</span></div><div class="ia-content" id="ia-content-psicologo"></div></div>
+  </div>
+
+  <!-- ══ FISIOTERAPEUTA ══ -->
+  <div class="modulo" id="mod-fisio">
+    <div class="modulo-header">
+      <div class="modulo-title">🏃 Fisioterapeuta — eMulti</div>
+      <div class="modulo-desc">O M1 (Peso 6) depende da sua capacidade de ampliar cobertura de atendimentos na população territorial.</div>
+    </div>
+    <div class="content-card">
+      <div class="content-card-title">🎯 Estratégia para maximizar M1 <span class="tag tag-critico">Crítico</span></div>
+      <div class="content-card-body">
+        <ul>
+          <li>Priorizar atendimentos a pessoas com menor acesso — idosos, acamados, pós-AVC</li>
+          <li>Grupos de reabilitação e exercício = múltiplos atendimentos por sessão</li>
+          <li>Visitas domiciliares ampliam cobertura territorial — registrar cada uma</li>
+          <li>Atendimentos compartilhados com médico/enfermeiro = M1 + M2 simultaneamente</li>
+          <li>Registrar <strong>todo contato</strong> — orientação por telefone pode ser lançada</li>
+        </ul>
+      </div>
+    </div>
+    <div class="checklist">
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Registrar 100% dos atendimentos no Siaps</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Organizar grupo de reabilitação para ampliar cobertura</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Realizar visitas domiciliares a pacientes com dificuldade de acesso</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Documentar ações conjuntas com outras categorias</span></div>
+    </div>
+    <button class="btn-ia-perfil" onclick="gerarOrientacaoIA('fisio')">✦ Gerar plano personalizado com IA</button>
+    <div class="ia-box" id="ia-fisio"><div class="ia-header"><span class="ia-tag">✦ IA</span><span class="ia-title">Orientações Personalizadas — Fisioterapeuta</span></div><div class="ia-content" id="ia-content-fisio"></div></div>
+  </div>
+
+  <!-- ══ NUTRICIONISTA ══ -->
+  <div class="modulo" id="mod-nutricionista">
+    <div class="modulo-header">
+      <div class="modulo-title">🥗 Nutricionista — eMulti</div>
+      <div class="modulo-desc">Você contribui para M1 e M2 e tem impacto indireto em C4 (diabetes) e C5 (hipertensão) via educação alimentar.</div>
+    </div>
+    <div class="content-card">
+      <div class="content-card-title">🎯 Como maximizar seus indicadores <span class="tag tag-importante">Importante</span></div>
+      <div class="content-card-body">
+        <ul>
+          <li><strong>M1:</strong> grupos de alimentação saudável — cada participante é um atendimento</li>
+          <li><strong>M2:</strong> participação em casos de diabetes e hipertensão com médico/enfermeiro</li>
+          <li>Consultas de pré-natal nutricional = M1 + contribui para C3</li>
+          <li>Atividades coletivas em escolas e comunidade ampliam muito a cobertura</li>
+        </ul>
+      </div>
+    </div>
+    <div class="checklist">
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Registrar todos os atendimentos e grupos</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Participar de reuniões de caso de diabéticos e hipertensos</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Organizar grupo de alimentação saudável mensal</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Documentar atividades educativas coletivas</span></div>
+    </div>
+    <button class="btn-ia-perfil" onclick="gerarOrientacaoIA('nutricionista')">✦ Gerar plano personalizado com IA</button>
+    <div class="ia-box" id="ia-nutricionista"><div class="ia-header"><span class="ia-tag">✦ IA</span><span class="ia-title">Orientações Personalizadas — Nutricionista</span></div><div class="ia-content" id="ia-content-nutricionista"></div></div>
+  </div>
+
+  <!-- ══ ASSISTENTE SOCIAL ══ -->
+  <div class="modulo" id="mod-assistente">
+    <div class="modulo-header">
+      <div class="modulo-title">🤝 Assistente Social — eMulti</div>
+      <div class="modulo-desc">Suas ações intersetoriais são fundamentais para o M2 e para o alcance de populações vulneráveis que sustentam o M1.</div>
+    </div>
+    <div class="content-card">
+      <div class="content-card-title">🎯 Estratégia para M1 e M2 <span class="tag tag-importante">Importante</span></div>
+      <div class="content-card-body">
+        <ul>
+          <li><strong>M2:</strong> articulações com CRAS, CREAS, escolas e outros serviços = ação interprofissional</li>
+          <li><strong>M1:</strong> atendimentos individuais e visitas a famílias vulneráveis</li>
+          <li>Registrar encaminhamentos e articulações intersetoriais no prontuário</li>
+          <li>Participação em reuniões de rede = M2 quando documentada</li>
+        </ul>
+      </div>
+    </div>
+    <div class="checklist">
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Registrar atendimentos individuais no Siaps</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Documentar articulações intersetoriais realizadas</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Registrar participação em reuniões de rede</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Identificar e encaminhar famílias vulneráveis para serviços</span></div>
+    </div>
+    <button class="btn-ia-perfil" onclick="gerarOrientacaoIA('assistente')">✦ Gerar plano personalizado com IA</button>
+    <div class="ia-box" id="ia-assistente"><div class="ia-header"><span class="ia-tag">✦ IA</span><span class="ia-title">Orientações Personalizadas — Assistente Social</span></div><div class="ia-content" id="ia-content-assistente"></div></div>
+  </div>
+
+  <!-- ══ COORDENADOR ══ -->
+  <div class="modulo" id="mod-coordenador">
+    <div class="modulo-header">
+      <div class="modulo-title">📋 Coordenador de UBS</div>
+      <div class="modulo-desc">Você é o responsável pelo fechamento mensal, envio ao Siaps e pela coordenação de todas as equipes da unidade.</div>
+    </div>
+    <div class="content-card">
+      <div class="content-card-title">🎯 Seu calendário crítico <span class="tag tag-critico">Crítico</span></div>
+      <div class="content-card-body">
+        <ul>
+          <li><strong>Dia 1–5:</strong> cobrar registros pendentes de todos os profissionais</li>
+          <li><strong>Dia 6–8:</strong> conferir e consolidar dados no sistema</li>
+          <li><strong>Dia 8:</strong> reunião de equipe para revisar indicadores antes do envio</li>
+          <li><strong>Dia 9:</strong> último dia para corrigir registros</li>
+          <li><strong>Dia 10:</strong> envio ao Siaps — prazo final improrrogável</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box warn"><span class="box-icon">⚠</span><div>Um mês sem envio = mês zerado na média do quadrimestre. Isso pode derrubar a classificação de Ótimo para Suficiente em um único mês de descuido.</div></div>
+    <div class="checklist">
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Cobrar registros pendentes toda semana</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Conferir dados consolidados até o dia 8</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Realizar reunião de equipe para revisar indicadores</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Enviar dados ao Siaps até o dia 10</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Registrar notas no Painel ÁPEX para monitoramento</span></div>
+    </div>
+    <button class="btn-ia-perfil" onclick="gerarOrientacaoIA('coordenador')">✦ Gerar plano personalizado com IA</button>
+    <div class="ia-box" id="ia-coordenador"><div class="ia-header"><span class="ia-tag">✦ IA</span><span class="ia-title">Orientações Personalizadas — Coordenador</span></div><div class="ia-content" id="ia-content-coordenador"></div></div>
+  </div>
+
+  <!-- ══ GESTOR ══ -->
+  <div class="modulo" id="mod-gestor">
+    <div class="modulo-header">
+      <div class="modulo-title">🏛️ Gestor Municipal de Saúde</div>
+      <div class="modulo-desc">Você precisa de visão consolidada de todas as equipes, repasse financeiro e estratégia de melhoria sistêmica.</div>
+    </div>
+    <div class="content-card">
+      <div class="content-card-title">🎯 O que monitorar todo mês <span class="tag tag-critico">Crítico</span></div>
+      <div class="content-card-body">
+        <ul>
+          <li>Notas de C2 e C3 de todas as equipes — maior impacto financeiro</li>
+          <li>Equipes em Regular — risco de perda de repasse federal</li>
+          <li>Envio ao Siaps — confirmar que todos os coordenadores enviaram até o dia 10</li>
+          <li>Evolução quadrimestral — compare com o período anterior</li>
+          <li>Cálculo do repasse estimado — planeje o orçamento municipal</li>
+        </ul>
+      </div>
+    </div>
+    <div class="box info"><span class="box-icon">💡</span><div>Uma equipe em Regular no Componente III perde até 75% do incentivo financeiro. Identificar e intervir antes do fechamento do quadrimestre é mais barato do que perder o repasse.</div></div>
+    <div class="checklist">
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Revisar notas de todas as equipes mensalmente</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Identificar equipes em Regular e acionar coordenadores</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Confirmar envio ao Siaps de todas as equipes até dia 10</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Calcular repasse estimado e informar financeiro municipal</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Apresentar evolução dos indicadores em reunião mensal</span></div>
+    </div>
+    <button class="btn-ia-perfil" onclick="gerarOrientacaoIA('gestor')">✦ Gerar plano personalizado com IA</button>
+    <div class="ia-box" id="ia-gestor"><div class="ia-header"><span class="ia-tag">✦ IA</span><span class="ia-title">Orientações Personalizadas — Gestor</span></div><div class="ia-content" id="ia-content-gestor"></div></div>
+  </div>
+
+  <!-- ══ FARMACÊUTICO ══ -->
+  <div class="modulo" id="mod-farmaceutico">
+    <div class="modulo-header">
+      <div class="modulo-title">💊 Farmacêutico — eMulti</div>
+      <div class="modulo-desc">Você contribui para M1 com atendimentos farmacêuticos e para M2 com participação em casos de polifarmácia e crônicos.</div>
+    </div>
+    <div class="content-card">
+      <div class="content-card-title">🎯 Como maximizar sua contribuição <span class="tag tag-importante">Importante</span></div>
+      <div class="content-card-body">
+        <ul>
+          <li><strong>M1:</strong> consultas farmacêuticas individuais — revisão de polifarmácia, adesão</li>
+          <li><strong>M2:</strong> discussão de casos com médico sobre prescrições de crônicos</li>
+          <li>Grupos de uso racional de medicamentos = M1 coletivo</li>
+          <li>Orientações a diabéticos e hipertensos sobre medicação = contribui para C4/C5</li>
+        </ul>
+      </div>
+    </div>
+    <div class="checklist">
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Registrar consultas farmacêuticas no Siaps</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Documentar discussões com médico sobre prescrições</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Organizar grupo de uso racional de medicamentos</span></div>
+      <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Orientar diabéticos e hipertensos sobre adesão</span></div>
+    </div>
+    <button class="btn-ia-perfil" onclick="gerarOrientacaoIA('farmaceutico')">✦ Gerar plano personalizado com IA</button>
+    <div class="ia-box" id="ia-farmaceutico"><div class="ia-header"><span class="ia-tag">✦ IA</span><span class="ia-title">Orientações Personalizadas — Farmacêutico</span></div><div class="ia-content" id="ia-content-farmaceutico"></div></div>
+  </div>
+
+</div>
+
+<script>
+// TEMA
+const themeBtn = document.getElementById('theme-toggle');
+let isDark = localStorage.getItem('apex_theme') !== 'light';
+document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+themeBtn.textContent = isDark ? '🌙' : '☀️';
+themeBtn.addEventListener('click', () => {
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  themeBtn.textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('apex_theme', isDark ? 'dark' : 'light');
+});
+
+// PERFIL SELECTOR
+function selectPerfil(id, btn) {
+  document.querySelectorAll('.perfil-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.modulo').forEach(m => m.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('mod-' + id).classList.add('active');
+  document.getElementById('mod-' + id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// CHECKLIST
+function tc(el) { el.classList.toggle('done'); }
+
+// IA POR PERFIL
+const perfilPrompts = {
+  medico: `médico da Estratégia Saúde da Família (eSF) responsável pelos indicadores C4 (diabetes), C5 (hipertensão), C6 (pessoa idosa) e C7 (prevenção do câncer) com Peso 2`,
+  enfermeiro: `enfermeiro coordenador da eSF responsável pelos indicadores C2 (desenvolvimento infantil, Peso 2), C3 (gestação e puerpério, Peso 2), C1 (acesso) e pelo Componente II (cadastro e acompanhamento territorial)`,
+  tecnico: `técnico de enfermagem da eSF responsável pelo registro de procedimentos como aferição de PA, glicemia capilar e vacinação que impactam C4, C5 e C6`,
+  acs: `Agente Comunitário de Saúde (ACS) responsável pelo Componente II (Dimensão Cadastro e Dimensão Acompanhamento) e pela busca ativa de populações vulneráveis`,
+  dentista: `dentista da equipe de Saúde Bucal (eSB) responsável pelos indicadores B1 a B6, sendo B3 (taxa de exodontias) um indicador invertido onde menos extração = maior pontuação`,
+  psicologo: `psicólogo da equipe multiprofissional (eMulti) responsável pelo M2 (ações interprofissionais, Peso 4) através de matriciamentos, PTS e discussões de caso, e pelo M1 através de atendimentos individuais e em grupo`,
+  fisio: `fisioterapeuta da equipe multiprofissional (eMulti) responsável pelo M1 (média de atendimentos por pessoa, Peso 6) através de atendimentos individuais, grupos de reabilitação e visitas domiciliares`,
+  nutricionista: `nutricionista da equipe multiprofissional (eMulti) responsável pelo M1 com atendimentos individuais e grupos de alimentação, e pelo M2 com participação em casos de diabetes e hipertensão`,
+  assistente: `assistente social da equipe multiprofissional (eMulti) responsável pelo M2 através de ações intersetoriais e pelo M1 através de atendimentos a famílias vulneráveis`,
+  coordenador: `coordenador de Unidade Básica de Saúde (UBS) responsável pelo fechamento mensal, envio ao Siaps até o dia 10, e pela coordenação de todas as equipes da unidade`,
+  gestor: `gestor municipal de saúde responsável pela visão consolidada de todas as equipes do município, pelo monitoramento do repasse financeiro federal e pela estratégia de melhoria sistêmica`,
+  farmaceutico: `farmacêutico da equipe multiprofissional (eMulti) responsável pelo M1 com consultas farmacêuticas e pelo M2 com discussões de casos de polifarmácia e crônicos`
+};
+
+async function gerarOrientacaoIA(perfil) {
+  const btn = event.currentTarget;
+  btn.disabled = true;
+  btn.innerHTML = `<div class="loading-dots"><span></span><span></span><span></span></div> Gerando...`;
+
+  const box = document.getElementById('ia-' + perfil);
+  const content = document.getElementById('ia-content-' + perfil);
+  box.classList.add('show');
+  content.textContent = 'Gerando orientações personalizadas...';
+
+  const prompt = `Você é um consultor especialista em Atenção Primária à Saúde (APS) do Brasil com domínio total da NT 6/2025-DEAPS/SAPS/MS e dos sistemas de cofinanciamento federal.
+
+Gere um GUIA DE ORIENTAÇÃO COMPLETO e personalizado para um profissional que atua como: ${perfilPrompts[perfil]}.
+
+O guia deve ser ALTAMENTE PRÁTICO, com linguagem acessível para o dia a dia do profissional de saúde.
+
+Estruture da seguinte forma:
+
+🎯 SEU PAPEL NOS INDICADORES
+[Explique de forma clara como esse profissional impacta os indicadores C2, C3, M1, M2, B1-B6 etc., com foco nos de maior peso]
+
+⚡ 5 AÇÕES IMEDIATAS ESTA SEMANA
+[5 ações concretas e específicas que o profissional pode fazer AGORA para melhorar seus indicadores]
+
+📅 ROTINA SEMANAL IDEAL
+[Rotina prática semana a semana, adaptada à realidade do cargo]
+
+🔧 DICAS DE REGISTRO NO SISTEMA
+[Como registrar corretamente cada ação para que ela conte nos indicadores — muito prático]
+
+⚠️ OS 3 ERROS MAIS COMUNS
+[Os erros típicos desse profissional que fazem perder pontos nos indicadores]
+
+💪 META DO PRÓXIMO QUADRIMESTRE
+[O que esse profissional precisa alcançar para contribuir para a classificação Ótimo da equipe]
+
+Seja específico, prático e motivador. Use linguagem que ressoa com profissionais de saúde da APS.`;
+
+  try {
+    const proxyUrl = localStorage.getItem('apex_config') ?
+      JSON.parse(localStorage.getItem('apex_config')).proxyUrl || 'https://apex-ai-proxy.agapenegociosdigitais.workers.dev'
+      : 'https://apex-ai-proxy.agapenegociosdigitais.workers.dev';
+
+    const res = await fetch(proxyUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1200,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    content.textContent = data.content?.map(i => i.text || '').join('') || 'Erro ao gerar orientações.';
+  } catch (err) {
+    content.textContent = '❌ Erro ao conectar com a IA. Verifique sua conexão.';
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '✦ Gerar novas orientações';
+}
+</script>
+</body>
+</html>

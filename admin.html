@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — ÁPEX Saúde</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+[data-theme="dark"]{--bg:#0a0906;--surface:#111009;--card:#161410;--border:#2a2520;--text:#ede8df;--text2:#a09880;--muted:#7a7060;}
+[data-theme="light"]{--bg:#f9f7f4;--surface:#ffffff;--card:#ffffff;--border:#e8e2d8;--text:#1c1a16;--text2:#5a5448;--muted:#8c8070;}
+:root{--gold:#c9a84c;--gold2:#e8c97a;--gold-dim:#c9a84c22;--danger:#c0392b;--success:#27ae60;--blue:#3b82f6;--purple:#7c3aed;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;min-height:100vh;transition:background .3s,color .3s;}
+
+/* TOPBAR */
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:200;}
+.logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--gold);letter-spacing:2px;flex:1;}
+.admin-badge{font-family:'DM Mono',monospace;font-size:8px;background:var(--gold-dim);color:var(--gold);border:1px solid var(--gold);padding:3px 8px;border-radius:3px;text-transform:uppercase;letter-spacing:1px;}
+.theme-btn{background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:15px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.btn-logout{background:none;border:1px solid var(--border);border-radius:5px;color:var(--muted);font-family:'DM Mono',monospace;font-size:9px;padding:5px 8px;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:all .15s;}
+.btn-logout:hover{border-color:var(--danger);color:var(--danger);}
+
+/* NAV TABS */
+.nav-tabs{display:flex;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;}
+.nav-tab{flex-shrink:0;padding:12px 14px;font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all .15s;display:flex;align-items:center;gap:5px;}
+.nav-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* CONTENT */
+.content{padding:16px;}
+
+/* STAT GRID */
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);}
+.stat-label{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;}
+.stat-val{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--gold);line-height:1;}
+.stat-sub{font-size:10px;color:var(--muted);margin-top:3px;}
+.stat-trend{font-family:'DM Mono',monospace;font-size:9px;position:absolute;top:12px;right:12px;}
+.stat-trend.up{color:var(--success);}
+.stat-trend.down{color:var(--danger);}
+
+/* SEC HEAD */
+.sec-head{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin:16px 0 10px;display:flex;align-items:center;gap:8px;}
+.sec-head::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* USER ROW */
+.user-row{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px;transition:border-color .15s;}
+.user-row:hover{border-color:var(--gold);}
+.user-avatar{width:36px;height:36px;border-radius:50%;background:var(--gold-dim);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;color:var(--gold);flex-shrink:0;text-transform:uppercase;}
+.user-info{flex:1;min-width:0;}
+.user-name{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.user-meta{font-size:10px;color:var(--muted);}
+.user-plan{font-family:'DM Mono',monospace;font-size:8px;padding:2px 6px;border-radius:3px;background:var(--gold-dim);color:var(--gold);border:1px solid #c9a84c44;white-space:nowrap;}
+.user-status{font-family:'DM Mono',monospace;font-size:8px;padding:2px 6px;border-radius:3px;white-space:nowrap;}
+.status-ativo{background:#27ae6022;color:var(--success);border:1px solid #27ae6044;}
+.status-bloqueado{background:#c0392b22;color:var(--danger);border:1px solid #c0392b44;}
+
+/* BOTÕES */
+.btn-sm{font-family:'DM Mono',monospace;font-size:8px;padding:4px 8px;border-radius:4px;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;border:none;transition:all .15s;}
+.btn-del{background:#c0392b22;color:var(--danger);border:1px solid #c0392b44;}
+.btn-del:hover{background:var(--danger);color:#fff;}
+.btn-edit{background:var(--gold-dim);color:var(--gold);border:1px solid #c9a84c44;}
+.btn-edit:hover{background:var(--gold);color:#000;}
+.btn-block{background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b44;}
+.btn-block:hover{background:#f59e0b;color:#000;}
+
+/* FORM */
+.form-group{margin-bottom:12px;}
+.form-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px;display:block;}
+.form-input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;transition:border-color .2s;outline:none;}
+.form-input:focus{border-color:var(--gold);}
+.form-select{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;outline:none;appearance:none;cursor:pointer;}
+.btn-primary{width:100%;background:var(--gold);color:#000;border:none;border-radius:6px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;padding:12px;cursor:pointer;transition:opacity .15s;margin-top:4px;}
+.btn-primary:hover{opacity:.85;}
+.btn-danger{width:100%;background:var(--danger);color:#fff;border:none;border-radius:6px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;padding:12px;cursor:pointer;margin-top:8px;}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:#000000cc;z-index:9998;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--card);border:1px solid var(--gold);border-radius:12px;width:100%;max-width:380px;padding:24px;position:relative;animation:popIn .25s ease;}
+@keyframes popIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:12px;right:12px;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;}
+.modal-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px;color:var(--text);}
+
+/* API CONFIG */
+.api-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:10px;}
+.api-card-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;margin-bottom:4px;}
+.api-card-desc{font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.5;}
+.api-status{display:flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:10px;margin-bottom:8px;}
+.api-dot{width:8px;height:8px;border-radius:50%;}
+.api-dot.ok{background:var(--success);}
+.api-dot.err{background:var(--danger);}
+
+/* MÉTRICAS */
+.metric-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.metric-row:last-child{border-bottom:none;}
+.metric-nome{color:var(--muted);}
+.metric-val{font-family:'DM Mono',monospace;font-weight:500;}
+
+/* RANKING */
+.rank-row{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:6px;display:flex;align-items:center;gap:10px;}
+.rank-num{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--gold);min-width:28px;text-align:center;}
+.rank-info{flex:1;}
+.rank-nome{font-size:13px;font-weight:500;}
+.rank-meta{font-size:10px;color:var(--muted);}
+.rank-nota{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;}
+.rank-badge{font-family:'DM Mono',monospace;font-size:8px;padding:2px 6px;border-radius:3px;text-transform:uppercase;}
+.rb-otimo{background:#27ae6022;color:var(--success);border:1px solid #27ae6044;}
+.rb-bom{background:#3b82f622;color:var(--blue);border:1px solid #3b82f644;}
+.rb-suf{background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b44;}
+.rb-reg{background:#c0392b22;color:var(--danger);border:1px solid #c0392b44;}
+
+/* ALERTA */
+.alerta-card{background:#c0392b10;border:1px solid #c0392b30;border-radius:8px;padding:12px 14px;margin-bottom:8px;display:flex;gap:10px;align-items:flex-start;}
+.alerta-icon{font-size:16px;flex-shrink:0;}
+.alerta-text{font-size:12px;color:#e74c3c;line-height:1.4;}
+
+/* PROGRESS BAR */
+.prog-wrap{margin-top:8px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.prog-bar{height:100%;border-radius:2px;transition:width .5s;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card);border:1px solid var(--gold);border-radius:8px;padding:10px 18px;font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);z-index:9999;transition:transform .3s;white-space:nowrap;box-shadow:0 8px 32px #00000088;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* PRAZO CARD */
+.prazo-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:8px;display:flex;gap:12px;align-items:center;}
+.prazo-num{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;line-height:1;min-width:36px;text-align:center;}
+.prazo-urgente .prazo-num{color:var(--danger);}
+.prazo-normal .prazo-num{color:var(--gold);}
+.prazo-info{}
+.prazo-titulo{font-size:13px;font-weight:500;margin-bottom:2px;}
+.prazo-desc{font-size:10px;color:var(--muted);}
+
+/* COMUNICADO */
+.comunicado-form{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:16px;}
+textarea.form-input{min-height:80px;resize:vertical;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">ÁPEX</div>
+  <span class="admin-badge">Admin</span>
+  <button class="theme-btn" id="theme-toggle">🌙</button>
+  <button class="btn-logout" id="btn-logout">Sair</button>
+</div>
+
+<div class="nav-tabs">
+  <button class="nav-tab active" data-tab="visao">📊 Visão Geral</button>
+  <button class="nav-tab" data-tab="usuarios">👥 Usuários</button>
+  <button class="nav-tab" data-tab="equipes">🏥 Equipes</button>
+  <button class="nav-tab" data-tab="api">🔧 API & Config</button>
+  <button class="nav-tab" data-tab="prazos">⏰ Prazos</button>
+  <button class="nav-tab" data-tab="comunicados">📢 Comunicados</button>
+</div>
+
+<!-- ══ VISÃO GERAL ══ -->
+<div class="content tab-content active" id="tab-visao">
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-label">Total Usuários</div>
+      <div class="stat-val" id="vg-usuarios">0</div>
+      <div class="stat-sub">cadastrados</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Receita Mensal</div>
+      <div class="stat-val" id="vg-receita" style="font-size:18px;">R$0</div>
+      <div class="stat-sub">estimada</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Plano Regional</div>
+      <div class="stat-val" id="vg-regional">0</div>
+      <div class="stat-sub">clientes</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Plano Municipal</div>
+      <div class="stat-val" id="vg-municipal">0</div>
+      <div class="stat-sub">clientes</div>
+    </div>
+  </div>
+
+  <div class="sec-head">Alertas do sistema</div>
+  <div id="alertas-sistema">
+    <div class="alerta-card">
+      <span class="alerta-icon">ℹ️</span>
+      <span class="alerta-text">Nenhum alerta no momento. Sistema operando normalmente.</span>
+    </div>
+  </div>
+
+  <div class="sec-head">Uso da API de IA</div>
+  <div class="api-card">
+    <div class="metric-row"><span class="metric-nome">Requisições hoje</span><span class="metric-val" id="req-hoje">0</span></div>
+    <div class="metric-row"><span class="metric-nome">Requisições este mês</span><span class="metric-val" id="req-mes">0</span></div>
+    <div class="metric-row"><span class="metric-nome">Custo estimado (mês)</span><span class="metric-val" id="custo-mes">R$ 0,00</span></div>
+    <div class="metric-row"><span class="metric-nome">Modelo em uso</span><span class="metric-val">claude-haiku-4-5</span></div>
+    <div class="metric-row"><span class="metric-nome">Status da API</span>
+      <span class="api-status"><span class="api-dot ok" id="api-dot"></span><span id="api-status-text">Conectada</span></span>
+    </div>
+  </div>
+
+  <div class="sec-head">Distribuição por plano</div>
+  <div class="api-card">
+    <div class="metric-row">
+      <span class="metric-nome">Básico (R$97)</span>
+      <span class="metric-val" id="dist-basico">0 clientes</span>
+    </div>
+    <div class="prog-wrap"><div class="prog-bar" id="prog-basico" style="width:0%;background:var(--gold)"></div></div>
+    <div class="metric-row" style="margin-top:8px;">
+      <span class="metric-nome">Municipal (R$397)</span>
+      <span class="metric-val" id="dist-municipal">0 clientes</span>
+    </div>
+    <div class="prog-wrap"><div class="prog-bar" id="prog-municipal" style="width:0%;background:var(--blue)"></div></div>
+    <div class="metric-row" style="margin-top:8px;">
+      <span class="metric-nome">Regional (R$997)</span>
+      <span class="metric-val" id="dist-regional">0 clientes</span>
+    </div>
+    <div class="prog-wrap"><div class="prog-bar" id="prog-regional" style="width:0%;background:var(--success)"></div></div>
+  </div>
+
+</div>
+
+<!-- ══ USUÁRIOS ══ -->
+<div class="content tab-content" id="tab-usuarios" style="display:none;">
+
+  <button class="btn-primary" style="margin-bottom:14px;" onclick="openModal('modal-novo-usuario')">+ Adicionar Usuário</button>
+
+  <div style="margin-bottom:12px;">
+    <input class="form-input" type="text" id="busca-usuario" placeholder="Buscar por nome, e-mail ou município..." oninput="filtrarUsuarios()">
+  </div>
+
+  <div class="sec-head">Usuários cadastrados (<span id="count-users">0</span>)</div>
+  <div id="lista-usuarios"></div>
+
+</div>
+
+<!-- ══ EQUIPES / RANKING ══ -->
+<div class="content tab-content" id="tab-equipes" style="display:none;">
+
+  <div class="sec-head">Ranking de equipes por desempenho</div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:12px;font-size:12px;color:var(--muted);line-height:1.5;">
+    O ranking é atualizado automaticamente conforme as equipes registram seus resultados nos painéis. Equipes sem dados não aparecem no ranking.
+  </div>
+
+  <div id="ranking-equipes">
+    <div style="text-align:center;padding:32px;color:var(--muted);font-size:12px;">
+      <div style="font-size:28px;margin-bottom:8px;">📊</div>
+      Nenhuma equipe registrou resultados ainda.<br>Os dados aparecem aqui quando as equipes usam os painéis.
+    </div>
+  </div>
+
+  <div class="sec-head" style="margin-top:20px;">Equipes em alerta</div>
+  <div id="equipes-alerta">
+    <div style="text-align:center;padding:20px;color:var(--muted);font-size:12px;">Nenhuma equipe em situação crítica.</div>
+  </div>
+
+</div>
+
+<!-- ══ API & CONFIG ══ -->
+<div class="content tab-content" id="tab-api" style="display:none;">
+
+  <div class="sec-head">Configuração da IA</div>
+
+  <div class="api-card">
+    <div class="api-card-title">🔑 Proxy da API (Cloudflare Worker)</div>
+    <div class="api-card-desc">URL do Worker que processa as requisições de IA. Configure na Cloudflare e cole aqui para que todos os painéis usem.</div>
+    <div class="form-group">
+      <label class="form-label">URL do Worker</label>
+      <input class="form-input" type="url" id="cfg-proxy-url" placeholder="https://apex-ai-proxy.SEU.workers.dev">
+    </div>
+    <button class="btn-primary" onclick="salvarConfig()">Salvar configuração</button>
+  </div>
+
+  <div class="api-card">
+    <div class="api-card-title">🤖 Modelo de IA</div>
+    <div class="api-card-desc">Escolha entre velocidade/custo (Haiku) e qualidade (Sonnet). Haiku custa ~R$0,005 por relatório.</div>
+    <div class="form-group">
+      <label class="form-label">Modelo ativo</label>
+      <select class="form-select" id="cfg-modelo">
+        <option value="claude-haiku-4-5-20251001">Claude Haiku 4.5 — Rápido e barato ✓ Recomendado</option>
+        <option value="claude-sonnet-4-6">Claude Sonnet 4.6 — Mais elaborado (custo maior)</option>
+      </select>
+    </div>
+    <button class="btn-primary" onclick="salvarConfig()">Salvar modelo</button>
+  </div>
+
+  <div class="api-card">
+    <div class="api-card-title">📊 Limite de uso por usuário</div>
+    <div class="api-card-desc">Defina quantas estratégias por IA cada usuário pode gerar por mês para controlar custos.</div>
+    <div class="form-group">
+      <label class="form-label">Limite mensal por usuário</label>
+      <select class="form-select" id="cfg-limite">
+        <option value="10">10 por mês (padrão)</option>
+        <option value="20">20 por mês</option>
+        <option value="50">50 por mês</option>
+        <option value="0">Ilimitado</option>
+      </select>
+    </div>
+    <button class="btn-primary" onclick="salvarConfig()">Salvar limite</button>
+  </div>
+
+  <div class="sec-head">Configurações do sistema</div>
+
+  <div class="api-card">
+    <div class="api-card-title">🌐 Informações da plataforma</div>
+    <div class="metric-row"><span class="metric-nome">Versão</span><span class="metric-val">ÁPEX Saúde v1.0</span></div>
+    <div class="metric-row"><span class="metric-nome">Base NT</span><span class="metric-val">NT 6/2025-DEAPS/SAPS/MS</span></div>
+    <div class="metric-row"><span class="metric-nome">Hospedagem</span><span class="metric-val">GitHub Pages</span></div>
+    <div class="metric-row"><span class="metric-nome">Proxy IA</span><span class="metric-val">Cloudflare Workers</span></div>
+    <div class="metric-row"><span class="metric-nome">Armazenamento</span><span class="metric-val">localStorage</span></div>
+  </div>
+
+  <div class="api-card">
+    <div class="api-card-title" style="color:var(--danger);">⚠️ Zona de perigo</div>
+    <div class="api-card-desc">Ações irreversíveis. Tenha certeza antes de executar.</div>
+    <button class="btn-danger" onclick="limparTodosDados()">🗑️ Limpar todos os dados do sistema</button>
+  </div>
+
+</div>
+
+<!-- ══ PRAZOS ══ -->
+<div class="content tab-content" id="tab-prazos" style="display:none;">
+
+  <div class="sec-head">Contador de prazo</div>
+
+  <div class="api-card" style="text-align:center;padding:20px;">
+    <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;">Dias para o próximo envio ao Siaps</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:700;color:var(--gold);line-height:1;" id="dias-siaps">—</div>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px;" id="data-siaps">Envio até o dia 10 do próximo mês</div>
+  </div>
+
+  <div class="sec-head">Calendário do ano</div>
+
+  <div class="prazo-card prazo-urgente">
+    <div class="prazo-num" id="pz-envio">10</div>
+    <div class="prazo-info">
+      <div class="prazo-titulo">Envio ao Siaps</div>
+      <div class="prazo-desc">Todo mês — dados do mês anterior. Prazo máximo: dia 10.</div>
+    </div>
+  </div>
+
+  <div class="prazo-card prazo-normal">
+    <div class="prazo-num">Abr</div>
+    <div class="prazo-info">
+      <div class="prazo-titulo">Fechamento 1º Quadrimestre</div>
+      <div class="prazo-desc">Jan–Abr · Resultado publicado em Maio</div>
+    </div>
+  </div>
+
+  <div class="prazo-card prazo-normal">
+    <div class="prazo-num">Ago</div>
+    <div class="prazo-info">
+      <div class="prazo-titulo">Fechamento 2º Quadrimestre</div>
+      <div class="prazo-desc">Mai–Ago · Resultado publicado em Setembro</div>
+    </div>
+  </div>
+
+  <div class="prazo-card prazo-normal">
+    <div class="prazo-num">Dez</div>
+    <div class="prazo-info">
+      <div class="prazo-titulo">Fechamento 3º Quadrimestre</div>
+      <div class="prazo-desc">Set–Dez · Resultado publicado em Janeiro</div>
+    </div>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-top:8px;">
+    <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Repasse financeiro</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.6;">O incentivo financeiro dos Componentes II e III é repassado nos <strong style="color:var(--gold)">4 meses subsequentes</strong> ao quadrimestre avaliado.</div>
+  </div>
+
+</div>
+
+<!-- ══ COMUNICADOS ══ -->
+<div class="content tab-content" id="tab-comunicados" style="display:none;">
+
+  <div class="sec-head">Enviar comunicado</div>
+
+  <div class="comunicado-form">
+    <div class="form-group">
+      <label class="form-label">Título</label>
+      <input class="form-input" type="text" id="com-titulo" placeholder="Ex: Nova funcionalidade disponível">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Mensagem</label>
+      <textarea class="form-input" id="com-texto" placeholder="Digite o comunicado para todos os usuários..."></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Tipo</label>
+      <select class="form-select" id="com-tipo">
+        <option value="info">ℹ️ Informação</option>
+        <option value="alerta">⚠️ Alerta</option>
+        <option value="novidade">🚀 Novidade</option>
+        <option value="prazo">⏰ Prazo</option>
+      </select>
+    </div>
+    <button class="btn-primary" onclick="enviarComunicado()">📢 Publicar comunicado</button>
+  </div>
+
+  <div class="sec-head">Comunicados publicados</div>
+  <div id="lista-comunicados">
+    <div style="text-align:center;padding:24px;color:var(--muted);font-size:12px;">Nenhum comunicado publicado ainda.</div>
+  </div>
+
+</div>
+
+<!-- MODAL NOVO USUÁRIO -->
+<div class="modal-overlay" id="modal-novo-usuario">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-novo-usuario')">×</button>
+    <div class="modal-title">➕ Adicionar Usuário</div>
+    <div class="form-group">
+      <label class="form-label">Nome completo</label>
+      <input class="form-input" type="text" id="nu-nome" placeholder="Nome do usuário">
+    </div>
+    <div class="form-group">
+      <label class="form-label">E-mail</label>
+      <input class="form-input" type="email" id="nu-email" placeholder="email@municipio.gov.br">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Município</label>
+      <input class="form-input" type="text" id="nu-municipio" placeholder="Cidade — UF">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Plano</label>
+      <select class="form-select" id="nu-plano">
+        <option value="Básico">Básico — R$ 97/mês</option>
+        <option value="Municipal">Municipal — R$ 397/mês</option>
+        <option value="Regional">Regional — R$ 997/mês</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Senha inicial</label>
+      <input class="form-input" type="password" id="nu-senha" placeholder="Mínimo 6 caracteres">
+    </div>
+    <button class="btn-primary" onclick="adicionarUsuario()">Criar usuário</button>
+    <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:10px;" id="nu-msg"></div>
+  </div>
+</div>
+
+<!-- MODAL EDITAR USUÁRIO -->
+<div class="modal-overlay" id="modal-editar-usuario">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-editar-usuario')">×</button>
+    <div class="modal-title">✏️ Editar Usuário</div>
+    <input type="hidden" id="eu-index">
+    <div class="form-group">
+      <label class="form-label">Nome</label>
+      <input class="form-input" type="text" id="eu-nome">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Município</label>
+      <input class="form-input" type="text" id="eu-municipio">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Plano</label>
+      <select class="form-select" id="eu-plano">
+        <option value="Básico">Básico — R$ 97/mês</option>
+        <option value="Municipal">Municipal — R$ 397/mês</option>
+        <option value="Regional">Regional — R$ 997/mês</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Nova senha (deixe em branco para manter)</label>
+      <input class="form-input" type="password" id="eu-senha" placeholder="Nova senha...">
+    </div>
+    <button class="btn-primary" onclick="salvarEdicao()">Salvar alterações</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── TEMA ──
+const themeBtn = document.getElementById('theme-toggle');
+let isDark = localStorage.getItem('apex_theme') !== 'light';
+document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+themeBtn.textContent = isDark ? '🌙' : '☀️';
+themeBtn.addEventListener('click', () => {
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  themeBtn.textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('apex_theme', isDark ? 'dark' : 'light');
+});
+
+// ── DADOS ──
+const planPrice = { 'Básico': 97, 'Municipal': 397, 'Regional': 997 };
+let users = JSON.parse(localStorage.getItem('apex_users') || '[]');
+let config = JSON.parse(localStorage.getItem('apex_config') || '{}');
+let comunicados = JSON.parse(localStorage.getItem('apex_comunicados') || '[]');
+let apiUsage = JSON.parse(localStorage.getItem('apex_api_usage') || '{"total":0,"hoje":0,"lastDate":""}');
+
+function saveUsers() { localStorage.setItem('apex_users', JSON.stringify(users)); }
+function saveConfig() { localStorage.setItem('apex_config', JSON.stringify(config)); }
+function saveComunicados() { localStorage.setItem('apex_comunicados', JSON.stringify(comunicados)); }
+
+// ── TABS ──
+document.querySelectorAll('.nav-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).style.display = 'block';
+    if (btn.dataset.tab === 'visao') updateVisaoGeral();
+    if (btn.dataset.tab === 'usuarios') renderUsuarios();
+    if (btn.dataset.tab === 'prazos') updatePrazos();
+    if (btn.dataset.tab === 'comunicados') renderComunicados();
+    if (btn.dataset.tab === 'api') loadConfig();
+  });
+});
+
+// ── VISÃO GERAL ──
+function updateVisaoGeral() {
+  const total = users.length;
+  const receita = users.reduce((a, u) => a + (planPrice[u.plano] || 0), 0);
+  const regional = users.filter(u => u.plano === 'Regional').length;
+  const municipal = users.filter(u => u.plano === 'Municipal').length;
+  const basico = users.filter(u => u.plano === 'Básico').length;
+
+  document.getElementById('vg-usuarios').textContent = total;
+  document.getElementById('vg-receita').textContent = 'R$' + receita.toLocaleString('pt-BR');
+  document.getElementById('vg-regional').textContent = regional;
+  document.getElementById('vg-municipal').textContent = municipal;
+
+  document.getElementById('dist-basico').textContent = basico + ' clientes';
+  document.getElementById('dist-municipal').textContent = municipal + ' clientes';
+  document.getElementById('dist-regional').textContent = regional + ' clientes';
+
+  const max = Math.max(basico, municipal, regional, 1);
+  document.getElementById('prog-basico').style.width = (basico / max * 100) + '%';
+  document.getElementById('prog-municipal').style.width = (municipal / max * 100) + '%';
+  document.getElementById('prog-regional').style.width = (regional / max * 100) + '%';
+
+  // API usage
+  const today = new Date().toDateString();
+  if (apiUsage.lastDate !== today) { apiUsage.hoje = 0; apiUsage.lastDate = today; }
+  document.getElementById('req-hoje').textContent = apiUsage.hoje;
+  document.getElementById('req-mes').textContent = apiUsage.total;
+  const custo = (apiUsage.total * 0.03).toFixed(2);
+  document.getElementById('custo-mes').textContent = 'R$ ' + custo.replace('.', ',');
+
+  // Alertas
+  const alertas = [];
+  if (users.filter(u => u.bloqueado).length > 0)
+    alertas.push('⚠️ ' + users.filter(u => u.bloqueado).length + ' usuário(s) bloqueado(s).');
+  if (total === 0)
+    alertas.push('ℹ️ Nenhum usuário cadastrado ainda. Divulgue a landing page!');
+
+  const area = document.getElementById('alertas-sistema');
+  area.innerHTML = alertas.length ? alertas.map(a => `
+    <div class="alerta-card">
+      <span class="alerta-icon">⚠️</span>
+      <span class="alerta-text">${a}</span>
+    </div>`).join('') : `<div class="alerta-card"><span class="alerta-icon">✅</span><span class="alerta-text" style="color:#2ecc71;">Sistema operando normalmente.</span></div>`;
+}
+
+// ── USUÁRIOS ──
+function renderUsuarios(filtro = '') {
+  const lista = document.getElementById('lista-usuarios');
+  const filtered = users.filter(u =>
+    u.nome.toLowerCase().includes(filtro.toLowerCase()) ||
+    u.email.toLowerCase().includes(filtro.toLowerCase()) ||
+    (u.municipio || '').toLowerCase().includes(filtro.toLowerCase())
+  );
+  document.getElementById('count-users').textContent = filtered.length;
+
+  if (!filtered.length) {
+    lista.innerHTML = '<div style="text-align:center;padding:24px;color:var(--muted);font-size:12px;">Nenhum usuário encontrado.</div>';
+    return;
+  }
+
+  lista.innerHTML = filtered.map((u, i) => {
+    const realIndex = users.indexOf(u);
+    return `
+    <div class="user-row">
+      <div class="user-avatar">${u.nome[0]}</div>
+      <div class="user-info">
+        <div class="user-name">${u.nome}</div>
+        <div class="user-meta">${u.email} · ${u.municipio || '—'}</div>
+        <div class="user-meta" style="margin-top:2px;">Cadastro: ${u.criado || '—'}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end;flex-shrink:0;">
+        <span class="user-plan">${u.plano}</span>
+        <span class="user-status ${u.bloqueado ? 'status-bloqueado' : 'status-ativo'}">${u.bloqueado ? 'Bloqueado' : 'Ativo'}</span>
+        <div style="display:flex;gap:4px;">
+          <button class="btn-sm btn-edit" onclick="editarUsuario(${realIndex})">✏️</button>
+          <button class="btn-sm btn-block" onclick="bloquearUsuario(${realIndex})">${u.bloqueado ? '🔓' : '🔒'}</button>
+          <button class="btn-sm btn-del" onclick="deletarUsuario(${realIndex})">✕</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filtrarUsuarios() {
+  renderUsuarios(document.getElementById('busca-usuario').value);
+}
+
+function adicionarUsuario() {
+  const nome = document.getElementById('nu-nome').value.trim();
+  const email = document.getElementById('nu-email').value.trim().toLowerCase();
+  const municipio = document.getElementById('nu-municipio').value.trim();
+  const plano = document.getElementById('nu-plano').value;
+  const senha = document.getElementById('nu-senha').value;
+  const msg = document.getElementById('nu-msg');
+
+  if (!nome || !email || !senha) { msg.textContent = 'Preencha nome, e-mail e senha.'; return; }
+  if (senha.length < 6) { msg.textContent = 'Senha mínima: 6 caracteres.'; return; }
+  if (users.find(u => u.email === email)) { msg.textContent = 'E-mail já cadastrado.'; return; }
+
+  users.push({ nome, email, municipio, plano, senha, criado: new Date().toLocaleDateString('pt-BR'), bloqueado: false });
+  saveUsers();
+  closeModal('modal-novo-usuario');
+  renderUsuarios();
+  updateVisaoGeral();
+  showToast('✓ Usuário criado com sucesso!');
+  ['nu-nome','nu-email','nu-municipio','nu-senha'].forEach(id => document.getElementById(id).value = '');
+}
+
+function editarUsuario(i) {
+  const u = users[i];
+  document.getElementById('eu-index').value = i;
+  document.getElementById('eu-nome').value = u.nome;
+  document.getElementById('eu-municipio').value = u.municipio || '';
+  document.getElementById('eu-plano').value = u.plano;
+  document.getElementById('eu-senha').value = '';
+  openModal('modal-editar-usuario');
+}
+
+function salvarEdicao() {
+  const i = parseInt(document.getElementById('eu-index').value);
+  users[i].nome = document.getElementById('eu-nome').value.trim();
+  users[i].municipio = document.getElementById('eu-municipio').value.trim();
+  users[i].plano = document.getElementById('eu-plano').value;
+  const novaSenha = document.getElementById('eu-senha').value;
+  if (novaSenha.length >= 6) users[i].senha = novaSenha;
+  saveUsers();
+  closeModal('modal-editar-usuario');
+  renderUsuarios();
+  updateVisaoGeral();
+  showToast('✓ Usuário atualizado!');
+}
+
+function bloquearUsuario(i) {
+  users[i].bloqueado = !users[i].bloqueado;
+  saveUsers();
+  renderUsuarios();
+  showToast(users[i].bloqueado ? '🔒 Usuário bloqueado.' : '🔓 Usuário desbloqueado.');
+}
+
+function deletarUsuario(i) {
+  if (!confirm(`Remover ${users[i].nome}?`)) return;
+  users.splice(i, 1);
+  saveUsers();
+  renderUsuarios();
+  updateVisaoGeral();
+  showToast('Usuário removido.');
+}
+
+// ── PRAZOS ──
+function updatePrazos() {
+  const hoje = new Date();
+  const dia = hoje.getDate();
+  const proximo10 = new Date(hoje.getFullYear(), hoje.getMonth() + (dia >= 10 ? 1 : 0), 10);
+  const diff = Math.ceil((proximo10 - hoje) / (1000 * 60 * 60 * 24));
+  document.getElementById('dias-siaps').textContent = diff;
+  document.getElementById('dias-siaps').style.color = diff <= 3 ? 'var(--danger)' : diff <= 7 ? '#f59e0b' : 'var(--gold)';
+  document.getElementById('data-siaps').textContent = `Próximo envio: dia 10/${String(proximo10.getMonth()+1).padStart(2,'0')}/${proximo10.getFullYear()}`;
+}
+
+// ── CONFIG ──
+function loadConfig() {
+  document.getElementById('cfg-proxy-url').value = config.proxyUrl || '';
+  document.getElementById('cfg-modelo').value = config.modelo || 'claude-haiku-4-5-20251001';
+  document.getElementById('cfg-limite').value = config.limite || '10';
+}
+
+function salvarConfig() {
+  config.proxyUrl = document.getElementById('cfg-proxy-url').value.trim();
+  config.modelo = document.getElementById('cfg-modelo').value;
+  config.limite = document.getElementById('cfg-limite').value;
+  saveConfig();
+  showToast('✓ Configuração salva!');
+}
+
+function limparTodosDados() {
+  if (!confirm('ATENÇÃO: Isso apagará TODOS os usuários e dados. Tem certeza?')) return;
+  if (!confirm('Última confirmação: apagar tudo mesmo?')) return;
+  localStorage.clear();
+  showToast('Dados limpos. Recarregando...');
+  setTimeout(() => location.reload(), 1500);
+}
+
+// ── COMUNICADOS ──
+function enviarComunicado() {
+  const titulo = document.getElementById('com-titulo').value.trim();
+  const texto = document.getElementById('com-texto').value.trim();
+  const tipo = document.getElementById('com-tipo').value;
+  if (!titulo || !texto) { showToast('Preencha título e mensagem.'); return; }
+  comunicados.unshift({ titulo, texto, tipo, data: new Date().toLocaleDateString('pt-BR'), hora: new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'}) });
+  saveComunicados();
+  localStorage.setItem('apex_comunicados', JSON.stringify(comunicados));
+  document.getElementById('com-titulo').value = '';
+  document.getElementById('com-texto').value = '';
+  renderComunicados();
+  showToast('📢 Comunicado publicado!');
+}
+
+function renderComunicados() {
+  const lista = document.getElementById('lista-comunicados');
+  if (!comunicados.length) {
+    lista.innerHTML = '<div style="text-align:center;padding:24px;color:var(--muted);font-size:12px;">Nenhum comunicado ainda.</div>';
+    return;
+  }
+  const icons = {info:'ℹ️',alerta:'⚠️',novidade:'🚀',prazo:'⏰'};
+  lista.innerHTML = comunicados.map((c, i) => `
+    <div class="api-card" style="margin-bottom:8px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+        <div style="font-size:13px;font-weight:500;">${icons[c.tipo]||'📢'} ${c.titulo}</div>
+        <button class="btn-sm btn-del" onclick="deletarComunicado(${i})">✕</button>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:6px;line-height:1.5;">${c.texto}</div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);">${c.data} às ${c.hora}</div>
+    </div>`).join('');
+}
+
+function deletarComunicado(i) {
+  comunicados.splice(i, 1);
+  saveComunicados();
+  renderComunicados();
+}
+
+// ── MODAL ──
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+});
+
+// ── TOAST ──
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── LOGOUT ──
+document.getElementById('btn-logout').addEventListener('click', () => {
+  window.location.href = 'apex-saude.html';
+});
+
+// ── INIT ──
+updateVisaoGeral();
+updatePrazos();
+</script>
+</body>
+</html>

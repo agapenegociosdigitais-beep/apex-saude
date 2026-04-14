@@ -786,10 +786,22 @@ body {
         <span class="tool-arrow">›</span>
       </div>
 
-      <div class="sec-head" style="margin-top:16px;">Último acesso</div>
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center;">
-        <div style="font-size:24px;margin-bottom:6px;">🎯</div>
-        <div style="font-size:12px;color:var(--muted);">Nenhum dado registrado ainda.<br>Acesse as Ferramentas para começar.</div>
+      <div class="sec-head" style="margin-top:16px;">Módulos extras</div>
+      <div class="tool-card" onclick="window.open('treinamento.html','_blank')">
+        <div class="tool-icon">🎓</div>
+        <div class="tool-body">
+          <div class="tool-name">Centro de Treinamento</div>
+          <div class="tool-desc">Orientações por perfil: médico, enfermeiro, ACS, dentista, eMulti e mais</div>
+        </div>
+        <span class="tool-arrow">›</span>
+      </div>
+      <div class="tool-card" onclick="window.open('gerencial.html','_blank')">
+        <div class="tool-icon">📈</div>
+        <div class="tool-body">
+          <div class="tool-name">Dashboard Gerencial</div>
+          <div class="tool-desc">Histórico, ranking de equipes, alertas e relatório em PDF</div>
+        </div>
+        <span class="tool-arrow">›</span>
       </div>
     </div>
 
@@ -1032,8 +1044,7 @@ function doLogin() {
   const adm = ['admin','apex.com'].join('@');
   if (email === adm && senha === 'apex2025') {
     currentUser = { nome: 'Administrador', email: adm, role: 'admin' };
-    showScreen('admin');
-    updateAdminStats();
+    window.location.href = 'admin.html';
     return;
   }
 

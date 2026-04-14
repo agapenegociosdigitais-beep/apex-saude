@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Gerencial — ÁPEX Saúde</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+[data-theme="dark"]{--bg:#080705;--surface:#0f0d0a;--card:#141210;--border:#242018;--text:#ede8df;--text2:#a09880;--muted:#7a7060;}
+[data-theme="light"]{--bg:#f9f7f4;--surface:#fff;--card:#fff;--border:#e8e2d8;--text:#1c1a16;--text2:#5a5448;--muted:#8c8070;}
+:root{--gold:#c9a84c;--gold-dim:#c9a84c22;--otimo:#10b981;--bom:#3b82f6;--suf:#f59e0b;--reg:#ef4444;--ai:#a78bfa;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;min-height:100vh;padding:0 0 60px;transition:background .3s,color .3s;}
+
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:200;}
+.topbar-back{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);text-decoration:none;text-transform:uppercase;letter-spacing:1px;opacity:.8;}
+.topbar-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--text);flex:1;}
+.topbar-title span{color:var(--gold);}
+.theme-btn{background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:15px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 16px;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);}
+.header-tag{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;}
+.header-sub{font-size:11px;color:var(--muted);}
+
+.nav-tabs{display:flex;background:var(--surface);border-bottom:1px solid var(--border);overflow-x:auto;}
+.nav-tab{flex-shrink:0;padding:11px 14px;font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all .15s;}
+.nav-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+.content{padding:14px 16px;}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+.sec-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin:16px 0 10px;display:flex;align-items:center;gap:8px;}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* REGISTRO DE RESULTADO */
+.registro-form{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:14px;}
+.registro-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:14px;color:var(--text);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.form-group{display:flex;flex-direction:column;gap:4px;}
+.form-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+.form-input{background:var(--surface);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;padding:9px 10px;outline:none;transition:border-color .15s;-moz-appearance:textfield;}
+.form-input::-webkit-outer-spin-button,.form-input::-webkit-inner-spin-button{-webkit-appearance:none;}
+.form-input:focus{border-color:var(--gold);}
+.form-select{background:var(--surface);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 10px;outline:none;appearance:none;cursor:pointer;}
+.btn-salvar{width:100%;background:var(--gold);color:#000;border:none;border-radius:6px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;padding:12px;cursor:pointer;margin-top:8px;transition:opacity .15s;}
+.btn-salvar:hover{opacity:.85;}
+
+/* RESULTADO CARD */
+.resultado-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:8px;position:relative;overflow:hidden;}
+.resultado-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.rc-otimo::before{background:var(--otimo);}
+.rc-bom::before{background:var(--bom);}
+.rc-suf::before{background:var(--suf);}
+.rc-reg::before{background:var(--reg);}
+.rc-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
+.rc-equipe{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;}
+.rc-quad{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+.rc-notas{display:flex;gap:16px;}
+.rc-nota-item{text-align:center;}
+.rc-nota-label{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);text-transform:uppercase;}
+.rc-nota-val{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;line-height:1.1;}
+.rc-nota-class{font-family:'DM Mono',monospace;font-size:8px;}
+.badge{font-family:'DM Mono',monospace;font-size:8px;padding:2px 6px;border-radius:3px;text-transform:uppercase;}
+.b-otimo{background:#10b98122;color:var(--otimo);border:1px solid #10b98144;}
+.b-bom{background:#3b82f622;color:var(--bom);border:1px solid #3b82f644;}
+.b-suf{background:#f59e0b22;color:var(--suf);border:1px solid #f59e0b44;}
+.b-reg{background:#ef444422;color:var(--reg);border:1px solid #ef444444;}
+.btn-del-small{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:2px;}
+.btn-del-small:hover{color:var(--reg);}
+
+/* GRÁFICO EVOLUÇÃO */
+.grafico-wrap{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px;}
+.grafico-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;margin-bottom:4px;}
+.grafico-sub{font-size:11px;color:var(--muted);margin-bottom:14px;}
+.grafico-bars{display:flex;gap:8px;align-items:flex-end;height:100px;}
+.g-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.g-bar{width:100%;border-radius:4px 4px 0 0;transition:height .5s ease;min-height:4px;}
+.g-bar.otimo{background:var(--otimo);}
+.g-bar.bom{background:var(--bom);}
+.g-bar.suf{background:var(--suf);}
+.g-bar.reg{background:var(--reg);}
+.g-label{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);text-align:center;}
+.g-val{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;text-align:center;}
+
+/* RANKING */
+.rank-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:6px;display:flex;align-items:center;gap:12px;}
+.rank-pos{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--gold);min-width:30px;text-align:center;}
+.rank-pos.pos-1{color:#FFD700;}
+.rank-pos.pos-2{color:#C0C0C0;}
+.rank-pos.pos-3{color:#CD7F32;}
+.rank-info{flex:1;min-width:0;}
+.rank-nome{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rank-quad{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);}
+.rank-notas{text-align:right;}
+.rank-nota-val{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;}
+
+/* ALERTA PRAZO */
+.prazo-alert{background:var(--card);border:2px solid var(--reg);border-radius:8px;padding:14px;margin-bottom:10px;display:flex;gap:10px;align-items:center;}
+.prazo-dias{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--reg);min-width:50px;text-align:center;}
+.prazo-info-title{font-size:13px;font-weight:500;color:var(--reg);}
+.prazo-info-desc{font-size:11px;color:var(--muted);}
+
+.prazo-ok{border-color:var(--otimo);}
+.prazo-ok .prazo-dias{color:var(--otimo);}
+.prazo-ok .prazo-info-title{color:var(--otimo);}
+
+.prazo-warn{border-color:var(--suf);}
+.prazo-warn .prazo-dias{color:var(--suf);}
+.prazo-warn .prazo-info-title{color:var(--suf);}
+
+/* PDF BTN */
+.btn-pdf-gerencial{width:100%;background:none;border:1px solid var(--border);color:var(--text2);border-radius:6px;font-family:'Syne',sans-serif;font-size:12px;font-weight:600;padding:11px;cursor:pointer;margin-top:10px;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-pdf-gerencial:hover{border-color:var(--gold);color:var(--gold);}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card);border:1px solid var(--gold);border-radius:8px;padding:10px 18px;font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);z-index:9999;transition:transform .3s;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* QUADRIMESTRE SELECTOR */
+.quad-filter{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+.qf-btn{font-family:'DM Mono',monospace;font-size:9px;padding:5px 12px;border-radius:4px;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--muted);transition:all .15s;}
+.qf-btn.active{background:var(--gold);border-color:var(--gold);color:#000;font-weight:600;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="topbar-back" href="apex-saude.html">← Dashboard</a>
+  <div class="topbar-title">Gestão <span>Gerencial</span></div>
+  <button class="theme-btn" id="theme-toggle">🌙</button>
+</div>
+
+<div class="header">
+  <div class="header-tag">Histórico · Ranking · Alertas · Relatório</div>
+  <div class="header-sub">Visão consolidada de todas as equipes do município</div>
+</div>
+
+<div class="nav-tabs">
+  <button class="nav-tab active" data-tab="registrar">➕ Registrar</button>
+  <button class="nav-tab" data-tab="historico">📊 Histórico</button>
+  <button class="nav-tab" data-tab="ranking">🏆 Ranking</button>
+  <button class="nav-tab" data-tab="alertas">⚠️ Alertas</button>
+  <button class="nav-tab" data-tab="relatorio">📄 Relatório</button>
+</div>
+
+<!-- ══ REGISTRAR ══ -->
+<div class="content tab-content active" id="tab-registrar">
+
+  <div class="registro-form">
+    <div class="registro-title">📝 Registrar resultado de equipe</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Nome da equipe</label>
+        <input class="form-input" type="text" id="reg-equipe" placeholder="Ex: eSF Vila Nova">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tipo</label>
+        <select class="form-select" id="reg-tipo">
+          <option value="eSF">eSF / eAP</option>
+          <option value="eMulti">eMulti</option>
+          <option value="eSB">eSB</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Quadrimestre</label>
+        <select class="form-select" id="reg-quad">
+          <option value="1Q/2025">1Q/2025 (Jan–Abr)</option>
+          <option value="2Q/2025">2Q/2025 (Mai–Ago)</option>
+          <option value="3Q/2025">3Q/2025 (Set–Dez)</option>
+          <option value="1Q/2026">1Q/2026 (Jan–Abr)</option>
+          <option value="2Q/2026">2Q/2026 (Mai–Ago)</option>
+          <option value="3Q/2026">3Q/2026 (Set–Dez)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Município</label>
+        <input class="form-input" type="text" id="reg-municipio" placeholder="Ex: Santarém – PA">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Nota C2 (Comp. II)</label>
+        <input class="form-input" type="number" min="0" max="10" step="0.01" id="reg-c2" placeholder="0.00">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nota C3 (Comp. III)</label>
+        <input class="form-input" type="number" min="0" max="10" step="0.01" id="reg-c3" placeholder="0.00">
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-bottom:0;">
+      <label class="form-label">Observações (opcional)</label>
+      <input class="form-input" type="text" id="reg-obs" placeholder="Ex: Mês sem envio em março...">
+    </div>
+
+    <button class="btn-salvar" onclick="salvarResultado()">✓ Salvar resultado</button>
+  </div>
+
+  <div class="sec-title">Últimos registros</div>
+  <div id="ultimos-registros"></div>
+
+</div>
+
+<!-- ══ HISTÓRICO ══ -->
+<div class="content tab-content" id="tab-historico">
+
+  <div class="form-group" style="margin-bottom:12px;">
+    <input class="form-input" type="text" id="filtro-historico" placeholder="Buscar por equipe ou município..." oninput="renderHistorico()">
+  </div>
+
+  <div class="quad-filter" id="quad-filter">
+    <button class="qf-btn active" onclick="filtrarQuad('todos',this)">Todos</button>
+    <button class="qf-btn" onclick="filtrarQuad('1Q/2025',this)">1Q/2025</button>
+    <button class="qf-btn" onclick="filtrarQuad('2Q/2025',this)">2Q/2025</button>
+    <button class="qf-btn" onclick="filtrarQuad('3Q/2025',this)">3Q/2025</button>
+    <button class="qf-btn" onclick="filtrarQuad('1Q/2026',this)">1Q/2026</button>
+  </div>
+
+  <div id="lista-historico"></div>
+
+</div>
+
+<!-- ══ RANKING ══ -->
+<div class="content tab-content" id="tab-ranking">
+
+  <div class="sec-title">🏆 Ranking — Melhor Comp. III</div>
+  <div id="ranking-c3"></div>
+
+  <div class="sec-title">🏆 Ranking — Melhor Comp. II</div>
+  <div id="ranking-c2"></div>
+
+  <div class="sec-title">📈 Evolução por equipe</div>
+  <div class="form-group" style="margin-bottom:10px;">
+    <select class="form-select" id="sel-equipe-grafico" onchange="renderGrafico()">
+      <option value="">Selecione uma equipe...</option>
+    </select>
+  </div>
+  <div class="grafico-wrap" id="grafico-wrap" style="display:none;">
+    <div class="grafico-title" id="grafico-title">Evolução</div>
+    <div class="grafico-sub">Componente III ao longo dos quadrimestres</div>
+    <div class="grafico-bars" id="grafico-bars"></div>
+  </div>
+
+</div>
+
+<!-- ══ ALERTAS ══ -->
+<div class="content tab-content" id="tab-alertas">
+
+  <div id="alerta-prazo"></div>
+
+  <div class="sec-title">Equipes em situação crítica</div>
+  <div id="alertas-equipes"></div>
+
+  <div class="sec-title">Equipes sem registro</div>
+  <div id="alertas-sem-registro"></div>
+
+</div>
+
+<!-- ══ RELATÓRIO ══ -->
+<div class="content tab-content" id="tab-relatorio">
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px;">
+    <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:6px;">📄 Relatório Gerencial Completo</div>
+    <div style="font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:12px;">Gera um relatório em PDF com todas as equipes, notas, ranking e evolução. Ideal para apresentar em reuniões de gestão com a secretaria municipal.</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Município</label>
+        <input class="form-input" type="text" id="rel-municipio" placeholder="Nome do município">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Período</label>
+        <select class="form-select" id="rel-periodo">
+          <option value="1Q/2025">1Q/2025</option>
+          <option value="2Q/2025">2Q/2025</option>
+          <option value="3Q/2025">3Q/2025</option>
+          <option value="1Q/2026">1Q/2026</option>
+          <option value="Todos">Todos os períodos</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn-pdf-gerencial" onclick="gerarRelatorio()">📄 Gerar Relatório PDF</button>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;">
+    <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:6px;">📊 Resumo rápido</div>
+    <div id="resumo-rapido"></div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// TEMA
+const themeBtn = document.getElementById('theme-toggle');
+let isDark = localStorage.getItem('apex_theme') !== 'light';
+document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+themeBtn.textContent = isDark ? '🌙' : '☀️';
+themeBtn.addEventListener('click', () => {
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  themeBtn.textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('apex_theme', isDark ? 'dark' : 'light');
+});
+
+// DADOS
+let resultados = JSON.parse(localStorage.getItem('apex_resultados') || '[]');
+let quadFiltro = 'todos';
+
+function saveResultados() { localStorage.setItem('apex_resultados', JSON.stringify(resultados)); }
+
+// TABS
+document.querySelectorAll('.nav-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    if (btn.dataset.tab === 'historico') renderHistorico();
+    if (btn.dataset.tab === 'ranking') renderRanking();
+    if (btn.dataset.tab === 'alertas') renderAlertas();
+    if (btn.dataset.tab === 'relatorio') renderResumo();
+  });
+});
+
+// CLASSIFICAÇÃO
+function classC3(n) { return n > 7.5 ? 'otimo' : n >= 5 ? 'bom' : n >= 2.6 ? 'suf' : 'reg'; }
+function classC2(n) { return n > 8.5 ? 'otimo' : n >= 7 ? 'bom' : n >= 5 ? 'suf' : 'reg'; }
+function labelClass(c) { return { otimo: 'Ótimo', bom: 'Bom', suf: 'Suficiente', reg: 'Regular' }[c] || '—'; }
+function colorClass(c) { return { otimo: 'var(--otimo)', bom: 'var(--bom)', suf: 'var(--suf)', reg: 'var(--reg)' }[c] || 'var(--muted)'; }
+
+// SALVAR RESULTADO
+function salvarResultado() {
+  const equipe = document.getElementById('reg-equipe').value.trim();
+  const tipo = document.getElementById('reg-tipo').value;
+  const quad = document.getElementById('reg-quad').value;
+  const municipio = document.getElementById('reg-municipio').value.trim();
+  const c2 = parseFloat(document.getElementById('reg-c2').value);
+  const c3 = parseFloat(document.getElementById('reg-c3').value);
+  const obs = document.getElementById('reg-obs').value.trim();
+
+  if (!equipe || isNaN(c2) || isNaN(c3)) { showToast('Preencha equipe e notas.'); return; }
+
+  resultados.unshift({
+    equipe, tipo, quad, municipio, c2, c3, obs,
+    data: new Date().toLocaleDateString('pt-BR'),
+    classC2: classC2(c2),
+    classC3: classC3(c3)
+  });
+  saveResultados();
+  renderUltimos();
+  updateEquipeSelect();
+  showToast('✓ Resultado salvo!');
+  ['reg-equipe','reg-municipio','reg-c2','reg-c3','reg-obs'].forEach(id => document.getElementById(id).value = '');
+}
+
+// ÚLTIMOS
+function renderUltimos() {
+  const ul = document.getElementById('ultimos-registros');
+  const recent = resultados.slice(0, 5);
+  if (!recent.length) { ul.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:12px;">Nenhum resultado registrado ainda.</div>'; return; }
+  ul.innerHTML = recent.map((r, i) => renderCard(r, i)).join('');
+}
+
+function renderCard(r, i) {
+  const c3class = r.classC3 || classC3(r.c3);
+  const c2class = r.classC2 || classC2(r.c2);
+  return `<div class="resultado-card rc-${c3class}">
+    <div class="rc-header">
+      <div>
+        <div class="rc-equipe">${r.equipe} <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);">(${r.tipo})</span></div>
+        <div class="rc-quad">${r.quad} · ${r.municipio || '—'} · ${r.data}</div>
+      </div>
+      <button class="btn-del-small" onclick="deletarResultado(${i})">✕</button>
+    </div>
+    <div class="rc-notas">
+      <div class="rc-nota-item">
+        <div class="rc-nota-label">Comp. III</div>
+        <div class="rc-nota-val" style="color:${colorClass(c3class)}">${r.c3.toFixed(2)}</div>
+        <span class="badge b-${c3class}">${labelClass(c3class)}</span>
+      </div>
+      <div class="rc-nota-item">
+        <div class="rc-nota-label">Comp. II</div>
+        <div class="rc-nota-val" style="color:${colorClass(c2class)}">${r.c2.toFixed(2)}</div>
+        <span class="badge b-${c2class}">${labelClass(c2class)}</span>
+      </div>
+    </div>
+    ${r.obs ? `<div style="font-size:11px;color:var(--muted);margin-top:8px;font-style:italic;">📝 ${r.obs}</div>` : ''}
+  </div>`;
+}
+
+function deletarResultado(i) {
+  resultados.splice(i, 1);
+  saveResultados();
+  renderUltimos();
+  renderHistorico();
+  renderRanking();
+  renderAlertas();
+}
+
+// HISTÓRICO
+function filtrarQuad(q, btn) {
+  document.querySelectorAll('.qf-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  quadFiltro = q;
+  renderHistorico();
+}
+
+function renderHistorico() {
+  const busca = (document.getElementById('filtro-historico')?.value || '').toLowerCase();
+  const lista = document.getElementById('lista-historico');
+  let filtered = resultados.filter(r => {
+    const matchBusca = !busca || r.equipe.toLowerCase().includes(busca) || (r.municipio || '').toLowerCase().includes(busca);
+    const matchQuad = quadFiltro === 'todos' || r.quad === quadFiltro;
+    return matchBusca && matchQuad;
+  });
+  if (!filtered.length) {
+    lista.innerHTML = '<div style="text-align:center;padding:24px;color:var(--muted);font-size:12px;">Nenhum resultado encontrado.</div>';
+    return;
+  }
+  lista.innerHTML = filtered.map((r, i) => renderCard(r, resultados.indexOf(r))).join('');
+}
+
+// RANKING
+function renderRanking() {
+  // Pegar o melhor resultado de cada equipe
+  const equipes = {};
+  resultados.forEach(r => {
+    const key = r.equipe + '|' + r.tipo;
+    if (!equipes[key] || r.c3 > equipes[key].c3) equipes[key] = r;
+  });
+  const sorted_c3 = Object.values(equipes).sort((a, b) => b.c3 - a.c3);
+  const sorted_c2 = Object.values(equipes).sort((a, b) => b.c2 - a.c2);
+
+  const renderRank = (list, campo) => {
+    if (!list.length) return '<div style="text-align:center;padding:16px;color:var(--muted);font-size:12px;">Sem dados ainda.</div>';
+    return list.slice(0, 10).map((r, i) => {
+      const nota = campo === 'c3' ? r.c3 : r.c2;
+      const cls = campo === 'c3' ? classC3(nota) : classC2(nota);
+      const posClass = i === 0 ? 'pos-1' : i === 1 ? 'pos-2' : i === 2 ? 'pos-3' : '';
+      return `<div class="rank-card">
+        <div class="rank-pos ${posClass}">${i + 1}</div>
+        <div class="rank-info">
+          <div class="rank-nome">${r.equipe} <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);">${r.tipo}</span></div>
+          <div class="rank-quad">${r.municipio || '—'} · ${r.quad}</div>
+        </div>
+        <div class="rank-notas">
+          <div class="rank-nota-val" style="color:${colorClass(cls)}">${nota.toFixed(2)}</div>
+          <span class="badge b-${cls}">${labelClass(cls)}</span>
+        </div>
+      </div>`;
+    }).join('');
+  };
+
+  document.getElementById('ranking-c3').innerHTML = renderRank(sorted_c3, 'c3');
+  document.getElementById('ranking-c2').innerHTML = renderRank(sorted_c2, 'c2');
+  updateEquipeSelect();
+}
+
+function updateEquipeSelect() {
+  const sel = document.getElementById('sel-equipe-grafico');
+  if (!sel) return;
+  const equipes = [...new Set(resultados.map(r => r.equipe + '|' + r.tipo))];
+  const current = sel.value;
+  sel.innerHTML = '<option value="">Selecione uma equipe...</option>' +
+    equipes.map(e => `<option value="${e}" ${e === current ? 'selected' : ''}>${e.replace('|', ' — ')}</option>`).join('');
+}
+
+function renderGrafico() {
+  const sel = document.getElementById('sel-equipe-grafico').value;
+  const wrap = document.getElementById('grafico-wrap');
+  if (!sel) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  const [nomeEquipe, tipo] = sel.split('|');
+  const dados = resultados.filter(r => r.equipe === nomeEquipe && r.tipo === tipo).reverse();
+  document.getElementById('grafico-title').textContent = nomeEquipe + ' — ' + tipo;
+  const bars = document.getElementById('grafico-bars');
+  if (!dados.length) { bars.innerHTML = '<div style="color:var(--muted);font-size:11px;">Sem dados.</div>'; return; }
+  const max = Math.max(...dados.map(d => d.c3), 10);
+  bars.innerHTML = dados.map(d => {
+    const cls = classC3(d.c3);
+    const h = (d.c3 / max * 80);
+    return `<div class="g-bar-wrap">
+      <div class="g-val" style="color:${colorClass(cls)}">${d.c3.toFixed(1)}</div>
+      <div class="g-bar ${cls}" style="height:${h}px"></div>
+      <div class="g-label">${d.quad.replace('/20', '/')}</div>
+    </div>`;
+  }).join('');
+}
+
+// ALERTAS
+function renderAlertas() {
+  // Prazo Siaps
+  const hoje = new Date();
+  const dia = hoje.getDate();
+  const proximo10 = new Date(hoje.getFullYear(), hoje.getMonth() + (dia >= 10 ? 1 : 0), 10);
+  const diff = Math.ceil((proximo10 - hoje) / (1000 * 60 * 60 * 24));
+  const prazoClass = diff <= 3 ? '' : diff <= 7 ? 'prazo-warn' : 'prazo-ok';
+  document.getElementById('alerta-prazo').innerHTML = `
+    <div class="prazo-alert ${prazoClass}">
+      <div class="prazo-dias">${diff}</div>
+      <div>
+        <div class="prazo-info-title">${diff <= 3 ? '🚨 URGENTE — ' : diff <= 7 ? '⚠️ Atenção — ' : '✅ '}Dias para o envio ao Siaps</div>
+        <div class="prazo-info-desc">Próximo prazo: dia 10/${String(proximo10.getMonth()+1).padStart(2,'0')}/${proximo10.getFullYear()}</div>
+      </div>
+    </div>`;
+
+  // Equipes críticas (Regular)
+  const criticas = resultados.filter(r => classC3(r.c3) === 'reg' || classC2(r.c2) === 'reg');
+  const alertEq = document.getElementById('alertas-equipes');
+  alertEq.innerHTML = criticas.length ? criticas.map(r => `
+    <div style="background:var(--reg)10;border:1px solid var(--reg)30;border-radius:8px;padding:12px 14px;margin-bottom:8px;">
+      <div style="font-size:13px;font-weight:500;color:var(--reg);">⚠️ ${r.equipe} (${r.tipo})</div>
+      <div style="font-size:11px;color:var(--muted);">${r.quad} · C3: ${r.c3.toFixed(2)} · C2: ${r.c2.toFixed(2)}</div>
+    </div>`).join('') : '<div style="text-align:center;padding:16px;color:var(--muted);font-size:12px;">✅ Nenhuma equipe em Regular.</div>';
+}
+
+// RELATÓRIO
+function renderResumo() {
+  const el = document.getElementById('resumo-rapido');
+  if (!resultados.length) { el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);font-size:12px;">Sem dados para resumir.</div>'; return; }
+  const total = resultados.length;
+  const otimos = resultados.filter(r => classC3(r.c3) === 'otimo').length;
+  const bons = resultados.filter(r => classC3(r.c3) === 'bom').length;
+  const sufs = resultados.filter(r => classC3(r.c3) === 'suf').length;
+  const regs = resultados.filter(r => classC3(r.c3) === 'reg').length;
+  const mediaC3 = (resultados.reduce((a, r) => a + r.c3, 0) / total).toFixed(2);
+  const mediaC2 = (resultados.reduce((a, r) => a + r.c2, 0) / total).toFixed(2);
+  el.innerHTML = `
+    <div style="display:grid;gap:6px;">
+      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;"><span style="color:var(--muted);">Total de registros</span><span style="font-family:'DM Mono',monospace;">${total}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;"><span style="color:var(--muted);">Média C3 geral</span><span style="font-family:'DM Mono',monospace;color:${colorClass(classC3(parseFloat(mediaC3)))};">${mediaC3}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;"><span style="color:var(--muted);">Média C2 geral</span><span style="font-family:'DM Mono',monospace;color:${colorClass(classC2(parseFloat(mediaC2)))};">${mediaC2}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;"><span style="color:var(--otimo);">Ótimo (C3)</span><span style="font-family:'DM Mono',monospace;">${otimos} equipes</span></div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;"><span style="color:var(--bom);">Bom (C3)</span><span style="font-family:'DM Mono',monospace;">${bons} equipes</span></div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;"><span style="color:var(--suf);">Suficiente (C3)</span><span style="font-family:'DM Mono',monospace;">${sufs} equipes</span></div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:12px;"><span style="color:var(--reg);">Regular (C3)</span><span style="font-family:'DM Mono',monospace;">${regs} equipes</span></div>
+    </div>`;
+}
+
+function gerarRelatorio() {
+  const municipio = document.getElementById('rel-municipio').value || 'Município';
+  const periodo = document.getElementById('rel-periodo').value;
+  const dados = periodo === 'Todos' ? resultados : resultados.filter(r => r.quad === periodo);
+
+  if (!dados.length) { showToast('Sem dados para o período selecionado.'); return; }
+
+  const mediaC3 = (dados.reduce((a, r) => a + r.c3, 0) / dados.length).toFixed(2);
+  const mediaC2 = (dados.reduce((a, r) => a + r.c2, 0) / dados.length).toFixed(2);
+
+  const html = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
+  <style>
+    body{font-family:Arial,sans-serif;font-size:13px;color:#1a1a2e;padding:32px;max-width:800px;margin:0 auto;}
+    h1{font-size:22px;color:#c9a84c;border-bottom:2px solid #c9a84c;padding-bottom:8px;margin-bottom:16px;}
+    h2{font-size:16px;margin:20px 0 10px;color:#1a1a2e;}
+    .meta{background:#f9f7f4;border-radius:8px;padding:12px 16px;margin-bottom:20px;display:flex;gap:20px;flex-wrap:wrap;}
+    .mi{display:flex;flex-direction:column;gap:2px;}
+    .ml{color:#8c8070;font-size:10px;text-transform:uppercase;letter-spacing:1px;}
+    .mv{font-weight:700;font-size:16px;}
+    table{width:100%;border-collapse:collapse;margin-bottom:20px;}
+    th{background:#1a1a2e;color:#fff;padding:8px 10px;text-align:left;font-size:11px;}
+    td{padding:8px 10px;border-bottom:1px solid #e8e2d8;font-size:12px;}
+    tr:nth-child(even) td{background:#f9f7f4;}
+    .otimo{color:#10b981;font-weight:700;}
+    .bom{color:#3b82f6;font-weight:700;}
+    .suf{color:#f59e0b;font-weight:700;}
+    .reg{color:#ef4444;font-weight:700;}
+    .rodape{margin-top:24px;font-size:10px;color:#8c8070;text-align:center;border-top:1px solid #e8e2d8;padding-top:12px;}
+  </style></head><body>
+  <h1>Relatório Gerencial — APS</h1>
+  <div class="meta">
+    <div class="mi"><span class="ml">Município</span><span class="mv">${municipio}</span></div>
+    <div class="mi"><span class="ml">Período</span><span class="mv">${periodo}</span></div>
+    <div class="mi"><span class="ml">Total equipes</span><span class="mv">${dados.length}</span></div>
+    <div class="mi"><span class="ml">Média C3</span><span class="mv">${mediaC3}</span></div>
+    <div class="mi"><span class="ml">Média C2</span><span class="mv">${mediaC2}</span></div>
+    <div class="mi"><span class="ml">Gerado em</span><span class="mv">${new Date().toLocaleDateString('pt-BR')}</span></div>
+  </div>
+  <h2>Resultados por Equipe</h2>
+  <table>
+    <tr><th>Equipe</th><th>Tipo</th><th>Quadrimestre</th><th>Comp. III</th><th>Classificação</th><th>Comp. II</th><th>Classificação</th></tr>
+    ${dados.sort((a,b) => b.c3 - a.c3).map(r => {
+      const c3c = classC3(r.c3), c2c = classC2(r.c2);
+      return `<tr><td>${r.equipe}</td><td>${r.tipo}</td><td>${r.quad}</td>
+        <td class="${c3c}">${r.c3.toFixed(2)}</td><td class="${c3c}">${labelClass(c3c)}</td>
+        <td class="${c2c}">${r.c2.toFixed(2)}</td><td class="${c2c}">${labelClass(c2c)}</td></tr>`;
+    }).join('')}
+  </table>
+  <div class="rodape">Gerado pelo sistema ÁPEX Saúde · Consultoria APS · NT 6/2025-DEAPS/SAPS/MS</div>
+  </body></html>`;
+
+  const blob = new Blob([html], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const win = window.open(url, '_blank');
+  setTimeout(() => { win.print(); }, 800);
+}
+
+// TOAST
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// INIT
+renderUltimos();
+renderAlertas();
+updateEquipeSelect();
+</script>
+</body>
+</html>
