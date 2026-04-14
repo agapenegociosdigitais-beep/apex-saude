@@ -666,7 +666,7 @@ body {
       <button class="btn-primary" onclick="doLogin()">Acessar plataforma</button>
       <div class="auth-msg" id="login-msg"></div>
       <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:14px;">
-        Admin: <span style="color:var(--gold);font-family:'DM Mono',monospace;">admin@apex.com</span> / <span style="color:var(--gold);font-family:'DM Mono',monospace;">apex2025</span>
+        Admin: <span style="color:var(--gold);font-family:'DM Mono',monospace;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="98f9fcf5f1f6d8f9e8fde0b6fbf7f5">[email&#160;protected]</a></span> / <span style="color:var(--gold);font-family:'DM Mono',monospace;">apex2025</span>
       </p>
     </div>
 
@@ -753,7 +753,7 @@ body {
       </div>
 
       <div class="sec-head">Acesso rápido</div>
-      <div class="tool-card" onclick="switchDashTab('ferramentas', document.querySelectorAll('.nav-tab')[1])">
+      <div class="tool-card" onclick="window.open('painel-emulti.html','_blank')">
         <div class="tool-icon">📊</div>
         <div class="tool-body">
           <div class="tool-name">Painel de Monitoramento</div>
@@ -761,7 +761,7 @@ body {
         </div>
         <span class="tool-arrow">›</span>
       </div>
-      <div class="tool-card" onclick="switchDashTab('ferramentas', document.querySelectorAll('.nav-tab')[1])">
+      <div class="tool-card" onclick="window.open('checklist-emulti.html','_blank')">
         <div class="tool-icon">✅</div>
         <div class="tool-body">
           <div class="tool-name">Checklist Operacional</div>
@@ -781,7 +781,7 @@ body {
     <div class="dash-tab" id="dt-ferramentas">
       <div class="sec-head">Ferramentas disponíveis</div>
 
-      <div class="tool-card" onclick="showToast('Abrindo Painel de Monitoramento...')">
+      <div class="tool-card" onclick="window.open('painel-emulti.html','_blank')">
         <div class="tool-icon">📊</div>
         <div class="tool-body">
           <div class="tool-name">Painel de Monitoramento eMulti</div>
@@ -790,11 +790,20 @@ body {
         <span class="tool-arrow">›</span>
       </div>
 
-      <div class="tool-card" onclick="showToast('Abrindo Checklist Operacional...')">
+      <div class="tool-card" onclick="window.open('checklist-emulti.html','_blank')">
         <div class="tool-icon">✅</div>
         <div class="tool-body">
           <div class="tool-name">Checklist Mensal eMulti</div>
           <div class="tool-desc">Rotina diária, semanal e mensal — nunca perca um prazo</div>
+        </div>
+        <span class="tool-arrow">›</span>
+      </div>
+
+      <div class="tool-card" onclick="window.open('guia-painel-emulti.html','_blank')">
+        <div class="tool-icon">📖</div>
+        <div class="tool-body">
+          <div class="tool-name">Guia de Preenchimento</div>
+          <div class="tool-desc">Aprenda a preencher o painel corretamente passo a passo</div>
         </div>
         <span class="tool-arrow">›</span>
       </div>
@@ -953,7 +962,7 @@ body {
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" defer></script><script>
 // ── STORAGE ──
 const ADMIN = { email: 'admin@apex.com', senha: 'apex2025', nome: 'Administrador', role: 'admin' };
 let users = JSON.parse(localStorage.getItem('apex_users') || '[]');
@@ -1101,13 +1110,4 @@ function showMsg(el, text, type) {
 }
 
 let toastTimer;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
-}
-</script>
-</body>
-</html>
+function showT
