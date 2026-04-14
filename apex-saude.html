@@ -666,7 +666,7 @@ body {
       <button class="btn-primary" onclick="doLogin()">Acessar plataforma</button>
       <div class="auth-msg" id="login-msg"></div>
       <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:14px;">
-        Admin: <span style="color:var(--gold);font-family:'DM Mono',monospace;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="98f9fcf5f1f6d8f9e8fde0b6fbf7f5">[email&#160;protected]</a></span> / <span style="color:var(--gold);font-family:'DM Mono',monospace;">apex2025</span>
+        Admin: <span style="color:var(--gold);font-family:'DM Mono',monospace;">admin&#64;apex.com</span> / <span style="color:var(--gold);font-family:'DM Mono',monospace;">apex2025</span>
       </p>
     </div>
 
@@ -990,9 +990,10 @@ function doLogin() {
 
   if (!email || !senha) { showMsg(msg, 'Preencha e-mail e senha.', 'error'); return; }
 
-  // Admin
-  if (email === ADMIN.email && senha === ADMIN.senha) {
-    currentUser = { ...ADMIN };
+  // Admin — string literal para evitar ofuscamento
+  const adm = ['admin','apex.com'].join('@');
+  if (email === adm && senha === 'apex2025') {
+    currentUser = { nome: 'Administrador', email: adm, role: 'admin' };
     showScreen('admin');
     updateAdminStats();
     return;
