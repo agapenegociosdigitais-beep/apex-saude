@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ÁPEX Saúde</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0906;
+  --black2: #111009;
+  --card: #161410;
+  --border: #2a2520;
+  --gold: #c9a84c;
+  --gold2: #e8c97a;
+  --gold-dim: #c9a84c33;
+  --text: #ede8df;
+  --muted: #7a7060;
+  --danger: #c0392b;
+  --success: #27ae60;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--black);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── SCREENS ── */
+.screen { display: none; min-height: 100vh; }
+.screen.active { display: flex; flex-direction: column; }
+
+/* ══════════════════════════════
+   LOGIN / REGISTER SCREEN
+══════════════════════════════ */
+#screen-auth {
+  background: var(--black);
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 0%, #c9a84c18 0%, transparent 70%);
+  pointer-events: none;
+}
+.auth-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.auth-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 380px;
+  padding: 32px 24px;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 24px 64px #00000088, 0 0 0 1px #c9a84c11;
+}
+
+.auth-logo {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.auth-logo-mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 3px;
+  line-height: 1;
+}
+.auth-logo-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  color: var(--muted);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--black2);
+  border-radius: 6px;
+  padding: 3px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
+}
+.auth-tab {
+  padding: 8px;
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+  border: none;
+  background: none;
+}
+.auth-tab.active {
+  background: var(--gold);
+  color: var(--black);
+  font-weight: 500;
+}
+
+.form-group {
+  margin-bottom: 14px;
+}
+.form-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 6px;
+  display: block;
+}
+.form-input {
+  width: 100%;
+  background: var(--black2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  padding: 11px 14px;
+  transition: border-color 0.2s;
+  outline: none;
+}
+.form-input:focus { border-color: var(--gold); }
+.form-input::placeholder { color: var(--muted); }
+
+.form-select {
+  width: 100%;
+  background: var(--black2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  padding: 11px 14px;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+}
+.form-select:focus { border-color: var(--gold); }
+
+.btn-primary {
+  width: 100%;
+  background: var(--gold);
+  color: var(--black);
+  border: none;
+  border-radius: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 13px;
+  cursor: pointer;
+  margin-top: 6px;
+  letter-spacing: 0.5px;
+  transition: opacity 0.15s;
+}
+.btn-primary:hover { opacity: 0.88; }
+
+.auth-msg {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 12px;
+  padding: 8px 12px;
+  border-radius: 5px;
+  display: none;
+}
+.auth-msg.error { background: #c0392b22; color: #e74c3c; border: 1px solid #c0392b44; display: block; }
+.auth-msg.success { background: #27ae6022; color: #2ecc71; border: 1px solid #27ae6044; display: block; }
+
+/* ══════════════════════════════
+   DASHBOARD SCREEN
+══════════════════════════════ */
+#screen-dashboard {
+  background: #0d0b08;
+}
+
+/* Topbar */
+.topbar {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  height: 52px;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topbar-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 2px;
+  flex: 1;
+}
+.topbar-user {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.topbar-plan {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  background: var(--gold-dim);
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 2px 7px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.btn-logout {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  padding: 5px 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.15s;
+}
+.btn-logout:hover { border-color: var(--danger); color: var(--danger); }
+
+/* Welcome banner */
+.welcome-banner {
+  background: linear-gradient(135deg, var(--card) 0%, #1a1508 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 16px 16px;
+  position: relative;
+  overflow: hidden;
+}
+.welcome-banner::before {
+  content: 'ÁPEX';
+  position: absolute;
+  right: -8px;
+  top: -4px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 64px;
+  font-weight: 700;
+  color: #c9a84c08;
+  pointer-events: none;
+}
+.welcome-greeting {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--gold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.welcome-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.welcome-sub {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* Nav tabs */
+.nav-tabs {
+  display: flex;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.nav-tab {
+  flex-shrink: 0;
+  padding: 12px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  cursor: pointer;
+  border: none;
+  background: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nav-tab.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+/* Content area */
+.dash-content { padding: 16px; }
+.dash-tab { display: none; }
+.dash-tab.active { display: block; }
+
+/* Cards grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+.stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 6px;
+}
+.stat-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-sub {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+/* Section heading */
+.sec-head {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sec-head::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* Tool cards */
+.tool-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.tool-card:hover {
+  border-color: var(--gold);
+  background: #1a1508;
+}
+.tool-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.tool-body { flex: 1; }
+.tool-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.tool-desc { font-size: 11px; color: var(--muted); line-height: 1.3; }
+.tool-arrow { color: var(--gold); font-size: 16px; }
+
+/* Content items */
+.content-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 8px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.content-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold-dim);
+  min-width: 28px;
+  line-height: 1;
+}
+.content-body { flex: 1; }
+.content-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+.content-meta { font-size: 10px; color: var(--muted); }
+.content-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: var(--gold-dim);
+  color: var(--gold);
+  border: 1px solid #c9a84c44;
+  white-space: nowrap;
+  align-self: flex-start;
+  margin-top: 2px;
+}
+
+/* Relatórios */
+.relatorio-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 8px;
+}
+.relatorio-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.relatorio-title { font-size: 13px; font-weight: 500; }
+.relatorio-status {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.status-novo { background: #27ae6022; color: #2ecc71; border: 1px solid #27ae6044; }
+.status-lido { background: var(--border); color: var(--muted); }
+.relatorio-desc { font-size: 11px; color: var(--muted); margin-bottom: 10px; line-height: 1.4; }
+.btn-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.15s;
+}
+.btn-download:hover { background: var(--gold); color: var(--black); }
+
+/* ══════════════════════════════
+   ADMIN SCREEN
+══════════════════════════════ */
+#screen-admin {
+  background: #0a0804;
+}
+
+.admin-topbar {
+  background: #0a0804;
+  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  height: 52px;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.admin-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  background: #c9a84c22;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 3px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.admin-content { padding: 16px; }
+
+.admin-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.user-row {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gold);
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+.user-info { flex: 1; min-width: 0; }
+.user-name { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.user-meta { font-size: 10px; color: var(--muted); }
+.user-plan {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: var(--gold-dim);
+  color: var(--gold);
+  border: 1px solid #c9a84c44;
+  white-space: nowrap;
+}
+.user-actions { display: flex; gap: 6px; }
+.btn-sm {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+  transition: all 0.15s;
+}
+.btn-sm-del { background: #c0392b22; color: #e74c3c; border: 1px solid #c0392b44; }
+.btn-sm-del:hover { background: #c0392b; color: #fff; }
+.btn-sm-edit { background: var(--gold-dim); color: var(--gold); border: 1px solid #c9a84c44; }
+
+/* Notificação */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--card);
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  z-index: 9999;
+  transition: transform 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 8px 32px #00000088;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.screen.active { animation: fadeIn 0.3s ease; }
+</style>
+</head>
+<body>
+
+<!-- ══════ AUTH SCREEN ══════ -->
+<div class="screen active" id="screen-auth">
+  <div class="auth-bg"></div>
+  <div class="auth-bg-grid"></div>
+
+  <div class="auth-box">
+    <div class="auth-logo">
+      <div class="auth-logo-mark">ÁPEX</div>
+      <div class="auth-logo-sub">Saúde · Consultoria APS</div>
+    </div>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchAuthTab('login')">Entrar</button>
+      <button class="auth-tab" onclick="switchAuthTab('register')">Cadastrar</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="auth-login">
+      <div class="form-group">
+        <label class="form-label">E-mail</label>
+        <input class="form-input" type="email" id="login-email" placeholder="seu@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Senha</label>
+        <input class="form-input" type="password" id="login-senha" placeholder="••••••••">
+      </div>
+      <button class="btn-primary" onclick="doLogin()">Acessar plataforma</button>
+      <div class="auth-msg" id="login-msg"></div>
+      <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:14px;">
+        Admin: <span style="color:var(--gold);font-family:'DM Mono',monospace;">admin@apex.com</span> / <span style="color:var(--gold);font-family:'DM Mono',monospace;">apex2025</span>
+      </p>
+    </div>
+
+    <!-- REGISTER -->
+    <div id="auth-register" style="display:none;">
+      <div class="form-group">
+        <label class="form-label">Nome completo</label>
+        <input class="form-input" type="text" id="reg-nome" placeholder="Seu nome">
+      </div>
+      <div class="form-group">
+        <label class="form-label">E-mail</label>
+        <input class="form-input" type="email" id="reg-email" placeholder="seu@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Município</label>
+        <input class="form-input" type="text" id="reg-municipio" placeholder="Ex: São Paulo – SP">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Plano</label>
+        <select class="form-select" id="reg-plano">
+          <option value="Básico">Básico – R$ 97/mês (1 equipe)</option>
+          <option value="Municipal">Municipal – R$ 397/mês (até 10 equipes)</option>
+          <option value="Regional">Regional – R$ 997/mês (ilimitado)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Senha</label>
+        <input class="form-input" type="password" id="reg-senha" placeholder="Mínimo 6 caracteres">
+      </div>
+      <button class="btn-primary" onclick="doRegister()">Criar conta</button>
+      <div class="auth-msg" id="reg-msg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ DASHBOARD SCREEN ══════ -->
+<div class="screen" id="screen-dashboard">
+
+  <div class="topbar">
+    <div class="topbar-logo">ÁPEX</div>
+    <span class="topbar-user" id="topbar-user">—</span>
+    <span class="topbar-plan" id="topbar-plan">—</span>
+    <button class="btn-logout" onclick="doLogout()">Sair</button>
+  </div>
+
+  <div class="welcome-banner">
+    <div class="welcome-greeting">Bem-vindo de volta</div>
+    <div class="welcome-name" id="dash-nome">—</div>
+    <div class="welcome-sub" id="dash-municipio">—</div>
+  </div>
+
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchDashTab('inicio',this)">🏠 Início</button>
+    <button class="nav-tab" onclick="switchDashTab('ferramentas',this)">🛠 Ferramentas</button>
+    <button class="nav-tab" onclick="switchDashTab('conteudo',this)">📚 Conteúdo</button>
+    <button class="nav-tab" onclick="switchDashTab('relatorios',this)">📄 Relatórios</button>
+  </div>
+
+  <div class="dash-content">
+
+    <!-- INÍCIO -->
+    <div class="dash-tab active" id="dt-inicio">
+      <div class="cards-grid">
+        <div class="stat-card">
+          <div class="stat-label">Comp. II</div>
+          <div class="stat-val">—</div>
+          <div class="stat-sub">Aguarda dados</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Comp. III</div>
+          <div class="stat-val">—</div>
+          <div class="stat-sub">Aguarda dados</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Quadrimestre</div>
+          <div class="stat-val" id="quad-atual">—</div>
+          <div class="stat-sub" id="quad-meses">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Plano ativo</div>
+          <div class="stat-val" style="font-size:18px;" id="plano-card">—</div>
+          <div class="stat-sub">Ativo</div>
+        </div>
+      </div>
+
+      <div class="sec-head">Acesso rápido</div>
+      <div class="tool-card" onclick="switchDashTab('ferramentas', document.querySelectorAll('.nav-tab')[1])">
+        <div class="tool-icon">📊</div>
+        <div class="tool-body">
+          <div class="tool-name">Painel de Monitoramento</div>
+          <div class="tool-desc">Insira os dados mensais e calcule sua nota final</div>
+        </div>
+        <span class="tool-arrow">›</span>
+      </div>
+      <div class="tool-card" onclick="switchDashTab('ferramentas', document.querySelectorAll('.nav-tab')[1])">
+        <div class="tool-icon">✅</div>
+        <div class="tool-body">
+          <div class="tool-name">Checklist Operacional</div>
+          <div class="tool-desc">Rotina diária, semanal e mensal para atingir Ótimo</div>
+        </div>
+        <span class="tool-arrow">›</span>
+      </div>
+
+      <div class="sec-head" style="margin-top:16px;">Último acesso</div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center;">
+        <div style="font-size:24px;margin-bottom:6px;">🎯</div>
+        <div style="font-size:12px;color:var(--muted);">Nenhum dado registrado ainda.<br>Acesse as Ferramentas para começar.</div>
+      </div>
+    </div>
+
+    <!-- FERRAMENTAS -->
+    <div class="dash-tab" id="dt-ferramentas">
+      <div class="sec-head">Ferramentas disponíveis</div>
+
+      <div class="tool-card" onclick="showToast('Abrindo Painel de Monitoramento...')">
+        <div class="tool-icon">📊</div>
+        <div class="tool-body">
+          <div class="tool-name">Painel de Monitoramento eMulti</div>
+          <div class="tool-desc">Calcule Componentes II e III com alertas automáticos por mês</div>
+        </div>
+        <span class="tool-arrow">›</span>
+      </div>
+
+      <div class="tool-card" onclick="showToast('Abrindo Checklist Operacional...')">
+        <div class="tool-icon">✅</div>
+        <div class="tool-body">
+          <div class="tool-name">Checklist Mensal eMulti</div>
+          <div class="tool-desc">Rotina diária, semanal e mensal — nunca perca um prazo</div>
+        </div>
+        <span class="tool-arrow">›</span>
+      </div>
+
+      <div class="tool-card" onclick="showToast('Em breve: Painel para eSF/eAP')">
+        <div class="tool-icon">🏥</div>
+        <div class="tool-body">
+          <div class="tool-name">Painel eSF / eAP</div>
+          <div class="tool-desc">Monitoramento completo para equipes de Saúde da Família</div>
+        </div>
+        <span class="tool-arrow" style="color:var(--muted)">›</span>
+      </div>
+
+      <div class="tool-card" onclick="showToast('Em breve: Painel para eSB')">
+        <div class="tool-icon">🦷</div>
+        <div class="tool-body">
+          <div class="tool-name">Painel eSB – Saúde Bucal</div>
+          <div class="tool-desc">Indicadores B1 a B6 com cálculo automático da nota final</div>
+        </div>
+        <span class="tool-arrow" style="color:var(--muted)">›</span>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:8px;text-align:center;">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;">NOVAS FERRAMENTAS A CADA QUADRIMESTRE</div>
+      </div>
+    </div>
+
+    <!-- CONTEÚDO -->
+    <div class="dash-tab" id="dt-conteudo">
+      <div class="sec-head">Biblioteca de conteúdo</div>
+
+      <div class="content-card">
+        <div class="content-num">01</div>
+        <div class="content-body">
+          <div class="content-title">Entendendo o Componente II — Vínculo e Acompanhamento</div>
+          <div class="content-meta">Aula · 18 min · PDF incluso</div>
+        </div>
+        <span class="content-tag">Novo</span>
+      </div>
+
+      <div class="content-card">
+        <div class="content-num">02</div>
+        <div class="content-body">
+          <div class="content-title">Como calcular a Nota Final do Componente III</div>
+          <div class="content-meta">Aula · 22 min · Exercícios</div>
+        </div>
+        <span class="content-tag">Novo</span>
+      </div>
+
+      <div class="content-card">
+        <div class="content-num">03</div>
+        <div class="content-body">
+          <div class="content-title">Estratégia para eMulti atingir Ótimo — M1 e M2</div>
+          <div class="content-meta">Guia prático · PDF</div>
+        </div>
+        <span class="content-tag">Popular</span>
+      </div>
+
+      <div class="content-card">
+        <div class="content-num">04</div>
+        <div class="content-body">
+          <div class="content-title">Registro correto no SISAPS — passo a passo</div>
+          <div class="content-meta">Tutorial em vídeo · 35 min</div>
+        </div>
+        <span class="content-tag">Essencial</span>
+      </div>
+
+      <div class="content-card">
+        <div class="content-num">05</div>
+        <div class="content-body">
+          <div class="content-title">NT Nº 6/2025 — Metodologia oficial comentada</div>
+          <div class="content-meta">Análise técnica · PDF</div>
+        </div>
+        <span class="content-tag">Técnico</span>
+      </div>
+    </div>
+
+    <!-- RELATÓRIOS -->
+    <div class="dash-tab" id="dt-relatorios">
+      <div class="sec-head">Relatórios disponíveis</div>
+
+      <div class="relatorio-card">
+        <div class="relatorio-head">
+          <div class="relatorio-title">Guia Estratégico eMulti — Ótimo</div>
+          <span class="relatorio-status status-novo">Novo</span>
+        </div>
+        <div class="relatorio-desc">Estratégia completa baseada na NT 6/2025 para atingir classificação Ótimo nos Componentes II e III com equipe multiprofissional.</div>
+        <button class="btn-download" onclick="showToast('Download iniciado!')">⬇ Baixar PDF</button>
+      </div>
+
+      <div class="relatorio-card">
+        <div class="relatorio-head">
+          <div class="relatorio-title">Calendário de Prazos 2025–2026</div>
+          <span class="relatorio-status status-novo">Novo</span>
+        </div>
+        <div class="relatorio-desc">Todos os prazos de envio ao Siaps, quadrimestres e datas de repasse financeiro para planejamento anual.</div>
+        <button class="btn-download" onclick="showToast('Download iniciado!')">⬇ Baixar PDF</button>
+      </div>
+
+      <div class="relatorio-card">
+        <div class="relatorio-head">
+          <div class="relatorio-title">Resumo NT 6/2025 — DEAPS/SAPS/MS</div>
+          <span class="relatorio-status status-lido">Disponível</span>
+        </div>
+        <div class="relatorio-desc">Resumo executivo da Nota Técnica nº 6/2025 com metodologia de cálculo simplificada para gestores e profissionais.</div>
+        <button class="btn-download" onclick="showToast('Download iniciado!')">⬇ Baixar PDF</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════ ADMIN SCREEN ══════ -->
+<div class="screen" id="screen-admin">
+
+  <div class="admin-topbar">
+    <div class="topbar-logo" style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--gold);letter-spacing:2px;flex:1;">ÁPEX</div>
+    <span class="admin-badge">Admin</span>
+    <button class="btn-logout" onclick="doLogout()">Sair</button>
+  </div>
+
+  <div class="admin-content">
+
+    <div class="sec-head">Visão geral</div>
+    <div class="admin-stat-grid">
+      <div class="stat-card">
+        <div class="stat-label">Usuários</div>
+        <div class="stat-val" id="admin-total-users">0</div>
+        <div class="stat-sub">cadastrados</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Receita Est.</div>
+        <div class="stat-val" id="admin-receita" style="font-size:18px;">R$0</div>
+        <div class="stat-sub">mensal</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Plano Regional</div>
+        <div class="stat-val" id="admin-regional">0</div>
+        <div class="stat-sub">clientes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Plano Municipal</div>
+        <div class="stat-val" id="admin-municipal">0</div>
+        <div class="stat-sub">clientes</div>
+      </div>
+    </div>
+
+    <div class="sec-head">Usuários cadastrados</div>
+    <div id="admin-users-list">
+      <div style="text-align:center;padding:24px;color:var(--muted);font-size:12px;">Nenhum usuário cadastrado ainda.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── STORAGE ──
+const ADMIN = { email: 'admin@apex.com', senha: 'apex2025', nome: 'Administrador', role: 'admin' };
+let users = JSON.parse(localStorage.getItem('apex_users') || '[]');
+let currentUser = null;
+
+const planPrice = { 'Básico': 97, 'Municipal': 397, 'Regional': 997 };
+
+function saveUsers() { localStorage.setItem('apex_users', JSON.stringify(users)); }
+
+// ── AUTH TABS ──
+function switchAuthTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach((t,i) => {
+    t.classList.toggle('active', (i===0 && tab==='login') || (i===1 && tab==='register'));
+  });
+  document.getElementById('auth-login').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('auth-register').style.display = tab === 'register' ? 'block' : 'none';
+}
+
+// ── LOGIN ──
+function doLogin() {
+  const email = document.getElementById('login-email').value.trim().toLowerCase();
+  const senha = document.getElementById('login-senha').value;
+  const msg = document.getElementById('login-msg');
+  msg.className = 'auth-msg';
+
+  if (!email || !senha) { showMsg(msg, 'Preencha e-mail e senha.', 'error'); return; }
+
+  // Admin
+  if (email === ADMIN.email && senha === ADMIN.senha) {
+    currentUser = { ...ADMIN };
+    showScreen('admin');
+    updateAdminStats();
+    return;
+  }
+
+  // User
+  const user = users.find(u => u.email === email && u.senha === senha);
+  if (!user) { showMsg(msg, 'E-mail ou senha incorretos.', 'error'); return; }
+
+  currentUser = user;
+  showScreen('dashboard');
+  populateDash();
+}
+
+// ── REGISTER ──
+function doRegister() {
+  const nome = document.getElementById('reg-nome').value.trim();
+  const email = document.getElementById('reg-email').value.trim().toLowerCase();
+  const municipio = document.getElementById('reg-municipio').value.trim();
+  const plano = document.getElementById('reg-plano').value;
+  const senha = document.getElementById('reg-senha').value;
+  const msg = document.getElementById('reg-msg');
+  msg.className = 'auth-msg';
+
+  if (!nome || !email || !municipio || !senha) { showMsg(msg, 'Preencha todos os campos.', 'error'); return; }
+  if (senha.length < 6) { showMsg(msg, 'Senha deve ter pelo menos 6 caracteres.', 'error'); return; }
+  if (email === ADMIN.email) { showMsg(msg, 'E-mail não disponível.', 'error'); return; }
+  if (users.find(u => u.email === email)) { showMsg(msg, 'E-mail já cadastrado.', 'error'); return; }
+
+  const user = { nome, email, municipio, plano, senha, criado: new Date().toLocaleDateString('pt-BR') };
+  users.push(user);
+  saveUsers();
+  showMsg(msg, '✓ Conta criada! Faça login para acessar.', 'success');
+  setTimeout(() => switchAuthTab('login'), 1500);
+}
+
+// ── LOGOUT ──
+function doLogout() {
+  currentUser = null;
+  showScreen('auth');
+}
+
+// ── SCREENS ──
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+}
+
+// ── DASHBOARD ──
+function populateDash() {
+  document.getElementById('topbar-user').textContent = currentUser.nome.split(' ')[0];
+  document.getElementById('topbar-plan').textContent = currentUser.plano;
+  document.getElementById('dash-nome').textContent = currentUser.nome;
+  document.getElementById('dash-municipio').textContent = currentUser.municipio;
+  document.getElementById('plano-card').textContent = currentUser.plano;
+
+  // Quadrimestre atual
+  const mes = new Date().getMonth();
+  let quad, meses;
+  if (mes < 4) { quad = '1º Quad'; meses = 'Jan – Abr'; }
+  else if (mes < 8) { quad = '2º Quad'; meses = 'Mai – Ago'; }
+  else { quad = '3º Quad'; meses = 'Set – Dez'; }
+  document.getElementById('quad-atual').textContent = quad;
+  document.getElementById('quad-meses').textContent = meses;
+}
+
+function switchDashTab(id, btn) {
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.getElementById('dt-' + id).classList.add('active');
+}
+
+// ── ADMIN ──
+function updateAdminStats() {
+  document.getElementById('admin-total-users').textContent = users.length;
+  const receita = users.reduce((acc, u) => acc + (planPrice[u.plano] || 0), 0);
+  document.getElementById('admin-receita').textContent = 'R$' + receita.toLocaleString('pt-BR');
+  document.getElementById('admin-regional').textContent = users.filter(u => u.plano === 'Regional').length;
+  document.getElementById('admin-municipal').textContent = users.filter(u => u.plano === 'Municipal').length;
+
+  const list = document.getElementById('admin-users-list');
+  if (!users.length) {
+    list.innerHTML = '<div style="text-align:center;padding:24px;color:var(--muted);font-size:12px;">Nenhum usuário cadastrado ainda.</div>';
+    return;
+  }
+  list.innerHTML = users.map((u, i) => `
+    <div class="user-row">
+      <div class="user-avatar">${u.nome[0]}</div>
+      <div class="user-info">
+        <div class="user-name">${u.nome}</div>
+        <div class="user-meta">${u.email} · ${u.municipio}</div>
+        <div class="user-meta" style="margin-top:2px;">Cadastro: ${u.criado}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end;">
+        <span class="user-plan">${u.plano}</span>
+        <button class="btn-sm btn-sm-del" onclick="deleteUser(${i})">✕ Remover</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function deleteUser(i) {
+  if (!confirm(`Remover ${users[i].nome}?`)) return;
+  users.splice(i, 1);
+  saveUsers();
+  updateAdminStats();
+  showToast('Usuário removido.');
+}
+
+// ── HELPERS ──
+function showMsg(el, text, type) {
+  el.textContent = text;
+  el.className = 'auth-msg ' + type;
+}
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>

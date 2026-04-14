@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checklist eMulti – APS</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f3ee;
+    --surface: #ffffff;
+    --card: #fafaf8;
+    --border: #e2ddd6;
+    --ink: #1a1714;
+    --muted: #8a8278;
+    --accent: #1a6b3a;
+    --accent2: #d4531a;
+    --yellow: #f5c842;
+    --green: #1a6b3a;
+    --red: #c0392b;
+    --done-bg: #e8f5ee;
+    --done-border: #a8d5b8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+    padding: 0 0 64px;
+  }
+
+  /* Topo */
+  .hero {
+    background: var(--ink);
+    padding: 28px 20px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: 'CHECK';
+    position: absolute;
+    right: -10px;
+    top: -8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 72px;
+    font-weight: 800;
+    color: #ffffff08;
+    letter-spacing: -4px;
+    pointer-events: none;
+  }
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--yellow);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 4px;
+  }
+  .hero h1 span { color: var(--yellow); }
+  .hero p {
+    font-size: 11px;
+    color: #ffffff66;
+    font-style: italic;
+  }
+
+  /* Progresso geral */
+  .progress-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px #0000000a;
+  }
+  .progress-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+  .progress-track {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #34d17a);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-pct {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--accent);
+    min-width: 40px;
+    text-align: right;
+  }
+
+  /* Tabs de frequência */
+  .tabs {
+    display: flex;
+    gap: 0;
+    padding: 14px 20px 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    overflow-x: auto;
+  }
+  .tab {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border: none;
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .tab.active {
+    color: var(--ink);
+    border-bottom-color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* Conteúdo */
+  .content {
+    padding: 0 16px;
+  }
+
+  /* Seção */
+  .section {
+    margin-top: 20px;
+  }
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .section-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .section-icon.green { background: #d4edde; }
+  .section-icon.blue { background: #d4e8f5; }
+  .section-icon.orange { background: #fde8d8; }
+  .section-icon.yellow { background: #fdf5d4; }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .section-sub {
+    font-size: 10px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* Item checklist */
+  .item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 7px;
+    transition: all 0.2s;
+    overflow: hidden;
+  }
+  .item.checked {
+    background: var(--done-bg);
+    border-color: var(--done-border);
+  }
+  .item-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 12px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .item-check {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    margin-top: 1px;
+    background: var(--surface);
+  }
+  .item.checked .item-check {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .checkmark {
+    display: none;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .item.checked .checkmark { display: block; }
+  .item-body { flex: 1; }
+  .item-text {
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--ink);
+    transition: color 0.2s;
+  }
+  .item.checked .item-text {
+    color: var(--muted);
+    text-decoration: line-through;
+    text-decoration-color: var(--done-border);
+  }
+  .item-tip {
+    font-size: 10px;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 3px;
+    line-height: 1.3;
+  }
+  .item.checked .item-tip { display: none; }
+
+  /* Tag de criticidade */
+  .item-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    padding: 2px 5px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    align-self: flex-start;
+    margin-top: 2px;
+  }
+  .tag-critico { background: #fde8e8; color: var(--red); }
+  .tag-importante { background: #fdeede; color: var(--accent2); }
+  .tag-bonus { background: #fdf5d4; color: #8a6a00; }
+
+  /* Contador da seção */
+  .section-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    background: var(--border);
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-left: auto;
+  }
+  .section-count.all-done { background: var(--done-border); color: var(--green); }
+
+  /* Alerta prazo */
+  .prazo-bar {
+    background: #1a1714;
+    color: var(--yellow);
+    padding: 10px 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 16px 0 0;
+    border-radius: 6px;
+  }
+  .prazo-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--yellow);
+    animation: pulse 1.5s infinite;
+    flex-shrink: 0;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; }
+    50% { opacity:0.3; }
+  }
+
+  /* Celebração */
+  .celebration {
+    display: none;
+    background: var(--ink);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .celebration.show { display: block; }
+  .celebration-emoji { font-size: 36px; margin-bottom: 8px; }
+  .celebration h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--yellow);
+    margin-bottom: 4px;
+  }
+  .celebration p { font-size: 12px; color: #ffffff88; }
+
+  /* Botão reset */
+  .btn-reset {
+    display: block;
+    width: calc(100% - 32px);
+    margin: 16px auto 0;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.15s;
+  }
+  .btn-reset:hover { border-color: var(--red); color: var(--red); }
+
+  /* Hidden tab content */
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-tag">eMulti · Atenção Primária à Saúde</div>
+  <h1>Checklist<br><span>Mensal</span></h1>
+  <p>Meta: Ótimo nos Componentes II e III</p>
+</div>
+
+<div class="progress-header">
+  <span class="progress-label">Progresso</span>
+  <div class="progress-track">
+    <div class="progress-fill" id="prog-fill"></div>
+  </div>
+  <span class="progress-pct" id="prog-pct">0%</span>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('diario',this)">📅 Diário</button>
+  <button class="tab" onclick="switchTab('semanal',this)">📆 Semanal</button>
+  <button class="tab" onclick="switchTab('mensal',this)">🗓 Mensal</button>
+  <button class="tab" onclick="switchTab('prazo',this)">⏰ Prazos</button>
+</div>
+
+<!-- ===== DIÁRIO ===== -->
+<div class="tab-content active content" id="tab-diario">
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon green">🏥</div>
+      <div>
+        <div class="section-title">Atendimentos M1</div>
+        <div class="section-sub">Peso 6 — indicador mais crítico</div>
+      </div>
+      <span class="section-count" id="cnt-atend">0/4</span>
+    </div>
+
+    <div class="item" id="i-a1" onclick="toggle('i-a1')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Registrar todos os atendimentos do dia no sistema (SISAPS/prontuário) antes de encerrar o turno</div>
+          <div class="item-tip">💡 Atendimento não registrado = não existe para o cálculo do M1</div>
+        </div>
+        <span class="item-tag tag-critico">Crítico</span>
+      </div>
+    </div>
+
+    <div class="item" id="i-a2" onclick="toggle('i-a2')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Verificar se cada atendimento está vinculado corretamente ao usuário cadastrado no território</div>
+          <div class="item-tip">💡 Atendimentos sem vínculo territorial podem não contar para a média por pessoa</div>
+        </div>
+        <span class="item-tag tag-critico">Crítico</span>
+      </div>
+    </div>
+
+    <div class="item" id="i-a3" onclick="toggle('i-a3')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Registrar atendimentos compartilhados com outras equipes (eSF/eAP) como ações interprofissionais</div>
+          <div class="item-tip">💡 Isso alimenta tanto o M1 quanto o M2 simultaneamente</div>
+        </div>
+        <span class="item-tag tag-importante">Importante</span>
+      </div>
+    </div>
+
+    <div class="item" id="i-a4" onclick="toggle('i-a4')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Anotar usuários faltosos do dia para busca ativa posterior</div>
+          <div class="item-tip">💡 Crie lista física ou digital dos faltosos — ela vira pauta de busca ativa semanal</div>
+        </div>
+        <span class="item-tag tag-importante">Importante</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon blue">🤝</div>
+      <div>
+        <div class="section-title">Ações Interprofissionais M2</div>
+        <div class="section-sub">Peso 4 — registre tudo</div>
+      </div>
+      <span class="section-count" id="cnt-inter">0/3</span>
+    </div>
+
+    <div class="item" id="i-b1" onclick="toggle('i-b1')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Registrar toda reunião de caso, matriciamento ou discussão clínica realizada hoje</div>
+          <div class="item-tip">💡 Inclua: nome dos participantes, equipe, usuário discutido e encaminhamento definido</div>
+        </div>
+        <span class="item-tag tag-critico">Crítico</span>
+      </div>
+    </div>
+
+    <div class="item" id="i-b2" onclick="toggle('i-b2')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Documentar Projetos Terapêuticos Singulares (PTS) iniciados ou revisados hoje</div>
+          <div class="item-tip">💡 PTS conta como ação interprofissional de alta complexidade — não deixe de registrar</div>
+        </div>
+        <span class="item-tag tag-critico">Crítico</span>
+      </div>
+    </div>
+
+    <div class="item" id="i-b3" onclick="toggle('i-b3')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Participar ou registrar participação em pelo menos uma atividade conjunta com eSF/eAP</div>
+          <div class="item-tip">💡 Pode ser visita domiciliar conjunta, grupo de saúde, acolhimento compartilhado</div>
+        </div>
+        <span class="item-tag tag-importante">Importante</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== SEMANAL ===== -->
+<div class="tab-content content" id="tab-semanal">
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon green">📊</div>
+      <div>
+        <div class="section-title">Monitoramento M1</div>
+        <div class="section-sub">Garanta a média por pessoa</div>
+      </div>
+      <span class="section-count" id="cnt-mon">0/3</span>
+    </div>
+
+    <div class="item" id="i-c1" onclick="toggle('i-c1')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Levantar lista de usuários do território que não tiveram atendimento eMulti nos últimos 30 dias</div>
+          <div class="item-tip">💡 Esses usuários estão puxando a média M1 para baixo — priorize-os</div>
+        </div>
+        <span class="item-tag tag-critico">Crítico</span>
+      </div>
+    </div>
+
+    <div class="item" id="i-c2" onclick="toggle('i-c2')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Realizar busca ativa dos usuários faltosos identificados durante a semana</div>
+          <div class="item-tip">💡 Contato por telefone, ACS ou visita domiciliar — registre cada tentativa</div>
+        </div>
+        <span class="item-tag tag-critico">Crítico</span>
+      </div>
+    </div>
+
+    <div class="item" id="i-c3" onclick="toggle('i-c3')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Verificar no sistema se os atendimentos da semana foram todos processados corretamente</div>
+          <div class="item-tip">💡 Corrija erros de registro antes do fechamento mensal</div>
+        </div>
+        <span class="item-tag tag-importante">Importante</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon blue">🔗</div>
+      <div>
+        <div class="section-title">Integração com eSF / eAP</div>
+        <div class="section-sub">Alimenta M2 e Componente II</div>
+      </div>
+      <span class="section-count" id="cnt-integ">0/4</span>
+    </div>
+
+    <div class="item" id="i-d1" onclick="toggle('i-d1')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Participar da reunião de equipe com eSF/eAP e registrar a presença como ação interprofissional</div>
+          <div class="item-tip">💡 Reunião sem registro não conta — documente pauta, participantes e deliberações</div>
+        </div>
+        <span class="item-tag tag-critico">Crítico</span>
+      </div>
+    </div>
+
+    <div class="item" id="i-d2" onclick="toggle('i-d2')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Realizar pelo menos uma visita domiciliar conjunta com ACS ou profissional da eSF</div>
+          <div class="item-tip">💡 Contribui para o acompanhamento territorial do Componente II</div>
+        </div>
+        <span class="item-tag tag-importante">Importante</span>
+      </div>
+    </div>
+
+    <div class="item" id="i-d3" onclick="toggle('i-d3')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Atualizar cadastro de usuários visitados ou atendidos com informações novas identificadas</div>
+          <div class="item-tip">💡 Cadastro atualizado melhora a Dimensão Cadastro do Componente II</div>
+        </div>
+        <span class="item-tag tag-importante">Importante</span>
+      </div>
+    </div>
+
+    <div class="item" id="i-d4" onclick="toggle('i-d4')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Aplicar ou registrar avaliação de satisfação com pelo menos um usuário atendido</div>
+          <div class="item-tip">💡 O bônus de satisfação usa o MELHOR mês — um mês excelente já garante o bônus</div>
+        </div>
+        <span class="item-tag tag-bonus">Bônus</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== MENSAL ===== -->
+<div class="tab-content content" id="tab-mensal">
+
+  <div class="prazo-bar">
+    <div class="prazo-dot"></div>
+    ATENÇÃO: envio ao Siaps até o 10º dia do mês seguinte
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon orange">🎯</div>
+      <div>
+        <div class="section-title">Fechamento do Mês</div>
+        <div class="section-sub">Faça antes do dia 8 para ter margem</div>
+      </div>
+      <span class="section-count" id="cnt-fecha">0/5</span>
+    </div>
+
+    <div class="item" id="i-e1" onclick="toggle('i-e1')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Consolidar e conferir todos os registros de atendimento do mês no sistema antes do envio</div>
+          <div class="item-tip">💡 Verifique duplicatas, erros de data e atendimentos sem CID ou procedimento</div>
+        </div>
+        <span class="item-tag tag-critico">Crítico</span>
+      </div>
+    </div>
+
+    <div class="item" id="i-e2" onclick="toggle('i-e2')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Conferir total de ações interprofissionais registradas no mês — meta mínima para Ótimo no M2</div>
+          <div class="item-tip">💡 Se estiver abaixo, registre ações retroativas do mês que ainda não foram documentadas</div>
+        </div>
+        <span class="item-tag tag-critico">Crítico</span>
+      </div>
+    </div>
+
+    <div class="item" id="i-e3" onclick="toggle('i-e3')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Calcular a média de atendimentos por pessoa do mês e comparar com a meta de Ótimo</div>
+          <div class="item-tip">💡 Use o Painel de Monitoramento para simular antes de enviar</div>
+        </div>
+        <span class="item-tag tag-importante">Importante</span>
+      </div>
+    </div>
+
+    <div class="item" id="i-e4" onclick="toggle('i-e4')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Enviar dados ao Siaps dentro do prazo (até o 10º dia do mês seguinte)</div>
+          <div class="item-tip">💡 Envio fora do prazo = mês não contabilizado nos indicadores</div>
+        </div>
+        <span class="item-tag tag-critico">Crítico</span>
+      </div>
+    </div>
+
+    <div class="item" id="i-e5" onclick="toggle('i-e5')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Registrar nota de satisfação do mês no Painel de Monitoramento para acompanhar o bônus</div>
+          <div class="item-tip">💡 O quadrimestre usa o mês de maior satisfação — monitore mês a mês</div>
+        </div>
+        <span class="item-tag tag-bonus">Bônus</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon yellow">📋</div>
+      <div>
+        <div class="section-title">Componente II – Território</div>
+        <div class="section-sub">Cadastro e Acompanhamento</div>
+      </div>
+      <span class="section-count" id="cnt-terr">0/3</span>
+    </div>
+
+    <div class="item" id="i-f1" onclick="toggle('i-f1')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Atualizar cadastros de todos os usuários com contato no mês (telefone, endereço, composição familiar)</div>
+          <div class="item-tip">💡 Cadastro desatualizado reduz a pontuação da Dimensão Cadastro (Comp. II)</div>
+        </div>
+        <span class="item-tag tag-critico">Crítico</span>
+      </div>
+    </div>
+
+    <div class="item" id="i-f2" onclick="toggle('i-f2')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Registrar no sistema todos os acompanhamentos realizados — visitas, contatos, grupos, consultas</div>
+          <div class="item-tip">💡 Acompanhamento só conta se registrado — não basta fazer, tem que documentar</div>
+        </div>
+        <span class="item-tag tag-critico">Crítico</span>
+      </div>
+    </div>
+
+    <div class="item" id="i-f3" onclick="toggle('i-f3')">
+      <div class="item-row">
+        <div class="item-check"><span class="checkmark">✓</span></div>
+        <div class="item-body">
+          <div class="item-text">Revisar lista de usuários sem acompanhamento nos últimos 12 meses e planejar busca ativa para o próximo mês</div>
+          <div class="item-tip">💡 Usuários sem acompanhamento reduzem a Dimensão Acompanhamento do Comp. II</div>
+        </div>
+        <span class="item-tag tag-importante">Importante</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="celebration" class="celebration">
+    <div class="celebration-emoji">🏆</div>
+    <h2>Mês concluído!</h2>
+    <p>Todos os itens do mês foram checados.<br>Ótimo trabalho — agora é só enviar ao Siaps!</p>
+  </div>
+
+</div>
+
+<!-- ===== PRAZOS ===== -->
+<div class="tab-content content" id="tab-prazo">
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon orange">⏰</div>
+      <div>
+        <div class="section-title">Calendário de Prazos</div>
+        <div class="section-sub">Não perca nenhuma data</div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:10px;">
+      <div style="padding:12px 14px;border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:center;">
+        <span style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--red);min-width:36px;">10</span>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;">Envio ao Siaps</div>
+          <div style="font-size:11px;color:var(--muted);">Até o 10º dia de cada mês — dados do mês anterior</div>
+        </div>
+        <span class="item-tag tag-critico" style="margin-left:auto;">Crítico</span>
+      </div>
+      <div style="padding:12px 14px;border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:center;">
+        <span style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--accent2);min-width:36px;">08</span>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;">Conferência interna</div>
+          <div style="font-size:11px;color:var(--muted);">Revisar todos os registros antes do envio — margem de 2 dias</div>
+        </div>
+        <span class="item-tag tag-importante" style="margin-left:auto;">Recomendado</span>
+      </div>
+      <div style="padding:12px 14px;display:flex;gap:10px;align-items:center;">
+        <span style="font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--accent);min-width:36px;">01</span>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;">Início do novo mês</div>
+          <div style="font-size:11px;color:var(--muted);">Resetar checklist e reiniciar monitoramento</div>
+        </div>
+        <span class="item-tag tag-bonus" style="margin-left:auto;">Rotina</span>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;">
+      <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;margin-bottom:10px;">Quadrimestres e repasse</div>
+      <div style="display:grid;gap:8px;">
+        <div style="display:flex;justify-content:space-between;font-size:12px;padding-bottom:6px;border-bottom:1px solid var(--border);">
+          <span style="color:var(--muted);">1º Quadrimestre</span>
+          <span style="font-family:'DM Mono',monospace;font-weight:500;">Jan · Fev · Mar · Abr</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;padding-bottom:6px;border-bottom:1px solid var(--border);">
+          <span style="color:var(--muted);">2º Quadrimestre</span>
+          <span style="font-family:'DM Mono',monospace;font-weight:500;">Mai · Jun · Jul · Ago</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;padding-bottom:6px;border-bottom:1px solid var(--border);">
+          <span style="color:var(--muted);">3º Quadrimestre</span>
+          <span style="font-family:'DM Mono',monospace;font-weight:500;">Set · Out · Nov · Dez</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;">
+          <span style="color:var(--muted);">Repasse financeiro</span>
+          <span style="font-family:'DM Mono',monospace;font-weight:500;color:var(--accent);">4 meses após o quad.</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#1a1714;border-radius:8px;padding:14px;">
+      <div style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--yellow);margin-bottom:8px;">⚡ Regra de ouro</div>
+      <div style="font-size:12px;color:#ffffffaa;line-height:1.6;">
+        O que não está <strong style="color:#fff;">registrado no sistema</strong> não existe para o cálculo.<br><br>
+        Um mês sem envio = mês zerado na média.<br><br>
+        A nota final é a <strong style="color:#fff;">média dos 4 meses</strong> — um mês ruim puxa tudo para baixo.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<button class="btn-reset" onclick="resetAll()">↺ Reiniciar checklist do mês</button>
+
+<script>
+// Estado
+const checked = new Set();
+const allItems = [
+  'i-a1','i-a2','i-a3','i-a4',
+  'i-b1','i-b2','i-b3',
+  'i-c1','i-c2','i-c3',
+  'i-d1','i-d2','i-d3','i-d4',
+  'i-e1','i-e2','i-e3','i-e4','i-e5',
+  'i-f1','i-f2','i-f3'
+];
+
+const sections = {
+  'cnt-atend': ['i-a1','i-a2','i-a3','i-a4'],
+  'cnt-inter': ['i-b1','i-b2','i-b3'],
+  'cnt-mon':   ['i-c1','i-c2','i-c3'],
+  'cnt-integ': ['i-d1','i-d2','i-d3','i-d4'],
+  'cnt-fecha': ['i-e1','i-e2','i-e3','i-e4','i-e5'],
+  'cnt-terr':  ['i-f1','i-f2','i-f3'],
+};
+
+function toggle(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (checked.has(id)) {
+    checked.delete(id);
+    el.classList.remove('checked');
+  } else {
+    checked.add(id);
+    el.classList.add('checked');
+  }
+  updateProgress();
+  updateCounts();
+  checkCelebration();
+}
+
+function updateProgress() {
+  const pct = Math.round(checked.size / allItems.length * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-pct').textContent = pct + '%';
+}
+
+function updateCounts() {
+  Object.entries(sections).forEach(([countId, items]) => {
+    const done = items.filter(i => checked.has(i)).length;
+    const el = document.getElementById(countId);
+    if (!el) return;
+    el.textContent = `${done}/${items.length}`;
+    if (done === items.length) {
+      el.classList.add('all-done');
+    } else {
+      el.classList.remove('all-done');
+    }
+  });
+}
+
+function checkCelebration() {
+  const mensalItems = ['i-e1','i-e2','i-e3','i-e4','i-e5','i-f1','i-f2','i-f3'];
+  const cel = document.getElementById('celebration');
+  if (!cel) return;
+  const allDone = mensalItems.every(i => checked.has(i));
+  cel.classList.toggle('show', allDone);
+}
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+}
+
+function resetAll() {
+  if (!confirm('Reiniciar todos os itens do checklist?')) return;
+  checked.clear();
+  allItems.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('checked');
+  });
+  updateProgress();
+  updateCounts();
+  const cel = document.getElementById('celebration');
+  if (cel) cel.classList.remove('show');
+}
+
+updateCounts();
+</script>
+</body>
+</html>

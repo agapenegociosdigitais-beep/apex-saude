@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia de Preenchimento — Painel eMulti</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf8f4;
+  --white: #ffffff;
+  --ink: #1c1a16;
+  --border: #e8e2d8;
+  --border2: #d4ccbf;
+  --muted: #8c8070;
+  --muted2: #b0a898;
+  --accent: #2d6a4f;
+  --accent2: #40916c;
+  --gold: #d4891a;
+  --gold-bg: #fdf3e3;
+  --gold-border: #f4c677;
+  --red: #c0392b;
+  --red-bg: #fdf0ee;
+  --red-border: #f5b8b1;
+  --blue: #1a5f8a;
+  --blue-bg: #e8f4fd;
+  --blue-border: #90cae8;
+  --green-bg: #eaf5ef;
+  --green-border: #90d4ae;
+  --step-size: 32px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--ink);
+  padding: 32px 20px 28px;
+  position: relative;
+  overflow: hidden;
+}
+.header::after {
+  content: 'GUIA';
+  position: absolute;
+  right: -12px; top: -8px;
+  font-family: 'Syne', sans-serif;
+  font-size: 80px;
+  font-weight: 800;
+  color: #ffffff06;
+  letter-spacing: -4px;
+  pointer-events: none;
+}
+.header-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--accent2);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.header h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+.header h1 span { color: #69d4a2; }
+.header-sub {
+  font-size: 12px;
+  color: #ffffff55;
+  font-style: italic;
+}
+
+/* ── PROGRESS NAV ── */
+.progress-nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px #00000008;
+}
+.nav-step {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  cursor: pointer;
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.15s;
+  border: 1px solid transparent;
+}
+.nav-step:hover { color: var(--accent); border-color: var(--green-border); background: var(--green-bg); }
+.nav-step.active { color: var(--accent); border-color: var(--green-border); background: var(--green-bg); font-weight: 500; }
+.nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+/* ── CONTENT ── */
+.content { padding: 0 16px 60px; max-width: 640px; margin: 0 auto; }
+
+/* ── INTRO CARD ── */
+.intro-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  margin: 16px 0;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.intro-icon { font-size: 28px; flex-shrink: 0; }
+.intro-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.intro-text { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+/* ── SECTION ── */
+.section { margin-top: 28px; }
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ── STEP ── */
+.step {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 14px;
+  align-items: flex-start;
+}
+.step-num {
+  width: var(--step-size);
+  height: var(--step-size);
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.step-num.green { background: var(--accent); }
+.step-num.gold { background: var(--gold); }
+.step-num.blue { background: var(--blue); }
+.step-body { flex: 1; }
+.step-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.step-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+/* ── INFO BOXES ── */
+.box {
+  border-radius: 8px;
+  padding: 13px 14px;
+  margin: 12px 0;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.box-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.box.tip { background: var(--green-bg); border: 1px solid var(--green-border); color: var(--accent); }
+.box.warn { background: var(--gold-bg); border: 1px solid var(--gold-border); color: #8a5500; }
+.box.danger { background: var(--red-bg); border: 1px solid var(--red-border); color: var(--red); }
+.box.info { background: var(--blue-bg); border: 1px solid var(--blue-border); color: var(--blue); }
+
+/* ── CONCEITO TABLE ── */
+.conceito-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.conceito-table th {
+  background: var(--ink);
+  color: #fff;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  text-align: left;
+}
+.conceito-table td {
+  padding: 10px 12px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+.conceito-table tr:last-child td { border-bottom: none; }
+.tag-conceito {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+.tag-otimo { background: #d4f5e3; color: #1a6b3a; }
+.tag-bom { background: #d4edf5; color: #1a5f8a; }
+.tag-suficiente { background: #fdf3e3; color: #8a5500; }
+.tag-regular { background: var(--red-bg); color: var(--red); }
+
+/* ── EXEMPLO VISUAL ── */
+.exemplo-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+.exemplo-header {
+  background: var(--ink);
+  padding: 10px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: #ffffff88;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.exemplo-header span { color: #69d4a2; }
+.exemplo-body { padding: 14px; }
+.exemplo-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.exemplo-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  min-width: 80px;
+}
+.exemplo-meses {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.mes-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.mes-nome {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  color: var(--muted2);
+}
+.mes-val {
+  width: 44px;
+  height: 32px;
+  border-radius: 5px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+}
+.mv-otimo { background: #d4f5e3; border-color: #90d4ae; color: #1a6b3a; }
+.mv-bom { background: #d4edf5; border-color: #90cae8; color: #1a5f8a; }
+.mv-suficiente { background: #fdf3e3; border-color: #f4c677; color: #8a5500; }
+.mv-regular { background: var(--red-bg); border-color: var(--red-border); color: var(--red); }
+.mv-vazio { background: var(--bg); border-color: var(--border); color: var(--muted2); }
+
+.exemplo-result {
+  background: var(--bg);
+  border-radius: 6px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+.exemplo-result-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.exemplo-result-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+/* ── FORMULA BOX ── */
+.formula {
+  background: var(--ink);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 12px 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: #69d4a2;
+  line-height: 1.8;
+}
+.formula .comment { color: #ffffff44; }
+.formula .val { color: #f4c677; }
+
+/* ── PERGUNTA/RESPOSTA ── */
+.qa { margin-bottom: 10px; }
+.qa-q {
+  font-weight: 500;
+  font-size: 13px;
+  margin-bottom: 4px;
+  display: flex;
+  gap: 6px;
+}
+.qa-q::before { content: 'P:'; color: var(--accent); font-family: 'DM Mono', monospace; font-size: 10px; flex-shrink: 0; margin-top: 2px; }
+.qa-a {
+  font-size: 13px;
+  color: var(--muted);
+  display: flex;
+  gap: 6px;
+  line-height: 1.5;
+}
+.qa-a::before { content: 'R:'; color: var(--gold); font-family: 'DM Mono', monospace; font-size: 10px; flex-shrink: 0; margin-top: 2px; }
+
+/* ── QUIZ INTERATIVO ── */
+.quiz-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  margin: 12px 0;
+}
+.quiz-pergunta {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  line-height: 1.3;
+}
+.quiz-opcoes { display: grid; gap: 8px; }
+.quiz-opt {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 11px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+  width: 100%;
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+.quiz-opt:hover { border-color: var(--accent); background: var(--green-bg); }
+.quiz-opt.correto { background: var(--green-bg); border-color: var(--green-border); color: var(--accent); font-weight: 500; }
+.quiz-opt.errado { background: var(--red-bg); border-color: var(--red-border); color: var(--red); }
+.quiz-feedback {
+  margin-top: 12px;
+  font-size: 13px;
+  display: none;
+  line-height: 1.5;
+}
+.quiz-feedback.show { display: block; }
+.quiz-next {
+  margin-top: 12px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 9px 16px;
+  cursor: pointer;
+  display: none;
+  letter-spacing: 0.5px;
+}
+.quiz-next.show { display: inline-block; }
+
+/* ── CHECKLIST RÁPIDO ── */
+.quick-check { display: grid; gap: 7px; margin: 12px 0; }
+.qc-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.qc-item.done { background: var(--green-bg); border-color: var(--green-border); }
+.qc-box {
+  width: 18px; height: 18px;
+  border: 2px solid var(--border2);
+  border-radius: 4px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+  transition: all 0.15s;
+}
+.qc-item.done .qc-box { background: var(--accent); border-color: var(--accent); }
+.qc-check { display: none; color: #fff; font-size: 10px; font-weight: 700; }
+.qc-item.done .qc-check { display: block; }
+.qc-text { font-size: 13px; line-height: 1.4; }
+.qc-item.done .qc-text { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--green-border); }
+
+/* ── FINAL CARD ── */
+.final-card {
+  background: var(--ink);
+  border-radius: 10px;
+  padding: 22px 18px;
+  text-align: center;
+  margin-top: 24px;
+}
+.final-emoji { font-size: 36px; margin-bottom: 10px; }
+.final-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: #69d4a2;
+  margin-bottom: 6px;
+}
+.final-text { font-size: 13px; color: #ffffff88; line-height: 1.5; }
+
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(12px); transition: all 0.5s ease; }
+.reveal.on { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-eyebrow">ÁPEX Saúde · eMulti APS</div>
+  <h1>Guia de<br><span>Preenchimento</span></h1>
+  <p class="header-sub">Painel de Monitoramento eMulti — passo a passo</p>
+</div>
+
+<!-- PROGRESS NAV -->
+<div class="progress-nav">
+  <a class="nav-step active" href="#intro"><span class="nav-dot"></span>Intro</a>
+  <a class="nav-step" href="#passo1"><span class="nav-dot"></span>Quadrimestre</a>
+  <a class="nav-step" href="#passo2"><span class="nav-dot"></span>M1</a>
+  <a class="nav-step" href="#passo3"><span class="nav-dot"></span>M2</a>
+  <a class="nav-step" href="#passo4"><span class="nav-dot"></span>Comp. II</a>
+  <a class="nav-step" href="#passo5"><span class="nav-dot"></span>Calcular</a>
+  <a class="nav-step" href="#quiz"><span class="nav-dot"></span>Quiz</a>
+  <a class="nav-step" href="#erros"><span class="nav-dot"></span>Erros comuns</a>
+</div>
+
+<div class="content">
+
+  <!-- INTRO -->
+  <div id="intro">
+    <div class="intro-card reveal">
+      <div class="intro-icon">🎯</div>
+      <div>
+        <div class="intro-title">Para que serve este guia?</div>
+        <div class="intro-text">Este guia ensina como preencher o Painel de Monitoramento da eMulti corretamente para que os resultados reflitam a realidade da sua equipe e você maximize a nota nos Componentes II e III.</div>
+      </div>
+    </div>
+
+    <div class="intro-card reveal">
+      <div class="intro-icon">⏱</div>
+      <div>
+        <div class="intro-title">Leitura estimada: 8 minutos</div>
+        <div class="intro-text">Ao final você saberá exatamente o que preencher em cada campo, de onde tirar os números e como interpretar os resultados gerados pelo painel.</div>
+      </div>
+    </div>
+
+    <!-- O que é o painel -->
+    <div class="section reveal">
+      <div class="section-label">Entendendo o painel</div>
+
+      <div class="step">
+        <div class="step-num green">I</div>
+        <div class="step-body">
+          <div class="step-title">O painel tem duas partes principais</div>
+          <div class="step-desc">
+            <strong>Componente III</strong> — avalia a qualidade do cuidado da eMulti através de 2 indicadores: M1 (média de atendimentos por pessoa) e M2 (ações interprofissionais).<br><br>
+            <strong>Componente II</strong> — avalia o vínculo territorial através da Dimensão Cadastro, Dimensão Acompanhamento e o Bônus de Satisfação do Usuário.
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num green">II</div>
+        <div class="step-body">
+          <div class="step-title">Os dados são mensais, o resultado é quadrimestral</div>
+          <div class="step-desc">Você preenche um valor por mês para cada indicador. O painel calcula automaticamente a média dos 4 meses para gerar a nota final do quadrimestre.</div>
+        </div>
+      </div>
+
+      <div class="box info reveal">
+        <span class="box-icon">ℹ</span>
+        <div>A nota final do quadrimestre define a <strong>classificação para o incentivo financeiro federal</strong> — Ótimo, Bom, Suficiente ou Regular.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PASSO 1 -->
+  <div id="passo1" class="section reveal">
+    <div class="section-label">Passo 1</div>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Selecione o quadrimestre correto</div>
+        <div class="step-desc">No topo do painel há três botões de quadrimestre. Clique no que corresponde ao período que você está avaliando.</div>
+      </div>
+    </div>
+
+    <div class="exemplo-card reveal">
+      <div class="exemplo-header">
+        <span>📅</span> <span>Quadrimestres do ano</span>
+      </div>
+      <div class="exemplo-body">
+        <table class="conceito-table">
+          <tr><th>Botão</th><th>Meses</th><th>Quando usar</th></tr>
+          <tr><td><strong>Jan–Abr</strong></td><td>Janeiro, Fevereiro, Março, Abril</td><td>1º quadrimestre</td></tr>
+          <tr><td><strong>Mai–Ago</strong></td><td>Maio, Junho, Julho, Agosto</td><td>2º quadrimestre</td></tr>
+          <tr><td><strong>Set–Dez</strong></td><td>Setembro, Outubro, Novembro, Dezembro</td><td>3º quadrimestre</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="box tip reveal">
+      <span class="box-icon">✓</span>
+      <div>Selecione o quadrimestre <strong>antes</strong> de preencher qualquer dado. Se trocar depois, os campos são resetados.</div>
+    </div>
+  </div>
+
+  <!-- PASSO 2 -->
+  <div id="passo2" class="section reveal">
+    <div class="section-label">Passo 2 — Componente III</div>
+    <div class="step">
+      <div class="step-num green">2</div>
+      <div class="step-body">
+        <div class="step-title">Preencha o M1 — Média de atendimentos por pessoa</div>
+        <div class="step-desc">Este é o indicador mais importante — vale <strong>Peso 6</strong> na nota final. Você precisa informar o percentual de cumprimento do indicador em cada mês.</div>
+      </div>
+    </div>
+
+    <div class="box warn reveal">
+      <span class="box-icon">⚠</span>
+      <div><strong>O que preencher no M1?</strong> O percentual que você obteve no Siaps para o indicador M1 naquele mês. Exemplo: se o Siaps mostrou 82% para janeiro, coloque 82 no campo de Janeiro.</div>
+    </div>
+
+    <div class="qa reveal">
+      <div class="qa-q">De onde tiro esse número?</div>
+      <div class="qa-a">Do Sistema de Informação para a Atenção Primária à Saúde (Siaps), na tela de resultados mensais da sua equipe. O valor aparece em percentual (%).</div>
+    </div>
+    <div class="qa reveal">
+      <div class="qa-q">O que significa o percentual do M1?</div>
+      <div class="qa-a">Representa o quanto sua equipe atingiu da meta de atendimentos médios por pessoa cadastrada no território. 100% significa que a meta foi completamente atingida.</div>
+    </div>
+    <div class="qa reveal">
+      <div class="qa-q">E se em algum mês não tiver dado disponível?</div>
+      <div class="qa-a">Deixe o campo vazio. O painel calcula a média apenas com os meses preenchidos.</div>
+    </div>
+
+    <!-- Exemplo M1 -->
+    <div class="exemplo-card reveal">
+      <div class="exemplo-header"><span>📊</span> <span>Exemplo de preenchimento M1</span></div>
+      <div class="exemplo-body">
+        <div class="exemplo-row">
+          <span class="exemplo-label">M1 — Jan–Abr</span>
+          <div class="exemplo-meses">
+            <div class="mes-box"><span class="mes-nome">Jan</span><div class="mes-val mv-otimo">82</div></div>
+            <div class="mes-box"><span class="mes-nome">Fev</span><div class="mes-val mv-otimo">78</div></div>
+            <div class="mes-box"><span class="mes-nome">Mar</span><div class="mes-val mv-bom">65</div></div>
+            <div class="mes-box"><span class="mes-nome">Abr</span><div class="mes-val mv-otimo">80</div></div>
+          </div>
+        </div>
+        <div class="exemplo-result">
+          <span class="exemplo-result-label">Média do Quad.</span>
+          <span class="exemplo-result-val" style="color:var(--accent)">76,25% → Ótimo</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabela de conceitos -->
+    <div class="section-label reveal" style="margin-top:16px;">Como o painel converte % em conceito</div>
+    <table class="conceito-table reveal">
+      <tr><th>Percentual obtido</th><th>Conceito</th><th>Pontuação</th><th>Pts no M1 (×6)</th></tr>
+      <tr><td>75% ou mais</td><td><span class="tag-conceito tag-otimo">Ótimo</span></td><td>1,00</td><td><strong>6,00</strong></td></tr>
+      <tr><td>50% a 74,9%</td><td><span class="tag-conceito tag-bom">Bom</span></td><td>0,75</td><td>4,50</td></tr>
+      <tr><td>25% a 49,9%</td><td><span class="tag-conceito tag-suficiente">Suficiente</span></td><td>0,50</td><td>3,00</td></tr>
+      <tr><td>Abaixo de 25%</td><td><span class="tag-conceito tag-regular">Regular</span></td><td>0,25</td><td>1,50</td></tr>
+    </table>
+
+    <div class="box danger reveal">
+      <span class="box-icon">🚨</span>
+      <div>O M1 vale <strong>60% da nota final do Componente III</strong>. Se ele ficar em Regular (abaixo de 25%), fica quase impossível atingir Ótimo mesmo com M2 perfeito.</div>
+    </div>
+  </div>
+
+  <!-- PASSO 3 -->
+  <div id="passo3" class="section reveal">
+    <div class="section-label">Passo 3 — Componente III</div>
+    <div class="step">
+      <div class="step-num green">3</div>
+      <div class="step-body">
+        <div class="step-title">Preencha o M2 — Ações interprofissionais</div>
+        <div class="step-desc">Peso 4 na nota final. Informe o percentual de cumprimento do indicador M2 em cada mês, da mesma forma que o M1.</div>
+      </div>
+    </div>
+
+    <div class="box info reveal">
+      <span class="box-icon">ℹ</span>
+      <div>O M2 mede o percentual de ações interprofissionais realizadas pela eMulti — como matriciamentos, reuniões de caso, PTS e atividades conjuntas com eSF/eAP.</div>
+    </div>
+
+    <div class="exemplo-card reveal">
+      <div class="exemplo-header"><span>🤝</span> <span>Exemplo de preenchimento M2</span></div>
+      <div class="exemplo-body">
+        <div class="exemplo-row">
+          <span class="exemplo-label">M2 — Jan–Abr</span>
+          <div class="exemplo-meses">
+            <div class="mes-box"><span class="mes-nome">Jan</span><div class="mes-val mv-suficiente">48</div></div>
+            <div class="mes-box"><span class="mes-nome">Fev</span><div class="mes-val mv-bom">60</div></div>
+            <div class="mes-box"><span class="mes-nome">Mar</span><div class="mes-val mv-bom">70</div></div>
+            <div class="mes-box"><span class="mes-nome">Abr</span><div class="mes-val mv-otimo">82</div></div>
+          </div>
+        </div>
+        <div class="exemplo-result">
+          <span class="exemplo-result-label">Média do Quad.</span>
+          <span class="exemplo-result-val" style="color:var(--blue)">65% → Bom</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fórmula C3 -->
+    <div class="section-label reveal" style="margin-top:16px;">Como é calculada a nota do Componente III</div>
+    <div class="formula reveal">
+<span class="comment"># Nota Final C3 = soma dos pontos ponderados</span>
+
+Nota C3 = (conceito_M1 × <span class="val">6</span>) + (conceito_M2 × <span class="val">4</span>)
+
+<span class="comment"># Exemplo com M1=Ótimo e M2=Bom:</span>
+Nota C3 = (<span class="val">1,00</span> × 6) + (<span class="val">0,75</span> × 4)
+Nota C3 = 6,00 + 3,00 = <span class="val">9,00</span>  →  Ótimo ✓
+    </div>
+
+    <table class="conceito-table reveal">
+      <tr><th>Nota Final C3</th><th>Classificação</th></tr>
+      <tr><td>Acima de 7,5</td><td><span class="tag-conceito tag-otimo">Ótimo</span></td></tr>
+      <tr><td>5,0 a 7,5</td><td><span class="tag-conceito tag-bom">Bom</span></td></tr>
+      <tr><td>2,6 a 4,9</td><td><span class="tag-conceito tag-suficiente">Suficiente</span></td></tr>
+      <tr><td>Até 2,5</td><td><span class="tag-conceito tag-regular">Regular</span></td></tr>
+    </table>
+  </div>
+
+  <!-- PASSO 4 -->
+  <div id="passo4" class="section reveal">
+    <div class="section-label">Passo 4 — Componente II</div>
+    <div class="step">
+      <div class="step-num blue">4</div>
+      <div class="step-body">
+        <div class="step-title">Preencha o Componente II — Vínculo e Acompanhamento</div>
+        <div class="step-desc">O Componente II tem 3 campos: Dimensão Cadastro, Dimensão Acompanhamento e o Bônus de Satisfação do Usuário. Todos usam escala de 0 a 10.</div>
+      </div>
+    </div>
+
+    <!-- Cadastro -->
+    <div class="step reveal" style="margin-top:12px;">
+      <div class="step-num" style="background:var(--blue);width:24px;height:24px;font-size:11px;">A</div>
+      <div class="step-body">
+        <div class="step-title" style="font-size:13px;">Dimensão Cadastro (0–10)</div>
+        <div class="step-desc">Informe a nota obtida no Siaps para a Dimensão Cadastro de cada mês. Essa dimensão avalia se os cadastros do território estão atualizados e completos.</div>
+      </div>
+    </div>
+
+    <!-- Acompanhamento -->
+    <div class="step reveal">
+      <div class="step-num" style="background:var(--blue);width:24px;height:24px;font-size:11px;">B</div>
+      <div class="step-body">
+        <div class="step-title" style="font-size:13px;">Dimensão Acompanhamento (0–10)</div>
+        <div class="step-desc">Informe a nota obtida para o Acompanhamento de cada mês. Avalia se os usuários cadastrados estão sendo acompanhados regularmente pela equipe.</div>
+      </div>
+    </div>
+
+    <!-- Satisfação -->
+    <div class="step reveal">
+      <div class="step-num" style="background:var(--gold);width:24px;height:24px;font-size:11px;">C</div>
+      <div class="step-body">
+        <div class="step-title" style="font-size:13px;">Bônus Satisfação do Usuário (0–10)</div>
+        <div class="step-desc">Informe a nota de satisfação de cada mês. O painel usa automaticamente <strong>a maior nota</strong> entre os 4 meses como bônus — não a média.</div>
+      </div>
+    </div>
+
+    <div class="box tip reveal">
+      <span class="box-icon">⭐</span>
+      <div><strong>Dica do bônus:</strong> como o painel pega o melhor mês, vale a pena investir muito em um único mês de satisfação — isso já garante o bônus máximo para o quadrimestre inteiro.</div>
+    </div>
+
+    <div class="exemplo-card reveal">
+      <div class="exemplo-header"><span>📋</span> <span>Exemplo — Componente II</span></div>
+      <div class="exemplo-body">
+        <div class="exemplo-row">
+          <span class="exemplo-label">Cadastro</span>
+          <div class="exemplo-meses">
+            <div class="mes-box"><span class="mes-nome">Jan</span><div class="mes-val mv-otimo">8,2</div></div>
+            <div class="mes-box"><span class="mes-nome">Fev</span><div class="mes-val mv-otimo">8,5</div></div>
+            <div class="mes-box"><span class="mes-nome">Mar</span><div class="mes-val mv-bom">7,1</div></div>
+            <div class="mes-box"><span class="mes-nome">Abr</span><div class="mes-val mv-otimo">8,8</div></div>
+          </div>
+        </div>
+        <div class="exemplo-row">
+          <span class="exemplo-label">Acomp.</span>
+          <div class="exemplo-meses">
+            <div class="mes-box"><span class="mes-nome">Jan</span><div class="mes-val mv-bom">7,4</div></div>
+            <div class="mes-box"><span class="mes-nome">Fev</span><div class="mes-val mv-otimo">8,1</div></div>
+            <div class="mes-box"><span class="mes-nome">Mar</span><div class="mes-val mv-otimo">8,3</div></div>
+            <div class="mes-box"><span class="mes-nome">Abr</span><div class="mes-val mv-bom">7,9</div></div>
+          </div>
+        </div>
+        <div class="exemplo-row">
+          <span class="exemplo-label">Satisfação</span>
+          <div class="exemplo-meses">
+            <div class="mes-box"><span class="mes-nome">Jan</span><div class="mes-val mv-bom">7,0</div></div>
+            <div class="mes-box"><span class="mes-nome">Fev</span><div class="mes-val mv-bom">7,5</div></div>
+            <div class="mes-box"><span class="mes-nome">Mar</span><div class="mes-val mv-otimo">9,2</div></div>
+            <div class="mes-box"><span class="mes-nome">Abr</span><div class="mes-val mv-bom">7,8</div></div>
+          </div>
+        </div>
+        <div class="exemplo-result">
+          <span class="exemplo-result-label">Bônus usado</span>
+          <span class="exemplo-result-val" style="color:var(--gold)">9,2 (Março)</span>
+        </div>
+      </div>
+    </div>
+
+    <table class="conceito-table reveal">
+      <tr><th>Nota Final C2</th><th>Classificação</th></tr>
+      <tr><td>Acima de 8,5</td><td><span class="tag-conceito tag-otimo">Ótimo</span></td></tr>
+      <tr><td>7,0 a 8,5</td><td><span class="tag-conceito tag-bom">Bom</span></td></tr>
+      <tr><td>5,0 a 6,9</td><td><span class="tag-conceito tag-suficiente">Suficiente</span></td></tr>
+      <tr><td>Abaixo de 5</td><td><span class="tag-conceito tag-regular">Regular</span></td></tr>
+    </table>
+  </div>
+
+  <!-- PASSO 5 -->
+  <div id="passo5" class="section reveal">
+    <div class="section-label">Passo 5</div>
+    <div class="step">
+      <div class="step-num gold">5</div>
+      <div class="step-body">
+        <div class="step-title">Clique em "↻ Calcular Notas Finais"</div>
+        <div class="step-desc">Após preencher todos os meses disponíveis, clique no botão verde no final do painel. O resultado aparece nos dois cartões no topo (Componente II e Componente III) com os anéis de progresso e a classificação.</div>
+      </div>
+    </div>
+
+    <div class="box tip reveal">
+      <span class="box-icon">✓</span>
+      <div>Os <strong>alertas automáticos</strong> aparecem logo abaixo do botão — eles mostram exatamente em qual indicador sua equipe precisa melhorar e o quanto falta para atingir Ótimo.</div>
+    </div>
+
+    <div class="box warn reveal">
+      <span class="box-icon">⚠</span>
+      <div>Se um campo ficar vazio, o painel calcula a média só com os meses preenchidos. Preencha apenas os meses que já têm dados disponíveis no Siaps.</div>
+    </div>
+
+    <!-- Interpretando resultados -->
+    <div class="section-label reveal" style="margin-top:16px;">Interpretando os resultados</div>
+
+    <div class="step reveal">
+      <div class="step-num" style="background:var(--accent);width:24px;height:24px;font-size:10px;">🟢</div>
+      <div class="step-body">
+        <div class="step-title" style="font-size:13px;">Campo verde — Ótimo (≥ 75%)</div>
+        <div class="step-desc">A equipe atingiu a meta para esse mês. Mantenha a rotina.</div>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num" style="background:var(--blue);width:24px;height:24px;font-size:10px;">🔵</div>
+      <div class="step-body">
+        <div class="step-title" style="font-size:13px;">Campo azul — Bom (50–74,9%)</div>
+        <div class="step-desc">Perto da meta. Um pequeno esforço extra nos próximos meses garante o Ótimo no quadrimestre.</div>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num" style="background:var(--gold);width:24px;height:24px;font-size:10px;">🟡</div>
+      <div class="step-body">
+        <div class="step-title" style="font-size:13px;">Campo amarelo — Suficiente (25–49,9%)</div>
+        <div class="step-desc">Atenção. Revise registros do mês e identifique o que está faltando. Corrija nos próximos meses.</div>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num" style="background:var(--red);width:24px;height:24px;font-size:10px;">🔴</div>
+      <div class="step-body">
+        <div class="step-title" style="font-size:13px;">Campo vermelho — Regular (abaixo de 25%)</div>
+        <div class="step-desc">Situação crítica. Verifique se os dados foram enviados ao Siaps e se há problemas de registro. Use o Checklist para reorganizar a rotina.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz" class="section">
+    <div class="section-label reveal">Teste seu conhecimento</div>
+
+    <div class="quiz-card reveal" id="q1">
+      <div class="quiz-pergunta">1. O M1 tem Peso 6 e o M2 tem Peso 4. Se o M1 for Ótimo (1,0) e o M2 for Bom (0,75), qual é a Nota Final do Componente III?</div>
+      <div class="quiz-opcoes">
+        <button class="quiz-opt" onclick="responder('q1', this, false, 'Quase! 7,0 seria se os dois tivessem peso igual. Lembre-se: M1×6 + M2×4.')">7,0</button>
+        <button class="quiz-opt" onclick="responder('q1', this, true, '✓ Correto! (1,0 × 6) + (0,75 × 4) = 6,0 + 3,0 = 9,0 — classificação Ótimo.')">9,0</button>
+        <button class="quiz-opt" onclick="responder('q1', this, false, 'Não. 8,5 seria a média simples, mas os indicadores têm pesos diferentes.')">8,5</button>
+        <button class="quiz-opt" onclick="responder('q1', this, false, 'Não. Bom começa em 5,0. Com esses valores a nota seria muito maior.')">5,0</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q1"></div>
+      <button class="quiz-next" id="nx-q1" onclick="document.getElementById('q2').scrollIntoView({behavior:'smooth'})">Próxima pergunta →</button>
+    </div>
+
+    <div class="quiz-card reveal" id="q2">
+      <div class="quiz-pergunta">2. O Bônus de Satisfação do Usuário usa qual valor dos 4 meses do quadrimestre?</div>
+      <div class="quiz-opcoes">
+        <button class="quiz-opt" onclick="responder('q2', this, false, 'Não. Se fosse a média, um mês ruim penalizaria o bônus.')">A média dos 4 meses</button>
+        <button class="quiz-opt" onclick="responder('q2', this, true, '✓ Correto! O painel usa automaticamente a maior nota entre os meses do quadrimestre.')">A maior nota entre os meses</button>
+        <button class="quiz-opt" onclick="responder('q2', this, false, 'Não. O último mês pode não ser o melhor.')">A nota do último mês</button>
+        <button class="quiz-opt" onclick="responder('q2', this, false, 'Não. O primeiro mês pode não ser o representativo.')">A nota do primeiro mês</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q2"></div>
+      <button class="quiz-next" id="nx-q2" onclick="document.getElementById('q3').scrollIntoView({behavior:'smooth'})">Próxima pergunta →</button>
+    </div>
+
+    <div class="quiz-card reveal" id="q3">
+      <div class="quiz-pergunta">3. Se o M1 obteve 60% em Janeiro, 55% em Fevereiro e 70% em Março, qual o conceito da média desses 3 meses?</div>
+      <div class="quiz-opcoes">
+        <button class="quiz-opt" onclick="responder('q3', this, false, 'Não. Ótimo exige 75% ou mais. A média aqui é (60+55+70)/3 = 61,7%.')">Ótimo</button>
+        <button class="quiz-opt" onclick="responder('q3', this, true, '✓ Correto! Média = 61,7% — entre 50% e 74,9% = conceito Bom (pontuação 0,75).')">Bom</button>
+        <button class="quiz-opt" onclick="responder('q3', this, false, 'Não. Suficiente seria entre 25% e 49,9%. A média aqui é 61,7%.')">Suficiente</button>
+        <button class="quiz-opt" onclick="responder('q3', this, false, 'Não. Regular seria abaixo de 25%.')">Regular</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q3"></div>
+      <button class="quiz-next" id="nx-q3" onclick="document.getElementById('erros').scrollIntoView({behavior:'smooth'})">Ver erros comuns →</button>
+    </div>
+  </div>
+
+  <!-- ERROS COMUNS -->
+  <div id="erros" class="section reveal">
+    <div class="section-label">Erros mais comuns</div>
+
+    <div class="box danger reveal">
+      <span class="box-icon">❌</span>
+      <div><strong>Preencher com o número de atendimentos, não o %.</strong> Os campos M1 e M2 pedem o percentual de cumprimento do indicador (ex: 78%), não a quantidade de atendimentos realizados.</div>
+    </div>
+
+    <div class="box danger reveal">
+      <span class="box-icon">❌</span>
+      <div><strong>Confundir escala.</strong> M1 e M2 vão de 0 a 100 (percentual). Cadastro, Acompanhamento e Satisfação vão de 0 a 10 (nota). Não misture as escalas.</div>
+    </div>
+
+    <div class="box danger reveal">
+      <span class="box-icon">❌</span>
+      <div><strong>Trocar o quadrimestre depois de preencher.</strong> Ao trocar o quadrimestre, os campos são resetados. Selecione o período correto antes de começar.</div>
+    </div>
+
+    <div class="box danger reveal">
+      <span class="box-icon">❌</span>
+      <div><strong>Não clicar em Calcular.</strong> O painel não atualiza automaticamente — você precisa clicar no botão "↻ Calcular Notas Finais" para ver os resultados.</div>
+    </div>
+
+    <div class="box tip reveal">
+      <span class="box-icon">💡</span>
+      <div><strong>Dica final:</strong> Use o painel mensalmente, não só no fechamento do quadrimestre. Assim você identifica problemas cedo e ainda tem tempo de corrigir antes da média ser calculada.</div>
+    </div>
+  </div>
+
+  <!-- CHECKLIST FINAL -->
+  <div class="section reveal">
+    <div class="section-label">Checklist de preenchimento</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">Marque cada item antes de calcular para garantir que tudo está correto:</p>
+
+    <div class="quick-check">
+      <div class="qc-item" onclick="toggleQC(this)">
+        <div class="qc-box"><span class="qc-check">✓</span></div>
+        <span class="qc-text">Selecionei o quadrimestre correto</span>
+      </div>
+      <div class="qc-item" onclick="toggleQC(this)">
+        <div class="qc-box"><span class="qc-check">✓</span></div>
+        <span class="qc-text">Preenchi o M1 com o % do Siaps (0–100)</span>
+      </div>
+      <div class="qc-item" onclick="toggleQC(this)">
+        <div class="qc-box"><span class="qc-check">✓</span></div>
+        <span class="qc-text">Preenchi o M2 com o % do Siaps (0–100)</span>
+      </div>
+      <div class="qc-item" onclick="toggleQC(this)">
+        <div class="qc-box"><span class="qc-check">✓</span></div>
+        <span class="qc-text">Preenchi Dimensão Cadastro com nota de 0 a 10</span>
+      </div>
+      <div class="qc-item" onclick="toggleQC(this)">
+        <div class="qc-box"><span class="qc-check">✓</span></div>
+        <span class="qc-text">Preenchi Dimensão Acompanhamento com nota de 0 a 10</span>
+      </div>
+      <div class="qc-item" onclick="toggleQC(this)">
+        <div class="qc-box"><span class="qc-check">✓</span></div>
+        <span class="qc-text">Preenchi Satisfação do Usuário em pelo menos um mês</span>
+      </div>
+      <div class="qc-item" onclick="toggleQC(this)">
+        <div class="qc-box"><span class="qc-check">✓</span></div>
+        <span class="qc-text">Cliquei em "↻ Calcular Notas Finais"</span>
+      </div>
+      <div class="qc-item" onclick="toggleQC(this)">
+        <div class="qc-box"><span class="qc-check">✓</span></div>
+        <span class="qc-text">Li os alertas e identifiquei o que precisa melhorar</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL -->
+  <div class="final-card reveal">
+    <div class="final-emoji">🏆</div>
+    <div class="final-title">Pronto para usar o painel!</div>
+    <div class="final-text">Agora você sabe exatamente como preencher cada campo, de onde tirar os dados e como interpretar os resultados.<br><br>Lembre-se: o painel é uma ferramenta de <strong style="color:#69d4a2;">monitoramento mensal</strong> — use-o todo mês para chegar ao Ótimo.</div>
+  </div>
+
+</div>
+
+<script>
+// Quiz
+function responder(qid, btn, correto, feedback) {
+  const card = document.getElementById(qid);
+  if (card.dataset.respondido) return;
+  card.dataset.respondido = '1';
+
+  btn.classList.add(correto ? 'correto' : 'errado');
+  card.querySelectorAll('.quiz-opt').forEach(o => { o.disabled = true; o.style.cursor = 'default'; });
+
+  const fb = document.getElementById('fb-' + qid);
+  fb.textContent = feedback;
+  fb.style.color = correto ? 'var(--accent)' : 'var(--red)';
+  fb.classList.add('show');
+
+  const nx = document.getElementById('nx-' + qid);
+  if (nx) nx.classList.add('show');
+}
+
+// Quick checklist
+function toggleQC(el) {
+  el.classList.toggle('done');
+}
+
+// Nav active state on scroll
+const sections = ['intro','passo1','passo2','passo3','passo4','passo5','quiz','erros'];
+const navLinks = document.querySelectorAll('.nav-step');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+    }
+  });
+}, { threshold: 0.3 });
+
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) observer.observe(el);
+});
+
+// Scroll reveal
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+</script>
+</body>
+</html>
