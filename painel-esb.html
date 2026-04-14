@@ -418,8 +418,39 @@ function exportarPDF(){
   setTimeout(()=>{win.print();},800);
 }
 
+
+// ── PERSISTÊNCIA ──
+const STORAGE_KEY = 'apex_esb_dados';
+function salvarDados() {
+  const dados = { quad: quadLabel, timestamp: Date.now() };
+  ['b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'cad', 'acomp', 'sat'].concat(['cad','acomp','sat']).filter((v,i,a)=>a.indexOf(v)===i).forEach(id => {
+    dados[id] = Array.from({length:4},(_,i)=>{
+      const el = document.getElementById(`inp-${id}-${i}`);
+      return el ? el.value : '';
+    });
+  });
+  const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  all[quadLabel] = dados;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+}
+function carregarDados() {
+  const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  const dados = all[quadLabel];
+  if (!dados) return;
+  Object.keys(dados).filter(k=>k!=='quad'&&k!=='timestamp').forEach(id => {
+    if (!dados[id]) return;
+    dados[id].forEach((v, i) => {
+      const el = document.getElementById(`inp-${id}-${i}`);
+      if (el && v !== '') { el.value = v; colorInp(el, ['cad','acomp','sat'].includes(id) ? 10 : 100); }
+    });
+  });
+  showToast('✓ Dados do ' + quadLabel + ' carregados');
+}
+document.addEventListener('input', e => { if (e.target.classList.contains('mes-inp')) salvarDados(); });
+
 document.addEventListener('DOMContentLoaded',()=>{
   renderGrids();
+  setTimeout(carregarDados, 100);
   document.getElementById('btn-calc').addEventListener('click',calcular);
   document.getElementById('btn-ia').addEventListener('click',gerarEstrategia);
   document.getElementById('btn-pdf').addEventListener('click',exportarPDF);

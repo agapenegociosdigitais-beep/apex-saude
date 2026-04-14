@@ -282,6 +282,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
   <button class="btn-ia" id="btn-ia" disabled>✦ Gerar Estratégia com IA</button>
   <button class="btn-pdf" id="btn-pdf">⬇ Exportar Estratégia em PDF</button>
 
+  <div id="comparativo-box" style="display:none;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-top:8px;"></div>
   <div class="estrategia-box" id="estrategia-box">
     <div class="estrategia-header">
       <span class="estrategia-tag">✦ IA — Claude Haiku</span>
@@ -529,8 +530,77 @@ function exportarPDF() {
   setTimeout(()=>{win.print();},800);
 }
 
+
+
+// ── PERSISTÊNCIA DE DADOS ──
+const STORAGE_KEY = 'apex_emulti_dados';
+
+function salvarDados() {
+  const dados = { quad: quadLabel, timestamp: Date.now() };
+  ['m1','m2','cad','acomp','sat'].forEach(id => {
+    dados[id] = Array.from({length:4},(_,i)=>{
+      const el = document.getElementById(`inp-${id}-${i}`);
+      return el ? el.value : '';
+    });
+  });
+  const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  all[quadLabel] = dados;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+}
+
+function carregarDados() {
+  const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  const dados = all[quadLabel];
+  if (!dados) return;
+  ['m1','m2','cad','acomp','sat'].forEach(id => {
+    if (!dados[id]) return;
+    dados[id].forEach((v, i) => {
+      const el = document.getElementById(`inp-${id}-${i}`);
+      if (el && v !== '') { el.value = v; colorInp(el, id.length <= 2 && !['cad','sat'].includes(id) ? 100 : 10); }
+    });
+  });
+  showToast('✓ Dados do ' + quadLabel + ' carregados automaticamente');
+}
+
+// Salvar ao digitar
+document.addEventListener('input', e => {
+  if (e.target.classList.contains('mes-inp')) salvarDados();
+});
+
+// ── COMPARATIVO DE QUADRIMESTRES ──
+function mostrarComparativo(totalC3, totalC2) {
+  const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  const quads = Object.keys(all).filter(q => q !== quadLabel);
+  if (!quads.length) return;
+  
+  const anterior = quads[quads.length - 1];
+  const dadosAnt = all[anterior];
+  if (!dadosAnt) return;
+
+  // Calcular nota anterior (simplificado)
+  const el = document.getElementById('comparativo-box');
+  if (!el) return;
+  el.style.display = 'block';
+  el.innerHTML = `
+    <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">
+      Comparativo com ${anterior}
+    </div>
+    <div style="display:flex;gap:12px;">
+      <div style="text-align:center;">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);">C3 atual</div>
+        <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#40c4ff;">${totalC3.toFixed(2)}</div>
+      </div>
+      <div style="font-size:20px;align-self:center;color:var(--muted);">→</div>
+      <div style="text-align:center;">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);">quadrimestre anterior</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">Abra o painel de histórico para ver evolução completa</div>
+      </div>
+    </div>`;
+}
+
 document.addEventListener('DOMContentLoaded',()=>{
   renderGrids();
+  setTimeout(carregarDados, 100);
   document.getElementById('btn-calc').addEventListener('click',calcular);
   document.getElementById('btn-ia').addEventListener('click',gerarEstrategia);
   document.getElementById('btn-pdf').addEventListener('click',exportarPDF);

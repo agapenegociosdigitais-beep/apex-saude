@@ -1195,5 +1195,131 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 </script>
+
+<!-- WHATSAPP SUPORTE -->
+<a href="https://wa.me/5593991234567?text=Olá!%20Preciso%20de%20suporte%20na%20plataforma%20ÁPEX%20Saúde."
+   target="_blank"
+   style="position:fixed;bottom:80px;right:16px;z-index:9000;
+          background:#25D366;color:#fff;border-radius:50%;
+          width:52px;height:52px;display:flex;align-items:center;
+          justify-content:center;font-size:24px;
+          box-shadow:0 4px 16px #00000044;text-decoration:none;
+          transition:transform .2s;"
+   onmouseover="this.style.transform='scale(1.1)'"
+   onmouseout="this.style.transform='scale(1)'"
+   title="Suporte via WhatsApp">
+  💬
+</a>
+
+<!-- NPS MODAL -->
+<div id="nps-overlay" style="display:none;position:fixed;inset:0;background:#000000cc;z-index:9990;align-items:flex-end;justify-content:center;padding:16px;">
+  <div style="background:var(--card);border:1px solid var(--gold);border-radius:12px;padding:20px;width:100%;max-width:400px;animation:slideUp .3s ease;">
+    <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:800;margin-bottom:4px;">Como você avalia a ÁPEX Saúde?</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:14px;">0 = Péssimo · 10 = Excelente</div>
+    <div style="display:flex;gap:4px;margin-bottom:14px;flex-wrap:wrap;" id="nps-scores">
+      ${[...Array(11)].map((_,i)=>`<button onclick="selectNPS(${i})" id="nps-${i}"
+        style="flex:1;min-width:28px;padding:8px 4px;border-radius:5px;border:1px solid var(--border);
+               background:var(--surface);color:var(--text);cursor:pointer;font-family:'DM Mono',monospace;
+               font-size:12px;transition:all .15s;">${i}</button>`).join('')}
+    </div>
+    <textarea id="nps-comment" placeholder="Comentário opcional..." 
+      style="width:100%;background:var(--surface);border:1px solid var(--border);border-radius:6px;
+             color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px;
+             min-height:60px;resize:vertical;outline:none;margin-bottom:10px;"></textarea>
+    <div style="display:flex;gap:8px;">
+      <button onclick="submitNPS()" style="flex:1;background:var(--gold);color:#000;border:none;border-radius:6px;
+        font-family:'Syne',sans-serif;font-size:13px;font-weight:700;padding:11px;cursor:pointer;">Enviar</button>
+      <button onclick="closeNPS()" style="background:none;border:1px solid var(--border);border-radius:6px;
+        color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;padding:11px 14px;cursor:pointer;">Agora não</button>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICAÇÃO PRAZO -->
+<div id="prazo-notif" style="display:none;position:fixed;top:60px;left:50%;transform:translateX(-50%);
+     background:var(--card);border:1px solid #ef4444;border-radius:8px;padding:10px 16px;
+     font-family:'DM Mono',monospace;font-size:11px;color:#ef4444;z-index:9998;
+     white-space:nowrap;box-shadow:0 4px 16px #00000066;max-width:90vw;">
+  🚨 <span id="prazo-notif-text">Faltam X dias para o envio ao Siaps!</span>
+  <button onclick="document.getElementById('prazo-notif').style.display='none'"
+    style="background:none;border:none;color:var(--muted);cursor:pointer;margin-left:8px;font-size:14px;">×</button>
+</div>
+
+<style>
+@keyframes slideUp{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+</style>
+
+<script>
+// ONBOARDING REDIRECT
+(function(){
+  const done = localStorage.getItem('apex_onboarding_done');
+  const user = localStorage.getItem('apex_current');
+  if (!done && user) {
+    // Redirecionar para onboarding na primeira vez
+    // window.location.href = 'onboarding.html'; // Descomente para ativar
+  }
+})();
+
+// NPS — mostrar após 3 minutos de uso
+let npsScore = null;
+function showNPS() {
+  const lastNPS = localStorage.getItem('apex_nps_date');
+  const hoje = new Date().toDateString();
+  if (lastNPS === hoje) return;
+  const shown = localStorage.getItem('apex_nps_shown');
+  if (shown) return;
+  setTimeout(() => {
+    document.getElementById('nps-overlay').style.display = 'flex';
+    localStorage.setItem('apex_nps_shown', '1');
+  }, 180000); // 3 minutos
+}
+function selectNPS(n) {
+  npsScore = n;
+  document.querySelectorAll('[id^="nps-"]').forEach(b => {
+    b.style.background = 'var(--surface)';
+    b.style.borderColor = 'var(--border)';
+    b.style.color = 'var(--text)';
+  });
+  const btn = document.getElementById('nps-' + n);
+  btn.style.background = 'var(--gold)';
+  btn.style.borderColor = 'var(--gold)';
+  btn.style.color = '#000';
+}
+function submitNPS() {
+  if (npsScore === null) { alert('Selecione uma nota.'); return; }
+  const comment = document.getElementById('nps-comment').value;
+  localStorage.setItem('apex_nps_date', new Date().toDateString());
+  localStorage.setItem('apex_nps_score', npsScore);
+  localStorage.setItem('apex_nps_comment', comment);
+  closeNPS();
+  const t = document.getElementById('toast');
+  if (t) { t.textContent = '✓ Obrigado pelo seu feedback!'; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2500); }
+}
+function closeNPS() {
+  document.getElementById('nps-overlay').style.display = 'none';
+}
+
+// NOTIFICAÇÃO DE PRAZO
+(function(){
+  const dia = new Date().getDate();
+  const notifKey = 'apex_prazo_notif_' + new Date().getMonth();
+  if (localStorage.getItem(notifKey)) return;
+  let msg = null;
+  if (dia === 7) msg = 'Faltam 3 dias para o envio ao Siaps! Confira os registros.';
+  if (dia === 8) msg = 'Faltam 2 dias para o envio ao Siaps!';
+  if (dia === 9) msg = '⚠️ AMANHÃ é o prazo de envio ao Siaps! Não perca!';
+  if (dia === 10) msg = '🚨 HOJE é o último dia de envio ao Siaps!';
+  if (msg) {
+    const el = document.getElementById('prazo-notif');
+    document.getElementById('prazo-notif-text').textContent = msg;
+    el.style.display = 'block';
+    localStorage.setItem(notifKey, '1');
+    setTimeout(() => { el.style.display = 'none'; }, 8000);
+  }
+})();
+
+showNPS();
+</script>
+
 </body>
 </html>

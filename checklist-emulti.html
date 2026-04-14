@@ -872,5 +872,48 @@ function resetAll() {
 
 updateCounts();
 </script>
+
+<button onclick="exportarChecklistPDF()" style="display:block;width:calc(100% - 32px);margin:8px auto 0;
+  background:none;border:1px solid var(--border);border-radius:6px;padding:10px;
+  font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);cursor:pointer;
+  text-transform:uppercase;letter-spacing:1px;transition:all .15s;"
+  onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'"
+  onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
+  ⬇ Exportar Checklist em PDF
+</button>
+
+<script>
+function exportarChecklistPDF() {
+  const checked = document.querySelectorAll('.item.checked .item-text');
+  const unchecked = document.querySelectorAll('.item:not(.checked) .item-text');
+  const quad = document.querySelector('.period-btn.active')?.textContent || '—';
+  
+  const html = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
+  <style>
+    body{font-family:Arial,sans-serif;font-size:13px;color:#1c1a16;padding:32px;max-width:680px;margin:0 auto;}
+    h1{font-size:20px;color:#1a6b3a;border-bottom:2px solid #1a6b3a;padding-bottom:8px;margin-bottom:16px;}
+    .meta{background:#f0fdf4;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#5f7c78;}
+    h2{font-size:14px;margin:16px 0 8px;color:#1c1a16;}
+    .item{padding:6px 10px;margin-bottom:4px;border-radius:4px;font-size:12px;display:flex;gap:8px;}
+    .done{background:#f0fdf4;color:#16a34a;}
+    .pending{background:#f9f7f4;color:#5a5448;}
+    .check{font-weight:700;}
+    .rodape{margin-top:24px;font-size:10px;color:#8c8070;text-align:center;border-top:1px solid #e8e2d8;padding-top:12px;}
+  </style></head><body>
+  <h1>✅ Checklist Mensal eMulti</h1>
+  <div class="meta">Quadrimestre: <strong>${quad}</strong> · Gerado em: <strong>${new Date().toLocaleDateString('pt-BR')}</strong> · ÁPEX Saúde</div>
+  <h2>Concluídos (${checked.length})</h2>
+  ${Array.from(checked).map(el=>`<div class="item done"><span class="check">✓</span>${el.textContent}</div>`).join('')}
+  <h2>Pendentes (${unchecked.length})</h2>
+  ${Array.from(unchecked).map(el=>`<div class="item pending"><span class="check">○</span>${el.textContent}</div>`).join('')}
+  <div class="rodape">ÁPEX Saúde · Consultoria APS · NT 6/2025-DEAPS/SAPS/MS</div>
+  </body></html>`;
+  
+  const blob = new Blob([html], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  const win = window.open(url, '_blank');
+  setTimeout(()=>{win.print();}, 600);
+}
+</script>
 </body>
 </html>

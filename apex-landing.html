@@ -867,6 +867,9 @@ footer {
   <div class="hero-btns">
     <a class="btn-hero-primary" href="#" onclick="openModal('register');return false;">Criar conta gratuita</a>
     <a class="btn-hero-secondary" href="#planos">Ver planos</a>
+  <a class="btn-hero-secondary" href="painel-emulti.html" target="_blank" style="margin-top:8px;">
+  🎮 Ver demo — sem cadastro
+</a>
   </div>
 
   <div class="hero-stats">
@@ -1128,6 +1131,7 @@ footer {
     <a href="#planos">Planos</a>
     <a href="#faq">FAQ</a>
     <a href="#" onclick="openModal('login');return false;">Entrar</a>
+    <a href="privacidade.html">Privacidade</a>
   </div>
   <div class="footer-copy">© 2025 ÁPEX Saúde. Todos os direitos reservados.</div>
 </footer>
@@ -1279,6 +1283,31 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+<!-- LGPD COOKIE BANNER -->
+<div id="lgpd-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;
+     background:#161410;border-top:1px solid #2a2520;padding:12px 16px;
+     z-index:9999;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+  <div style="flex:1;min-width:200px;font-size:12px;color:#a09880;line-height:1.5;">
+    🍪 Usamos localStorage para salvar suas preferências. 
+    Leia nossa <a href="privacidade.html" style="color:#c9a84c;">Política de Privacidade</a>.
+  </div>
+  <button onclick="aceitarLGPD()" style="background:#c9a84c;color:#000;border:none;border-radius:6px;
+    font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:8px 16px;cursor:pointer;white-space:nowrap;">
+    Entendido
+  </button>
+</div>
+<script>
+function aceitarLGPD() {
+  localStorage.setItem('apex_lgpd', '1');
+  document.getElementById('lgpd-banner').style.display = 'none';
+}
+(function(){
+  if (!localStorage.getItem('apex_lgpd')) {
+    document.getElementById('lgpd-banner').style.display = 'flex';
+  }
+})();
 </script>
 </body>
 </html>

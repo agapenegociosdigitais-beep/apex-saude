@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bem-vindo — ÁPEX Saúde</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+[data-theme="dark"]{--bg:#0a0906;--surface:#111009;--card:#161410;--border:#2a2520;--text:#ede8df;--text2:#a09880;--muted:#7a7060;}
+[data-theme="light"]{--bg:#f9f7f4;--surface:#fff;--card:#fff;--border:#e8e2d8;--text:#1c1a16;--text2:#5a5448;--muted:#8c8070;}
+:root{--gold:#c9a84c;--gold2:#e8c97a;--gold-dim:#c9a84c22;--success:#27ae60;--blue:#3b82f6;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;min-height:100vh;transition:background .3s,color .3s;}
+
+/* HERO */
+.hero{background:var(--surface);border-bottom:1px solid var(--border);padding:32px 20px 24px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.hero-logo{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--gold);letter-spacing:3px;margin-bottom:8px;}
+.hero-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--text);margin-bottom:6px;}
+.hero-sub{font-size:12px;color:var(--muted);}
+
+/* PROGRESS */
+.progress-wrap{padding:16px 20px;background:var(--surface);border-bottom:1px solid var(--border);}
+.progress-steps{display:flex;gap:0;margin-bottom:8px;}
+.step-dot{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;}
+.step-dot::before{content:'';position:absolute;top:14px;left:50%;right:-50%;height:2px;background:var(--border);z-index:0;}
+.step-dot:last-child::before{display:none;}
+.step-dot.done::before{background:var(--gold);}
+.step-circle{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--muted);position:relative;z-index:1;transition:all .3s;}
+.step-dot.active .step-circle{border-color:var(--gold);background:var(--gold);color:#000;font-weight:700;}
+.step-dot.done .step-circle{border-color:var(--gold);background:var(--gold);color:#000;}
+.step-name{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;text-align:center;}
+.step-dot.active .step-name{color:var(--gold);}
+.progress-bar-wrap{height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
+.progress-bar-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .4s ease;}
+
+/* CONTENT */
+.content{padding:20px 16px;max-width:480px;margin:0 auto;}
+
+/* STEP CARD */
+.step-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;display:none;}
+.step-card.active{display:block;animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.step-icon{font-size:36px;text-align:center;margin-bottom:12px;}
+.step-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;text-align:center;margin-bottom:6px;}
+.step-desc{font-size:13px;color:var(--muted);text-align:center;line-height:1.6;margin-bottom:18px;}
+
+/* FORM */
+.form-group{margin-bottom:12px;}
+.form-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px;display:block;}
+.form-input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;padding:11px 14px;transition:border-color .2s;outline:none;}
+.form-input:focus{border-color:var(--gold);}
+.form-select{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;padding:11px 14px;outline:none;appearance:none;cursor:pointer;}
+
+/* OPCÕES DE TIPO */
+.tipo-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.tipo-btn{background:var(--surface);border:2px solid var(--border);border-radius:8px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;}
+.tipo-btn:hover{border-color:var(--gold);}
+.tipo-btn.selected{border-color:var(--gold);background:var(--gold-dim);}
+.tipo-icon{font-size:24px;margin-bottom:4px;}
+.tipo-nome{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;}
+.tipo-desc{font-size:10px;color:var(--muted);margin-top:2px;}
+
+/* CHECKLIST ONBOARDING */
+.ob-check-list{display:grid;gap:8px;margin-bottom:16px;}
+.ob-item{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s;}
+.ob-item.done{background:#27ae6018;border-color:#27ae6044;}
+.ob-check{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.ob-item.done .ob-check{background:var(--success);border-color:var(--success);}
+.ob-ck{display:none;color:#fff;font-size:12px;font-weight:700;}
+.ob-item.done .ob-ck{display:block;}
+.ob-text{font-size:13px;font-weight:500;}
+.ob-item.done .ob-text{color:var(--muted);}
+.ob-arrow{margin-left:auto;color:var(--gold);font-size:16px;text-decoration:none;}
+
+/* FEATURE CARDS */
+.feature-list{display:grid;gap:8px;margin-bottom:16px;}
+.feature-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start;}
+.feature-icon{font-size:20px;flex-shrink:0;}
+.feature-title{font-size:13px;font-weight:500;margin-bottom:2px;}
+.feature-desc{font-size:11px;color:var(--muted);line-height:1.4;}
+
+/* BTNS */
+.btn-next{width:100%;background:var(--gold);color:#000;border:none;border-radius:8px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;padding:14px;cursor:pointer;transition:opacity .15s;letter-spacing:.5px;}
+.btn-next:hover{opacity:.85;}
+.btn-skip{width:100%;background:none;border:none;color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;padding:10px;cursor:pointer;margin-top:6px;letter-spacing:1px;text-transform:uppercase;}
+.btn-skip:hover{color:var(--text);}
+
+/* CONCLUSÃO */
+.conclusao{text-align:center;padding:24px 0;}
+.conclusao-icon{font-size:48px;margin-bottom:12px;}
+.conclusao-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--gold);margin-bottom:8px;}
+.conclusao-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:20px;}
+
+/* PRAZO CARD */
+.prazo-info{background:var(--gold-dim);border:1px solid var(--gold);border-radius:8px;padding:12px 14px;display:flex;gap:10px;align-items:center;margin-bottom:14px;}
+.prazo-icon{font-size:20px;flex-shrink:0;}
+.prazo-text{font-size:12px;color:var(--text2);line-height:1.5;}
+.prazo-text strong{color:var(--gold);}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-logo">ÁPEX</div>
+  <div class="hero-title">Bem-vindo à plataforma! 👋</div>
+  <div class="hero-sub">Vamos configurar tudo em menos de 3 minutos</div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-steps">
+    <div class="step-dot active" id="dot-1">
+      <div class="step-circle">1</div>
+      <div class="step-name">Perfil</div>
+    </div>
+    <div class="step-dot" id="dot-2">
+      <div class="step-circle">2</div>
+      <div class="step-name">Equipe</div>
+    </div>
+    <div class="step-dot" id="dot-3">
+      <div class="step-circle">3</div>
+      <div class="step-name">Ferramentas</div>
+    </div>
+    <div class="step-dot" id="dot-4">
+      <div class="step-circle">4</div>
+      <div class="step-name">Prazo</div>
+    </div>
+    <div class="step-dot" id="dot-5">
+      <div class="step-circle">✓</div>
+      <div class="step-name">Pronto</div>
+    </div>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progress-bar" style="width:10%"></div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- STEP 1 — PERFIL -->
+  <div class="step-card active" id="step-1">
+    <div class="step-icon">👤</div>
+    <div class="step-title">Qual é o seu perfil?</div>
+    <div class="step-desc">Isso nos ajuda a mostrar as ferramentas certas para você desde o início.</div>
+
+    <div class="tipo-grid">
+      <div class="tipo-btn" onclick="selectTipo(this,'profissional')">
+        <div class="tipo-icon">👨‍⚕️</div>
+        <div class="tipo-nome">Profissional</div>
+        <div class="tipo-desc">Médico, Enfermeiro, ACS, Dentista, eMulti</div>
+      </div>
+      <div class="tipo-btn" onclick="selectTipo(this,'coordenador')">
+        <div class="tipo-icon">📋</div>
+        <div class="tipo-nome">Coordenador</div>
+        <div class="tipo-desc">Coordenador de UBS ou equipe</div>
+      </div>
+      <div class="tipo-btn" onclick="selectTipo(this,'gestor')">
+        <div class="tipo-icon">🏛️</div>
+        <div class="tipo-nome">Gestor</div>
+        <div class="tipo-desc">Secretário ou gestor municipal</div>
+      </div>
+      <div class="tipo-btn" onclick="selectTipo(this,'consultor')">
+        <div class="tipo-icon">💼</div>
+        <div class="tipo-nome">Consultor</div>
+        <div class="tipo-desc">Consultoria externa ou assessoria</div>
+      </div>
+    </div>
+
+    <button class="btn-next" id="btn-step1" onclick="goStep(2)" disabled>Continuar →</button>
+    <button class="btn-skip" onclick="skipOnboarding()">Pular configuração</button>
+  </div>
+
+  <!-- STEP 2 — EQUIPE -->
+  <div class="step-card" id="step-2">
+    <div class="step-icon">🏥</div>
+    <div class="step-title">Qual é a sua equipe?</div>
+    <div class="step-desc">Vamos deixar o painel mais relevante para você.</div>
+
+    <div class="tipo-grid">
+      <div class="tipo-btn" onclick="selectEquipe(this,'esf')">
+        <div class="tipo-icon">🏥</div>
+        <div class="tipo-nome">eSF / eAP</div>
+        <div class="tipo-desc">Saúde da Família</div>
+      </div>
+      <div class="tipo-btn" onclick="selectEquipe(this,'emulti')">
+        <div class="tipo-icon">🤝</div>
+        <div class="tipo-nome">eMulti</div>
+        <div class="tipo-desc">Multiprofissional</div>
+      </div>
+      <div class="tipo-btn" onclick="selectEquipe(this,'esb')">
+        <div class="tipo-icon">🦷</div>
+        <div class="tipo-nome">eSB</div>
+        <div class="tipo-desc">Saúde Bucal</div>
+      </div>
+      <div class="tipo-btn" onclick="selectEquipe(this,'todas')">
+        <div class="tipo-icon">📊</div>
+        <div class="tipo-nome">Todas</div>
+        <div class="tipo-desc">Gerencio múltiplas equipes</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Nome do município (opcional)</label>
+      <input class="form-input" type="text" id="ob-municipio" placeholder="Ex: Santarém — PA">
+    </div>
+
+    <button class="btn-next" id="btn-step2" onclick="goStep(3)" disabled>Continuar →</button>
+    <button class="btn-skip" onclick="goStep(3)">Pular esta etapa</button>
+  </div>
+
+  <!-- STEP 3 — FERRAMENTAS -->
+  <div class="step-card" id="step-3">
+    <div class="step-icon">🛠️</div>
+    <div class="step-title">Suas primeiras tarefas</div>
+    <div class="step-desc">Clique em cada item para conhecer as ferramentas. Você pode voltar a qualquer momento pelo dashboard.</div>
+
+    <div class="ob-check-list" id="ob-checks"></div>
+
+    <button class="btn-next" onclick="goStep(4)">Continuar →</button>
+    <button class="btn-skip" onclick="goStep(4)">Já conheço, pular</button>
+  </div>
+
+  <!-- STEP 4 — PRAZO -->
+  <div class="step-card" id="step-4">
+    <div class="step-icon">⏰</div>
+    <div class="step-title">Fique de olho nos prazos</div>
+    <div class="step-desc">A regra mais importante do sistema APS — o envio ao Siaps até o dia 10 de cada mês.</div>
+
+    <div class="prazo-info">
+      <div class="prazo-icon">📅</div>
+      <div class="prazo-text">Próximo envio ao Siaps: <strong id="ob-prazo-data">—</strong> <br>Faltam <strong id="ob-prazo-dias" style="color:var(--gold)">—</strong> dias.</div>
+    </div>
+
+    <div class="feature-list">
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div>
+          <div class="feature-title">Preencha o painel todo mês</div>
+          <div class="feature-desc">Insira os resultados do Siaps e calcule sua nota antes do fechamento do quadrimestre.</div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">✦</div>
+        <div>
+          <div class="feature-title">Gere sua estratégia com IA</div>
+          <div class="feature-desc">Após calcular, clique em "Gerar Estratégia" para receber um plano personalizado para atingir Ótimo.</div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📄</div>
+        <div>
+          <div class="feature-title">Exporte o relatório em PDF</div>
+          <div class="feature-desc">Apresente em reunião de gestão com um relatório profissional gerado em segundos.</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-next" onclick="goStep(5)">Entendido, vamos lá! →</button>
+  </div>
+
+  <!-- STEP 5 — CONCLUSÃO -->
+  <div class="step-card" id="step-5">
+    <div class="conclusao">
+      <div class="conclusao-icon">🏆</div>
+      <div class="conclusao-title">Tudo pronto!</div>
+      <div class="conclusao-desc">
+        Sua conta está configurada. Agora é hora de usar as ferramentas e transformar seus dados em estratégia.
+      </div>
+    </div>
+
+    <div class="feature-list">
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <div>
+          <div class="feature-title">Meta: classificação Ótimo</div>
+          <div class="feature-desc">C2 > 8,5 e C3 > 7,5 nos dois componentes.</div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎓</div>
+        <div>
+          <div class="feature-title">Treinamento disponível</div>
+          <div class="feature-desc">Acesse o Centro de Treinamento para orientações específicas do seu cargo.</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-next" onclick="concluirOnboarding()">Acessar o dashboard →</button>
+  </div>
+
+</div>
+
+<script>
+// TEMA
+const savedTheme = localStorage.getItem('apex_theme');
+if (savedTheme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+
+let currentStep = 1;
+let selectedTipo = null;
+let selectedEquipe = null;
+const totalSteps = 5;
+
+// STEP DOTS
+function updateDots(step) {
+  for (let i = 1; i <= totalSteps; i++) {
+    const dot = document.getElementById('dot-' + i);
+    if (!dot) continue;
+    dot.classList.remove('active', 'done');
+    if (i < step) dot.classList.add('done');
+    if (i === step) dot.classList.add('active');
+  }
+  const pct = ((step - 1) / (totalSteps - 1)) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+}
+
+function goStep(n) {
+  document.getElementById('step-' + currentStep).classList.remove('active');
+  currentStep = n;
+  const card = document.getElementById('step-' + n);
+  card.classList.add('active');
+  updateDots(n);
+  if (n === 3) renderChecks();
+  if (n === 4) updatePrazo();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// TIPO
+function selectTipo(btn, tipo) {
+  document.querySelectorAll('.tipo-grid .tipo-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedTipo = tipo;
+  document.getElementById('btn-step1').disabled = false;
+  localStorage.setItem('apex_ob_tipo', tipo);
+}
+
+// EQUIPE
+function selectEquipe(btn, equipe) {
+  // Apenas dentro do step-2
+  document.querySelectorAll('#step-2 .tipo-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedEquipe = equipe;
+  document.getElementById('btn-step2').disabled = false;
+  localStorage.setItem('apex_ob_equipe', equipe);
+}
+
+// CHECKS por equipe
+const checksByEquipe = {
+  esf: [
+    { icon: '🏥', text: 'Abrir o Painel eSF/eAP', url: 'painel-esf.html' },
+    { icon: '📖', text: 'Ler o Guia de Preenchimento eSF', url: 'guia-esf.html' },
+    { icon: '📊', text: 'Acessar o Dashboard Gerencial', url: 'gerencial.html' },
+    { icon: '🎓', text: 'Ver treinamento para Enfermeiro', url: 'treinamento.html' },
+  ],
+  emulti: [
+    { icon: '📊', text: 'Abrir o Painel eMulti', url: 'painel-emulti.html' },
+    { icon: '📖', text: 'Ler o Guia de Preenchimento eMulti', url: 'guia-painel-emulti.html' },
+    { icon: '✅', text: 'Usar o Checklist Mensal', url: 'checklist-emulti.html' },
+    { icon: '🎓', text: 'Ver treinamento para Psicólogo/Fisio', url: 'treinamento.html' },
+  ],
+  esb: [
+    { icon: '🦷', text: 'Abrir o Painel eSB', url: 'painel-esb.html' },
+    { icon: '📖', text: 'Ler o Guia de Preenchimento eSB', url: 'guia-esb.html' },
+    { icon: '🎓', text: 'Ver treinamento para Dentista', url: 'treinamento.html' },
+    { icon: '📊', text: 'Acessar o Dashboard Gerencial', url: 'gerencial.html' },
+  ],
+  todas: [
+    { icon: '📊', text: 'Abrir o Painel eMulti', url: 'painel-emulti.html' },
+    { icon: '🏥', text: 'Abrir o Painel eSF/eAP', url: 'painel-esf.html' },
+    { icon: '🦷', text: 'Abrir o Painel eSB', url: 'painel-esb.html' },
+    { icon: '📈', text: 'Acessar o Dashboard Gerencial', url: 'gerencial.html' },
+  ],
+  default: [
+    { icon: '📊', text: 'Explorar os painéis de monitoramento', url: 'apex-saude.html' },
+    { icon: '🎓', text: 'Acessar o Centro de Treinamento', url: 'treinamento.html' },
+    { icon: '📈', text: 'Conhecer o Dashboard Gerencial', url: 'gerencial.html' },
+    { icon: '⚙️', text: 'Explorar o Painel Admin', url: 'admin.html' },
+  ]
+};
+
+function renderChecks() {
+  const equipe = selectedEquipe || 'default';
+  const checks = checksByEquipe[equipe] || checksByEquipe.default;
+  const list = document.getElementById('ob-checks');
+  list.innerHTML = checks.map((c, i) => `
+    <div class="ob-item" id="obitem-${i}" onclick="markCheck(${i}, '${c.url}')">
+      <div class="ob-check"><span class="ob-ck">✓</span></div>
+      <span class="ob-text">${c.icon} ${c.text}</span>
+      <a class="ob-arrow" href="${c.url}" target="_blank" onclick="event.stopPropagation()">›</a>
+    </div>`).join('');
+}
+
+function markCheck(i) {
+  document.getElementById('obitem-' + i).classList.toggle('done');
+}
+
+// PRAZO
+function updatePrazo() {
+  const hoje = new Date();
+  const dia = hoje.getDate();
+  const proximo10 = new Date(hoje.getFullYear(), hoje.getMonth() + (dia >= 10 ? 1 : 0), 10);
+  const diff = Math.ceil((proximo10 - hoje) / (1000 * 60 * 60 * 24));
+  const meses = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  document.getElementById('ob-prazo-data').textContent =
+    `10 de ${meses[proximo10.getMonth()]}/${proximo10.getFullYear()}`;
+  document.getElementById('ob-prazo-dias').textContent = diff;
+  document.getElementById('ob-prazo-dias').style.color = diff <= 3 ? '#ef4444' : diff <= 7 ? '#f59e0b' : 'var(--gold)';
+}
+
+// SKIP
+function skipOnboarding() {
+  localStorage.setItem('apex_onboarding_done', '1');
+  window.location.href = 'apex-saude.html';
+}
+
+// CONCLUIR
+function concluirOnboarding() {
+  const municipio = document.getElementById('ob-municipio')?.value?.trim();
+  if (municipio) localStorage.setItem('apex_ob_municipio', municipio);
+  localStorage.setItem('apex_onboarding_done', '1');
+  localStorage.setItem('apex_ob_tipo', selectedTipo || 'profissional');
+  localStorage.setItem('apex_ob_equipe', selectedEquipe || 'todas');
+  window.location.href = 'apex-saude.html';
+}
+</script>
+</body>
+</html>
