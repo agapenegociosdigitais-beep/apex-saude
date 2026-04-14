@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia eSF/eAP — ÁPEX Saúde</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f6fb;
+  --white: #ffffff;
+  --ink: #0f172a;
+  --border: #e2e8f0;
+  --border2: #cbd5e1;
+  --muted: #64748b;
+  --muted2: #94a3b8;
+  --blue: #2563eb;
+  --blue-bg: #eff6ff;
+  --blue-border: #93c5fd;
+  --blue-light: #dbeafe;
+  --green: #16a34a;
+  --green-bg: #f0fdf4;
+  --green-border: #86efac;
+  --gold: #d97706;
+  --gold-bg: #fffbeb;
+  --gold-border: #fcd34d;
+  --red: #dc2626;
+  --red-bg: #fef2f2;
+  --red-border: #fca5a5;
+  --purple: #7c3aed;
+  --purple-bg: #f5f3ff;
+  --purple-border: #c4b5fd;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+  padding: 28px 20px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.header::after {
+  content: 'eSF';
+  position: absolute;
+  right: -10px; top: -8px;
+  font-family: 'Syne', sans-serif;
+  font-size: 80px;
+  font-weight: 800;
+  color: #ffffff08;
+  pointer-events: none;
+}
+.header-back {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: #93c5fd;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  opacity: 0.8;
+}
+.header-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: #93c5fd;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.header h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.header h1 span { color: #93c5fd; }
+.header-sub { font-size: 12px; color: #ffffff66; font-style: italic; }
+
+/* NAV */
+.nav-bar {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px #0000000a;
+}
+.nav-item {
+  flex-shrink: 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition: all 0.15s;
+  letter-spacing: 0.5px;
+}
+.nav-item:hover, .nav-item.active { color: var(--blue); border-color: var(--blue-border); background: var(--blue-bg); }
+
+/* CONTENT */
+.content { padding: 0 16px 60px; max-width: 640px; margin: 0 auto; }
+
+/* INTRO */
+.intro-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  margin: 14px 0;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.intro-icon { font-size: 26px; flex-shrink: 0; }
+.intro-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+.intro-text { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+/* SECTION */
+.section { margin-top: 24px; }
+.sec-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* STEP */
+.step {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  align-items: flex-start;
+}
+.step-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #fff;
+}
+.sn-blue { background: var(--blue); }
+.sn-green { background: var(--green); }
+.sn-gold { background: var(--gold); }
+.sn-purple { background: var(--purple); }
+.sn-ink { background: var(--ink); }
+
+.step-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+.step-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+/* BOXES */
+.box {
+  border-radius: 8px;
+  padding: 11px 13px;
+  margin: 10px 0;
+  display: flex;
+  gap: 9px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.box-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+.box.tip { background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green); }
+.box.warn { background: var(--gold-bg); border: 1px solid var(--gold-border); color: #92400e; }
+.box.danger { background: var(--red-bg); border: 1px solid var(--red-border); color: var(--red); }
+.box.info { background: var(--blue-bg); border: 1px solid var(--blue-border); color: var(--blue); }
+.box.special { background: var(--purple-bg); border: 1px solid var(--purple-border); color: var(--purple); }
+
+/* TABELA */
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  font-size: 12px;
+}
+.tabela th {
+  background: var(--ink);
+  color: #fff;
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 8px 10px;
+  text-align: left;
+}
+.tabela td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+  vertical-align: top;
+}
+.tabela tr:last-child td { border-bottom: none; }
+.tabela tr:nth-child(even) td { background: var(--bg); }
+
+.tag {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+.tag-otimo { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+.tag-bom { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
+.tag-suf { background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold-border); }
+.tag-reg { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+.tag-peso { background: var(--purple-bg); color: var(--purple); border: 1px solid var(--purple-border); }
+
+/* INDICADOR GUIDE CARD */
+.ind-guide {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.ind-guide-header {
+  background: var(--ink);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.ind-guide-nome {
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  flex: 1;
+}
+.ind-guide-body { padding: 12px 14px; }
+.ind-guide-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+.ind-guide-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  min-width: 70px;
+  margin-top: 1px;
+}
+.ind-guide-val { color: var(--ink); line-height: 1.4; }
+
+/* EXEMPLO VISUAL */
+.exemplo {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+.exemplo-head {
+  background: var(--ink);
+  padding: 8px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: #93c5fd;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.exemplo-body { padding: 12px 14px; }
+.ex-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+.ex-lbl { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); min-width: 50px; }
+.ex-meses { display: flex; gap: 5px; flex-wrap: wrap; }
+.mes-box { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.mes-n { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--muted2); }
+.mes-v {
+  width: 42px; height: 30px;
+  border-radius: 4px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+}
+.mv-o { background: var(--green-bg); border-color: var(--green-border); color: var(--green); }
+.mv-b { background: var(--blue-bg); border-color: var(--blue-border); color: var(--blue); }
+.mv-s { background: var(--gold-bg); border-color: var(--gold-border); color: var(--gold); }
+.mv-r { background: var(--red-bg); border-color: var(--red-border); color: var(--red); }
+.mv-v { background: var(--bg); border-color: var(--border); color: var(--muted2); }
+.ex-result {
+  background: var(--bg);
+  border-radius: 5px;
+  padding: 8px 10px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+.ex-result-lbl { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); text-transform: uppercase; }
+.ex-result-val { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 800; }
+
+/* FORMULA */
+.formula {
+  background: var(--ink);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 10px 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: #93c5fd;
+  line-height: 1.9;
+}
+.formula .cm { color: #ffffff33; }
+.formula .vl { color: #fcd34d; }
+
+/* QUIZ */
+.quiz {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  margin: 10px 0;
+}
+.quiz-q { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; margin-bottom: 12px; line-height: 1.3; }
+.quiz-opts { display: grid; gap: 7px; }
+.quiz-opt {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 10px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+}
+.quiz-opt:hover { border-color: var(--blue); background: var(--blue-bg); }
+.quiz-opt.ok { background: var(--green-bg); border-color: var(--green-border); color: var(--green); font-weight: 500; }
+.quiz-opt.no { background: var(--red-bg); border-color: var(--red-border); color: var(--red); }
+.quiz-fb { margin-top: 10px; font-size: 12px; display: none; line-height: 1.5; }
+.quiz-fb.show { display: block; }
+.quiz-nx {
+  margin-top: 10px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 8px 14px;
+  cursor: pointer;
+  display: none;
+}
+.quiz-nx.show { display: inline-block; }
+
+/* CHECK RÁPIDO */
+.checks { display: grid; gap: 6px; margin: 10px 0; }
+.ci {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 9px 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ci.done { background: var(--green-bg); border-color: var(--green-border); }
+.ci-box {
+  width: 17px; height: 17px;
+  border: 2px solid var(--border2);
+  border-radius: 3px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+.ci.done .ci-box { background: var(--green); border-color: var(--green); }
+.ci-ck { display: none; color: #fff; font-size: 9px; font-weight: 700; }
+.ci.done .ci-ck { display: block; }
+.ci-txt { font-size: 12px; line-height: 1.4; }
+.ci.done .ci-txt { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--green-border); }
+
+/* FINAL */
+.final {
+  background: var(--ink);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  margin-top: 20px;
+}
+.final-emoji { font-size: 32px; margin-bottom: 8px; }
+.final-title { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; color: #93c5fd; margin-bottom: 5px; }
+.final-text { font-size: 12px; color: #ffffff66; line-height: 1.5; }
+
+/* REVEAL */
+.rv { opacity: 0; transform: translateY(10px); transition: all 0.4s ease; }
+.rv.on { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a class="header-back" href="apex-saude.html">← voltar ao dashboard</a>
+  <div class="header-eyebrow">ÁPEX Saúde · eSF / eAP</div>
+  <h1>Guia de <span>Preenchimento</span></h1>
+  <p class="header-sub">Painel eSF/eAP — 7 indicadores C1 a C7</p>
+</div>
+
+<div class="nav-bar">
+  <a class="nav-item active" href="#intro">Intro</a>
+  <a class="nav-item" href="#passo1">Quadrimestre</a>
+  <a class="nav-item" href="#passo2">C1 a C7</a>
+  <a class="nav-item" href="#especiais">C2 e C3</a>
+  <a class="nav-item" href="#pesos">Pesos</a>
+  <a class="nav-item" href="#compii">Comp. II</a>
+  <a class="nav-item" href="#quiz">Quiz</a>
+  <a class="nav-item" href="#erros">Erros</a>
+</div>
+
+<div class="content">
+
+<!-- INTRO -->
+<div id="intro">
+  <div class="intro-card rv">
+    <div class="intro-icon">🏥</div>
+    <div>
+      <div class="intro-title">Painel eSF / eAP — o que ele faz?</div>
+      <div class="intro-text">Calcula automaticamente as notas dos Componentes II e III para equipes de Saúde da Família (eSF) e Atenção Primária (eAP), com base na metodologia oficial da NT 6/2025.</div>
+    </div>
+  </div>
+  <div class="intro-card rv">
+    <div class="intro-icon">📊</div>
+    <div>
+      <div class="intro-title">7 indicadores com pesos diferentes</div>
+      <div class="intro-text">C1 a C7 com pesos de 1 a 2. A nota final é a soma ponderada — indicadores com peso 2 valem o dobro no resultado.</div>
+    </div>
+  </div>
+
+  <div class="section rv">
+    <div class="sec-label">Visão geral dos indicadores</div>
+    <table class="tabela">
+      <tr><th>Código</th><th>Indicador</th><th>Peso</th></tr>
+      <tr><td><span class="tag tag-bom">C1</span></td><td>Mais Acesso à APS</td><td><span class="tag tag-peso">1</span></td></tr>
+      <tr><td><span class="tag tag-bom">C2</span></td><td>Cuidado no Desenvolvimento Infantil ★</td><td><span class="tag tag-peso">2</span></td></tr>
+      <tr><td><span class="tag tag-bom">C3</span></td><td>Cuidado na Gestação e Puerpério ★</td><td><span class="tag tag-peso">2</span></td></tr>
+      <tr><td><span class="tag tag-bom">C4</span></td><td>Cuidado da Pessoa com Diabetes</td><td><span class="tag tag-peso">1</span></td></tr>
+      <tr><td><span class="tag tag-bom">C5</span></td><td>Cuidado da Pessoa com Hipertensão</td><td><span class="tag tag-peso">1</span></td></tr>
+      <tr><td><span class="tag tag-bom">C6</span></td><td>Cuidado da Pessoa Idosa</td><td><span class="tag tag-peso">1</span></td></tr>
+      <tr><td><span class="tag tag-bom">C7</span></td><td>Cuidado da Mulher na Prevenção do Câncer</td><td><span class="tag tag-peso">2</span></td></tr>
+    </table>
+    <div class="box special rv">
+      <span class="box-icon">★</span>
+      <div>C2 e C3 têm regra especial de contagem de meses. Veja na seção "C2 e C3" abaixo.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PASSO 1 -->
+<div id="passo1" class="section rv">
+  <div class="sec-label">Passo 1</div>
+  <div class="step">
+    <div class="step-num sn-ink">1</div>
+    <div>
+      <div class="step-title">Selecione o quadrimestre</div>
+      <div class="step-desc">Clique no botão do período que está avaliando antes de preencher qualquer dado.</div>
+    </div>
+  </div>
+  <table class="tabela rv">
+    <tr><th>Botão</th><th>Meses incluídos</th></tr>
+    <tr><td><strong>Jan–Abr</strong></td><td>Janeiro, Fevereiro, Março, Abril</td></tr>
+    <tr><td><strong>Mai–Ago</strong></td><td>Maio, Junho, Julho, Agosto</td></tr>
+    <tr><td><strong>Set–Dez</strong></td><td>Setembro, Outubro, Novembro, Dezembro</td></tr>
+  </table>
+  <div class="box warn rv"><span class="box-icon">⚠</span><div>Trocar o quadrimestre depois de preencher <strong>apaga todos os dados</strong>. Escolha primeiro, preencha depois.</div></div>
+</div>
+
+<!-- PASSO 2 — C1 a C7 -->
+<div id="passo2" class="section rv">
+  <div class="sec-label">Passo 2 — Indicadores C1 a C7</div>
+  <div class="step">
+    <div class="step-num sn-blue">2</div>
+    <div>
+      <div class="step-title">Preencha o % de cada indicador por mês</div>
+      <div class="step-desc">Para cada indicador C1 a C7, informe o percentual obtido no Siaps em cada mês do quadrimestre. Escala de 0 a 100.</div>
+    </div>
+  </div>
+
+  <div class="box info rv"><span class="box-icon">ℹ</span><div>Os valores vêm do <strong>Siaps</strong> — Sistema de Informação para a Atenção Primária à Saúde — na tela de resultados mensais da sua equipe.</div></div>
+
+  <!-- Guia por indicador -->
+  <div class="ind-guide rv">
+    <div class="ind-guide-header">
+      <div class="ind-guide-nome">C1. Mais Acesso à APS</div>
+      <span class="tag tag-peso">Peso 1</span>
+    </div>
+    <div class="ind-guide-body">
+      <div class="ind-guide-row"><span class="ind-guide-lbl">O que mede</span><span class="ind-guide-val">Proporção de pessoas da área que realizaram ao menos uma consulta na APS nos últimos 30 dias</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">De onde tirar</span><span class="ind-guide-val">Siaps → resultados mensais → C1</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Período</span><span class="ind-guide-val">Últimos 30 dias (monitoramento mensal)</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Meta Ótimo</span><span class="ind-guide-val">75% ou mais em todos os meses</span></div>
+    </div>
+  </div>
+
+  <div class="ind-guide rv">
+    <div class="ind-guide-header">
+      <div class="ind-guide-nome">C4. Cuidado da Pessoa com Diabetes</div>
+      <span class="tag tag-peso">Peso 1</span>
+    </div>
+    <div class="ind-guide-body">
+      <div class="ind-guide-row"><span class="ind-guide-lbl">O que mede</span><span class="ind-guide-val">% de pessoas com diabetes com acompanhamento adequado na APS</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">De onde tirar</span><span class="ind-guide-val">Siaps → resultados mensais → C4</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Período</span><span class="ind-guide-val">Últimos 12 meses</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Meta Ótimo</span><span class="ind-guide-val">75% ou mais</span></div>
+    </div>
+  </div>
+
+  <div class="ind-guide rv">
+    <div class="ind-guide-header">
+      <div class="ind-guide-nome">C5. Cuidado da Pessoa com Hipertensão</div>
+      <span class="tag tag-peso">Peso 1</span>
+    </div>
+    <div class="ind-guide-body">
+      <div class="ind-guide-row"><span class="ind-guide-lbl">O que mede</span><span class="ind-guide-val">% de pessoas com hipertensão com acompanhamento adequado</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">De onde tirar</span><span class="ind-guide-val">Siaps → resultados mensais → C5</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Período</span><span class="ind-guide-val">Últimos 12 meses</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Meta Ótimo</span><span class="ind-guide-val">75% ou mais</span></div>
+    </div>
+  </div>
+
+  <div class="ind-guide rv">
+    <div class="ind-guide-header">
+      <div class="ind-guide-nome">C6. Cuidado da Pessoa Idosa</div>
+      <span class="tag tag-peso">Peso 1</span>
+    </div>
+    <div class="ind-guide-body">
+      <div class="ind-guide-row"><span class="ind-guide-lbl">O que mede</span><span class="ind-guide-val">% de idosos com caderneta atualizada e acompanhamento regular</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">De onde tirar</span><span class="ind-guide-val">Siaps → resultados mensais → C6</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Período</span><span class="ind-guide-val">Últimos 12 meses</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Meta Ótimo</span><span class="ind-guide-val">75% ou mais</span></div>
+    </div>
+  </div>
+
+  <div class="ind-guide rv">
+    <div class="ind-guide-header">
+      <div class="ind-guide-nome">C7. Cuidado da Mulher na Prevenção do Câncer</div>
+      <span class="tag tag-peso">Peso 2</span>
+    </div>
+    <div class="ind-guide-body">
+      <div class="ind-guide-row"><span class="ind-guide-lbl">O que mede</span><span class="ind-guide-val">% de mulheres com colpocitologia e/ou mamografia em dia</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">De onde tirar</span><span class="ind-guide-val">Siaps → resultados mensais → C7</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Período</span><span class="ind-guide-val">Últimos 60 meses (5 anos)</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Meta Ótimo</span><span class="ind-guide-val">75% ou mais · Peso 2 — vale o dobro!</span></div>
+    </div>
+  </div>
+
+  <!-- Tabela de conceitos -->
+  <div class="sec-label rv" style="margin-top:16px;">Conversão de % em conceito</div>
+  <table class="tabela rv">
+    <tr><th>% obtido no mês</th><th>Conceito</th><th>Pontuação</th></tr>
+    <tr><td>75% ou mais</td><td><span class="tag tag-otimo">Ótimo</span></td><td>1,00</td></tr>
+    <tr><td>50% a 74,9%</td><td><span class="tag tag-bom">Bom</span></td><td>0,75</td></tr>
+    <tr><td>25% a 49,9%</td><td><span class="tag tag-suf">Suficiente</span></td><td>0,50</td></tr>
+    <tr><td>Abaixo de 25%</td><td><span class="tag tag-reg">Regular</span></td><td>0,25</td></tr>
+  </table>
+</div>
+
+<!-- ESPECIAIS C2 e C3 -->
+<div id="especiais" class="section rv">
+  <div class="sec-label">Atenção especial — C2 e C3</div>
+
+  <div class="box special rv">
+    <span class="box-icon">★</span>
+    <div><strong>C2 e C3 têm regra exclusiva:</strong> o resultado quadrimestral considera apenas os meses em que houve crianças completando 2 anos (C2) ou gestações atingindo o 42° dia de puerpério (C3).</div>
+  </div>
+
+  <div class="ind-guide rv">
+    <div class="ind-guide-header">
+      <div class="ind-guide-nome">C2. Cuidado no Desenvolvimento Infantil</div>
+      <span class="tag tag-peso">Peso 2</span>
+    </div>
+    <div class="ind-guide-body">
+      <div class="ind-guide-row"><span class="ind-guide-lbl">O que mede</span><span class="ind-guide-val">% de crianças que completaram 2 anos com acompanhamento completo de desenvolvimento</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Meses válidos</span><span class="ind-guide-val">Apenas os meses em que houve crianças completando exatamente 2 anos</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Se não houve</span><span class="ind-guide-val">Deixe o campo do mês em branco — ele não entra na média</span></div>
+    </div>
+  </div>
+
+  <div class="ind-guide rv">
+    <div class="ind-guide-header">
+      <div class="ind-guide-nome">C3. Cuidado na Gestação e Puerpério</div>
+      <span class="tag tag-peso">Peso 2</span>
+    </div>
+    <div class="ind-guide-body">
+      <div class="ind-guide-row"><span class="ind-guide-lbl">O que mede</span><span class="ind-guide-val">% de gestações que atingiram o 42° dia de puerpério com acompanhamento completo</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Meses válidos</span><span class="ind-guide-val">Apenas os meses em que gestações encerraram o puerpério (42° dia)</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Se não houve</span><span class="ind-guide-val">Deixe o campo em branco</span></div>
+    </div>
+  </div>
+
+  <div class="exemplo rv">
+    <div class="exemplo-head">📋 Exemplo — C2 com meses válidos e inválidos</div>
+    <div class="exemplo-body">
+      <div class="ex-row">
+        <span class="ex-lbl">C2</span>
+        <div class="ex-meses">
+          <div class="mes-box"><span class="mes-n">Jan</span><div class="mes-v mv-o">80</div></div>
+          <div class="mes-box"><span class="mes-n">Fev</span><div class="mes-v mv-v">—</div></div>
+          <div class="mes-box"><span class="mes-n">Mar</span><div class="mes-v mv-o">85</div></div>
+          <div class="mes-box"><span class="mes-n">Abr</span><div class="mes-v mv-v">—</div></div>
+        </div>
+      </div>
+      <div class="ex-result">
+        <span class="ex-result-lbl">Média (jan + mar)</span>
+        <span class="ex-result-val" style="color:var(--green)">82,5% → Ótimo</span>
+      </div>
+      <p style="font-size:11px;color:var(--muted);margin-top:6px;">Fevereiro e Abril ficaram em branco — não houve crianças completando 2 anos nesses meses.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PESOS -->
+<div id="pesos" class="section rv">
+  <div class="sec-label">Passo 3 — Entendendo os pesos</div>
+  <div class="step">
+    <div class="step-num sn-purple">3</div>
+    <div>
+      <div class="step-title">Nota Final = soma de (conceito × peso) de cada indicador</div>
+      <div class="step-desc">Total de pontos possível: 10. A nota final determina a classificação para o incentivo financeiro.</div>
+    </div>
+  </div>
+
+  <div class="formula rv">
+<span class="cm"># Fórmula da Nota Final C3</span>
+Nota = (C1×<span class="vl">1</span>) + (C2×<span class="vl">2</span>) + (C3×<span class="vl">2</span>) + (C4×<span class="vl">1</span>)
+     + (C5×<span class="vl">1</span>) + (C6×<span class="vl">1</span>) + (C7×<span class="vl">2</span>)
+
+<span class="cm"># Exemplo com todos em Ótimo (1,00):</span>
+Nota = 1+2+2+1+1+1+2 = <span class="vl">10,0</span> → Ótimo ✓
+
+<span class="cm"># Exemplo realista:</span>
+C1=Bom(0,75×1) + C2=Ótimo(1×2) + C3=Ótimo(1×2)
++ C4=Suf(0,5×1) + C5=Reg(0,25×1) + C6=Ótimo(1×1)
++ C7=Ótimo(1×2) = <span class="vl">8,5</span> → Bom
+  </div>
+
+  <table class="tabela rv">
+    <tr><th>Nota Final C3</th><th>Classificação</th><th>Incentivo</th></tr>
+    <tr><td>Acima de 7,5</td><td><span class="tag tag-otimo">Ótimo</span></td><td>100%</td></tr>
+    <tr><td>5,0 a 7,5</td><td><span class="tag tag-bom">Bom</span></td><td>75%</td></tr>
+    <tr><td>2,6 a 4,9</td><td><span class="tag tag-suf">Suficiente</span></td><td>50%</td></tr>
+    <tr><td>Até 2,5</td><td><span class="tag tag-reg">Regular</span></td><td>25%</td></tr>
+  </table>
+
+  <div class="box tip rv"><span class="box-icon">💡</span><div>C2, C3 e C7 têm <strong>Peso 2</strong> — foque neles primeiro. Se os três ficarem em Ótimo, você já garante 6 dos 10 pontos possíveis.</div></div>
+</div>
+
+<!-- COMP II -->
+<div id="compii" class="section rv">
+  <div class="sec-label">Passo 4 — Componente II</div>
+  <div class="step">
+    <div class="step-num sn-blue">4</div>
+    <div>
+      <div class="step-title">Preencha Cadastro, Acompanhamento e Satisfação</div>
+      <div class="step-desc">Todos usam escala de 0 a 10. Os valores vêm do Siaps — nota mensal por dimensão.</div>
+    </div>
+  </div>
+
+  <table class="tabela rv">
+    <tr><th>Campo</th><th>O que informar</th><th>Escala</th></tr>
+    <tr><td><strong>Dimensão Cadastro</strong></td><td>Nota mensal do Siaps para Cadastro</td><td>0 a 10</td></tr>
+    <tr><td><strong>Dimensão Acompanhamento</strong></td><td>Nota mensal do Siaps para Acompanhamento</td><td>0 a 10</td></tr>
+    <tr><td><strong>Bônus Satisfação</strong></td><td>Nota de satisfação do mês (o maior valor do quad. é usado)</td><td>0 a 10</td></tr>
+  </table>
+
+  <table class="tabela rv">
+    <tr><th>Nota Final C2</th><th>Classificação</th></tr>
+    <tr><td>Acima de 8,5</td><td><span class="tag tag-otimo">Ótimo</span></td></tr>
+    <tr><td>7,0 a 8,5</td><td><span class="tag tag-bom">Bom</span></td></tr>
+    <tr><td>5,0 a 6,9</td><td><span class="tag tag-suf">Suficiente</span></td></tr>
+    <tr><td>Abaixo de 5</td><td><span class="tag tag-reg">Regular</span></td></tr>
+  </table>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="section">
+  <div class="sec-label rv">Quiz rápido</div>
+
+  <div class="quiz rv" id="q1">
+    <div class="quiz-q">1. C7 (Prevenção do Câncer) tem Peso 2 e ficou com média de 80% (Ótimo). Quantos pontos ele contribui para a nota final?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="resp('q1',this,false,'Não. 1,0 seria se o peso fosse 1. Ótimo (1,0) × Peso 2 = 2,0.')">1,0 ponto</button>
+      <button class="quiz-opt" onclick="resp('q1',this,true,'✓ Correto! Conceito Ótimo = 1,0 × Peso 2 = 2,0 pontos.')">2,0 pontos</button>
+      <button class="quiz-opt" onclick="resp('q1',this,false,'Não. 80% seria o percentual, não os pontos ponderados.')">0,8 ponto</button>
+    </div>
+    <div class="quiz-fb" id="fb-q1"></div>
+    <button class="quiz-nx" id="nx-q1" onclick="document.getElementById('q2').scrollIntoView({behavior:'smooth'})">Próxima →</button>
+  </div>
+
+  <div class="quiz rv" id="q2">
+    <div class="quiz-q">2. Em fevereiro não houve nenhuma criança completando 2 anos. O que fazer no campo C2 de fevereiro?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="resp('q2',this,false,'Não. Zero prejudica a média. Meses sem evento devem ficar em branco.')">Colocar 0%</button>
+      <button class="quiz-opt" onclick="resp('q2',this,false,'Não. 100% seria incorreto e inflaria a média.')">Colocar 100%</button>
+      <button class="quiz-opt" onclick="resp('q2',this,true,'✓ Correto! Deixe em branco — o painel calcula a média só com os meses válidos.')">Deixar em branco</button>
+    </div>
+    <div class="quiz-fb" id="fb-q2"></div>
+    <button class="quiz-nx" id="nx-q2" onclick="document.getElementById('erros').scrollIntoView({behavior:'smooth'})">Ver erros comuns →</button>
+  </div>
+</div>
+
+<!-- ERROS -->
+<div id="erros" class="section rv">
+  <div class="sec-label">Erros mais comuns</div>
+  <div class="box danger rv"><span class="box-icon">❌</span><div><strong>Colocar 0 em vez de deixar em branco</strong> nos meses sem evento de C2 ou C3. Zero entra na média e prejudica muito o resultado.</div></div>
+  <div class="box danger rv"><span class="box-icon">❌</span><div><strong>Confundir a escala:</strong> C1–C7 usam percentual (0–100). Cadastro, Acompanhamento e Satisfação usam nota (0–10). Não troque.</div></div>
+  <div class="box danger rv"><span class="box-icon">❌</span><div><strong>Não clicar em Calcular.</strong> O painel não atualiza sozinho — sempre clique em "↻ Calcular Notas Finais" após preencher.</div></div>
+  <div class="box danger rv"><span class="box-icon">❌</span><div><strong>Ignorar C7.</strong> Ele tem Peso 2 e janela de 60 meses — muitas equipes deixam de lado e perdem 2 pontos preciosos.</div></div>
+
+  <div class="sec-label rv" style="margin-top:16px;">Checklist de preenchimento</div>
+  <div class="checks">
+    <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Selecionei o quadrimestre correto</span></div>
+    <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Preenchi C1 a C7 com % do Siaps (0–100)</span></div>
+    <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Deixei em branco os meses sem evento em C2 e C3</span></div>
+    <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Preenchi Cadastro e Acompanhamento com nota 0–10</span></div>
+    <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Preenchi Satisfação em pelo menos um mês</span></div>
+    <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Cliquei em "↻ Calcular Notas Finais"</span></div>
+    <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Li os alertas e identifiquei o que melhorar</span></div>
+  </div>
+</div>
+
+<div class="final rv">
+  <div class="final-emoji">🏥</div>
+  <div class="final-title">Pronto para usar o painel eSF/eAP!</div>
+  <div class="final-text">Foque em C2, C3 e C7 (Peso 2) para maximizar a nota.<br>Use o painel todo mês — não só no fechamento do quadrimestre.</div>
+</div>
+
+</div>
+
+<script>
+function resp(qid, btn, ok, fb) {
+  const card = document.getElementById(qid);
+  if (card.dataset.r) return;
+  card.dataset.r = '1';
+  btn.classList.add(ok ? 'ok' : 'no');
+  card.querySelectorAll('.quiz-opt').forEach(o => { o.disabled = true; o.style.cursor = 'default'; });
+  const f = document.getElementById('fb-' + qid);
+  f.textContent = fb;
+  f.style.color = ok ? 'var(--green)' : 'var(--red)';
+  f.classList.add('show');
+  const nx = document.getElementById('nx-' + qid);
+  if (nx) nx.classList.add('show');
+}
+function tc(el) { el.classList.toggle('done'); }
+
+const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) x.target.classList.add('on'); }), { threshold: 0.08 });
+document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+const navLinks = document.querySelectorAll('.nav-item');
+const secs = ['intro','passo1','passo2','especiais','pesos','compii','quiz','erros'];
+const secObs = new IntersectionObserver(e => {
+  e.forEach(x => { if (x.isIntersecting) navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href')==='#'+x.target.id)); });
+}, { threshold: 0.2 });
+secs.forEach(id => { const el = document.getElementById(id); if (el) secObs.observe(el); });
+</script>
+</body>
+</html>

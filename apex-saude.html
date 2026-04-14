@@ -756,16 +756,32 @@ body {
       <div class="tool-card" onclick="window.open('painel-emulti.html','_blank')">
         <div class="tool-icon">📊</div>
         <div class="tool-body">
-          <div class="tool-name">Painel de Monitoramento</div>
-          <div class="tool-desc">Insira os dados mensais e calcule sua nota final</div>
+          <div class="tool-name">Painel eMulti</div>
+          <div class="tool-desc">Monitore M1 e M2 — calcule a nota final</div>
+        </div>
+        <span class="tool-arrow">›</span>
+      </div>
+      <div class="tool-card" onclick="window.open('painel-esf.html','_blank')">
+        <div class="tool-icon">🏥</div>
+        <div class="tool-body">
+          <div class="tool-name">Painel eSF / eAP</div>
+          <div class="tool-desc">7 indicadores C1 a C7 com pesos da NT 6/2025</div>
+        </div>
+        <span class="tool-arrow">›</span>
+      </div>
+      <div class="tool-card" onclick="window.open('painel-esb.html','_blank')">
+        <div class="tool-icon">🦷</div>
+        <div class="tool-body">
+          <div class="tool-name">Painel eSB</div>
+          <div class="tool-desc">6 indicadores B1 a B6 — Saúde Bucal</div>
         </div>
         <span class="tool-arrow">›</span>
       </div>
       <div class="tool-card" onclick="window.open('checklist-emulti.html','_blank')">
         <div class="tool-icon">✅</div>
         <div class="tool-body">
-          <div class="tool-name">Checklist Operacional</div>
-          <div class="tool-desc">Rotina diária, semanal e mensal para atingir Ótimo</div>
+          <div class="tool-name">Checklist Mensal eMulti</div>
+          <div class="tool-desc">Rotina diária, semanal e mensal</div>
         </div>
         <span class="tool-arrow">›</span>
       </div>
@@ -779,13 +795,22 @@ body {
 
     <!-- FERRAMENTAS -->
     <div class="dash-tab" id="dt-ferramentas">
-      <div class="sec-head">Ferramentas disponíveis</div>
+      <div class="sec-head">eMulti — Multiprofissional</div>
 
       <div class="tool-card" onclick="window.open('painel-emulti.html','_blank')">
         <div class="tool-icon">📊</div>
         <div class="tool-body">
-          <div class="tool-name">Painel de Monitoramento eMulti</div>
-          <div class="tool-desc">Calcule Componentes II e III com alertas automáticos por mês</div>
+          <div class="tool-name">Painel eMulti</div>
+          <div class="tool-desc">Monitore M1 e M2 com cálculo automático da nota final</div>
+        </div>
+        <span class="tool-arrow">›</span>
+      </div>
+
+      <div class="tool-card" onclick="window.open('guia-painel-emulti.html','_blank')">
+        <div class="tool-icon">📖</div>
+        <div class="tool-body">
+          <div class="tool-name">Guia de Preenchimento eMulti</div>
+          <div class="tool-desc">Passo a passo completo para usar o painel corretamente</div>
         </div>
         <span class="tool-arrow">›</span>
       </div>
@@ -799,34 +824,47 @@ body {
         <span class="tool-arrow">›</span>
       </div>
 
-      <div class="tool-card" onclick="window.open('guia-painel-emulti.html','_blank')">
-        <div class="tool-icon">📖</div>
+      <div class="sec-head" style="margin-top:16px;">eSF / eAP — Saúde da Família</div>
+
+      <div class="tool-card" onclick="window.open('painel-esf.html','_blank')">
+        <div class="tool-icon">🏥</div>
         <div class="tool-body">
-          <div class="tool-name">Guia de Preenchimento</div>
-          <div class="tool-desc">Aprenda a preencher o painel corretamente passo a passo</div>
+          <div class="tool-name">Painel eSF / eAP</div>
+          <div class="tool-desc">7 indicadores C1 a C7 com pesos da NT 6/2025</div>
         </div>
         <span class="tool-arrow">›</span>
       </div>
 
-      <div class="tool-card" onclick="showToast('Em breve: Painel para eSF/eAP')">
-        <div class="tool-icon">🏥</div>
+      <div class="tool-card" onclick="window.open('guia-esf.html','_blank')">
+        <div class="tool-icon">📖</div>
         <div class="tool-body">
-          <div class="tool-name">Painel eSF / eAP</div>
-          <div class="tool-desc">Monitoramento completo para equipes de Saúde da Família</div>
+          <div class="tool-name">Guia de Preenchimento eSF / eAP</div>
+          <div class="tool-desc">Como preencher cada indicador C1 a C7 corretamente</div>
         </div>
-        <span class="tool-arrow" style="color:var(--muted)">›</span>
+        <span class="tool-arrow">›</span>
       </div>
 
-      <div class="tool-card" onclick="showToast('Em breve: Painel para eSB')">
+      <div class="sec-head" style="margin-top:16px;">eSB — Saúde Bucal</div>
+
+      <div class="tool-card" onclick="window.open('painel-esb.html','_blank')">
         <div class="tool-icon">🦷</div>
         <div class="tool-body">
-          <div class="tool-name">Painel eSB – Saúde Bucal</div>
-          <div class="tool-desc">Indicadores B1 a B6 com cálculo automático da nota final</div>
+          <div class="tool-name">Painel eSB</div>
+          <div class="tool-desc">6 indicadores B1 a B6 com cálculo automático da nota final</div>
         </div>
-        <span class="tool-arrow" style="color:var(--muted)">›</span>
+        <span class="tool-arrow">›</span>
       </div>
 
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:8px;text-align:center;">
+      <div class="tool-card" onclick="window.open('guia-esb.html','_blank')">
+        <div class="tool-icon">📖</div>
+        <div class="tool-body">
+          <div class="tool-name">Guia de Preenchimento eSB</div>
+          <div class="tool-desc">Inclui explicação do B3 invertido (Taxa de Exodontias)</div>
+        </div>
+        <span class="tool-arrow">›</span>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:16px;text-align:center;">
         <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;">NOVAS FERRAMENTAS A CADA QUADRIMESTRE</div>
       </div>
     </div>

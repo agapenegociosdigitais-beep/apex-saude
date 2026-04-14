@@ -1,812 +1,540 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Painel eMulti – APS</title>
+<title>Painel eMulti — ÁPEX Saúde</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0d0f14;
-    --surface: #14171f;
-    --card: #1a1e2a;
-    --border: #252a38;
-    --otimo: #00e676;
-    --bom: #69f0ae;
-    --suficiente: #ffd740;
-    --regular: #ff5252;
-    --accent: #00e676;
-    --text: #e8eaf0;
-    --muted: #6b7280;
-    --highlight: #00e676;
-  }
+[data-theme="dark"] {
+  --bg:#0d0f14;--surface:#14171f;--card:#1a1e2a;--border:#252a38;
+  --text:#e8eaf0;--text2:#a0aec0;--muted:#6b7280;
+  --theme-icon:🌙;
+}
+[data-theme="light"] {
+  --bg:#f4f6fb;--surface:#ffffff;--card:#ffffff;--border:#e2e8f0;
+  --text:#1a1a2e;--text2:#4a5568;--muted:#94a3b8;
+  --theme-icon:☀️;
+}
+:root {
+  --accent:#00e676;--otimo:#00e676;--bom:#69f0ae;
+  --suficiente:#ffd740;--regular:#ff5252;
+  --ai:#a78bfa;--ai-bg:#a78bfa14;--ai-border:#a78bfa44;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;min-height:100vh;padding:0 0 60px;transition:background .3s,color .3s;}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+/* TOPBAR */
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:200;}
+.topbar-back{font-family:'DM Mono',monospace;font-size:9px;color:var(--accent);text-decoration:none;text-transform:uppercase;letter-spacing:1px;opacity:.8;}
+.topbar-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--text);flex:1;}
+.topbar-title span{color:var(--accent);}
+.theme-btn{background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:16px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-shrink:0;}
+.theme-btn:hover{border-color:var(--accent);}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    min-height: 100vh;
-    padding: 24px 16px 48px;
-  }
+/* HEADER */
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 16px;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent);}
+.header-tag{font-family:'DM Mono',monospace;font-size:9px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;}
+.header-sub{font-size:11px;color:var(--muted);}
 
-  /* Header */
-  .header {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    margin-bottom: 28px;
-    border-left: 3px solid var(--accent);
-    padding-left: 14px;
-  }
-  .header-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--accent);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-  .header h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: 22px;
-    font-weight: 800;
-    color: #fff;
-    line-height: 1.2;
-  }
-  .header p {
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 2px;
-  }
+/* PERIOD */
+.period-bar{display:flex;gap:6px;padding:10px 16px;background:var(--surface);border-bottom:1px solid var(--border);align-items:center;flex-wrap:wrap;}
+.period-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+.period-btn{background:var(--card);border:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;padding:5px 12px;border-radius:4px;cursor:pointer;transition:all .15s;}
+.period-btn.active{background:var(--accent);border-color:var(--accent);color:#000;font-weight:600;}
+.period-btn:hover:not(.active){border-color:var(--accent);color:var(--accent);}
 
-  /* Quadrimestre selector */
-  .period-bar {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-  .period-bar label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    align-self: center;
-    margin-right: 4px;
-  }
-  .period-btn {
-    background: var(--card);
-    border: 1px solid var(--border);
-    color: var(--muted);
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .period-btn.active {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #000;
-    font-weight: 500;
-  }
-  .period-btn:hover:not(.active) {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
+/* NOTAS */
+.notas-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 16px 0;}
+.nota-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;position:relative;overflow:hidden;transition:background .3s;}
+.nota-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.nota-card.c2::before{background:linear-gradient(90deg,var(--otimo),#69f0ae);}
+.nota-card.c3::before{background:linear-gradient(90deg,#40c4ff,var(--otimo));}
+.nota-label{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;}
+.nota-valor{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;line-height:1;margin-bottom:3px;}
+.nota-card.c2 .nota-valor{color:var(--otimo);}
+.nota-card.c3 .nota-valor{color:#40c4ff;}
+.nota-meta{font-size:10px;color:var(--muted);}
+.nota-meta span{color:var(--accent);}
+.ring-wrap{position:absolute;right:10px;top:50%;transform:translateY(-40%);}
+.ring-wrap svg{width:44px;height:44px;}
+.ring-bg{fill:none;stroke:var(--border);stroke-width:4;}
+.ring-fg{fill:none;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset 1s ease;}
 
-  /* Nota badges */
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 2px 8px;
-    border-radius: 3px;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  .badge-otimo { background: #00e67622; color: var(--otimo); border: 1px solid #00e67644; }
-  .badge-bom { background: #69f0ae22; color: var(--bom); border: 1px solid #69f0ae44; }
-  .badge-suficiente { background: #ffd74022; color: var(--suficiente); border: 1px solid #ffd74044; }
-  .badge-regular { background: #ff525222; color: var(--regular); border: 1px solid #ff525244; }
+/* CONTENT */
+.content{padding:12px 16px;}
+.sec-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin:16px 0 8px;display:flex;align-items:center;gap:8px;}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
 
-  /* Nota final cards */
-  .notas-finais {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 20px;
-  }
-  .nota-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px;
-    position: relative;
-    overflow: hidden;
-  }
-  .nota-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-  }
-  .nota-card.comp2::before { background: linear-gradient(90deg, #00e676, #69f0ae); }
-  .nota-card.comp3::before { background: linear-gradient(90deg, #40c4ff, #00e676); }
-  .nota-card-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 8px;
-  }
-  .nota-valor {
-    font-family: 'Syne', sans-serif;
-    font-size: 36px;
-    font-weight: 800;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-  .nota-card.comp2 .nota-valor { color: var(--otimo); }
-  .nota-card.comp3 .nota-valor { color: #40c4ff; }
-  .nota-meta {
-    font-size: 10px;
-    color: var(--muted);
-  }
-  .nota-meta span {
-    color: var(--accent);
-  }
+/* INDICADORES */
+.ind-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;transition:background .3s;}
+.ind-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;gap:8px;}
+.ind-nome{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--text);flex:1;line-height:1.3;}
+.ind-peso{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);background:var(--surface);border:1px solid var(--border);padding:2px 6px;border-radius:3px;white-space:nowrap;}
+.meses-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:7px;}
+.mes-wrap{display:flex;flex-direction:column;gap:2px;}
+.mes-lbl{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);text-align:center;}
+.mes-inp{background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;padding:6px 4px;text-align:center;width:100%;-moz-appearance:textfield;transition:border-color .15s,background .3s;}
+.mes-inp::-webkit-outer-spin-button,.mes-inp::-webkit-inner-spin-button{-webkit-appearance:none;}
+.mes-inp:focus{outline:none;border-color:var(--accent);}
+.mes-inp.otimo{border-color:var(--otimo);color:var(--otimo);}
+.mes-inp.bom{border-color:var(--bom);color:var(--bom);}
+.mes-inp.suficiente{border-color:var(--suficiente);color:var(--suficiente);}
+.mes-inp.regular{border-color:var(--regular);color:var(--regular);}
+.ind-result{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border-radius:4px;padding:5px 10px;}
+.result-lbl{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+.result-val{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;}
+.badge{font-family:'DM Mono',monospace;font-size:8px;padding:2px 6px;border-radius:3px;text-transform:uppercase;letter-spacing:.5px;}
+.badge-otimo{background:#00e67622;color:var(--otimo);border:1px solid #00e67644;}
+.badge-bom{background:#69f0ae22;color:var(--bom);border:1px solid #69f0ae44;}
+.badge-suficiente{background:#ffd74022;color:var(--suficiente);border:1px solid #ffd74044;}
+.badge-regular{background:#ff525222;color:var(--regular);border:1px solid #ff525244;}
+.prog-wrap{margin-top:5px;height:2px;background:var(--border);border-radius:1px;overflow:hidden;}
+.prog-bar{height:100%;border-radius:1px;transition:width .5s ease;}
 
-  /* Progress ring */
-  .ring-wrap {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-40%);
-  }
-  .ring-wrap svg { width: 48px; height: 48px; }
-  .ring-bg { fill: none; stroke: var(--border); stroke-width: 4; }
-  .ring-fg { fill: none; stroke-width: 4; stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
-  .comp2 .ring-fg { stroke: var(--otimo); }
-  .comp3 .ring-fg { stroke: #40c4ff; }
+/* RESUMO */
+.resumo{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-top:8px;transition:background .3s;}
+.resumo-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);font-size:11px;}
+.resumo-row:last-of-type{border-bottom:none;}
+.resumo-nome{color:var(--muted);}
+.resumo-val{font-family:'DM Mono',monospace;font-weight:500;}
+.resumo-total{display:flex;justify-content:space-between;align-items:center;padding-top:10px;margin-top:6px;border-top:1px solid var(--accent);}
+.resumo-total-lbl{font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--text);}
+.resumo-total-val{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;}
 
-  /* Seção */
-  .section-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 10px;
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .section-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
+/* DIM CARD */
+.dim-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;transition:background .3s;}
+.dim-titulo{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.bonus-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;transition:background .3s;}
+.bonus-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.bonus-tag{font-family:'DM Mono',monospace;font-size:8px;background:#ffd74022;color:var(--suficiente);border:1px solid #ffd74044;padding:2px 6px;border-radius:3px;}
 
-  /* Indicadores */
-  .indicador-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px;
-    margin-bottom: 10px;
-  }
-  .indicador-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 10px;
-  }
-  .indicador-nome {
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: #fff;
-    flex: 1;
-    margin-right: 8px;
-    line-height: 1.3;
-  }
-  .indicador-peso {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    color: var(--muted);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 2px 6px;
-    border-radius: 3px;
-    white-space: nowrap;
-  }
+/* BOTÕES */
+.btn-calcular{width:100%;background:var(--accent);color:#000;border:none;border-radius:6px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;padding:13px;cursor:pointer;margin-top:14px;letter-spacing:1px;text-transform:uppercase;transition:opacity .15s;}
+.btn-calcular:hover{opacity:.85;}
 
-  /* Meses grid */
-  .meses-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
-    margin-bottom: 8px;
-  }
-  .mes-input-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-  .mes-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    color: var(--muted);
-    text-align: center;
-  }
-  .mes-input {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    padding: 6px 4px;
-    text-align: center;
-    width: 100%;
-    transition: border-color 0.15s;
-    -moz-appearance: textfield;
-  }
-  .mes-input::-webkit-outer-spin-button,
-  .mes-input::-webkit-inner-spin-button { -webkit-appearance: none; }
-  .mes-input:focus {
-    outline: none;
-    border-color: var(--accent);
-  }
-  .mes-input.otimo { border-color: var(--otimo); color: var(--otimo); }
-  .mes-input.bom { border-color: var(--bom); color: var(--bom); }
-  .mes-input.suficiente { border-color: var(--suficiente); color: var(--suficiente); }
-  .mes-input.regular { border-color: var(--regular); color: var(--regular); }
+.btn-ia{width:100%;background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;border:none;border-radius:6px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;padding:13px;cursor:pointer;margin-top:10px;letter-spacing:1px;text-transform:uppercase;transition:opacity .15s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-ia:hover{opacity:.88;}
+.btn-ia:disabled{opacity:.45;cursor:not-allowed;}
 
-  /* Resultado do indicador */
-  .indicador-resultado {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--surface);
-    border-radius: 4px;
-    padding: 6px 10px;
-  }
-  .resultado-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  .resultado-valor {
-    font-family: 'Syne', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-  }
+.btn-pdf{width:100%;background:none;border:1px solid var(--border);color:var(--text2);border-radius:6px;font-family:'Syne',sans-serif;font-size:12px;font-weight:600;padding:11px;cursor:pointer;margin-top:8px;letter-spacing:.5px;transition:all .15s;align-items:center;justify-content:center;gap:6px;display:none;}
+.btn-pdf.show{display:flex;}
+.btn-pdf:hover{border-color:var(--accent);color:var(--accent);}
 
-  /* Progress bar */
-  .progress-wrap {
-    margin-top: 6px;
-    height: 3px;
-    background: var(--border);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-  .progress-bar {
-    height: 100%;
-    border-radius: 2px;
-    transition: width 0.5s ease;
-  }
+/* ALERTA */
+.alerta{background:#ff525210;border:1px solid #ff525230;border-radius:6px;padding:10px 12px;font-size:11px;color:#ff8a80;margin-top:8px;display:flex;gap:8px;align-items:flex-start;}
 
-  /* Comp II */
-  .comp2-grid {
-    display: grid;
-    gap: 10px;
-  }
-  .dim-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px;
-  }
-  .dim-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  .dim-nome {
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: #fff;
-  }
+/* ESTRATÉGIA */
+.estrategia-box{background:var(--ai-bg);border:1px solid var(--ai-border);border-radius:10px;padding:16px;margin-top:12px;display:none;}
+.estrategia-box.show{display:block;}
+.estrategia-header{display:flex;align-items:center;gap:8px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--ai-border);}
+.estrategia-tag{font-family:'DM Mono',monospace;font-size:8px;background:#7c3aed22;color:var(--ai);border:1px solid var(--ai-border);padding:2px 8px;border-radius:3px;text-transform:uppercase;letter-spacing:1px;}
+.estrategia-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--ai);}
+.estrategia-content{font-size:13px;color:var(--text);line-height:1.8;white-space:pre-wrap;}
 
-  /* Satisfação bonus */
-  .bonus-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px;
-    margin-top: 10px;
-  }
-  .bonus-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
-  }
-  .bonus-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    background: #ffd74022;
-    color: var(--suficiente);
-    border: 1px solid #ffd74044;
-    padding: 2px 6px;
-    border-radius: 3px;
-  }
-  .bonus-nome {
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: #fff;
-  }
+/* LOADING */
+.loading-dots{display:inline-flex;gap:4px;align-items:center;}
+.loading-dots span{width:6px;height:6px;border-radius:50%;background:#fff;animation:bounce 1.2s infinite;}
+.loading-dots span:nth-child(2){animation-delay:.2s;}
+.loading-dots span:nth-child(3){animation-delay:.4s;}
+@keyframes bounce{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
 
-  /* Alerta */
-  .alerta {
-    background: #ff525210;
-    border: 1px solid #ff525230;
-    border-radius: 6px;
-    padding: 10px 12px;
-    font-size: 11px;
-    color: #ff8a80;
-    margin-top: 16px;
-    display: flex;
-    gap: 8px;
-    align-items: flex-start;
-  }
-  .alerta-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
-
-  /* Resumo pontos */
-  .resumo-pontos {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px;
-    margin-top: 10px;
-  }
-  .pontos-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 12px;
-  }
-  .pontos-row:last-of-type { border-bottom: none; }
-  .pontos-nome { color: var(--muted); }
-  .pontos-val { font-family: 'DM Mono', monospace; font-weight: 500; }
-  .pontos-total-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 10px;
-    margin-top: 4px;
-    border-top: 1px solid var(--accent);
-  }
-  .pontos-total-label {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    color: #fff;
-  }
-  .pontos-total-val {
-    font-family: 'Syne', sans-serif;
-    font-size: 24px;
-    font-weight: 800;
-  }
-
-  /* Btn calcular */
-  .btn-calcular {
-    width: 100%;
-    background: var(--accent);
-    color: #000;
-    border: none;
-    border-radius: 6px;
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    padding: 12px;
-    cursor: pointer;
-    margin-top: 16px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: opacity 0.15s;
-  }
-  .btn-calcular:hover { opacity: 0.85; }
-
-  /* Tooltip meses */
-  .meses-hint {
-    font-size: 10px;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
-
-  select.mes-input {
-    appearance: none;
-    -webkit-appearance: none;
-    cursor: pointer;
-  }
+@media print{
+  .topbar,.period-bar,.btn-calcular,.btn-ia,.btn-pdf,.meses-grid,.prog-wrap{display:none!important;}
+  .estrategia-box{border:2px solid #7c3aed;break-inside:avoid;}
+  body{background:#fff!important;color:#000!important;}
+  .nota-card,.resumo,.ind-card{border:1px solid #ccc!important;background:#fff!important;}
+}
 </style>
 </head>
 <body>
 
-<div class="header">
-  <span class="header-tag">Monitoramento Mensal</span>
-  <h1>Painel eMulti — APS</h1>
-  <p>Componentes II e III · Meta: Ótimo</p>
+<div class="topbar">
+  <a class="topbar-back" href="apex-saude.html">← Dashboard</a>
+  <div class="topbar-title">Painel <span>eMulti</span></div>
+  <button class="theme-btn" id="theme-toggle">🌙</button>
 </div>
 
-<!-- Seletor de quadrimestre -->
+<div class="header">
+  <div class="header-tag">Componentes II e III · NT 6/2025</div>
+  <div class="header-sub">Equipe Multiprofissional · Meta: Ótimo</div>
+</div>
+
 <div class="period-bar">
-  <label>Quadrimestre</label>
+  <span class="period-label">Quadrimestre</span>
   <button class="period-btn active" onclick="setQuad(this,'Jan–Abr')">Jan–Abr</button>
   <button class="period-btn" onclick="setQuad(this,'Mai–Ago')">Mai–Ago</button>
   <button class="period-btn" onclick="setQuad(this,'Set–Dez')">Set–Dez</button>
 </div>
 
-<!-- Notas finais -->
-<div class="notas-finais">
-  <div class="nota-card comp2">
-    <div class="nota-card-label">Componente II</div>
+<div class="notas-grid">
+  <div class="nota-card c2">
+    <div class="nota-label">Componente II</div>
     <div class="nota-valor" id="nota-c2">—</div>
-    <div class="nota-meta">Meta: <span>> 8,5</span> (Ótimo)</div>
-    <div class="ring-wrap">
-      <svg viewBox="0 0 48 48">
-        <circle class="ring-bg" cx="24" cy="24" r="20"/>
-        <circle class="ring-fg" id="ring-c2" cx="24" cy="24" r="20"
-          stroke-dasharray="125.6" stroke-dashoffset="125.6"
-          transform="rotate(-90 24 24)"/>
-      </svg>
-    </div>
+    <div class="nota-meta">Meta: <span>> 8,5</span></div>
+    <div class="ring-wrap"><svg viewBox="0 0 44 44">
+      <circle class="ring-bg" cx="22" cy="22" r="18"/>
+      <circle class="ring-fg" id="ring-c2" cx="22" cy="22" r="18" stroke-dasharray="113" stroke-dashoffset="113" transform="rotate(-90 22 22)" style="stroke:var(--otimo)"/>
+    </svg></div>
   </div>
-  <div class="nota-card comp3">
-    <div class="nota-card-label">Componente III</div>
-    <div class="nota-valor" id="nota-c3" style="color:#40c4ff">—</div>
-    <div class="nota-meta">Meta: <span>> 7,5</span> (Ótimo)</div>
-    <div class="ring-wrap">
-      <svg viewBox="0 0 48 48">
-        <circle class="ring-bg" cx="24" cy="24" r="20"/>
-        <circle class="ring-fg" id="ring-c3" cx="24" cy="24" r="20"
-          stroke-dasharray="125.6" stroke-dashoffset="125.6"
-          transform="rotate(-90 24 24)" style="stroke:#40c4ff"/>
-      </svg>
-    </div>
+  <div class="nota-card c3">
+    <div class="nota-label">Componente III</div>
+    <div class="nota-valor" id="nota-c3">—</div>
+    <div class="nota-meta">Meta: <span>> 7,5</span></div>
+    <div class="ring-wrap"><svg viewBox="0 0 44 44">
+      <circle class="ring-bg" cx="22" cy="22" r="18"/>
+      <circle class="ring-fg" id="ring-c3" cx="22" cy="22" r="18" stroke-dasharray="113" stroke-dashoffset="113" transform="rotate(-90 22 22)" style="stroke:#40c4ff"/>
+    </svg></div>
   </div>
 </div>
 
-<!-- ===== COMPONENTE III ===== -->
-<div class="section-title">Componente III – Qualidade</div>
+<div class="content">
+  <div class="sec-title">Componente III — Qualidade</div>
 
-<!-- M1 -->
-<div class="indicador-card">
-  <div class="indicador-header">
-    <div class="indicador-nome">M1. Média de atendimentos da eMulti por pessoa</div>
-    <div class="indicador-peso">Peso 6</div>
+  <div class="ind-card">
+    <div class="ind-header">
+      <div class="ind-nome">M1. Média de atendimentos da eMulti por pessoa</div>
+      <div class="ind-peso">Peso 6</div>
+    </div>
+    <div class="meses-grid" id="grid-m1"></div>
+    <div class="ind-result">
+      <span class="result-lbl">Média do Quad.</span>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <span class="result-val" id="res-m1">—</span>
+        <span id="badge-m1"></span>
+      </div>
+    </div>
+    <div class="prog-wrap"><div class="prog-bar" id="prog-m1" style="width:0%"></div></div>
   </div>
-  <div class="meses-hint" id="hint-m1">Informe o % de cumprimento do indicador em cada mês (0–100)</div>
-  <div class="meses-grid" id="grid-m1"></div>
-  <div class="indicador-resultado">
-    <span class="resultado-label">Média do Quad.</span>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <span class="resultado-valor" id="res-m1">—</span>
-      <span id="badge-m1"></span>
+
+  <div class="ind-card">
+    <div class="ind-header">
+      <div class="ind-nome">M2. Ações interprofissionais da eMulti</div>
+      <div class="ind-peso">Peso 4</div>
+    </div>
+    <div class="meses-grid" id="grid-m2"></div>
+    <div class="ind-result">
+      <span class="result-lbl">Média do Quad.</span>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <span class="result-val" id="res-m2">—</span>
+        <span id="badge-m2"></span>
+      </div>
+    </div>
+    <div class="prog-wrap"><div class="prog-bar" id="prog-m2" style="width:0%"></div></div>
+  </div>
+
+  <div class="resumo">
+    <div class="resumo-row"><span class="resumo-nome">M1 × Peso 6</span><span class="resumo-val" id="pts-m1">—</span></div>
+    <div class="resumo-row"><span class="resumo-nome">M2 × Peso 4</span><span class="resumo-val" id="pts-m2">—</span></div>
+    <div class="resumo-total">
+      <span class="resumo-total-lbl">Nota Final C3</span>
+      <span class="resumo-total-val" id="total-c3" style="color:#40c4ff">—</span>
     </div>
   </div>
-  <div class="progress-wrap"><div class="progress-bar" id="prog-m1" style="width:0%;background:var(--muted)"></div></div>
-</div>
 
-<!-- M2 -->
-<div class="indicador-card">
-  <div class="indicador-header">
-    <div class="indicador-nome">M2. Ações interprofissionais da eMulti</div>
-    <div class="indicador-peso">Peso 4</div>
-  </div>
-  <div class="meses-hint" id="hint-m2">Informe o % de cumprimento do indicador em cada mês (0–100)</div>
-  <div class="meses-grid" id="grid-m2"></div>
-  <div class="indicador-resultado">
-    <span class="resultado-label">Média do Quad.</span>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <span class="resultado-valor" id="res-m2">—</span>
-      <span id="badge-m2"></span>
-    </div>
-  </div>
-  <div class="progress-wrap"><div class="progress-bar" id="prog-m2" style="width:0%;background:var(--muted)"></div></div>
-</div>
+  <div class="sec-title">Componente II — Vínculo e Acompanhamento</div>
 
-<!-- Resumo C3 -->
-<div class="resumo-pontos">
-  <div class="pontos-row">
-    <span class="pontos-nome">M1 × Peso 6</span>
-    <span class="pontos-val" id="pts-m1">—</span>
-  </div>
-  <div class="pontos-row">
-    <span class="pontos-nome">M2 × Peso 4</span>
-    <span class="pontos-val" id="pts-m2">—</span>
-  </div>
-  <div class="pontos-total-row">
-    <span class="pontos-total-label">Nota Final C3</span>
-    <span class="pontos-total-val" id="total-c3" style="color:#40c4ff">—</span>
-  </div>
-</div>
-
-<!-- ===== COMPONENTE II ===== -->
-<div class="section-title">Componente II – Vínculo e Acompanhamento</div>
-
-<div class="comp2-grid">
-
-  <!-- Cadastro -->
   <div class="dim-card">
-    <div class="dim-header">
-      <span class="dim-nome">Dimensão Cadastro</span>
-      <span id="badge-cad"></span>
-    </div>
-    <div class="meses-hint">% ou nota obtida nos últimos 30 dias / 24 meses (0–10)</div>
+    <div class="dim-titulo">Dimensão Cadastro (nota 0–10)</div>
     <div class="meses-grid" id="grid-cad"></div>
-    <div class="indicador-resultado">
-      <span class="resultado-label">Média</span>
-      <span class="resultado-valor" id="res-cad">—</span>
+    <div class="ind-result">
+      <span class="result-lbl">Média</span>
+      <span class="result-val" id="res-cad">—</span>
     </div>
-    <div class="progress-wrap"><div class="progress-bar" id="prog-cad" style="width:0%;background:var(--muted)"></div></div>
+    <div class="prog-wrap"><div class="prog-bar" id="prog-cad" style="width:0%;background:var(--otimo)"></div></div>
   </div>
 
-  <!-- Acompanhamento -->
   <div class="dim-card">
-    <div class="dim-header">
-      <span class="dim-nome">Dimensão Acompanhamento</span>
-      <span id="badge-acomp"></span>
-    </div>
-    <div class="meses-hint">% ou nota obtida (0–10)</div>
+    <div class="dim-titulo">Dimensão Acompanhamento (nota 0–10)</div>
     <div class="meses-grid" id="grid-acomp"></div>
-    <div class="indicador-resultado">
-      <span class="resultado-label">Média</span>
-      <span class="resultado-valor" id="res-acomp">—</span>
+    <div class="ind-result">
+      <span class="result-lbl">Média</span>
+      <span class="result-val" id="res-acomp">—</span>
     </div>
-    <div class="progress-wrap"><div class="progress-bar" id="prog-acomp" style="width:0%;background:var(--muted)"></div></div>
+    <div class="prog-wrap"><div class="prog-bar" id="prog-acomp" style="width:0%;background:var(--otimo)"></div></div>
   </div>
 
-  <!-- Bônus Satisfação -->
   <div class="bonus-card">
-    <div class="bonus-header">
+    <div class="bonus-head">
       <span class="bonus-tag">BÔNUS</span>
-      <span class="bonus-nome">Satisfação do Usuário</span>
+      <span style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--text);">Satisfação do Usuário (nota 0–10)</span>
     </div>
-    <div class="meses-hint">Nota de satisfação em cada mês (0–10). O maior valor será usado.</div>
     <div class="meses-grid" id="grid-sat"></div>
-    <div class="indicador-resultado">
-      <span class="resultado-label">Maior Nota (bônus)</span>
-      <span class="resultado-valor" id="res-sat" style="color:var(--suficiente)">—</span>
+    <div class="ind-result">
+      <span class="result-lbl">Maior nota (bônus)</span>
+      <span class="result-val" id="res-sat" style="color:var(--suficiente)">—</span>
     </div>
   </div>
 
+  <div class="resumo">
+    <div class="resumo-row"><span class="resumo-nome">Média Cadastro</span><span class="resumo-val" id="pts-cad">—</span></div>
+    <div class="resumo-row"><span class="resumo-nome">Média Acompanhamento</span><span class="resumo-val" id="pts-acomp">—</span></div>
+    <div class="resumo-row"><span class="resumo-nome">Bônus Satisfação</span><span class="resumo-val" id="pts-sat" style="color:var(--suficiente)">—</span></div>
+    <div class="resumo-total">
+      <span class="resumo-total-lbl">Nota Final C2</span>
+      <span class="resumo-total-val" id="total-c2" style="color:var(--otimo)">—</span>
+    </div>
+  </div>
+
+  <button class="btn-calcular" id="btn-calc">↻ Calcular Notas Finais</button>
+  <div id="alerta-area"></div>
+  <button class="btn-ia" id="btn-ia" disabled>✦ Gerar Estratégia com IA</button>
+  <button class="btn-pdf" id="btn-pdf">⬇ Exportar Estratégia em PDF</button>
+
+  <div class="estrategia-box" id="estrategia-box">
+    <div class="estrategia-header">
+      <span class="estrategia-tag">✦ IA — Claude Haiku</span>
+      <span class="estrategia-title">Plano Estratégico Personalizado</span>
+    </div>
+    <div class="estrategia-content" id="estrategia-content"></div>
+  </div>
 </div>
-
-<!-- Resumo C2 -->
-<div class="resumo-pontos" style="margin-top:10px;">
-  <div class="pontos-row">
-    <span class="pontos-nome">Média Cadastro</span>
-    <span class="pontos-val" id="pts-cad">—</span>
-  </div>
-  <div class="pontos-row">
-    <span class="pontos-nome">Média Acompanhamento</span>
-    <span class="pontos-val" id="pts-acomp">—</span>
-  </div>
-  <div class="pontos-row">
-    <span class="pontos-nome">Bônus Satisfação</span>
-    <span class="pontos-val" id="pts-sat" style="color:var(--suficiente)">—</span>
-  </div>
-  <div class="pontos-total-row">
-    <span class="pontos-total-label">Nota Final C2</span>
-    <span class="pontos-total-val" id="total-c2" style="color:var(--otimo)">—</span>
-  </div>
-</div>
-
-<button class="btn-calcular" onclick="calcular()">↻ Calcular Notas Finais</button>
-
-<div id="alerta-area"></div>
 
 <script>
-// Estado
+// TEMA
+const themeBtn = document.getElementById('theme-toggle');
+let isDark = localStorage.getItem('apex_theme') !== 'light';
+document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+themeBtn.textContent = isDark ? '🌙' : '☀️';
+themeBtn.addEventListener('click', () => {
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  themeBtn.textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('apex_theme', isDark ? 'dark' : 'light');
+});
+
+// DADOS
 let quadLabel = 'Jan–Abr';
-const quadMeses = {
-  'Jan–Abr': ['Jan','Fev','Mar','Abr'],
-  'Mai–Ago': ['Mai','Jun','Jul','Ago'],
-  'Set–Dez': ['Set','Out','Nov','Dez'],
-};
+let dadosCalculados = null;
+const quadMeses = {'Jan–Abr':['Jan','Fev','Mar','Abr'],'Mai–Ago':['Mai','Jun','Jul','Ago'],'Set–Dez':['Set','Out','Nov','Dez']};
 
 function setQuad(btn, label) {
   document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   quadLabel = label;
   renderGrids();
+  dadosCalculados = null;
+  document.getElementById('btn-ia').disabled = true;
+  document.getElementById('estrategia-box').classList.remove('show');
+  document.getElementById('btn-pdf').classList.remove('show');
 }
 
-function makeGrid(id, max=100, step=1) {
-  const wrap = document.getElementById('grid-'+id);
-  if (!wrap) return;
-  const meses = quadMeses[quadLabel];
-  wrap.innerHTML = meses.map((m,i) => `
-    <div class="mes-input-wrap">
-      <span class="mes-label">${m}</span>
-      <input class="mes-input" type="number" min="0" max="${max}" step="${step}"
-        id="inp-${id}-${i}" placeholder="—" oninput="colorInput(this,${max})" />
-    </div>
-  `).join('');
+function makeGrid(id, max, step) {
+  const el = document.getElementById('grid-'+id);
+  if (!el) return;
+  el.innerHTML = quadMeses[quadLabel].map((m,i) => `
+    <div class="mes-wrap">
+      <span class="mes-lbl">${m}</span>
+      <input class="mes-inp" type="number" min="0" max="${max}" step="${step}"
+        id="inp-${id}-${i}" placeholder="—" oninput="colorInp(this,${max})">
+    </div>`).join('');
 }
 
 function renderGrids() {
-  ['m1','m2'].forEach(id => makeGrid(id, 100, 0.1));
-  ['cad','acomp','sat'].forEach(id => makeGrid(id, 10, 0.1));
+  ['m1','m2'].forEach(id => makeGrid(id,100,0.1));
+  ['cad','acomp','sat'].forEach(id => makeGrid(id,10,0.1));
 }
 
-function colorInput(el, max) {
+function colorInp(el, max) {
   const v = parseFloat(el.value);
   el.classList.remove('otimo','bom','suficiente','regular');
-  if (isNaN(v) || el.value === '') return;
-  const pct = v / max * 100;
-  if (pct >= 75) el.classList.add('otimo');
-  else if (pct >= 50) el.classList.add('bom');
-  else if (pct >= 25) el.classList.add('suficiente');
+  if (isNaN(v)||el.value==='') return;
+  const p = v/max*100;
+  if(p>=75) el.classList.add('otimo');
+  else if(p>=50) el.classList.add('bom');
+  else if(p>=25) el.classList.add('suficiente');
   else el.classList.add('regular');
 }
 
-function getVals(id, n=4) {
-  return Array.from({length:n}, (_,i) => {
+function getVals(id) {
+  return Array.from({length:4},(_,i)=>{
     const el = document.getElementById(`inp-${id}-${i}`);
-    const v = el ? parseFloat(el.value) : NaN;
-    return isNaN(v) ? null : v;
+    const v = el?parseFloat(el.value):NaN;
+    return isNaN(v)||el.value===''?null:v;
   });
 }
 
-function avg(arr) {
-  const valid = arr.filter(v => v !== null);
-  if (!valid.length) return null;
-  return valid.reduce((a,b)=>a+b,0)/valid.length;
-}
-
-function max(arr) {
-  const valid = arr.filter(v => v !== null);
-  if (!valid.length) return null;
-  return Math.max(...valid);
-}
-
-// Conceito por percentual (0–100)
-function conceito(pct) {
-  if (pct === null) return null;
-  if (pct >= 75) return 'otimo';
-  if (pct >= 50) return 'bom';
-  if (pct >= 25) return 'suficiente';
-  return 'regular';
-}
-
-function conceitoNota(c) {
-  return {otimo:1, bom:0.75, suficiente:0.5, regular:0.25}[c] ?? 0;
-}
-
-function badgeHTML(c) {
-  const labels = {otimo:'Ótimo', bom:'Bom', suficiente:'Suficiente', regular:'Regular'};
-  if (!c) return '';
-  return `<span class="badge badge-${c}">${labels[c]}</span>`;
-}
-
-function setRing(id, nota, max) {
-  const pct = Math.min(nota/max, 1);
-  const circ = 125.6;
-  const offset = circ - pct * circ;
-  const el = document.getElementById('ring-'+id);
-  if (el) el.style.strokeDashoffset = offset;
-}
-
-function setProgress(id, pct, color) {
-  const el = document.getElementById('prog-'+id);
-  if (el) { el.style.width = Math.min(pct,100)+'%'; el.style.background = color; }
-}
-
-const colors = {otimo:'var(--otimo)', bom:'var(--bom)', suficiente:'var(--suficiente)', regular:'var(--regular)'};
+function avg(arr){const v=arr.filter(x=>x!==null);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null;}
+function maxVal(arr){const v=arr.filter(x=>x!==null);return v.length?Math.max(...v):null;}
+function conceito(p){if(p===null)return null;if(p>=75)return'otimo';if(p>=50)return'bom';if(p>=25)return'suficiente';return'regular';}
+function concNota(c){return{otimo:1,bom:.75,suficiente:.5,regular:.25}[c]??0;}
+const colors={otimo:'var(--otimo)',bom:'var(--bom)',suficiente:'var(--suficiente)',regular:'var(--regular)'};
+const labels={otimo:'Ótimo',bom:'Bom',suficiente:'Suficiente',regular:'Regular'};
+function badgeHTML(c){if(!c)return'';return`<span class="badge badge-${c}">${labels[c]}</span>`;}
+function setRing(id,nota,max){const el=document.getElementById('ring-'+id);if(el)el.style.strokeDashoffset=113-Math.min(nota/max,1)*113;}
+function classC3(n){return n>7.5?'Ótimo':n>=5?'Bom':n>=2.6?'Suficiente':'Regular';}
+function classC2(n){return n>8.5?'Ótimo':n>=7?'Bom':n>=5?'Suficiente':'Regular';}
 
 function calcular() {
-  // M1
-  const valsM1 = getVals('m1');
-  const avgM1 = avg(valsM1);
-  const concM1 = conceito(avgM1);
-  const notaM1 = conceitoNota(concM1);
-  const ptsM1 = notaM1 * 6;
+  const avgM1=avg(getVals('m1')), avgM2=avg(getVals('m2'));
+  const cM1=conceito(avgM1), cM2=conceito(avgM2);
+  const pM1=concNota(cM1)*6, pM2=concNota(cM2)*4;
 
-  document.getElementById('res-m1').textContent = avgM1 !== null ? avgM1.toFixed(1)+'%' : '—';
-  document.getElementById('res-m1').style.color = concM1 ? colors[concM1] : 'var(--text)';
-  document.getElementById('badge-m1').innerHTML = badgeHTML(concM1);
-  document.getElementById('pts-m1').textContent = avgM1 !== null ? ptsM1.toFixed(2) : '—';
-  setProgress('m1', avgM1, colors[concM1] || 'var(--muted)');
+  const setInd=(id,a,c,p)=>{
+    document.getElementById('res-'+id).textContent=a!==null?a.toFixed(1)+'%':'—';
+    document.getElementById('res-'+id).style.color=c?colors[c]:'var(--text)';
+    document.getElementById('badge-'+id).innerHTML=badgeHTML(c);
+    document.getElementById('pts-'+id).textContent=a!==null?p.toFixed(2):'—';
+    const pr=document.getElementById('prog-'+id);
+    pr.style.width=(a||0)+'%';pr.style.background=colors[c]||'var(--muted)';
+  };
+  setInd('m1',avgM1,cM1,pM1);
+  setInd('m2',avgM2,cM2,pM2);
 
-  // M2
-  const valsM2 = getVals('m2');
-  const avgM2 = avg(valsM2);
-  const concM2 = conceito(avgM2);
-  const notaM2 = conceitoNota(concM2);
-  const ptsM2 = notaM2 * 4;
-
-  document.getElementById('res-m2').textContent = avgM2 !== null ? avgM2.toFixed(1)+'%' : '—';
-  document.getElementById('res-m2').style.color = concM2 ? colors[concM2] : 'var(--text)';
-  document.getElementById('badge-m2').innerHTML = badgeHTML(concM2);
-  document.getElementById('pts-m2').textContent = avgM2 !== null ? ptsM2.toFixed(2) : '—';
-  setProgress('m2', avgM2, colors[concM2] || 'var(--muted)');
-
-  // Nota Final C3
-  if (avgM1 !== null || avgM2 !== null) {
-    const totalC3 = (avgM1!==null?ptsM1:0) + (avgM2!==null?ptsM2:0);
-    document.getElementById('total-c3').textContent = totalC3.toFixed(2);
-    document.getElementById('nota-c3').textContent = totalC3.toFixed(2);
-    setRing('c3', totalC3, 10);
+  const totalC3=(avgM1!==null?pM1:0)+(avgM2!==null?pM2:0);
+  if(avgM1!==null||avgM2!==null){
+    document.getElementById('total-c3').textContent=totalC3.toFixed(2);
+    document.getElementById('nota-c3').textContent=totalC3.toFixed(2);
+    setRing('c3',totalC3,10);
   }
 
-  // Cadastro (0–10 scale)
-  const valsCad = getVals('cad');
-  const avgCad = avg(valsCad);
-  document.getElementById('res-cad').textContent = avgCad !== null ? avgCad.toFixed(2) : '—';
-  document.getElementById('pts-cad').textContent = avgCad !== null ? avgCad.toFixed(2) : '—';
-  setProgress('cad', avgCad!==null ? avgCad/10*100 : 0, 'var(--otimo)');
+  const avgCad=avg(getVals('cad')), avgAcomp=avg(getVals('acomp')), maxSat=maxVal(getVals('sat'));
+  document.getElementById('res-cad').textContent=avgCad!==null?avgCad.toFixed(2):'—';
+  document.getElementById('pts-cad').textContent=avgCad!==null?avgCad.toFixed(2):'—';
+  document.getElementById('prog-cad').style.width=avgCad!==null?(avgCad/10*100)+'%':'0%';
+  document.getElementById('res-acomp').textContent=avgAcomp!==null?avgAcomp.toFixed(2):'—';
+  document.getElementById('pts-acomp').textContent=avgAcomp!==null?avgAcomp.toFixed(2):'—';
+  document.getElementById('prog-acomp').style.width=avgAcomp!==null?(avgAcomp/10*100)+'%':'0%';
+  document.getElementById('res-sat').textContent=maxSat!==null?maxSat.toFixed(2):'—';
+  document.getElementById('pts-sat').textContent=maxSat!==null?maxSat.toFixed(2):'—';
 
-  // Acompanhamento
-  const valsAcomp = getVals('acomp');
-  const avgAcomp = avg(valsAcomp);
-  document.getElementById('res-acomp').textContent = avgAcomp !== null ? avgAcomp.toFixed(2) : '—';
-  document.getElementById('pts-acomp').textContent = avgAcomp !== null ? avgAcomp.toFixed(2) : '—';
-  setProgress('acomp', avgAcomp!==null ? avgAcomp/10*100 : 0, 'var(--otimo)');
-
-  // Satisfação (bônus = maior)
-  const valsSat = getVals('sat');
-  const maxSat = max(valsSat);
-  document.getElementById('res-sat').textContent = maxSat !== null ? maxSat.toFixed(2) : '—';
-  document.getElementById('pts-sat').textContent = maxSat !== null ? maxSat.toFixed(2) : '—';
-
-  // Nota Final C2 (simplificado: média das duas dimensões + bônus)
-  if (avgCad !== null || avgAcomp !== null) {
-    const dims = [avgCad, avgAcomp].filter(v=>v!==null);
-    const mediaC2 = dims.reduce((a,b)=>a+b,0)/dims.length;
-    const bonus = maxSat !== null ? maxSat * 0.1 : 0; // bônus proporcional
-    const totalC2 = Math.min(10, mediaC2 + bonus);
-    document.getElementById('total-c2').textContent = totalC2.toFixed(2);
-    document.getElementById('nota-c2').textContent = totalC2.toFixed(2);
-    setRing('c2', totalC2, 10);
+  let totalC2=null;
+  if(avgCad!==null||avgAcomp!==null){
+    const dims=[avgCad,avgAcomp].filter(v=>v!==null);
+    const mC2=dims.reduce((a,b)=>a+b,0)/dims.length;
+    totalC2=Math.min(10,mC2+(maxSat!==null?maxSat*.1:0));
+    document.getElementById('total-c2').textContent=totalC2.toFixed(2);
+    document.getElementById('nota-c2').textContent=totalC2.toFixed(2);
+    setRing('c2',totalC2,10);
   }
 
-  // Alertas
-  let alertas = [];
-  if (avgM1 !== null && avgM1 < 75) alertas.push(`⚡ M1 está em ${avgM1.toFixed(1)}% — precisa de pelo menos 75% para Ótimo. Ele vale 6 pontos!`);
-  if (avgM2 !== null && avgM2 < 75) alertas.push(`⚡ M2 está em ${avgM2.toFixed(1)}% — registre mais ações interprofissionais.`);
-  if (maxSat !== null && maxSat < 8) alertas.push(`⚡ Satisfação do usuário baixa (${maxSat.toFixed(1)}/10) — invista em acolhimento.`);
+  const alertas=[];
+  if(avgM1!==null&&avgM1<75) alertas.push(`⚡ M1 em ${avgM1.toFixed(1)}% — precisa de 75% para Ótimo (Peso 6, crítico!)`);
+  if(avgM2!==null&&avgM2<75) alertas.push(`⚡ M2 em ${avgM2.toFixed(1)}% — registre mais ações interprofissionais`);
+  if(maxSat!==null&&maxSat<8) alertas.push(`⚡ Satisfação ${maxSat.toFixed(1)}/10 — invista em acolhimento`);
+  document.getElementById('alerta-area').innerHTML=alertas.map(a=>`<div class="alerta"><span>⚠</span><span>${a}</span></div>`).join('');
 
-  const area = document.getElementById('alerta-area');
-  area.innerHTML = alertas.map(a => `
-    <div class="alerta"><span class="alerta-icon">⚠</span><span>${a}</span></div>
-  `).join('');
+  dadosCalculados={quadrimestre:quadLabel,m1:{media:avgM1,conceito:cM1,pontos:pM1},m2:{media:avgM2,conceito:cM2,pontos:pM2},totalC3,concC3:classC3(totalC3),cadastro:avgCad,acompanhamento:avgAcomp,satisfacao:maxSat,totalC2,concC2:totalC2?classC2(totalC2):null};
+  document.getElementById('btn-ia').disabled=false;
 }
 
-// Init
-renderGrids();
+// IA
+async function gerarEstrategia() {
+  if(!dadosCalculados) return;
+  const btn=document.getElementById('btn-ia');
+  btn.disabled=true;
+  btn.innerHTML=`<div class="loading-dots"><span></span><span></span><span></span></div> Analisando...`;
+  const box=document.getElementById('estrategia-box');
+  const content=document.getElementById('estrategia-content');
+  box.classList.add('show');
+  content.textContent='Gerando plano estratégico...';
+
+  const d=dadosCalculados;
+  const prompt=`Você é consultor especialista em APS do Brasil com domínio total da NT 6/2025-DEAPS/SAPS/MS.
+
+Analise os resultados de uma equipe eMulti e gere um PLANO ESTRATÉGICO COMPLETO para atingir Ótimo no próximo quadrimestre.
+
+RESULTADOS — Quadrimestre ${d.quadrimestre}:
+
+COMPONENTE III (meta > 7,5):
+- M1 (Atendimentos por pessoa) Peso 6: ${d.m1.media!==null?d.m1.media.toFixed(1)+'%':'Não informado'} → ${d.m1.conceito?d.m1.conceito.toUpperCase():'—'} (${d.m1.pontos.toFixed(2)} pts)
+- M2 (Ações interprofissionais) Peso 4: ${d.m2.media!==null?d.m2.media.toFixed(1)+'%':'Não informado'} → ${d.m2.conceito?d.m2.conceito.toUpperCase():'—'} (${d.m2.pontos.toFixed(2)} pts)
+- NOTA FINAL C3: ${d.totalC3.toFixed(2)} → ${d.concC3}
+
+COMPONENTE II (meta > 8,5):
+- Cadastro: ${d.cadastro!==null?d.cadastro.toFixed(2)+'/10':'Não informado'}
+- Acompanhamento: ${d.acompanhamento!==null?d.acompanhamento.toFixed(2)+'/10':'Não informado'}
+- Satisfação (bônus): ${d.satisfacao!==null?d.satisfacao.toFixed(2)+'/10':'Não informado'}
+- NOTA FINAL C2: ${d.totalC2!==null?d.totalC2.toFixed(2)+' → '+d.concC2:'Não calculado'}
+
+Gere o plano no seguinte formato:
+
+📊 DIAGNÓSTICO ATUAL
+[Análise clara do gap para Ótimo em cada componente]
+
+🎯 METAS DO PRÓXIMO QUADRIMESTRE
+[Metas numéricas específicas para cada indicador]
+
+⚡ PRIORIDADES IMEDIATAS (Semanas 1-2)
+[3 a 5 ações concretas, focadas nos pontos mais críticos]
+
+📅 PLANO SEMANA A SEMANA
+Semanas 1-2: [ações]
+Semanas 3-4: [ações]
+Semanas 5-8: [ações]
+Semanas 9-12: [ações]
+Semanas 13-16: [fechamento e consolidação]
+
+🔧 ESTRATÉGIA POR INDICADOR
+M1: [o que fazer especificamente]
+M2: [o que fazer especificamente]
+Cadastro: [o que fazer]
+Acompanhamento: [o que fazer]
+Satisfação: [o que fazer]
+
+⚠️ ALERTAS E RISCOS
+[Pontos críticos que podem comprometer o resultado]
+
+✅ CHECKLIST DE CONTROLE MENSAL
+[Lista de verificação para monitoramento mensal]
+
+Seja específico, prático e direto. Linguagem acessível para profissionais de saúde.`;
+
+  try {
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1500,messages:[{role:'user',content:prompt}]})
+    });
+    const data=await res.json();
+    const texto=data.content?.map(i=>i.text||'').join('')||'Erro ao gerar estratégia.';
+    content.textContent=texto;
+    document.getElementById('btn-pdf').classList.add('show');
+  } catch(err) {
+    content.textContent='❌ Erro ao conectar com a IA. Verifique sua conexão.';
+  }
+  btn.disabled=false;
+  btn.innerHTML='✦ Gerar Nova Estratégia';
+}
+
+// PDF
+function exportarPDF() {
+  const d=dadosCalculados;
+  const texto=document.getElementById('estrategia-content').textContent;
+  const html=`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
+  <style>
+    body{font-family:Arial,sans-serif;font-size:13px;color:#1a1a2e;padding:32px;max-width:750px;margin:0 auto;}
+    h1{font-size:22px;color:#7c3aed;border-bottom:2px solid #7c3aed;padding-bottom:8px;margin-bottom:16px;}
+    .meta{display:flex;gap:20px;background:#f4f6fb;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:12px;flex-wrap:wrap;}
+    .mi{display:flex;flex-direction:column;gap:2px;}
+    .ml{color:#64748b;font-size:10px;text-transform:uppercase;letter-spacing:1px;}
+    .mv{font-weight:700;font-size:15px;}
+    .conteudo{white-space:pre-wrap;line-height:1.8;background:#f9f4ff;border:1px solid #c4b5fd;border-radius:8px;padding:20px;}
+    .rodape{margin-top:24px;font-size:10px;color:#94a3b8;text-align:center;border-top:1px solid #e2e8f0;padding-top:12px;}
+  </style></head><body>
+  <h1>✦ Plano Estratégico — eMulti</h1>
+  <div class="meta">
+    <div class="mi"><span class="ml">Quadrimestre</span><span class="mv">${d.quadrimestre}</span></div>
+    <div class="mi"><span class="ml">Nota C3</span><span class="mv">${d.totalC3.toFixed(2)} — ${d.concC3}</span></div>
+    <div class="mi"><span class="ml">Nota C2</span><span class="mv">${d.totalC2!==null?d.totalC2.toFixed(2)+' — '+d.concC2:'—'}</span></div>
+    <div class="mi"><span class="ml">Gerado em</span><span class="mv">${new Date().toLocaleDateString('pt-BR')}</span></div>
+  </div>
+  <div class="conteudo">${texto.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+  <div class="rodape">Gerado pelo sistema ÁPEX Saúde · Consultoria APS · NT 6/2025</div>
+  </body></html>`;
+  const blob=new Blob([html],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const win=window.open(url,'_blank');
+  setTimeout(()=>{win.print();},800);
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  renderGrids();
+  document.getElementById('btn-calc').addEventListener('click',calcular);
+  document.getElementById('btn-ia').addEventListener('click',gerarEstrategia);
+  document.getElementById('btn-pdf').addEventListener('click',exportarPDF);
+});
 </script>
 </body>
 </html>

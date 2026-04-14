@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel eSB — ÁPEX Saúde</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+[data-theme="dark"]{--bg:#090b10;--surface:#0e1118;--card:#131720;--border:#1e2535;--text:#e2e8f0;--text2:#94a3b8;--muted:#64748b;}
+[data-theme="light"]{--bg:#f0fdf9;--surface:#ffffff;--card:#ffffff;--border:#ccfbf1;--text:#0f2420;--text2:#5f7c78;--muted:#94a3a0;}
+:root{--teal:#14b8a6;--teal2:#5eead4;--otimo:#10b981;--bom:#14b8a6;--suficiente:#f59e0b;--regular:#ef4444;--ai:#a78bfa;--ai-bg:#a78bfa14;--ai-border:#a78bfa44;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;min-height:100vh;padding:0 0 60px;transition:background .3s,color .3s;}
+
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:200;}
+.topbar-back{font-family:'DM Mono',monospace;font-size:9px;color:var(--teal2);text-decoration:none;text-transform:uppercase;letter-spacing:1px;opacity:.8;}
+.topbar-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--text);flex:1;}
+.topbar-title span{color:var(--teal2);}
+.theme-btn{background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:16px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-shrink:0;}
+.theme-btn:hover{border-color:var(--teal);}
+
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 16px;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),#818cf8,transparent);}
+.header-tag{font-family:'DM Mono',monospace;font-size:9px;color:var(--teal2);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;}
+.header-sub{font-size:11px;color:var(--muted);}
+
+.period-bar{display:flex;gap:6px;padding:10px 16px;background:var(--surface);border-bottom:1px solid var(--border);align-items:center;flex-wrap:wrap;}
+.period-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+.period-btn{background:var(--card);border:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;padding:5px 12px;border-radius:4px;cursor:pointer;transition:all .15s;}
+.period-btn.active{background:var(--teal);border-color:var(--teal);color:#000;font-weight:600;}
+.period-btn:hover:not(.active){border-color:var(--teal);color:var(--teal);}
+
+.notas-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 16px 0;}
+.nota-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;position:relative;overflow:hidden;transition:background .3s;}
+.nota-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.nota-card.c3::before{background:linear-gradient(90deg,var(--teal),var(--otimo));}
+.nota-card.c2::before{background:linear-gradient(90deg,#818cf8,var(--teal));}
+.nota-label{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;}
+.nota-valor{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;line-height:1;margin-bottom:3px;}
+.nota-card.c3 .nota-valor{color:var(--teal2);}
+.nota-card.c2 .nota-valor{color:#818cf8;}
+.nota-meta{font-size:10px;color:var(--muted);}
+.nota-meta span{color:var(--teal2);}
+.ring-wrap{position:absolute;right:10px;top:50%;transform:translateY(-40%);}
+.ring-wrap svg{width:44px;height:44px;}
+.ring-bg{fill:none;stroke:var(--border);stroke-width:4;}
+.ring-fg{fill:none;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset 1s ease;}
+
+.content{padding:12px 16px;}
+.sec-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin:16px 0 8px;display:flex;align-items:center;gap:8px;}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+.ind-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;transition:background .3s;}
+.ind-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;gap:8px;}
+.ind-nome{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--text);flex:1;line-height:1.3;}
+.ind-peso{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);background:var(--surface);border:1px solid var(--border);padding:2px 6px;border-radius:3px;white-space:nowrap;}
+.alerta-b3{background:#ef444410;border:1px solid #ef444430;border-radius:5px;padding:6px 10px;font-size:10px;color:#fca5a5;margin-bottom:6px;display:flex;gap:5px;}
+.meses-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:7px;}
+.mes-wrap{display:flex;flex-direction:column;gap:2px;}
+.mes-lbl{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);text-align:center;}
+.mes-inp{background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;padding:6px 4px;text-align:center;width:100%;-moz-appearance:textfield;transition:border-color .15s,background .3s;}
+.mes-inp::-webkit-outer-spin-button,.mes-inp::-webkit-inner-spin-button{-webkit-appearance:none;}
+.mes-inp:focus{outline:none;border-color:var(--teal);}
+.mes-inp.otimo{border-color:var(--otimo);color:var(--otimo);}
+.mes-inp.bom{border-color:var(--bom);color:var(--bom);}
+.mes-inp.suficiente{border-color:var(--suficiente);color:var(--suficiente);}
+.mes-inp.regular{border-color:var(--regular);color:var(--regular);}
+.ind-result{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border-radius:4px;padding:5px 10px;}
+.result-lbl{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+.result-val{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;}
+.badge{font-family:'DM Mono',monospace;font-size:8px;padding:2px 6px;border-radius:3px;text-transform:uppercase;letter-spacing:.5px;}
+.badge-otimo{background:#10b98122;color:var(--otimo);border:1px solid #10b98144;}
+.badge-bom{background:#14b8a622;color:var(--bom);border:1px solid #14b8a644;}
+.badge-suficiente{background:#f59e0b22;color:var(--suficiente);border:1px solid #f59e0b44;}
+.badge-regular{background:#ef444422;color:var(--regular);border:1px solid #ef444444;}
+.prog-wrap{margin-top:5px;height:2px;background:var(--border);border-radius:1px;overflow:hidden;}
+.prog-bar{height:100%;border-radius:1px;transition:width .5s ease;}
+
+.resumo{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-top:8px;transition:background .3s;}
+.resumo-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);font-size:11px;}
+.resumo-row:last-of-type{border-bottom:none;}
+.resumo-nome{color:var(--muted);}
+.resumo-val{font-family:'DM Mono',monospace;font-weight:500;}
+.resumo-total{display:flex;justify-content:space-between;align-items:center;padding-top:10px;margin-top:6px;border-top:1px solid var(--teal);}
+.resumo-total-lbl{font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--text);}
+.resumo-total-val{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--teal2);}
+
+.dim-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;transition:background .3s;}
+.dim-titulo{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.bonus-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px;transition:background .3s;}
+.bonus-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.bonus-tag{font-family:'DM Mono',monospace;font-size:8px;background:#f59e0b22;color:var(--suficiente);border:1px solid #f59e0b44;padding:2px 6px;border-radius:3px;}
+
+.btn-calcular{width:100%;background:var(--teal);color:#000;border:none;border-radius:6px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;padding:13px;cursor:pointer;margin-top:14px;letter-spacing:1px;text-transform:uppercase;transition:opacity .15s;}
+.btn-calcular:hover{opacity:.85;}
+.btn-ia{width:100%;background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;border:none;border-radius:6px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;padding:13px;cursor:pointer;margin-top:10px;letter-spacing:1px;text-transform:uppercase;transition:opacity .15s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-ia:hover{opacity:.88;}
+.btn-ia:disabled{opacity:.45;cursor:not-allowed;}
+.btn-pdf{width:100%;background:none;border:1px solid var(--border);color:var(--text2);border-radius:6px;font-family:'Syne',sans-serif;font-size:12px;font-weight:600;padding:11px;cursor:pointer;margin-top:8px;transition:all .15s;align-items:center;justify-content:center;gap:6px;display:none;}
+.btn-pdf.show{display:flex;}
+.btn-pdf:hover{border-color:var(--teal2);color:var(--teal2);}
+.alerta{background:#ef444410;border:1px solid #ef444430;border-radius:6px;padding:10px 12px;font-size:11px;color:#fca5a5;margin-top:8px;display:flex;gap:8px;align-items:flex-start;}
+
+.estrategia-box{background:var(--ai-bg);border:1px solid var(--ai-border);border-radius:10px;padding:16px;margin-top:12px;display:none;}
+.estrategia-box.show{display:block;}
+.estrategia-header{display:flex;align-items:center;gap:8px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--ai-border);}
+.estrategia-tag{font-family:'DM Mono',monospace;font-size:8px;background:#7c3aed22;color:var(--ai);border:1px solid var(--ai-border);padding:2px 8px;border-radius:3px;text-transform:uppercase;letter-spacing:1px;}
+.estrategia-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--ai);}
+.estrategia-content{font-size:13px;color:var(--text);line-height:1.8;white-space:pre-wrap;}
+
+.loading-dots{display:inline-flex;gap:4px;align-items:center;}
+.loading-dots span{width:6px;height:6px;border-radius:50%;background:#fff;animation:bounce 1.2s infinite;}
+.loading-dots span:nth-child(2){animation-delay:.2s;}
+.loading-dots span:nth-child(3){animation-delay:.4s;}
+@keyframes bounce{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
+@media print{.topbar,.period-bar,.btn-calcular,.btn-ia,.btn-pdf,.meses-grid,.prog-wrap{display:none!important;}.estrategia-box{border:2px solid #7c3aed;break-inside:avoid;}body{background:#fff!important;color:#000!important;}.nota-card,.resumo,.ind-card{border:1px solid #ccc!important;background:#fff!important;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="topbar-back" href="apex-saude.html">← Dashboard</a>
+  <div class="topbar-title">Painel <span>eSB</span></div>
+  <button class="theme-btn" id="theme-toggle">🌙</button>
+</div>
+
+<div class="header">
+  <div class="header-tag">Componentes II e III · NT 6/2025</div>
+  <div class="header-sub">Equipe de Saúde Bucal · Meta: Ótimo</div>
+</div>
+
+<div class="period-bar">
+  <span class="period-label">Quadrimestre</span>
+  <button class="period-btn active" onclick="setQuad(this,'Jan–Abr')">Jan–Abr</button>
+  <button class="period-btn" onclick="setQuad(this,'Mai–Ago')">Mai–Ago</button>
+  <button class="period-btn" onclick="setQuad(this,'Set–Dez')">Set–Dez</button>
+</div>
+
+<div class="notas-grid">
+  <div class="nota-card c3">
+    <div class="nota-label">Componente III</div>
+    <div class="nota-valor" id="nota-c3">—</div>
+    <div class="nota-meta">Meta: <span>> 7,5</span></div>
+    <div class="ring-wrap"><svg viewBox="0 0 44 44">
+      <circle class="ring-bg" cx="22" cy="22" r="18"/>
+      <circle class="ring-fg" id="ring-c3" cx="22" cy="22" r="18" stroke-dasharray="113" stroke-dashoffset="113" transform="rotate(-90 22 22)" style="stroke:var(--teal2)"/>
+    </svg></div>
+  </div>
+  <div class="nota-card c2">
+    <div class="nota-label">Componente II</div>
+    <div class="nota-valor" id="nota-c2">—</div>
+    <div class="nota-meta">Meta: <span>> 8,5</span></div>
+    <div class="ring-wrap"><svg viewBox="0 0 44 44">
+      <circle class="ring-bg" cx="22" cy="22" r="18"/>
+      <circle class="ring-fg" id="ring-c2" cx="22" cy="22" r="18" stroke-dasharray="113" stroke-dashoffset="113" transform="rotate(-90 22 22)" style="stroke:#818cf8"/>
+    </svg></div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="sec-title">Componente III — Saúde Bucal</div>
+
+  <!-- B1 -->
+  <div class="ind-card">
+    <div class="ind-header"><div class="ind-nome">B1. Primeira Consulta Odontológica Programada</div><div class="ind-peso">Peso 2</div></div>
+    <div class="meses-grid" id="grid-b1"></div>
+    <div class="ind-result"><span class="result-lbl">Média</span><div style="display:flex;align-items:center;gap:6px;"><span class="result-val" id="res-b1">—</span><span id="badge-b1"></span></div></div>
+    <div class="prog-wrap"><div class="prog-bar" id="prog-b1" style="width:0%"></div></div>
+  </div>
+  <!-- B2 -->
+  <div class="ind-card">
+    <div class="ind-header"><div class="ind-nome">B2. Tratamento Concluído</div><div class="ind-peso">Peso 2</div></div>
+    <div class="meses-grid" id="grid-b2"></div>
+    <div class="ind-result"><span class="result-lbl">Média</span><div style="display:flex;align-items:center;gap:6px;"><span class="result-val" id="res-b2">—</span><span id="badge-b2"></span></div></div>
+    <div class="prog-wrap"><div class="prog-bar" id="prog-b2" style="width:0%"></div></div>
+  </div>
+  <!-- B3 -->
+  <div class="ind-card">
+    <div class="ind-header"><div class="ind-nome">B3. Taxa de Exodontias</div><div class="ind-peso">Peso 2</div></div>
+    <div class="alerta-b3">⚠ Indicador INVERTIDO — quanto menor a taxa de extração, maior a pontuação. Use o valor do Siaps diretamente.</div>
+    <div class="meses-grid" id="grid-b3"></div>
+    <div class="ind-result"><span class="result-lbl">Média</span><div style="display:flex;align-items:center;gap:6px;"><span class="result-val" id="res-b3">—</span><span id="badge-b3"></span></div></div>
+    <div class="prog-wrap"><div class="prog-bar" id="prog-b3" style="width:0%"></div></div>
+  </div>
+  <!-- B4 -->
+  <div class="ind-card">
+    <div class="ind-header"><div class="ind-nome">B4. Procedimentos Odontológicos Individuais Preventivos</div><div class="ind-peso">Peso 2</div></div>
+    <div class="meses-grid" id="grid-b4"></div>
+    <div class="ind-result"><span class="result-lbl">Média</span><div style="display:flex;align-items:center;gap:6px;"><span class="result-val" id="res-b4">—</span><span id="badge-b4"></span></div></div>
+    <div class="prog-wrap"><div class="prog-bar" id="prog-b4" style="width:0%"></div></div>
+  </div>
+  <!-- B5 -->
+  <div class="ind-card">
+    <div class="ind-header"><div class="ind-nome">B5. Escovação Supervisionada</div><div class="ind-peso">Peso 1</div></div>
+    <div class="meses-grid" id="grid-b5"></div>
+    <div class="ind-result"><span class="result-lbl">Média</span><div style="display:flex;align-items:center;gap:6px;"><span class="result-val" id="res-b5">—</span><span id="badge-b5"></span></div></div>
+    <div class="prog-wrap"><div class="prog-bar" id="prog-b5" style="width:0%"></div></div>
+  </div>
+  <!-- B6 -->
+  <div class="ind-card">
+    <div class="ind-header"><div class="ind-nome">B6. Tratamento Restaurador Atraumático</div><div class="ind-peso">Peso 1</div></div>
+    <div class="meses-grid" id="grid-b6"></div>
+    <div class="ind-result"><span class="result-lbl">Média</span><div style="display:flex;align-items:center;gap:6px;"><span class="result-val" id="res-b6">—</span><span id="badge-b6"></span></div></div>
+    <div class="prog-wrap"><div class="prog-bar" id="prog-b6" style="width:0%"></div></div>
+  </div>
+
+  <div class="resumo">
+    <div class="resumo-row"><span class="resumo-nome">B1 × Peso 2</span><span class="resumo-val" id="pts-b1">—</span></div>
+    <div class="resumo-row"><span class="resumo-nome">B2 × Peso 2</span><span class="resumo-val" id="pts-b2">—</span></div>
+    <div class="resumo-row"><span class="resumo-nome">B3 × Peso 2</span><span class="resumo-val" id="pts-b3">—</span></div>
+    <div class="resumo-row"><span class="resumo-nome">B4 × Peso 2</span><span class="resumo-val" id="pts-b4">—</span></div>
+    <div class="resumo-row"><span class="resumo-nome">B5 × Peso 1</span><span class="resumo-val" id="pts-b5">—</span></div>
+    <div class="resumo-row"><span class="resumo-nome">B6 × Peso 1</span><span class="resumo-val" id="pts-b6">—</span></div>
+    <div class="resumo-total"><span class="resumo-total-lbl">Nota Final C3</span><span class="resumo-total-val" id="total-c3">—</span></div>
+  </div>
+
+  <div class="sec-title">Componente II — Vínculo e Acompanhamento</div>
+
+  <div class="dim-card">
+    <div class="dim-titulo">Dimensão Cadastro (nota 0–10)</div>
+    <div class="meses-grid" id="grid-cad"></div>
+    <div class="ind-result"><span class="result-lbl">Média</span><span class="result-val" id="res-cad">—</span></div>
+    <div class="prog-wrap"><div class="prog-bar" id="prog-cad" style="width:0%;background:var(--teal)"></div></div>
+  </div>
+  <div class="dim-card">
+    <div class="dim-titulo">Dimensão Acompanhamento (nota 0–10)</div>
+    <div class="meses-grid" id="grid-acomp"></div>
+    <div class="ind-result"><span class="result-lbl">Média</span><span class="result-val" id="res-acomp">—</span></div>
+    <div class="prog-wrap"><div class="prog-bar" id="prog-acomp" style="width:0%;background:var(--teal)"></div></div>
+  </div>
+  <div class="bonus-card">
+    <div class="bonus-head"><span class="bonus-tag">BÔNUS</span><span style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--text);">Satisfação do Usuário (nota 0–10)</span></div>
+    <div class="meses-grid" id="grid-sat"></div>
+    <div class="ind-result"><span class="result-lbl">Maior nota (bônus)</span><span class="result-val" id="res-sat" style="color:var(--suficiente)">—</span></div>
+  </div>
+
+  <div class="resumo">
+    <div class="resumo-row"><span class="resumo-nome">Média Cadastro</span><span class="resumo-val" id="pts-cad">—</span></div>
+    <div class="resumo-row"><span class="resumo-nome">Média Acompanhamento</span><span class="resumo-val" id="pts-acomp">—</span></div>
+    <div class="resumo-row"><span class="resumo-nome">Bônus Satisfação</span><span class="resumo-val" id="pts-sat" style="color:var(--suficiente)">—</span></div>
+    <div class="resumo-total"><span class="resumo-total-lbl">Nota Final C2</span><span class="resumo-total-val" id="total-c2" style="color:#818cf8">—</span></div>
+  </div>
+
+  <button class="btn-calcular" id="btn-calc">↻ Calcular Notas Finais</button>
+  <div id="alerta-area"></div>
+  <button class="btn-ia" id="btn-ia" disabled>✦ Gerar Estratégia com IA</button>
+  <button class="btn-pdf" id="btn-pdf">⬇ Exportar Estratégia em PDF</button>
+
+  <div class="estrategia-box" id="estrategia-box">
+    <div class="estrategia-header">
+      <span class="estrategia-tag">✦ IA — Claude Haiku</span>
+      <span class="estrategia-title">Plano Estratégico Personalizado</span>
+    </div>
+    <div class="estrategia-content" id="estrategia-content"></div>
+  </div>
+</div>
+
+<script>
+// TEMA
+const themeBtn=document.getElementById('theme-toggle');
+let isDark=localStorage.getItem('apex_theme')!=='light';
+document.documentElement.setAttribute('data-theme',isDark?'dark':'light');
+themeBtn.textContent=isDark?'🌙':'☀️';
+themeBtn.addEventListener('click',()=>{isDark=!isDark;document.documentElement.setAttribute('data-theme',isDark?'dark':'light');themeBtn.textContent=isDark?'🌙':'☀️';localStorage.setItem('apex_theme',isDark?'dark':'light');});
+
+const pesos={b1:2,b2:2,b3:2,b4:2,b5:1,b6:1};
+const inds=['b1','b2','b3','b4','b5','b6'];
+let quadLabel='Jan–Abr';
+let dadosCalculados=null;
+const quadMeses={'Jan–Abr':['Jan','Fev','Mar','Abr'],'Mai–Ago':['Mai','Jun','Jul','Ago'],'Set–Dez':['Set','Out','Nov','Dez']};
+
+function setQuad(btn,label){document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');quadLabel=label;renderGrids();dadosCalculados=null;document.getElementById('btn-ia').disabled=true;document.getElementById('estrategia-box').classList.remove('show');document.getElementById('btn-pdf').classList.remove('show');}
+function makeGrid(id,max,step){const el=document.getElementById('grid-'+id);if(!el)return;el.innerHTML=quadMeses[quadLabel].map((m,i)=>`<div class="mes-wrap"><span class="mes-lbl">${m}</span><input class="mes-inp" type="number" min="0" max="${max}" step="${step}" id="inp-${id}-${i}" placeholder="—" oninput="colorInp(this,${max})"></div>`).join('');}
+function renderGrids(){inds.forEach(id=>makeGrid(id,100,0.1));['cad','acomp','sat'].forEach(id=>makeGrid(id,10,0.1));}
+function colorInp(el,max){const v=parseFloat(el.value);el.classList.remove('otimo','bom','suficiente','regular');if(isNaN(v)||el.value==='')return;const p=v/max*100;if(p>=75)el.classList.add('otimo');else if(p>=50)el.classList.add('bom');else if(p>=25)el.classList.add('suficiente');else el.classList.add('regular');}
+function getVals(id){return Array.from({length:4},(_,i)=>{const el=document.getElementById(`inp-${id}-${i}`);const v=el?parseFloat(el.value):NaN;return isNaN(v)||el.value===''?null:v;});}
+function avg(arr){const v=arr.filter(x=>x!==null);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null;}
+function maxVal(arr){const v=arr.filter(x=>x!==null);return v.length?Math.max(...v):null;}
+function conceito(p){if(p===null)return null;if(p>=75)return'otimo';if(p>=50)return'bom';if(p>=25)return'suficiente';return'regular';}
+function concNota(c){return{otimo:1,bom:.75,suficiente:.5,regular:.25}[c]??0;}
+const colors={otimo:'var(--otimo)',bom:'var(--bom)',suficiente:'var(--suficiente)',regular:'var(--regular)'};
+const labels={otimo:'Ótimo',bom:'Bom',suficiente:'Suficiente',regular:'Regular'};
+function badgeHTML(c){if(!c)return'';return`<span class="badge badge-${c}">${labels[c]}</span>`;}
+function setRing(id,nota,max){const el=document.getElementById('ring-'+id);if(el)el.style.strokeDashoffset=113-Math.min(nota/max,1)*113;}
+function classC3(n){return n>7.5?'Ótimo':n>=5?'Bom':n>=2.6?'Suficiente':'Regular';}
+function classC2(n){return n>8.5?'Ótimo':n>=7?'Bom':n>=5?'Suficiente':'Regular';}
+
+function calcular(){
+  let totalC3=0;
+  const resultados={};
+  const alertas=[];
+  inds.forEach(id=>{
+    const a=avg(getVals(id));const c=conceito(a);const n=concNota(c);const p=a!==null?n*pesos[id]:0;
+    if(a!==null)totalC3+=p;
+    resultados[id]={media:a,conceito:c,pontos:p};
+    document.getElementById('res-'+id).textContent=a!==null?a.toFixed(1)+'%':'—';
+    document.getElementById('res-'+id).style.color=c?colors[c]:'var(--text)';
+    document.getElementById('badge-'+id).innerHTML=badgeHTML(c);
+    document.getElementById('pts-'+id).textContent=a!==null?p.toFixed(2):'—';
+    const pr=document.getElementById('prog-'+id);
+    pr.style.width=(a||0)+'%';pr.style.background=colors[c]||'var(--muted)';
+    if(a!==null&&a<75)alertas.push(`⚡ ${id.toUpperCase()} em ${a.toFixed(1)}% (Peso ${pesos[id]}) — precisa de 75% para Ótimo${id==='b3'?' (indicador invertido)':''}`);
+  });
+  document.getElementById('total-c3').textContent=totalC3.toFixed(2);
+  document.getElementById('nota-c3').textContent=totalC3.toFixed(2);
+  setRing('c3',totalC3,10);
+
+  const avgCad=avg(getVals('cad')),avgAcomp=avg(getVals('acomp')),maxSat=maxVal(getVals('sat'));
+  document.getElementById('res-cad').textContent=avgCad!==null?avgCad.toFixed(2):'—';
+  document.getElementById('pts-cad').textContent=avgCad!==null?avgCad.toFixed(2):'—';
+  document.getElementById('prog-cad').style.width=avgCad!==null?(avgCad/10*100)+'%':'0%';
+  document.getElementById('res-acomp').textContent=avgAcomp!==null?avgAcomp.toFixed(2):'—';
+  document.getElementById('pts-acomp').textContent=avgAcomp!==null?avgAcomp.toFixed(2):'—';
+  document.getElementById('prog-acomp').style.width=avgAcomp!==null?(avgAcomp/10*100)+'%':'0%';
+  document.getElementById('res-sat').textContent=maxSat!==null?maxSat.toFixed(2):'—';
+  document.getElementById('pts-sat').textContent=maxSat!==null?maxSat.toFixed(2):'—';
+
+  let totalC2=null;
+  if(avgCad!==null||avgAcomp!==null){
+    const dims=[avgCad,avgAcomp].filter(v=>v!==null);
+    totalC2=Math.min(10,dims.reduce((a,b)=>a+b,0)/dims.length+(maxSat!==null?maxSat*.1:0));
+    document.getElementById('total-c2').textContent=totalC2.toFixed(2);
+    document.getElementById('nota-c2').textContent=totalC2.toFixed(2);
+    setRing('c2',totalC2,10);
+  }
+
+  document.getElementById('alerta-area').innerHTML=alertas.map(a=>`<div class="alerta"><span>⚠</span><span>${a}</span></div>`).join('');
+  dadosCalculados={quadrimestre:quadLabel,inds:resultados,totalC3,concC3:classC3(totalC3),cadastro:avgCad,acompanhamento:avgAcomp,satisfacao:maxSat,totalC2,concC2:totalC2?classC2(totalC2):null};
+  document.getElementById('btn-ia').disabled=false;
+}
+
+async function gerarEstrategia(){
+  if(!dadosCalculados)return;
+  const btn=document.getElementById('btn-ia');
+  btn.disabled=true;btn.innerHTML=`<div class="loading-dots"><span></span><span></span><span></span></div> Analisando...`;
+  const box=document.getElementById('estrategia-box');
+  const content=document.getElementById('estrategia-content');
+  box.classList.add('show');content.textContent='Gerando plano estratégico...';
+  const d=dadosCalculados;
+  const fmtInd=(id)=>d.inds[id].media!==null?`${d.inds[id].media.toFixed(1)}% → ${d.inds[id].conceito?.toUpperCase()||'—'} (${d.inds[id].pontos.toFixed(2)} pts)`:'Não informado';
+
+  const prompt=`Você é consultor especialista em APS e Saúde Bucal do Brasil com domínio total da NT 6/2025-DEAPS/SAPS/MS.
+
+Analise os resultados de uma equipe eSB e gere um PLANO ESTRATÉGICO COMPLETO para atingir Ótimo.
+
+RESULTADOS — Quadrimestre ${d.quadrimestre}:
+
+COMPONENTE III (meta > 7,5 para Ótimo) — Pesos totais = 10:
+- B1 Primeira Consulta Odontológica Programada (Peso 2): ${fmtInd('b1')}
+- B2 Tratamento Concluído (Peso 2): ${fmtInd('b2')}
+- B3 Taxa de Exodontias (Peso 2) [INVERTIDO — taxa baixa = pontuação alta]: ${fmtInd('b3')}
+- B4 Procedimentos Preventivos (Peso 2): ${fmtInd('b4')}
+- B5 Escovação Supervisionada (Peso 1): ${fmtInd('b5')}
+- B6 Tratamento Restaurador Atraumático (Peso 1): ${fmtInd('b6')}
+- NOTA FINAL C3: ${d.totalC3.toFixed(2)} → ${d.concC3}
+
+COMPONENTE II (meta > 8,5 para Ótimo):
+- Cadastro: ${d.cadastro!==null?d.cadastro.toFixed(2)+'/10':'Não informado'}
+- Acompanhamento: ${d.acompanhamento!==null?d.acompanhamento.toFixed(2)+'/10':'Não informado'}
+- Bônus Satisfação: ${d.satisfacao!==null?d.satisfacao.toFixed(2)+'/10':'Não informado'}
+- NOTA FINAL C2: ${d.totalC2!==null?d.totalC2.toFixed(2)+' → '+d.concC2:'Não calculado'}
+
+Gere o plano no seguinte formato:
+
+📊 DIAGNÓSTICO ATUAL
+[Análise do gap para Ótimo — foque em B1, B2, B3, B4 (Peso 2) pois valem mais. Lembre que B3 é invertido]
+
+🎯 METAS DO PRÓXIMO QUADRIMESTRE
+[Metas numéricas específicas para cada indicador B1 a B6, Cadastro, Acompanhamento e Satisfação]
+
+⚡ PRIORIDADES IMEDIATAS (Semanas 1-2)
+[3 a 5 ações concretas priorizando B1, B2, B3 e B4]
+
+📅 PLANO SEMANA A SEMANA
+Semanas 1-2: [ações]
+Semanas 3-4: [ações]
+Semanas 5-8: [ações]
+Semanas 9-12: [ações]
+Semanas 13-16: [fechamento]
+
+🔧 ESTRATÉGIA POR INDICADOR
+[Para cada indicador abaixo do Ótimo, estratégia específica. Para B3, explique como reduzir extrações]
+
+⚠️ ALERTAS E RISCOS
+[Inclua alerta sobre o registro correto do B3 e sobre prazos do Siaps]
+
+✅ CHECKLIST DE CONTROLE MENSAL
+[Lista de verificação mensal específica para eSB]
+
+Seja específico, prático e direto. Linguagem acessível para profissionais de saúde bucal.`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1500,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();
+    content.textContent=data.content?.map(i=>i.text||'').join('')||'Erro ao gerar estratégia.';
+    document.getElementById('btn-pdf').classList.add('show');
+  }catch(err){content.textContent='❌ Erro ao conectar com a IA. Verifique sua conexão.';}
+  btn.disabled=false;btn.innerHTML='✦ Gerar Nova Estratégia';
+}
+
+function exportarPDF(){
+  const d=dadosCalculados;
+  const texto=document.getElementById('estrategia-content').textContent;
+  const html=`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;font-size:13px;color:#0f2420;padding:32px;max-width:750px;margin:0 auto;}h1{font-size:22px;color:#0d9488;border-bottom:2px solid #0d9488;padding-bottom:8px;margin-bottom:16px;}.meta{display:flex;gap:20px;background:#f0fdfa;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:12px;flex-wrap:wrap;}.mi{display:flex;flex-direction:column;gap:2px;}.ml{color:#5f7c78;font-size:10px;text-transform:uppercase;letter-spacing:1px;}.mv{font-weight:700;font-size:15px;}.conteudo{white-space:pre-wrap;line-height:1.8;background:#f9fffe;border:1px solid #5eead4;border-radius:8px;padding:20px;}.rodape{margin-top:24px;font-size:10px;color:#94a3b8;text-align:center;border-top:1px solid #ccfbf1;padding-top:12px;}</style></head><body>
+  <h1>✦ Plano Estratégico — eSB</h1>
+  <div class="meta">
+    <div class="mi"><span class="ml">Quadrimestre</span><span class="mv">${d.quadrimestre}</span></div>
+    <div class="mi"><span class="ml">Nota C3</span><span class="mv">${d.totalC3.toFixed(2)} — ${d.concC3}</span></div>
+    <div class="mi"><span class="ml">Nota C2</span><span class="mv">${d.totalC2!==null?d.totalC2.toFixed(2)+' — '+d.concC2:'—'}</span></div>
+    <div class="mi"><span class="ml">Gerado em</span><span class="mv">${new Date().toLocaleDateString('pt-BR')}</span></div>
+  </div>
+  <div class="conteudo">${texto.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+  <div class="rodape">Gerado pelo sistema ÁPEX Saúde · Consultoria APS · NT 6/2025</div>
+  </body></html>`;
+  const blob=new Blob([html],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const win=window.open(url,'_blank');
+  setTimeout(()=>{win.print();},800);
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  renderGrids();
+  document.getElementById('btn-calc').addEventListener('click',calcular);
+  document.getElementById('btn-ia').addEventListener('click',gerarEstrategia);
+  document.getElementById('btn-pdf').addEventListener('click',exportarPDF);
+});
+</script>
+</body>
+</html>

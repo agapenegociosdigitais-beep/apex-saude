@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia eSB — ÁPEX Saúde</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f0fdf9;
+  --white: #ffffff;
+  --ink: #0f2420;
+  --border: #ccfbf1;
+  --border2: #99f6e4;
+  --muted: #5f7c78;
+  --muted2: #94a3a0;
+  --teal: #0d9488;
+  --teal-bg: #f0fdfa;
+  --teal-border: #5eead4;
+  --teal-dark: #0f766e;
+  --green: #16a34a;
+  --green-bg: #f0fdf4;
+  --green-border: #86efac;
+  --gold: #d97706;
+  --gold-bg: #fffbeb;
+  --gold-border: #fcd34d;
+  --red: #dc2626;
+  --red-bg: #fef2f2;
+  --red-border: #fca5a5;
+  --blue: #2563eb;
+  --blue-bg: #eff6ff;
+  --blue-border: #93c5fd;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.header {
+  background: linear-gradient(135deg, #134e4a 0%, #0f766e 100%);
+  padding: 28px 20px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.header::after {
+  content: 'eSB';
+  position: absolute;
+  right: -10px; top: -8px;
+  font-family: 'Syne', sans-serif;
+  font-size: 80px;
+  font-weight: 800;
+  color: #ffffff08;
+  pointer-events: none;
+}
+.header-back {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: #5eead4;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  opacity: 0.8;
+}
+.header-eyebrow { font-family: 'DM Mono', monospace; font-size: 9px; color: #5eead4; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+.header h1 { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 4px; }
+.header h1 span { color: #5eead4; }
+.header-sub { font-size: 12px; color: #ffffff55; font-style: italic; }
+
+.nav-bar {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px #0000000a;
+}
+.nav-item {
+  flex-shrink: 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.nav-item:hover, .nav-item.active { color: var(--teal); border-color: var(--teal-border); background: var(--teal-bg); }
+
+.content { padding: 0 16px 60px; max-width: 640px; margin: 0 auto; }
+
+.intro-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  margin: 14px 0;
+  display: flex;
+  gap: 12px;
+}
+.intro-icon { font-size: 26px; flex-shrink: 0; }
+.intro-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+.intro-text { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+.section { margin-top: 24px; }
+.sec-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+.step { display: flex; gap: 12px; margin-bottom: 12px; }
+.step-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #fff;
+}
+.sn-teal { background: var(--teal); }
+.sn-ink { background: var(--ink); }
+.sn-gold { background: var(--gold); }
+.sn-red { background: var(--red); }
+
+.step-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+.step-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+.box { border-radius: 8px; padding: 11px 13px; margin: 10px 0; display: flex; gap: 9px; font-size: 12px; line-height: 1.5; }
+.box-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+.box.tip { background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green); }
+.box.warn { background: var(--gold-bg); border: 1px solid var(--gold-border); color: #92400e; }
+.box.danger { background: var(--red-bg); border: 1px solid var(--red-border); color: var(--red); }
+.box.info { background: var(--teal-bg); border: 1px solid var(--teal-border); color: var(--teal-dark); }
+.box.critical { background: #fef2f2; border: 2px solid var(--red); color: var(--red); }
+
+.tabela { width: 100%; border-collapse: collapse; margin: 10px 0; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); font-size: 12px; }
+.tabela th { background: var(--ink); color: #fff; font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 1px; text-transform: uppercase; padding: 8px 10px; text-align: left; }
+.tabela td { padding: 9px 10px; border-bottom: 1px solid var(--border); background: var(--white); vertical-align: top; }
+.tabela tr:last-child td { border-bottom: none; }
+.tabela tr:nth-child(even) td { background: var(--bg); }
+
+.tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 8px; padding: 2px 7px; border-radius: 3px; font-weight: 500; }
+.tag-otimo { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+.tag-bom { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
+.tag-suf { background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold-border); }
+.tag-reg { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+.tag-peso { background: var(--teal-bg); color: var(--teal); border: 1px solid var(--teal-border); }
+.tag-inv { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+
+.ind-guide { background: var(--white); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 10px; }
+.ind-guide-header { background: var(--ink); padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.ind-guide-nome { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: #fff; flex: 1; }
+.ind-guide-body { padding: 12px 14px; }
+.ind-guide-row { display: flex; gap: 8px; margin-bottom: 6px; font-size: 12px; }
+.ind-guide-lbl { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; min-width: 70px; margin-top: 1px; }
+.ind-guide-val { color: var(--ink); line-height: 1.4; flex: 1; }
+
+/* INDICADOR INVERTIDO especial */
+.inv-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--red-bg);
+  border: 1px solid var(--red-border);
+  color: var(--red);
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.formula { background: var(--ink); border-radius: 8px; padding: 12px 14px; margin: 10px 0; font-family: 'DM Mono', monospace; font-size: 11px; color: #5eead4; line-height: 1.9; }
+.formula .cm { color: #ffffff33; }
+.formula .vl { color: #fcd34d; }
+
+.exemplo { background: var(--white); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 10px 0; }
+.exemplo-head { background: var(--ink); padding: 8px 14px; font-family: 'DM Mono', monospace; font-size: 9px; color: #5eead4; letter-spacing: 1px; text-transform: uppercase; }
+.exemplo-body { padding: 12px 14px; }
+.ex-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+.ex-lbl { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); min-width: 40px; }
+.ex-meses { display: flex; gap: 5px; }
+.mes-box { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.mes-n { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--muted2); }
+.mes-v { width: 42px; height: 30px; border-radius: 4px; border: 1px solid; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; }
+.mv-o { background: var(--green-bg); border-color: var(--green-border); color: var(--green); }
+.mv-b { background: var(--blue-bg); border-color: var(--blue-border); color: var(--blue); }
+.mv-s { background: var(--gold-bg); border-color: var(--gold-border); color: var(--gold); }
+.mv-r { background: var(--red-bg); border-color: var(--red-border); color: var(--red); }
+.ex-result { background: var(--bg); border-radius: 5px; padding: 8px 10px; display: flex; justify-content: space-between; margin-top: 4px; }
+.ex-result-lbl { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); text-transform: uppercase; }
+.ex-result-val { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 800; }
+
+.quiz { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 10px 0; }
+.quiz-q { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; margin-bottom: 12px; line-height: 1.3; }
+.quiz-opts { display: grid; gap: 7px; }
+.quiz-opt { background: var(--bg); border: 1px solid var(--border); border-radius: 5px; padding: 10px 12px; font-size: 12px; cursor: pointer; text-align: left; width: 100%; color: var(--ink); font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+.quiz-opt:hover { border-color: var(--teal); background: var(--teal-bg); }
+.quiz-opt.ok { background: var(--green-bg); border-color: var(--green-border); color: var(--green); font-weight: 500; }
+.quiz-opt.no { background: var(--red-bg); border-color: var(--red-border); color: var(--red); }
+.quiz-fb { margin-top: 10px; font-size: 12px; display: none; line-height: 1.5; }
+.quiz-fb.show { display: block; }
+.quiz-nx { margin-top: 10px; background: var(--teal); color: #fff; border: none; border-radius: 5px; font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; padding: 8px 14px; cursor: pointer; display: none; }
+.quiz-nx.show { display: inline-block; }
+
+.checks { display: grid; gap: 6px; margin: 10px 0; }
+.ci { display: flex; align-items: flex-start; gap: 10px; background: var(--white); border: 1px solid var(--border); border-radius: 6px; padding: 9px 12px; cursor: pointer; transition: all 0.15s; }
+.ci.done { background: var(--green-bg); border-color: var(--green-border); }
+.ci-box { width: 17px; height: 17px; border: 2px solid var(--border2); border-radius: 3px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+.ci.done .ci-box { background: var(--green); border-color: var(--green); }
+.ci-ck { display: none; color: #fff; font-size: 9px; font-weight: 700; }
+.ci.done .ci-ck { display: block; }
+.ci-txt { font-size: 12px; line-height: 1.4; }
+.ci.done .ci-txt { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--green-border); }
+
+.final { background: var(--ink); border-radius: 10px; padding: 20px; text-align: center; margin-top: 20px; }
+.final-emoji { font-size: 32px; margin-bottom: 8px; }
+.final-title { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; color: #5eead4; margin-bottom: 5px; }
+.final-text { font-size: 12px; color: #ffffff66; line-height: 1.5; }
+
+.rv { opacity: 0; transform: translateY(10px); transition: all 0.4s ease; }
+.rv.on { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a class="header-back" href="apex-saude.html">← voltar ao dashboard</a>
+  <div class="header-eyebrow">ÁPEX Saúde · eSB</div>
+  <h1>Guia de <span>Preenchimento</span></h1>
+  <p class="header-sub">Painel eSB — 6 indicadores B1 a B6</p>
+</div>
+
+<div class="nav-bar">
+  <a class="nav-item active" href="#intro">Intro</a>
+  <a class="nav-item" href="#passo1">Quadrimestre</a>
+  <a class="nav-item" href="#passo2">B1–B6</a>
+  <a class="nav-item" href="#b3">B3 Invertido</a>
+  <a class="nav-item" href="#pesos">Pesos</a>
+  <a class="nav-item" href="#compii">Comp. II</a>
+  <a class="nav-item" href="#quiz">Quiz</a>
+  <a class="nav-item" href="#erros">Erros</a>
+</div>
+
+<div class="content">
+
+<!-- INTRO -->
+<div id="intro">
+  <div class="intro-card rv">
+    <div class="intro-icon">🦷</div>
+    <div>
+      <div class="intro-title">Painel eSB — o que ele faz?</div>
+      <div class="intro-text">Calcula automaticamente as notas dos Componentes II e III para a Equipe de Saúde Bucal, com 6 indicadores odontológicos baseados na NT 6/2025.</div>
+    </div>
+  </div>
+  <div class="intro-card rv">
+    <div class="intro-icon">⚠️</div>
+    <div>
+      <div class="intro-title">Atenção: o B3 é invertido!</div>
+      <div class="intro-text">O único indicador diferente de todos os painéis — quanto menor a taxa de extração dental, melhor a pontuação. Leia a seção B3 antes de preencher.</div>
+    </div>
+  </div>
+
+  <div class="section rv">
+    <div class="sec-label">Visão geral dos indicadores</div>
+    <table class="tabela">
+      <tr><th>Código</th><th>Indicador</th><th>Peso</th><th>Tipo</th></tr>
+      <tr><td><span class="tag tag-bom">B1</span></td><td>Primeira Consulta Odontológica Programada</td><td><span class="tag tag-peso">2</span></td><td>Normal</td></tr>
+      <tr><td><span class="tag tag-bom">B2</span></td><td>Tratamento Concluído</td><td><span class="tag tag-peso">2</span></td><td>Normal</td></tr>
+      <tr><td><span class="tag tag-bom">B3</span></td><td>Taxa de Exodontias</td><td><span class="tag tag-peso">2</span></td><td><span class="inv-badge">⚠ Invertido</span></td></tr>
+      <tr><td><span class="tag tag-bom">B4</span></td><td>Procedimentos Odontológicos Preventivos</td><td><span class="tag tag-peso">2</span></td><td>Normal</td></tr>
+      <tr><td><span class="tag tag-bom">B5</span></td><td>Escovação Supervisionada</td><td><span class="tag tag-peso">1</span></td><td>Normal</td></tr>
+      <tr><td><span class="tag tag-bom">B6</span></td><td>Tratamento Restaurador Atraumático</td><td><span class="tag tag-peso">1</span></td><td>Normal</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- PASSO 1 -->
+<div id="passo1" class="section rv">
+  <div class="sec-label">Passo 1</div>
+  <div class="step">
+    <div class="step-num sn-ink">1</div>
+    <div>
+      <div class="step-title">Selecione o quadrimestre</div>
+      <div class="step-desc">Escolha o período antes de preencher qualquer dado.</div>
+    </div>
+  </div>
+  <table class="tabela rv">
+    <tr><th>Botão</th><th>Meses</th></tr>
+    <tr><td><strong>Jan–Abr</strong></td><td>Janeiro, Fevereiro, Março, Abril</td></tr>
+    <tr><td><strong>Mai–Ago</strong></td><td>Maio, Junho, Julho, Agosto</td></tr>
+    <tr><td><strong>Set–Dez</strong></td><td>Setembro, Outubro, Novembro, Dezembro</td></tr>
+  </table>
+  <div class="box warn rv"><span class="box-icon">⚠</span><div>Trocar o quadrimestre depois apaga todos os dados. Escolha primeiro.</div></div>
+</div>
+
+<!-- PASSO 2 -->
+<div id="passo2" class="section rv">
+  <div class="sec-label">Passo 2 — Indicadores B1 a B6</div>
+  <div class="step">
+    <div class="step-num sn-teal">2</div>
+    <div>
+      <div class="step-title">Preencha o % de cada indicador por mês</div>
+      <div class="step-desc">Para cada indicador, informe o percentual obtido no Siaps em cada mês. Escala de 0 a 100.</div>
+    </div>
+  </div>
+
+  <div class="box info rv"><span class="box-icon">ℹ</span><div>Os valores vêm do <strong>Siaps</strong> na tela de resultados mensais da sua equipe de Saúde Bucal.</div></div>
+
+  <div class="ind-guide rv">
+    <div class="ind-guide-header">
+      <div class="ind-guide-nome">B1. Primeira Consulta Odontológica Programada</div>
+      <span class="tag tag-peso">Peso 2</span>
+    </div>
+    <div class="ind-guide-body">
+      <div class="ind-guide-row"><span class="ind-guide-lbl">O que mede</span><span class="ind-guide-val">% de pessoas que realizaram a primeira consulta odontológica programada na APS</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">De onde tirar</span><span class="ind-guide-val">Siaps → resultados mensais → B1</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Período</span><span class="ind-guide-val">Últimos 30 dias</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Meta Ótimo</span><span class="ind-guide-val">75% ou mais · Peso 2 — vale o dobro!</span></div>
+    </div>
+  </div>
+
+  <div class="ind-guide rv">
+    <div class="ind-guide-header">
+      <div class="ind-guide-nome">B2. Tratamento Concluído</div>
+      <span class="tag tag-peso">Peso 2</span>
+    </div>
+    <div class="ind-guide-body">
+      <div class="ind-guide-row"><span class="ind-guide-lbl">O que mede</span><span class="ind-guide-val">% de tratamentos odontológicos concluídos em relação aos iniciados</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">De onde tirar</span><span class="ind-guide-val">Siaps → resultados mensais → B2</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Período</span><span class="ind-guide-val">Últimos 30 dias</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Meta Ótimo</span><span class="ind-guide-val">75% ou mais · Peso 2</span></div>
+    </div>
+  </div>
+
+  <div class="ind-guide rv">
+    <div class="ind-guide-header">
+      <div class="ind-guide-nome">B4. Procedimentos Odontológicos Individuais Preventivos</div>
+      <span class="tag tag-peso">Peso 2</span>
+    </div>
+    <div class="ind-guide-body">
+      <div class="ind-guide-row"><span class="ind-guide-lbl">O que mede</span><span class="ind-guide-val">% de procedimentos preventivos (aplicação de flúor, selantes) em relação ao total</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">De onde tirar</span><span class="ind-guide-val">Siaps → resultados mensais → B4</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Período</span><span class="ind-guide-val">Últimos 30 dias</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Meta Ótimo</span><span class="ind-guide-val">75% ou mais · Peso 2</span></div>
+    </div>
+  </div>
+
+  <div class="ind-guide rv">
+    <div class="ind-guide-header">
+      <div class="ind-guide-nome">B5. Escovação Supervisionada</div>
+      <span class="tag tag-peso">Peso 1</span>
+    </div>
+    <div class="ind-guide-body">
+      <div class="ind-guide-row"><span class="ind-guide-lbl">O que mede</span><span class="ind-guide-val">% de pessoas que participaram de atividades de escovação supervisionada</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">De onde tirar</span><span class="ind-guide-val">Siaps → resultados mensais → B5</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Período</span><span class="ind-guide-val">Últimos 30 dias</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Meta Ótimo</span><span class="ind-guide-val">75% ou mais</span></div>
+    </div>
+  </div>
+
+  <div class="ind-guide rv">
+    <div class="ind-guide-header">
+      <div class="ind-guide-nome">B6. Tratamento Restaurador Atraumático</div>
+      <span class="tag tag-peso">Peso 1</span>
+    </div>
+    <div class="ind-guide-body">
+      <div class="ind-guide-row"><span class="ind-guide-lbl">O que mede</span><span class="ind-guide-val">% de procedimentos restauradores atraumáticos em relação ao total de restaurações</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">De onde tirar</span><span class="ind-guide-val">Siaps → resultados mensais → B6</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Período</span><span class="ind-guide-val">Últimos 30 dias</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Meta Ótimo</span><span class="ind-guide-val">75% ou mais</span></div>
+    </div>
+  </div>
+
+  <div class="sec-label rv" style="margin-top:16px;">Conversão de % em conceito</div>
+  <table class="tabela rv">
+    <tr><th>% obtido</th><th>Conceito</th><th>Pontuação</th></tr>
+    <tr><td>75% ou mais</td><td><span class="tag tag-otimo">Ótimo</span></td><td>1,00</td></tr>
+    <tr><td>50% a 74,9%</td><td><span class="tag tag-bom">Bom</span></td><td>0,75</td></tr>
+    <tr><td>25% a 49,9%</td><td><span class="tag tag-suf">Suficiente</span></td><td>0,50</td></tr>
+    <tr><td>Abaixo de 25%</td><td><span class="tag tag-reg">Regular</span></td><td>0,25</td></tr>
+  </table>
+</div>
+
+<!-- B3 INVERTIDO -->
+<div id="b3" class="section rv">
+  <div class="sec-label">⚠ Atenção especial — B3</div>
+
+  <div class="box critical rv">
+    <span class="box-icon">🦷</span>
+    <div><strong>B3 — Taxa de Exodontias é um indicador INVERTIDO.</strong> Diferente de todos os outros — quanto MENOR a taxa de extração dental, MELHOR a pontuação. Uma taxa de 5% pode ser Ótimo, enquanto 80% seria Regular.</div>
+  </div>
+
+  <div class="ind-guide rv">
+    <div class="ind-guide-header">
+      <div class="ind-guide-nome">B3. Taxa de Exodontias</div>
+      <div style="display:flex;gap:5px;">
+        <span class="tag tag-peso">Peso 2</span>
+        <span class="inv-badge">Invertido</span>
+      </div>
+    </div>
+    <div class="ind-guide-body">
+      <div class="ind-guide-row"><span class="ind-guide-lbl">O que mede</span><span class="ind-guide-val">Proporção de extrações dentais em relação ao total de procedimentos odontológicos</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">De onde tirar</span><span class="ind-guide-val">Siaps → resultados mensais → B3 (já aparece convertido para o conceito)</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">Lógica</span><span class="ind-guide-val">Alta taxa de extração = práticas menos preventivas = pontuação menor</span></div>
+      <div class="ind-guide-row"><span class="ind-guide-lbl">O que preencher</span><span class="ind-guide-val">O percentual que o Siaps apresenta para o B3 — o sistema já converte corretamente</span></div>
+    </div>
+  </div>
+
+  <div class="box tip rv"><span class="box-icon">💡</span><div>No Siaps, o B3 já aparece com a pontuação ajustada para a lógica invertida. Você não precisa fazer a inversão manualmente — só insira o valor que o sistema mostrar.</div></div>
+
+  <div class="exemplo rv">
+    <div class="exemplo-head">📊 Exemplo B3 — lógica invertida</div>
+    <div class="exemplo-body">
+      <div class="ex-row">
+        <span class="ex-lbl">B3</span>
+        <div class="ex-meses">
+          <div class="mes-box"><span class="mes-n">Jan</span><div class="mes-v mv-o">82</div></div>
+          <div class="mes-box"><span class="mes-n">Fev</span><div class="mes-v mv-o">78</div></div>
+          <div class="mes-box"><span class="mes-n">Mar</span><div class="mes-v mv-b">65</div></div>
+          <div class="mes-box"><span class="mes-n">Abr</span><div class="mes-v mv-o">80</div></div>
+        </div>
+      </div>
+      <div class="ex-result">
+        <span class="ex-result-lbl">Média do quad.</span>
+        <span class="ex-result-val" style="color:var(--green)">76,3% → Ótimo</span>
+      </div>
+      <p style="font-size:11px;color:var(--muted);margin-top:6px;">O Siaps já converte: taxa baixa de extração = percentual alto no indicador.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PESOS -->
+<div id="pesos" class="section rv">
+  <div class="sec-label">Passo 3 — Pesos e Nota Final</div>
+  <div class="step">
+    <div class="step-num sn-teal">3</div>
+    <div>
+      <div class="step-title">Nota Final = soma de (conceito × peso)</div>
+      <div class="step-desc">B1 a B4 têm Peso 2 e B5/B6 têm Peso 1. Total possível: 10 pontos.</div>
+    </div>
+  </div>
+
+  <div class="formula rv">
+<span class="cm"># Fórmula da Nota Final C3 — eSB</span>
+Nota = (B1×<span class="vl">2</span>) + (B2×<span class="vl">2</span>) + (B3×<span class="vl">2</span>)
+     + (B4×<span class="vl">2</span>) + (B5×<span class="vl">1</span>) + (B6×<span class="vl">1</span>)
+
+<span class="cm"># Exemplo com B1=Bom, B2=Ótimo, B3=Ótimo,
+# B4=Suf, B5=Reg, B6=Ótimo:</span>
+= (0,75×2)+(1×2)+(1×2)+(0,5×2)+(0,25×1)+(1×1)
+= 1,5 + 2 + 2 + 1 + 0,25 + 1 = <span class="vl">7,75</span> → Ótimo ✓
+  </div>
+
+  <table class="tabela rv">
+    <tr><th>Nota Final C3</th><th>Classificação</th></tr>
+    <tr><td>Acima de 7,5</td><td><span class="tag tag-otimo">Ótimo</span></td></tr>
+    <tr><td>5,0 a 7,5</td><td><span class="tag tag-bom">Bom</span></td></tr>
+    <tr><td>2,6 a 4,9</td><td><span class="tag tag-suf">Suficiente</span></td></tr>
+    <tr><td>Até 2,5</td><td><span class="tag tag-reg">Regular</span></td></tr>
+  </table>
+
+  <div class="box tip rv"><span class="box-icon">💡</span><div>B1, B2, B3 e B4 têm Peso 2 — focando nos quatro você já garante 8 dos 10 pontos possíveis. B5 e B6 são complementares.</div></div>
+</div>
+
+<!-- COMP II -->
+<div id="compii" class="section rv">
+  <div class="sec-label">Passo 4 — Componente II</div>
+  <div class="step">
+    <div class="step-num sn-teal">4</div>
+    <div>
+      <div class="step-title">Preencha Cadastro, Acompanhamento e Satisfação</div>
+      <div class="step-desc">Igual aos outros painéis — escala de 0 a 10, dados do Siaps.</div>
+    </div>
+  </div>
+  <table class="tabela rv">
+    <tr><th>Campo</th><th>O que informar</th><th>Escala</th></tr>
+    <tr><td><strong>Dimensão Cadastro</strong></td><td>Nota mensal do Siaps para Cadastro</td><td>0 a 10</td></tr>
+    <tr><td><strong>Dimensão Acompanhamento</strong></td><td>Nota mensal do Siaps para Acompanhamento</td><td>0 a 10</td></tr>
+    <tr><td><strong>Bônus Satisfação</strong></td><td>Nota de satisfação (usa o maior mês do quad.)</td><td>0 a 10</td></tr>
+  </table>
+  <table class="tabela rv">
+    <tr><th>Nota Final C2</th><th>Classificação</th></tr>
+    <tr><td>Acima de 8,5</td><td><span class="tag tag-otimo">Ótimo</span></td></tr>
+    <tr><td>7,0 a 8,5</td><td><span class="tag tag-bom">Bom</span></td></tr>
+    <tr><td>5,0 a 6,9</td><td><span class="tag tag-suf">Suficiente</span></td></tr>
+    <tr><td>Abaixo de 5</td><td><span class="tag tag-reg">Regular</span></td></tr>
+  </table>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="section">
+  <div class="sec-label rv">Quiz rápido</div>
+
+  <div class="quiz rv" id="q1">
+    <div class="quiz-q">1. O B3 (Taxa de Exodontias) teve 15% em janeiro — uma taxa muito baixa de extrações. Qual o conceito esperado?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="resp('q1',this,false,'Não. Regular seria quando a taxa de extração é alta. B3 é invertido — taxa baixa = pontuação alta.')">Regular</button>
+      <button class="quiz-opt" onclick="resp('q1',this,true,'✓ Correto! B3 é invertido — taxa BAIXA de extração = pontuação ALTA = Ótimo.')">Ótimo</button>
+      <button class="quiz-opt" onclick="resp('q1',this,false,'Não. O Siaps já converte a lógica invertida e apresenta o percentual ajustado.')">Suficiente</button>
+    </div>
+    <div class="quiz-fb" id="fb-q1"></div>
+    <button class="quiz-nx" id="nx-q1" onclick="document.getElementById('q2').scrollIntoView({behavior:'smooth'})">Próxima →</button>
+  </div>
+
+  <div class="quiz rv" id="q2">
+    <div class="quiz-q">2. B1 e B2 têm Peso 2 e ficaram em Ótimo (1,0). Quantos pontos os dois juntos contribuem para a nota final?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="resp('q2',this,false,'Não. 2,0 seria se o peso de cada um fosse 1. Com Peso 2 cada um vale 2 pontos.')">2,0 pontos</button>
+      <button class="quiz-opt" onclick="resp('q2',this,true,'✓ Correto! B1 (1,0×2=2) + B2 (1,0×2=2) = 4,0 pontos. 40% da nota total!')">4,0 pontos</button>
+      <button class="quiz-opt" onclick="resp('q2',this,false,'Não. 3,0 seria com Peso 1,5. Os pesos são 2 para cada um.')">3,0 pontos</button>
+    </div>
+    <div class="quiz-fb" id="fb-q2"></div>
+    <button class="quiz-nx" id="nx-q2" onclick="document.getElementById('erros').scrollIntoView({behavior:'smooth'})">Ver erros comuns →</button>
+  </div>
+</div>
+
+<!-- ERROS -->
+<div id="erros" class="section rv">
+  <div class="sec-label">Erros mais comuns</div>
+  <div class="box danger rv"><span class="box-icon">❌</span><div><strong>Interpretar o B3 como os outros indicadores.</strong> Uma taxa alta de extração (ex: 80%) é RUIM, não boa. Não confunda a lógica invertida.</div></div>
+  <div class="box danger rv"><span class="box-icon">❌</span><div><strong>Confundir a escala:</strong> B1–B6 usam percentual (0–100). Cadastro, Acompanhamento e Satisfação usam nota (0–10).</div></div>
+  <div class="box danger rv"><span class="box-icon">❌</span><div><strong>Ignorar B1 e B2 (Peso 2):</strong> juntos valem 4 pontos (40% da nota). São os mais impactantes — cuide deles primeiro.</div></div>
+  <div class="box danger rv"><span class="box-icon">❌</span><div><strong>Não clicar em Calcular.</strong> Sempre clique em "↻ Calcular Notas Finais" após preencher todos os campos.</div></div>
+
+  <div class="sec-label rv" style="margin-top:16px;">Checklist de preenchimento</div>
+  <div class="checks">
+    <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Selecionei o quadrimestre correto</span></div>
+    <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Preenchi B1, B2, B4, B5, B6 com % do Siaps (0–100)</span></div>
+    <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Preenchi B3 com o valor do Siaps (já invertido automaticamente)</span></div>
+    <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Preenchi Cadastro e Acompanhamento com nota 0–10</span></div>
+    <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Preenchi Satisfação em pelo menos um mês</span></div>
+    <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Cliquei em "↻ Calcular Notas Finais"</span></div>
+    <div class="ci" onclick="tc(this)"><div class="ci-box"><span class="ci-ck">✓</span></div><span class="ci-txt">Li os alertas e identifiquei o que melhorar</span></div>
+  </div>
+</div>
+
+<div class="final rv">
+  <div class="final-emoji">🦷</div>
+  <div class="final-title">Pronto para usar o painel eSB!</div>
+  <div class="final-text">Foque em B1, B2, B3 e B4 (Peso 2) para maximizar a nota.<br>Lembre: B3 é invertido — quanto menos extração, melhor!</div>
+</div>
+
+</div>
+
+<script>
+function resp(qid, btn, ok, fb) {
+  const card = document.getElementById(qid);
+  if (card.dataset.r) return;
+  card.dataset.r = '1';
+  btn.classList.add(ok ? 'ok' : 'no');
+  card.querySelectorAll('.quiz-opt').forEach(o => { o.disabled = true; o.style.cursor = 'default'; });
+  const f = document.getElementById('fb-' + qid);
+  f.textContent = fb;
+  f.style.color = ok ? 'var(--green)' : 'var(--red)';
+  f.classList.add('show');
+  const nx = document.getElementById('nx-' + qid);
+  if (nx) nx.classList.add('show');
+}
+function tc(el) { el.classList.toggle('done'); }
+
+const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) x.target.classList.add('on'); }), { threshold: 0.08 });
+document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+const navLinks = document.querySelectorAll('.nav-item');
+const secs = ['intro','passo1','passo2','b3','pesos','compii','quiz','erros'];
+const secObs = new IntersectionObserver(e => {
+  e.forEach(x => { if (x.isIntersecting) navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href')==='#'+x.target.id)); });
+}, { threshold: 0.2 });
+secs.forEach(id => { const el = document.getElementById(id); if (el) secObs.observe(el); });
+</script>
+</body>
+</html>
