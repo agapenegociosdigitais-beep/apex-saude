@@ -649,8 +649,8 @@ body {
     </div>
 
     <div class="auth-tabs">
-      <button class="auth-tab active" onclick="switchAuthTab('login')">Entrar</button>
-      <button class="auth-tab" onclick="switchAuthTab('register')">Cadastrar</button>
+      <button class="auth-tab active" id="tab-login-btn">Entrar</button>
+      <button class="auth-tab" id="tab-register-btn">Cadastrar</button>
     </div>
 
     <!-- LOGIN -->
@@ -663,7 +663,7 @@ body {
         <label class="form-label">Senha</label>
         <input class="form-input" type="password" id="login-senha" placeholder="••••••••">
       </div>
-      <button class="btn-primary" onclick="doLogin()">Acessar plataforma</button>
+      <button class="btn-primary" id="btn-login">Acessar plataforma</button>
       <div class="auth-msg" id="login-msg"></div>
       <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:14px;">
         Admin: <span style="color:var(--gold);font-family:'DM Mono',monospace;">admin&#64;apex.com</span> / <span style="color:var(--gold);font-family:'DM Mono',monospace;">apex2025</span>
@@ -696,7 +696,7 @@ body {
         <label class="form-label">Senha</label>
         <input class="form-input" type="password" id="reg-senha" placeholder="Mínimo 6 caracteres">
       </div>
-      <button class="btn-primary" onclick="doRegister()">Criar conta</button>
+      <button class="btn-primary" id="btn-register">Criar conta</button>
       <div class="auth-msg" id="reg-msg"></div>
     </div>
   </div>
@@ -719,10 +719,10 @@ body {
   </div>
 
   <div class="nav-tabs">
-    <button class="nav-tab active" onclick="switchDashTab('inicio',this)">🏠 Início</button>
-    <button class="nav-tab" onclick="switchDashTab('ferramentas',this)">🛠 Ferramentas</button>
-    <button class="nav-tab" onclick="switchDashTab('conteudo',this)">📚 Conteúdo</button>
-    <button class="nav-tab" onclick="switchDashTab('relatorios',this)">📄 Relatórios</button>
+    <button class="nav-tab active" data-tab="inicio">🏠 Início</button>
+    <button class="nav-tab" data-tab="ferramentas">🛠 Ferramentas</button>
+    <button class="nav-tab" data-tab="conteudo">📚 Conteúdo</button>
+    <button class="nav-tab" data-tab="relatorios">📄 Relatórios</button>
   </div>
 
   <div class="dash-content">
@@ -1111,4 +1111,40 @@ function showMsg(el, text, type) {
 }
 
 let toastTimer;
-function showT
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── EVENT LISTENERS (substitui onclicks inline) ──
+document.addEventListener('DOMContentLoaded', function() {
+
+  // Auth tabs
+  const tabLogin = document.getElementById('tab-login-btn');
+  const tabReg = document.getElementById('tab-register-btn');
+  if (tabLogin) tabLogin.addEventListener('click', () => switchAuthTab('login'));
+  if (tabReg) tabReg.addEventListener('click', () => switchAuthTab('register'));
+
+  // Botões de login e registro
+  const btnLogin = document.getElementById('btn-login');
+  const btnReg = document.getElementById('btn-register');
+  if (btnLogin) btnLogin.addEventListener('click', doLogin);
+  if (btnReg) btnReg.addEventListener('click', doRegister);
+
+  // Logout
+  document.querySelectorAll('.btn-logout').forEach(b => b.addEventListener('click', doLogout));
+
+  // Nav tabs do dashboard
+  document.querySelectorAll('.nav-tab[data-tab]').forEach(btn => {
+    btn.addEventListener('click', function() {
+      switchDashTab(this.dataset.tab, this);
+    });
+  });
+
+});
+</script>
+</body>
+</html>
