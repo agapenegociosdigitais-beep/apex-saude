@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
+<link rel="icon" type="image/png" href="favicon.png">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Painel eSB — ÁPEX Saúde</title>
@@ -120,7 +122,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 
 <div class="topbar">
   <a class="topbar-back" href="apex-saude.html">← Dashboard</a>
-  <div class="topbar-title">Painel <span>eSB</span></div>
+  <div class="topbar-title" style="flex:1;display:flex;align-items:center;"><img src="logo-nav.png" alt="ÁPEX Saúde" style="height:32px;width:auto;object-fit:contain;"></div>
   <button class="theme-btn" id="theme-toggle">🌙</button>
 </div>
 
@@ -401,7 +403,9 @@ Seja específico, prático e direto. Linguagem acessível para profissionais de 
 function exportarPDF(){
   const d=dadosCalculados;
   const texto=document.getElementById('estrategia-content').textContent;
-  const html=`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;font-size:13px;color:#0f2420;padding:32px;max-width:750px;margin:0 auto;}h1{font-size:22px;color:#0d9488;border-bottom:2px solid #0d9488;padding-bottom:8px;margin-bottom:16px;}.meta{display:flex;gap:20px;background:#f0fdfa;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:12px;flex-wrap:wrap;}.mi{display:flex;flex-direction:column;gap:2px;}.ml{color:#5f7c78;font-size:10px;text-transform:uppercase;letter-spacing:1px;}.mv{font-weight:700;font-size:15px;}.conteudo{white-space:pre-wrap;line-height:1.8;background:#f9fffe;border:1px solid #5eead4;border-radius:8px;padding:20px;}.rodape{margin-top:24px;font-size:10px;color:#94a3b8;text-align:center;border-top:1px solid #ccfbf1;padding-top:12px;}</style></head><body>
+  const html=`<!DOCTYPE html><html lang="pt-BR"><head>
+<link rel="icon" type="image/png" href="favicon.png">
+<meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;font-size:13px;color:#0f2420;padding:32px;max-width:750px;margin:0 auto;}h1{font-size:22px;color:#0d9488;border-bottom:2px solid #0d9488;padding-bottom:8px;margin-bottom:16px;}.meta{display:flex;gap:20px;background:#f0fdfa;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:12px;flex-wrap:wrap;}.mi{display:flex;flex-direction:column;gap:2px;}.ml{color:#5f7c78;font-size:10px;text-transform:uppercase;letter-spacing:1px;}.mv{font-weight:700;font-size:15px;}.conteudo{white-space:pre-wrap;line-height:1.8;background:#f9fffe;border:1px solid #5eead4;border-radius:8px;padding:20px;}.rodape{margin-top:24px;font-size:10px;color:#94a3b8;text-align:center;border-top:1px solid #ccfbf1;padding-top:12px;}</style></head><body>
   <h1>✦ Plano Estratégico — eSB</h1>
   <div class="meta">
     <div class="mi"><span class="ml">Quadrimestre</span><span class="mv">${d.quadrimestre}</span></div>

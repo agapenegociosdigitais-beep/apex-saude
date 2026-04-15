@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
+<link rel="icon" type="image/png" href="favicon.png">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard Gerencial — ÁPEX Saúde</title>
@@ -128,7 +130,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 
 <div class="topbar">
   <a class="topbar-back" href="apex-saude.html">← Dashboard</a>
-  <div class="topbar-title">Gestão <span>Gerencial</span></div>
+  <div class="topbar-title" style="flex:1;display:flex;align-items:center;"><img src="logo-nav.png" alt="ÁPEX Saúde" style="height:32px;width:auto;object-fit:contain;"></div>
   <button class="theme-btn" id="theme-toggle">🌙</button>
 </div>
 
@@ -556,7 +558,9 @@ function gerarRelatorio() {
   const mediaC3 = (dados.reduce((a, r) => a + r.c3, 0) / dados.length).toFixed(2);
   const mediaC2 = (dados.reduce((a, r) => a + r.c2, 0) / dados.length).toFixed(2);
 
-  const html = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
+  const html = `<!DOCTYPE html><html lang="pt-BR"><head>
+<link rel="icon" type="image/png" href="favicon.png">
+<meta charset="UTF-8">
   <style>
     body{font-family:Arial,sans-serif;font-size:13px;color:#1a1a2e;padding:32px;max-width:800px;margin:0 auto;}
     h1{font-size:22px;color:#c9a84c;border-bottom:2px solid #c9a84c;padding-bottom:8px;margin-bottom:16px;}

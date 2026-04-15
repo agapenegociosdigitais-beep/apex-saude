@@ -1,1064 +1,573 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<link rel="icon" type="image/png" href="favicon.png">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ÁPEX Saúde — Consultoria APS</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --black: #080705;
-  --black2: #0f0d0a;
-  --card: #141210;
-  --border: #242018;
-  --border2: #2e2820;
-  --gold: #c9a84c;
-  --gold2: #e8c97a;
-  --gold3: #f5e0a0;
-  --gold-dim: #c9a84c18;
-  --text: #ede8df;
-  --muted: #7a7060;
-  --muted2: #5a5448;
+  --black:#050403;--black2:#080604;--ink:#0d0b08;--card:#100e0b;
+  --border:#1e1a14;--border2:#2e2820;--border3:#3e3428;
+  --gold:#c9a84c;--gold2:#e8c97a;--gold3:#f5e4b0;
+  --gold-dim:#c9a84c12;--gold-glow:#c9a84c30;--gold-glow2:#c9a84c18;
+  --text:#f0ead8;--text2:#c8bfa8;--muted:#7a7060;--muted2:#504840;
 }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--text);font-family:'Lato',sans-serif;font-size:15px;overflow-x:hidden;}
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* ── GRAIN ── */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9998;opacity:.6;}
 
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--black);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 15px;
-  overflow-x: hidden;
-}
+/* ── SPOTLIGHT ── */
+#spotlight{position:fixed;width:600px;height:600px;border-radius:50%;background:radial-gradient(ellipse,#c9a84c09 0%,transparent 70%);pointer-events:none;z-index:1;transform:translate(-50%,-50%);transition:opacity .3s;top:0;left:0;}
 
 /* ── NAV ── */
-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 999;
-  background: #080705ee;
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 20px;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.nav-logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--gold);
-  letter-spacing: 3px;
-  flex: 1;
-}
-.nav-cta {
-  background: var(--gold);
-  color: var(--black);
-  border: none;
-  border-radius: 5px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  padding: 8px 16px;
-  cursor: pointer;
-  letter-spacing: 0.3px;
-  transition: opacity 0.15s;
-  text-decoration: none;
-  display: inline-block;
-}
-.nav-cta:hover { opacity: 0.85; }
-.nav-login {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  color: var(--muted);
-  text-decoration: none;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: color 0.15s;
-}
-.nav-login:hover { color: var(--gold); }
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:20px 24px;display:flex;align-items:center;gap:16px;transition:all .4s;}
+nav.scrolled{background:rgba(5,4,3,0.94);backdrop-filter:blur(24px);padding:14px 24px;border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--gold);letter-spacing:4px;flex:1;cursor:default;}
+.nav-links{display:flex;gap:22px;list-style:none;}
+.nav-links a{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-decoration:none;text-transform:uppercase;letter-spacing:2px;transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-cta{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--black);background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;padding:10px 22px;cursor:pointer;text-decoration:none;transition:all .2s;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);}
+.nav-cta:hover{opacity:.88;transform:translateY(-1px);}
 
 /* ── HERO ── */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 100px 24px 60px;
-  position: relative;
-  overflow: hidden;
-}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;position:relative;overflow:hidden;}
 
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% -10%, #c9a84c14 0%, transparent 60%),
-    radial-gradient(ellipse 40% 40% at 80% 80%, #c9a84c08 0%, transparent 50%);
-  pointer-events: none;
-}
-.hero-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 48px 48px;
-  opacity: 0.25;
-  pointer-events: none;
-}
-.hero-grid-fade {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 30%, var(--black) 80%);
-  pointer-events: none;
-}
+/* Geometric lines background */
+.hero-bg{position:absolute;inset:0;pointer-events:none;}
+.hero-bg svg{width:100%;height:100%;opacity:.06;}
 
-.hero-tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  color: var(--gold);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--border2);
-  background: var(--gold-dim);
-  padding: 5px 14px;
-  border-radius: 20px;
-  position: relative;
-  z-index: 1;
-}
-.hero-tag::before {
-  content: '';
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--gold);
-  animation: blink 2s infinite;
-}
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+.hero-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border2);background:var(--gold-dim);padding:6px 16px;margin-bottom:28px;position:relative;z-index:2;}
+.hero-badge-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.hero-badge-text{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:3px;text-transform:uppercase;}
 
-.hero h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(36px, 10vw, 58px);
-  font-weight: 700;
-  line-height: 1.08;
-  color: var(--text);
-  margin-bottom: 16px;
-  position: relative;
-  z-index: 1;
-  max-width: 640px;
-}
-.hero h1 em {
-  font-style: italic;
-  color: var(--gold);
-}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(48px,12vw,88px);font-weight:400;line-height:1.02;letter-spacing:-1px;margin-bottom:20px;position:relative;z-index:2;}
+.hero-title .line1{display:block;color:var(--text2);font-weight:400;}
+.hero-title .line2{display:block;color:var(--gold);font-style:italic;}
+.hero-title .line3{display:block;color:var(--text);font-weight:600;}
 
-.hero-sub {
-  font-size: 15px;
-  color: var(--muted);
-  line-height: 1.6;
-  max-width: 460px;
-  margin: 0 auto 32px;
-  position: relative;
-  z-index: 1;
-  font-weight: 300;
-}
+.hero-divider{width:100px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 24px;position:relative;z-index:2;}
 
-.hero-btns {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-  position: relative;
-  z-index: 1;
-  margin-bottom: 48px;
-}
-.btn-hero-primary {
-  background: var(--gold);
-  color: var(--black);
-  border: none;
-  border-radius: 6px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 14px 28px;
-  cursor: pointer;
-  transition: all 0.2s;
-  letter-spacing: 0.3px;
-  text-decoration: none;
-  display: inline-block;
-}
-.btn-hero-primary:hover {
-  background: var(--gold2);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 24px #c9a84c33;
-}
-.btn-hero-secondary {
-  background: none;
-  color: var(--text);
-  border: 1px solid var(--border2);
-  border-radius: 6px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  padding: 14px 24px;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-decoration: none;
-  display: inline-block;
-}
-.btn-hero-secondary:hover { border-color: var(--gold); color: var(--gold); }
+.hero-sub{font-weight:400;font-size:16px;color:var(--text2);max-width:420px;line-height:1.75;margin:0 auto 40px;position:relative;z-index:2;letter-spacing:.3px;}
 
-/* Stats row */
-.hero-stats {
-  display: flex;
-  gap: 0;
-  border: 1px solid var(--border2);
-  border-radius: 10px;
-  background: var(--card);
-  overflow: hidden;
-  position: relative;
-  z-index: 1;
-  max-width: 480px;
-  width: 100%;
-  margin: 0 auto;
-}
-.hero-stat {
-  flex: 1;
-  padding: 14px 12px;
-  text-align: center;
-  border-right: 1px solid var(--border2);
-}
-.hero-stat:last-child { border-right: none; }
-.hero-stat-val {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--gold);
-  line-height: 1;
-  margin-bottom: 3px;
-}
-.hero-stat-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 8px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:60px;position:relative;z-index:2;}
 
-/* ── SCROLL INDICATOR ── */
-.scroll-hint {
-  position: absolute;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  z-index: 1;
-  animation: float 2.5s ease-in-out infinite;
-}
-@keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
-.scroll-line {
-  width: 1px;
-  height: 32px;
-  background: linear-gradient(to bottom, var(--gold), transparent);
-}
-.scroll-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 8px;
-  color: var(--muted2);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
+.btn-gold{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--black);background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;padding:15px 32px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .3s;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);position:relative;overflow:hidden;}
+.btn-gold::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--gold2),var(--gold3));opacity:0;transition:opacity .3s;}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 16px 48px var(--gold-glow);}
+.btn-gold:hover::before{opacity:1;}
+.btn-gold span{position:relative;z-index:1;}
 
-/* ── SECTIONS COMMON ── */
-section { padding: 64px 24px; }
-.section-inner { max-width: 600px; margin: 0 auto; }
-.section-tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  color: var(--gold);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-.section-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(28px, 8vw, 40px);
-  font-weight: 700;
-  line-height: 1.15;
-  margin-bottom: 14px;
-  color: var(--text);
-}
-.section-title em { font-style: italic; color: var(--gold); }
-.section-desc {
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.7;
-  font-weight: 300;
-}
+.btn-outline{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);background:none;border:1px solid var(--border2);padding:15px 28px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .3s;}
+.btn-outline:hover{border-color:var(--gold);background:var(--gold-dim);}
 
-/* ── DOR (PROBLEMA) ── */
-#dor {
-  background: var(--black2);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-.dor-grid {
-  display: grid;
-  gap: 10px;
-  margin-top: 28px;
-}
-.dor-card {
-  background: var(--card);
-  border: 1px solid var(--border2);
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-}
-.dor-icon {
-  font-size: 20px;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-.dor-text {
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--text);
-}
-.dor-text strong { color: var(--gold2); font-weight: 500; }
+/* ── COUNTERS ── */
+.counters{display:flex;gap:0;border:1px solid var(--border2);max-width:460px;width:100%;margin:0 auto;position:relative;z-index:2;background:var(--card);}
+.counters::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.counter-item{flex:1;padding:18px 12px;text-align:center;border-right:1px solid var(--border);}
+.counter-item:last-child{border-right:none;}
+.counter-num{font-family:'Playfair Display',serif;font-size:32px;font-weight:600;color:var(--gold);line-height:1;display:block;}
+.counter-label{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;display:block;}
 
-/* ── SOLUÇÃO ── */
-#solucao { background: var(--black); }
-.solucao-items { margin-top: 28px; display: grid; gap: 12px; }
-.solucao-item {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-  padding: 16px;
-  background: var(--card);
-  border: 1px solid var(--border2);
-  border-radius: 8px;
-  position: relative;
-  overflow: hidden;
-  transition: border-color 0.2s;
-}
-.solucao-item:hover { border-color: var(--gold); }
-.solucao-item::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 2px; height: 100%;
-  background: var(--gold);
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.solucao-item:hover::before { opacity: 1; }
-.solucao-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--border2);
-  line-height: 1;
-  min-width: 28px;
-}
-.solucao-body {}
-.solucao-title {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text);
-  margin-bottom: 4px;
-}
-.solucao-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+/* ── MARQUEE ── */
+.marquee-section{padding:32px 0;background:var(--black2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;}
+.marquee-track{display:flex;gap:0;width:max-content;animation:marquee 30s linear infinite;}
+.marquee-track:hover{animation-play-state:paused;}
+.marquee-item{display:flex;align-items:center;gap:12px;padding:0 32px;border-right:1px solid var(--border);white-space:nowrap;}
+.marquee-icon{font-size:16px;}
+.marquee-text{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:2px;}
+.marquee-text.highlight{color:var(--gold);}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── BENTO SECTION ── */
+#bento{padding:100px 20px;background:var(--black);}
+.bento-header{text-align:center;margin-bottom:48px;}
+.bento-ornament{display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:16px;}
+.orn-line{height:1px;background:var(--border2);width:50px;}
+.orn-diamond{width:6px;height:6px;background:var(--gold);transform:rotate(45deg);}
+.orn-text{font-family:'DM Mono',monospace;font-size:8px;color:var(--gold);text-transform:uppercase;letter-spacing:3px;}
+.bento-title{font-family:'Playfair Display',serif;font-size:clamp(32px,8vw,52px);font-weight:400;line-height:1.1;}
+.bento-title em{font-style:italic;color:var(--gold);}
+.bento-sub{font-weight:400;font-size:14px;color:var(--text2);margin-top:12px;line-height:1.7;}
+
+/* Bento grid */
+.bento-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:auto;gap:10px;max-width:900px;margin:0 auto;}
+
+.bento-card{background:var(--card);border:1px solid var(--border);padding:20px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s;}
+.bento-card:hover{border-color:var(--border3);transform:translateY(-2px);}
+.bento-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .4s;}
+.bento-card:hover::before{transform:scaleX(1);}
+
+/* Tamanhos */
+.b-wide{grid-column:span 2;}
+.b-tall{grid-row:span 2;}
+.b-full{grid-column:span 4;}
+.b-3{grid-column:span 3;}
+
+.bento-icon{font-size:28px;margin-bottom:12px;display:block;}
+.bento-card-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:500;margin-bottom:8px;color:var(--text);}
+.bento-card-desc{font-size:12px;color:var(--muted);line-height:1.7;font-weight:400;}
+
+/* Card especial — nota visual */
+.bento-nota-wrap{display:flex;flex-direction:column;gap:8px;}
+.nota-bar{display:flex;align-items:center;gap:8px;}
+.nota-bar-label{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;min-width:32px;}
+.nota-bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.nota-bar-fill{height:100%;border-radius:2px;transition:width 1.5s ease;}
+.nota-bar-val{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);min-width:28px;text-align:right;}
+
+/* Card IA preview */
+.ia-preview{background:var(--black2);border:1px solid var(--border);padding:10px 12px;margin-top:10px;font-size:11px;color:var(--text2);line-height:1.6;font-family:'DM Mono',monospace;font-weight:400;}
+.ia-preview .cursor{display:inline-block;width:2px;height:12px;background:var(--gold);margin-left:1px;animation:blink-cursor .8s infinite;}
+@keyframes blink-cursor{0%,100%{opacity:1}50%{opacity:0}}
+
+/* Card prazo */
+.prazo-display{text-align:center;padding:10px 0;}
+.prazo-num{font-family:'Playfair Display',serif;font-size:52px;font-weight:400;color:var(--gold);line-height:1;}
+.prazo-unit{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-top:4px;}
+
+/* Card perfis */
+.perfis-grid-mini{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.perfil-chip{font-family:'DM Mono',monospace;font-size:8px;padding:4px 8px;border:1px solid var(--border2);color:var(--muted);text-transform:uppercase;letter-spacing:.5px;transition:all .2s;cursor:default;}
+.perfil-chip:hover{border-color:var(--gold);color:var(--gold);}
+
+/* Card indicadores */
+.ind-list{display:grid;gap:5px;margin-top:8px;}
+.ind-item{display:flex;justify-content:space-between;align-items:center;padding:5px 8px;background:var(--black2);border:1px solid var(--border);}
+.ind-name{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+.ind-peso{font-family:'Playfair Display',serif;font-size:14px;font-weight:600;color:var(--gold);}
 
 /* ── PLANOS ── */
-#planos {
-  background: var(--black2);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-.planos-grid {
-  display: grid;
-  gap: 12px;
-  margin-top: 28px;
-}
-.plano-card {
-  background: var(--card);
-  border: 1px solid var(--border2);
-  border-radius: 10px;
-  padding: 22px 18px;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.2s, border-color 0.2s;
-}
-.plano-card:hover { transform: translateY(-2px); }
-.plano-card.destaque {
-  border-color: var(--gold);
-  background: linear-gradient(135deg, #1a1508 0%, var(--card) 100%);
-}
-.plano-destaque-tag {
-  position: absolute;
-  top: 14px; right: 14px;
-  font-family: 'DM Mono', monospace;
-  font-size: 8px;
-  background: var(--gold);
-  color: var(--black);
-  padding: 3px 8px;
-  border-radius: 3px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 500;
-}
-.plano-nome {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  color: var(--gold);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 8px;
-}
-.plano-preco {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 38px;
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1;
-  margin-bottom: 4px;
-}
-.plano-preco span {
-  font-size: 16px;
-  font-weight: 400;
-  color: var(--muted);
-}
-.plano-desc {
-  font-size: 12px;
-  color: var(--muted);
-  margin-bottom: 16px;
-  line-height: 1.4;
-}
-.plano-features {
-  list-style: none;
-  margin-bottom: 20px;
-  display: grid;
-  gap: 7px;
-}
-.plano-features li {
-  font-size: 12px;
-  color: var(--text);
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  line-height: 1.4;
-}
-.plano-features li::before {
-  content: '✓';
-  color: var(--gold);
-  font-weight: 700;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-.btn-plano {
-  width: 100%;
-  padding: 12px;
-  border-radius: 6px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  letter-spacing: 0.3px;
-  border: none;
-}
-.btn-plano-primary {
-  background: var(--gold);
-  color: var(--black);
-}
-.btn-plano-primary:hover { background: var(--gold2); }
-.btn-plano-secondary {
-  background: none;
-  border: 1px solid var(--border2);
-  color: var(--text);
-}
-.btn-plano-secondary:hover { border-color: var(--gold); color: var(--gold); }
+#planos{padding:100px 20px;background:var(--black2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.planos-inner{max-width:900px;margin:0 auto;}
+.planos-grid{display:grid;gap:10px;margin-top:48px;}
+.plano-card{background:var(--card);border:1px solid var(--border);padding:28px 22px;position:relative;overflow:hidden;transition:all .3s;}
+.plano-card:hover{border-color:var(--border3);}
+.plano-card.destaque{border-color:var(--gold);background:linear-gradient(160deg,#16120a 0%,var(--card) 100%);}
+.plano-glow{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.plano-badge{position:absolute;top:16px;right:16px;font-family:'DM Mono',monospace;font-size:7px;background:var(--gold);color:var(--black);padding:4px 10px;letter-spacing:2px;text-transform:uppercase;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);}
+.plano-name{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:3px;margin-bottom:12px;}
+.plano-price{font-family:'Playfair Display',serif;font-size:44px;font-weight:400;line-height:1;margin-bottom:6px;}
+.plano-price span{font-size:16px;color:var(--muted);}
+.plano-desc{font-size:12px;color:var(--muted);margin-bottom:20px;font-weight:400;line-height:1.5;}
+.plano-features{list-style:none;display:grid;gap:8px;margin-bottom:24px;}
+.plano-features li{font-size:12px;color:var(--text2);display:flex;align-items:flex-start;gap:10px;font-weight:400;line-height:1.4;}
+.plano-features li::before{content:'◆';color:var(--gold);font-size:6px;flex-shrink:0;margin-top:5px;}
 
-/* ── PROVA SOCIAL ── */
-#prova { background: var(--black); }
-.depoimentos { margin-top: 28px; display: grid; gap: 12px; }
-.dep-card {
-  background: var(--card);
-  border: 1px solid var(--border2);
-  border-radius: 8px;
-  padding: 18px;
-}
-.dep-text {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 16px;
-  font-style: italic;
-  color: var(--text);
-  line-height: 1.5;
-  margin-bottom: 12px;
-}
-.dep-author {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.dep-avatar {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  background: var(--gold-dim);
-  border: 1px solid var(--gold);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--gold);
-}
-.dep-name { font-size: 12px; font-weight: 500; }
-.dep-role { font-size: 10px; color: var(--muted); }
-.dep-stars { color: var(--gold); font-size: 11px; margin-bottom: 2px; }
+/* ── DEPOIMENTOS ── */
+#prova{padding:100px 20px;background:var(--black);}
+.dep-inner{max-width:900px;margin:0 auto;}
+.dep-grid{display:grid;gap:10px;margin-top:48px;}
+.dep-card{background:var(--card);border:1px solid var(--border);padding:24px 20px;position:relative;transition:border-color .3s;}
+.dep-card:hover{border-color:var(--border3);}
+.dep-quote{position:absolute;top:12px;left:16px;font-family:'Playfair Display',serif;font-size:52px;font-weight:400;color:var(--gold);opacity:.15;line-height:1;}
+.dep-stars{color:var(--gold);font-size:10px;letter-spacing:3px;margin-bottom:10px;}
+.dep-text{font-family:'Playfair Display',serif;font-size:16px;font-style:italic;font-weight:400;line-height:1.65;margin-bottom:16px;}
+.dep-author{display:flex;align-items:center;gap:10px;}
+.dep-av{width:32px;height:32px;border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:var(--gold);background:var(--gold-dim);}
+.dep-name{font-size:12px;font-weight:500;color:var(--text2);}
+.dep-role{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:.5px;}
 
 /* ── FAQ ── */
-#faq {
-  background: var(--black2);
-  border-top: 1px solid var(--border);
-}
-.faqs { margin-top: 28px; display: grid; gap: 8px; }
-.faq-item {
-  background: var(--card);
-  border: 1px solid var(--border2);
-  border-radius: 8px;
-  overflow: hidden;
-}
-.faq-q {
-  padding: 14px 16px;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-}
-.faq-arrow {
-  color: var(--gold);
-  font-size: 16px;
-  transition: transform 0.2s;
-  flex-shrink: 0;
-}
-.faq-item.open .faq-arrow { transform: rotate(45deg); }
-.faq-a {
-  display: none;
-  padding: 0 16px 14px;
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.6;
-  border-top: 1px solid var(--border);
-}
-.faq-item.open .faq-a { display: block; }
+#faq{padding:100px 20px;background:var(--black2);border-top:1px solid var(--border);}
+.faq-inner{max-width:680px;margin:0 auto;}
+.faq-list{margin-top:48px;border:1px solid var(--border);}
+.faq-item{background:var(--card);}
+.faq-item+.faq-item{border-top:1px solid var(--border);}
+.faq-q{padding:16px 20px;font-size:13px;font-weight:400;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--text2);transition:color .2s;user-select:none;}
+.faq-q:hover,.faq-item.open .faq-q{color:var(--gold);}
+.faq-ico{width:20px;height:20px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--gold);flex-shrink:0;transition:transform .3s,background .2s;}
+.faq-item.open .faq-ico{transform:rotate(45deg);background:var(--gold-dim);}
+.faq-a{display:none;padding:0 20px 16px;font-size:13px;color:var(--muted);line-height:1.7;font-weight:400;border-top:1px solid var(--border);}
+.faq-item.open .faq-a{display:block;}
 
 /* ── CTA FINAL ── */
-#cta-final {
-  background: var(--black);
-  text-align: center;
-  border-top: 1px solid var(--border);
-}
-.cta-box {
-  background: linear-gradient(135deg, #1a1508 0%, var(--card) 60%);
-  border: 1px solid var(--gold);
-  border-radius: 12px;
-  padding: 36px 24px;
-  position: relative;
-  overflow: hidden;
-  max-width: 500px;
-  margin: 0 auto;
-}
-.cta-box::before {
-  content: 'ÁPEX';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 100px;
-  font-weight: 700;
-  color: #c9a84c06;
-  pointer-events: none;
-  white-space: nowrap;
-}
-.cta-box h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 30px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 10px;
-  position: relative;
-  z-index: 1;
-}
-.cta-box h2 em { font-style: italic; color: var(--gold); }
-.cta-box p {
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 24px;
-  position: relative;
-  z-index: 1;
-  line-height: 1.6;
-}
-.cta-box .btn-hero-primary {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  font-size: 15px;
-  padding: 15px;
-}
-.cta-garantia {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  color: var(--muted2);
-  margin-top: 12px;
-  letter-spacing: 1px;
-  position: relative;
-  z-index: 1;
-}
+#cta-final{padding:100px 20px;background:var(--black);border-top:1px solid var(--border);}
+.cta-inner{max-width:560px;margin:0 auto;text-align:center;position:relative;}
+.cta-inner::before{content:'ÁPEX';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Playfair Display',serif;font-size:110px;font-weight:700;color:var(--gold);opacity:.02;pointer-events:none;white-space:nowrap;letter-spacing:8px;}
+.cta-eyebrow{font-family:'DM Mono',monospace;font-size:8px;color:var(--gold);letter-spacing:4px;text-transform:uppercase;margin-bottom:20px;}
+.cta-title{font-family:'Playfair Display',serif;font-size:clamp(36px,9vw,60px);font-weight:400;line-height:1.08;margin-bottom:16px;}
+.cta-title em{font-style:italic;color:var(--gold);}
+.cta-desc{font-size:14px;color:var(--text2);margin-bottom:32px;line-height:1.7;font-weight:400;}
+.cta-guarantee{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted2);letter-spacing:2px;text-transform:uppercase;margin-top:16px;}
 
 /* ── FOOTER ── */
-footer {
-  background: var(--black2);
-  border-top: 1px solid var(--border);
-  padding: 24px 20px;
-  text-align: center;
-}
-.footer-logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--gold);
-  letter-spacing: 3px;
-  margin-bottom: 8px;
-}
-.footer-sub {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  color: var(--muted2);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-}
-.footer-links {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
-}
-.footer-links a {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  color: var(--muted);
-  text-decoration: none;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: color 0.15s;
-}
-.footer-links a:hover { color: var(--gold); }
-.footer-copy {
-  font-size: 10px;
-  color: var(--muted2);
-}
+footer{background:var(--black2);border-top:1px solid var(--border);padding:32px 24px;text-align:center;}
+.footer-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--gold);letter-spacing:4px;margin-bottom:6px;}
+.footer-sub{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted2);letter-spacing:3px;text-transform:uppercase;margin-bottom:18px;}
+.footer-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;}
+.footer-links a{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;transition:color .2s;}
+.footer-links a:hover{color:var(--gold);}
+.footer-copy{font-size:11px;color:var(--muted2);font-weight:400;}
 
 /* ── MODAL ── */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: #000000cc;
-  z-index: 9998;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  backdrop-filter: blur(4px);
-}
-.modal-overlay.open { display: flex; }
-.modal {
-  background: var(--card);
-  border: 1px solid var(--gold);
-  border-radius: 12px;
-  width: 100%;
-  max-width: 380px;
-  padding: 28px 24px;
-  position: relative;
-  animation: popIn 0.25s ease;
-}
-@keyframes popIn {
-  from { opacity:0; transform:scale(0.94) translateY(10px); }
-  to { opacity:1; transform:scale(1) translateY(0); }
-}
-.modal-close {
-  position: absolute;
-  top: 14px; right: 14px;
-  background: none;
-  border: none;
-  color: var(--muted);
-  font-size: 20px;
-  cursor: pointer;
-  line-height: 1;
-  padding: 4px;
-}
-.modal-logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--gold);
-  letter-spacing: 3px;
-  text-align: center;
-  margin-bottom: 4px;
-}
-.modal-sub {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  color: var(--muted);
-  text-align: center;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 22px;
-}
-.modal-tabs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  background: var(--black2);
-  border: 1px solid var(--border2);
-  border-radius: 6px;
-  padding: 3px;
-  margin-bottom: 20px;
-}
-.modal-tab {
-  padding: 8px;
-  text-align: center;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--muted);
-  cursor: pointer;
-  border-radius: 4px;
-  transition: all 0.2s;
-  border: none;
-  background: none;
-}
-.modal-tab.active {
-  background: var(--gold);
-  color: var(--black);
-  font-weight: 500;
-}
-.form-group { margin-bottom: 12px; }
-.form-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 5px;
-  display: block;
-}
-.form-input {
-  width: 100%;
-  background: var(--black2);
-  border: 1px solid var(--border2);
-  border-radius: 5px;
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  padding: 10px 12px;
-  transition: border-color 0.2s;
-  outline: none;
-}
-.form-input:focus { border-color: var(--gold); }
-.form-input::placeholder { color: var(--muted); }
-.form-select {
-  width: 100%;
-  background: var(--black2);
-  border: 1px solid var(--border2);
-  border-radius: 5px;
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  padding: 10px 12px;
-  outline: none;
-  appearance: none;
-  cursor: pointer;
-}
-.btn-modal {
-  width: 100%;
-  background: var(--gold);
-  color: var(--black);
-  border: none;
-  border-radius: 6px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  padding: 12px;
-  cursor: pointer;
-  margin-top: 4px;
-  transition: opacity 0.15s;
-}
-.btn-modal:hover { opacity: 0.85; }
-.modal-msg {
-  font-size: 11px;
-  text-align: center;
-  margin-top: 10px;
-  padding: 7px 10px;
-  border-radius: 4px;
-  display: none;
-}
-.modal-msg.error { background: #c0392b22; color: #e74c3c; border: 1px solid #c0392b44; display: block; }
-.modal-msg.success { background: #27ae6022; color: #2ecc71; border: 1px solid #27ae6044; display: block; }
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);z-index:9990;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--card);border:1px solid var(--gold);width:100%;max-width:380px;padding:32px 24px;position:relative;animation:modalIn .3s ease;}
+@keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:none}}
+.modal::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.modal-close{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;transition:color .2s;}
+.modal-close:hover{color:var(--gold);}
+.modal-logo{font-family:'Playfair Display',serif;font-size:26px;font-weight:600;color:var(--gold);letter-spacing:4px;text-align:center;margin-bottom:4px;}
+.modal-sub{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);text-align:center;letter-spacing:2px;text-transform:uppercase;margin-bottom:22px;}
+.modal-tabs{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border2);margin-bottom:20px;}
+.modal-tab{padding:10px;text-align:center;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);cursor:pointer;border:none;background:none;transition:all .2s;border-right:1px solid var(--border2);}
+.modal-tab:last-child{border-right:none;}
+.modal-tab.active{background:var(--gold);color:var(--black);font-weight:500;}
+.form-group{margin-bottom:11px;}
+.form-label{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px;display:block;}
+.form-input{width:100%;background:var(--black2);border:1px solid var(--border2);color:var(--text);font-family:'Lato',sans-serif;font-size:14px;font-weight:400;padding:10px 13px;transition:border-color .2s;outline:none;}
+.form-input:focus{border-color:var(--gold);}
+.form-input::placeholder{color:var(--muted);}
+.form-select{width:100%;background:var(--black2);border:1px solid var(--border2);color:var(--text);font-family:'Lato',sans-serif;font-size:14px;font-weight:400;padding:10px 13px;outline:none;appearance:none;cursor:pointer;}
+.btn-modal{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--black);border:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:12px;cursor:pointer;margin-top:5px;transition:opacity .15s;clip-path:polygon(7px 0%,100% 0%,calc(100% - 7px) 100%,0% 100%);}
+.btn-modal:hover{opacity:.88;}
+.modal-msg{font-size:11px;text-align:center;margin-top:10px;padding:7px 10px;display:none;}
+.modal-msg.error{background:#c0392b22;color:#e74c3c;border:1px solid #c0392b44;display:block;}
+.modal-msg.success{background:#27ae6022;color:#2ecc71;border:1px solid #27ae6044;display:block;}
 
-/* Animations on scroll */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:none;}
+.rd1{transition-delay:.1s;}.rd2{transition-delay:.2s;}.rd3{transition-delay:.3s;}.rd4{transition-delay:.4s;}
+
+/* ── LGPD ── */
+#lgpd{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);padding:12px 16px;z-index:9997;align-items:center;gap:12px;flex-wrap:wrap;}
+#lgpd p{flex:1;min-width:180px;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;line-height:1.5;}
+#lgpd a{color:var(--gold);}
+#lgpd button{background:var(--gold);color:#000;border:none;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:9px 18px;cursor:pointer;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);white-space:nowrap;}
+
+@media(max-width:480px){
+  .nav-links{display:none;}
+  .bento-grid{grid-template-columns:1fr 1fr;}
+  .b-wide,.b-3,.b-full{grid-column:span 2;}
+  .b-tall{grid-row:span 1;}
 }
 </style>
 </head>
 <body>
 
+<!-- SPOTLIGHT -->
+<div id="spotlight"></div>
+
 <!-- NAV -->
-<nav>
-  <div class="nav-logo">ÁPEX</div>
-  <a class="nav-login" href="#" onclick="openModal('login');return false;">Entrar</a>
-  <a class="nav-cta" href="#" onclick="openModal('register');return false;">Começar agora</a>
+<nav id="navbar">
+  <div class="nav-logo" style="flex:1;display:flex;align-items:center;"><img src="logo-nav.png" alt="ÁPEX Saúde" style="height:36px;width:auto;object-fit:contain;"></div>
+  <ul class="nav-links">
+    <li><a href="#bento">Solução</a></li>
+    <li><a href="#planos">Planos</a></li>
+    <li><a href="#prova">Depoimentos</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a class="nav-cta" href="#" onclick="openModal('login');return false;">Acessar →</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-grid-fade"></div>
+  <!-- Geometric SVG background -->
+  <div class="hero-bg">
+    <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <radialGradient id="rg" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle cx="600" cy="400" r="350" fill="url(#rg)"/>
+      <line x1="0" y1="400" x2="1200" y2="400" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
+      <line x1="600" y1="0" x2="600" y2="800" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="600" cy="400" r="200" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.2"/>
+      <circle cx="600" cy="400" r="300" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.1"/>
+      <polygon points="600,100 850,500 350,500" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.15"/>
+    </svg>
+  </div>
 
-  <div class="hero-tag">Consultoria APS · Cofinanciamento Federal</div>
+  <div style="margin-bottom:20px;position:relative;z-index:2;">
+    <img src="logo-full.png" alt="ÁPEX Saúde" style="width:min(340px,75vw);height:auto;object-fit:contain;filter:drop-shadow(0 8px 32px rgba(201,168,76,0.3));">
+  </div>
 
-  <h1>Sua equipe merece<br>nota <em>Ótimo</em>.<br>Nós garantimos o caminho.</h1>
+  <div class="hero-badge reveal">
+    <span class="hero-badge-dot"></span>
+    <span class="hero-badge-text">NT 6/2025 · DEAPS/SAPS/MS</span>
+  </div>
 
-  <p class="hero-sub">
-    A plataforma que transforma a metodologia da NT 6/2025 em estratégia prática — para gestores, coordenadores e equipes de APS que não querem perder repasse financeiro.
+  <h1 class="hero-title reveal rd1">
+    <span class="line1">Excelência em</span>
+    <span class="line2">Atenção Primária</span>
+    <span class="line3">à Saúde</span>
+  </h1>
+
+  <div class="hero-divider reveal rd2"></div>
+
+  <p class="hero-sub reveal rd2">
+    A plataforma que transforma dados do Siaps em estratégia — para equipes que não aceitam menos que <strong style="color:var(--gold)">Ótimo</strong>.
   </p>
 
-  <div class="hero-btns">
-    <a class="btn-hero-primary" href="#" onclick="openModal('register');return false;">Criar conta gratuita</a>
-    <a class="btn-hero-secondary" href="#planos">Ver planos</a>
-  <a class="btn-hero-secondary" href="painel-emulti.html" target="_blank" style="margin-top:8px;">
-  🎮 Ver demo — sem cadastro
-</a>
+  <div class="hero-btns reveal rd3">
+    <a class="btn-gold" href="#" onclick="openModal('register');return false;">
+      <span>Começar agora</span>
+      <span>→</span>
+    </a>
+    <a class="btn-outline" href="painel-emulti.html" target="_blank">
+      Ver demonstração
+    </a>
   </div>
 
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <div class="hero-stat-val">3</div>
-      <div class="hero-stat-label">Componentes</div>
+  <!-- COUNTERS ANIMADOS -->
+  <div class="counters reveal rd4">
+    <div class="counter-item">
+      <span class="counter-num" data-target="3" data-suffix="">0</span>
+      <span class="counter-label">Tipos de equipe</span>
     </div>
-    <div class="hero-stat">
-      <div class="hero-stat-val">10</div>
-      <div class="hero-stat-label">Indicadores</div>
+    <div class="counter-item">
+      <span class="counter-num" data-target="15" data-suffix="">0</span>
+      <span class="counter-label">Indicadores</span>
     </div>
-    <div class="hero-stat">
-      <div class="hero-stat-val">100%</div>
-      <div class="hero-stat-label">NT 6/2025</div>
-    </div>
-  </div>
-
-  <div class="scroll-hint">
-    <div class="scroll-line"></div>
-    <div class="scroll-label">Role para ver</div>
-  </div>
-</section>
-
-<!-- DOR -->
-<section id="dor">
-  <div class="section-inner">
-    <div class="section-tag reveal">O problema</div>
-    <h2 class="section-title reveal">Você está perdendo repasse<br>sem <em>saber por quê</em>.</h2>
-    <p class="section-desc reveal">A metodologia da APS é complexa, os prazos são rígidos e o registro errado custa caro. Veja os erros mais comuns:</p>
-
-    <div class="dor-grid">
-      <div class="dor-card reveal">
-        <div class="dor-icon">📋</div>
-        <div class="dor-text"><strong>Atendimento feito, não registrado.</strong> Sem lançamento no Siaps, o mês conta como zero — independente do que a equipe fez.</div>
-      </div>
-      <div class="dor-card reveal">
-        <div class="dor-icon">⏰</div>
-        <div class="dor-text"><strong>Envio fora do prazo.</strong> O 10º dia do mês passa e o quadrimestre inteiro é prejudicado. Não há recurso.</div>
-      </div>
-      <div class="dor-card reveal">
-        <div class="dor-icon">📉</div>
-        <div class="dor-text"><strong>Um mês ruim derruba tudo.</strong> A nota final é a média dos 4 meses — um mês em Regular pode tirar o Ótimo do quadrimestre.</div>
-      </div>
-      <div class="dor-card reveal">
-        <div class="dor-icon">❓</div>
-        <div class="dor-text"><strong>Ninguém sabe como calcular a nota.</strong> A metodologia da NT 6/2025 é técnica, com pesos e fórmulas que a maioria não domina.</div>
-      </div>
+    <div class="counter-item">
+      <span class="counter-num" data-target="100" data-suffix="%">0%</span>
+      <span class="counter-label">NT 6/2025</span>
     </div>
   </div>
 </section>
 
-<!-- SOLUÇÃO -->
-<section id="solucao">
-  <div class="section-inner">
-    <div class="section-tag reveal">A solução</div>
-    <h2 class="section-title reveal">Tudo que sua equipe precisa<br>em <em>um só lugar</em>.</h2>
-    <p class="section-desc reveal">A ÁPEX Saúde traduz a complexidade da NT 6/2025 em ferramentas práticas para o dia a dia das equipes.</p>
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track" id="marquee-track">
+    <div class="marquee-item"><span class="marquee-icon">📊</span><span class="marquee-text highlight">Componente II</span></div>
+    <div class="marquee-item"><span class="marquee-icon">🏥</span><span class="marquee-text">eSF / eAP</span></div>
+    <div class="marquee-item"><span class="marquee-icon">✦</span><span class="marquee-text highlight">Estratégia com IA</span></div>
+    <div class="marquee-item"><span class="marquee-icon">🦷</span><span class="marquee-text">eSB · B1 a B6</span></div>
+    <div class="marquee-item"><span class="marquee-icon">🎯</span><span class="marquee-text highlight">Classificação Ótimo</span></div>
+    <div class="marquee-item"><span class="marquee-icon">🤝</span><span class="marquee-text">eMulti · M1 e M2</span></div>
+    <div class="marquee-item"><span class="marquee-icon">⏰</span><span class="marquee-text highlight">Envio ao Siaps · Dia 10</span></div>
+    <div class="marquee-item"><span class="marquee-icon">📄</span><span class="marquee-text">Relatório PDF</span></div>
+    <div class="marquee-item"><span class="marquee-icon">🎓</span><span class="marquee-text highlight">12 Perfis Profissionais</span></div>
+    <div class="marquee-item"><span class="marquee-icon">📈</span><span class="marquee-text">Dashboard Gerencial</span></div>
+    <!-- duplicado para loop infinito -->
+    <div class="marquee-item"><span class="marquee-icon">📊</span><span class="marquee-text highlight">Componente II</span></div>
+    <div class="marquee-item"><span class="marquee-icon">🏥</span><span class="marquee-text">eSF / eAP</span></div>
+    <div class="marquee-item"><span class="marquee-icon">✦</span><span class="marquee-text highlight">Estratégia com IA</span></div>
+    <div class="marquee-item"><span class="marquee-icon">🦷</span><span class="marquee-text">eSB · B1 a B6</span></div>
+    <div class="marquee-item"><span class="marquee-icon">🎯</span><span class="marquee-text highlight">Classificação Ótimo</span></div>
+    <div class="marquee-item"><span class="marquee-icon">🤝</span><span class="marquee-text">eMulti · M1 e M2</span></div>
+    <div class="marquee-item"><span class="marquee-icon">⏰</span><span class="marquee-text highlight">Envio ao Siaps · Dia 10</span></div>
+    <div class="marquee-item"><span class="marquee-icon">📄</span><span class="marquee-text">Relatório PDF</span></div>
+    <div class="marquee-item"><span class="marquee-icon">🎓</span><span class="marquee-text highlight">12 Perfis Profissionais</span></div>
+    <div class="marquee-item"><span class="marquee-icon">📈</span><span class="marquee-text">Dashboard Gerencial</span></div>
+  </div>
+</div>
 
-    <div class="solucao-items">
-      <div class="solucao-item reveal">
-        <div class="solucao-num">01</div>
-        <div class="solucao-body">
-          <div class="solucao-title">📊 Painel de Monitoramento Inteligente</div>
-          <div class="solucao-desc">Insira os dados mensais e veja a nota do Componente II e III calculada automaticamente — com alertas de onde melhorar antes do fechamento.</div>
+<!-- BENTO SECTION -->
+<section id="bento">
+  <div class="bento-header">
+    <div class="bento-ornament reveal">
+      <div class="orn-line"></div><div class="orn-diamond"></div>
+      <div class="orn-text">Tudo em um só lugar</div>
+      <div class="orn-diamond"></div><div class="orn-line"></div>
+    </div>
+    <h2 class="bento-title reveal rd1">A plataforma que sua equipe<br><em>merecia desde sempre</em></h2>
+    <p class="bento-sub reveal rd2">Monitoramento, estratégia, treinamento e gestão — integrados e prontos para usar.</p>
+  </div>
+
+  <div class="bento-grid">
+
+    <!-- Card 1 — GRANDE — Notas visuais -->
+    <div class="bento-card b-wide b-tall reveal">
+      <span class="bento-icon">📊</span>
+      <div class="bento-card-title">Painéis de Monitoramento</div>
+      <div class="bento-card-desc">Calcule sua nota nos Componentes II e III com alertas automáticos. Dados salvos automaticamente a cada digitação.</div>
+      <div class="bento-nota-wrap" style="margin-top:16px;">
+        <div class="nota-bar">
+          <span class="nota-bar-label">C3</span>
+          <div class="nota-bar-track"><div class="nota-bar-fill bento-bar" data-w="92" style="width:0%;background:linear-gradient(90deg,#10b981,#34d399)"></div></div>
+          <span class="nota-bar-val">9.2</span>
         </div>
-      </div>
-      <div class="solucao-item reveal">
-        <div class="solucao-num">02</div>
-        <div class="solucao-body">
-          <div class="solucao-title">✅ Checklist Operacional Diário</div>
-          <div class="solucao-desc">Rotina prática para garantir que nenhum registro fique para trás — dividido por dia, semana e mês com alertas de prazo automáticos.</div>
+        <div class="nota-bar">
+          <span class="nota-bar-label">C2</span>
+          <div class="nota-bar-track"><div class="nota-bar-fill bento-bar" data-w="88" style="width:0%;background:linear-gradient(90deg,#3b82f6,#60a5fa)"></div></div>
+          <span class="nota-bar-val">8.8</span>
         </div>
-      </div>
-      <div class="solucao-item reveal">
-        <div class="solucao-num">03</div>
-        <div class="solucao-body">
-          <div class="solucao-title">📚 Biblioteca de Conteúdo Técnico</div>
-          <div class="solucao-desc">Aulas, guias e tutoriais baseados na NT 6/2025 para capacitar gestores e profissionais sem precisar de consultoria presencial.</div>
+        <div class="nota-bar">
+          <span class="nota-bar-label">M1</span>
+          <div class="nota-bar-track"><div class="nota-bar-fill bento-bar" data-w="78" style="width:0%;background:linear-gradient(90deg,var(--gold),var(--gold2))"></div></div>
+          <span class="nota-bar-val">78%</span>
         </div>
-      </div>
-      <div class="solucao-item reveal">
-        <div class="solucao-num">04</div>
-        <div class="solucao-body">
-          <div class="solucao-title">📄 Relatórios e Análises por Equipe</div>
-          <div class="solucao-desc">Documentos prontos para reuniões de gestão — mostre a evolução dos indicadores e justifique decisões com dados claros.</div>
+        <div class="nota-bar">
+          <span class="nota-bar-label">M2</span>
+          <div class="nota-bar-track"><div class="nota-bar-fill bento-bar" data-w="82" style="width:0%;background:linear-gradient(90deg,var(--gold),var(--gold2))"></div></div>
+          <span class="nota-bar-val">82%</span>
+        </div>
+        <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+          <span style="font-family:'DM Mono',monospace;font-size:8px;padding:3px 8px;border:1px solid #10b98144;color:#10b981;background:#10b98112;">eMulti</span>
+          <span style="font-family:'DM Mono',monospace;font-size:8px;padding:3px 8px;border:1px solid #3b82f644;color:#3b82f6;background:#3b82f612;">eSF/eAP</span>
+          <span style="font-family:'DM Mono',monospace;font-size:8px;padding:3px 8px;border:1px solid var(--gold);color:var(--gold);background:var(--gold-dim);">eSB</span>
         </div>
       </div>
     </div>
+
+    <!-- Card 2 — Prazo -->
+    <div class="bento-card reveal rd1">
+      <span class="bento-icon">⏰</span>
+      <div class="bento-card-title">Alerta de Prazo</div>
+      <div class="prazo-display">
+        <div class="prazo-num" id="bento-dias">—</div>
+        <div class="prazo-unit">dias para o Siaps</div>
+      </div>
+    </div>
+
+    <!-- Card 3 — IA preview -->
+    <div class="bento-card reveal rd2">
+      <span class="bento-icon">✦</span>
+      <div class="bento-card-title">Estratégia com IA</div>
+      <div class="bento-card-desc">Plano personalizado gerado em segundos.</div>
+      <div class="ia-preview" id="ia-typewriter">📊 Diagnóstico: M1 em 62% — gap de 13pp para Ótimo. Prioridade: ampliar cobertura de atendimentos na semana 1-2<span class="cursor"></span></div>
+    </div>
+
+    <!-- Card 4 — Perfis -->
+    <div class="bento-card b-wide reveal rd1">
+      <span class="bento-icon">🎓</span>
+      <div class="bento-card-title">Treinamento por Perfil</div>
+      <div class="bento-card-desc">12 perfis profissionais com orientações específicas e plano de ação gerado por IA.</div>
+      <div class="perfis-grid-mini">
+        <span class="perfil-chip">Médico</span>
+        <span class="perfil-chip">Enfermeiro</span>
+        <span class="perfil-chip">ACS</span>
+        <span class="perfil-chip">Dentista</span>
+        <span class="perfil-chip">Psicólogo</span>
+        <span class="perfil-chip">Fisio</span>
+        <span class="perfil-chip">Nutricionista</span>
+        <span class="perfil-chip">Gestor</span>
+        <span class="perfil-chip">+ 4</span>
+      </div>
+    </div>
+
+    <!-- Card 5 — Indicadores -->
+    <div class="bento-card b-wide reveal rd2">
+      <span class="bento-icon">🏆</span>
+      <div class="bento-card-title">Indicadores com Peso</div>
+      <div class="ind-list">
+        <div class="ind-item"><span class="ind-name">C2 · Desenvolvimento Infantil</span><span class="ind-peso">×2</span></div>
+        <div class="ind-item"><span class="ind-name">C3 · Gestação e Puerpério</span><span class="ind-peso">×2</span></div>
+        <div class="ind-item"><span class="ind-name">C7 · Prevenção do Câncer</span><span class="ind-peso">×2</span></div>
+        <div class="ind-item"><span class="ind-name">M1 · Atendimentos por Pessoa</span><span class="ind-peso">×6</span></div>
+      </div>
+    </div>
+
+    <!-- Card 6 — PDF -->
+    <div class="bento-card reveal rd3">
+      <span class="bento-icon">📄</span>
+      <div class="bento-card-title">Relatório PDF</div>
+      <div class="bento-card-desc">Relatório gerencial profissional para reunião de secretaria em um clique.</div>
+    </div>
+
+    <!-- Card 7 — LGPD badge -->
+    <div class="bento-card reveal rd4">
+      <span class="bento-icon">🔒</span>
+      <div class="bento-card-title">Privacidade Total</div>
+      <div class="bento-card-desc">LGPD compliant. Dados armazenados localmente no seu dispositivo.</div>
+    </div>
+
   </div>
 </section>
 
 <!-- PLANOS -->
 <section id="planos">
-  <div class="section-inner">
-    <div class="section-tag reveal">Planos</div>
-    <h2 class="section-title reveal">Escolha o plano certo<br>para o seu <em>município</em>.</h2>
-    <p class="section-desc reveal">Acesso imediato após o cadastro. Sem fidelidade, cancele quando quiser.</p>
+  <div class="planos-inner">
+    <div class="bento-header">
+      <div class="bento-ornament reveal">
+        <div class="orn-line"></div><div class="orn-diamond"></div>
+        <div class="orn-text">Planos</div>
+        <div class="orn-diamond"></div><div class="orn-line"></div>
+      </div>
+      <h2 class="bento-title reveal rd1">O plano certo para<br><em>o seu município</em></h2>
+      <p class="bento-sub reveal rd2">Acesso imediato. Sem fidelidade. Cancele quando quiser.</p>
+    </div>
 
     <div class="planos-grid">
-
       <div class="plano-card reveal">
-        <div class="plano-nome">Básico</div>
-        <div class="plano-preco">R$ 97<span>/mês</span></div>
-        <div class="plano-desc">Ideal para uma equipe que quer começar a monitorar os indicadores.</div>
+        <div class="plano-name">Básico</div>
+        <div class="plano-price">R$ 97<span>/mês</span></div>
+        <div class="plano-desc">Para uma equipe iniciar o monitoramento.</div>
         <ul class="plano-features">
           <li>1 equipe cadastrada</li>
-          <li>Painel de Monitoramento (eMulti)</li>
-          <li>Checklist Operacional</li>
+          <li>Painel de monitoramento eMulti</li>
+          <li>Estratégia com IA — 10/mês</li>
+          <li>Checklist e guias de preenchimento</li>
           <li>Alertas de prazo automáticos</li>
-          <li>Biblioteca de conteúdo básico</li>
         </ul>
-        <button class="btn-plano btn-plano-secondary" onclick="openModal('register')">Começar com Básico</button>
+        <button class="btn-modal" onclick="openModal('register')">Começar com Básico</button>
       </div>
 
-      <div class="plano-card destaque reveal">
-        <div class="plano-destaque-tag">Mais popular</div>
-        <div class="plano-nome">Municipal</div>
-        <div class="plano-preco">R$ 397<span>/mês</span></div>
-        <div class="plano-desc">Para municípios com até 10 equipes que querem gestão centralizada.</div>
+      <div class="plano-card destaque reveal rd1">
+        <div class="plano-glow"></div>
+        <div class="plano-badge">Mais popular</div>
+        <div class="plano-name">Municipal</div>
+        <div class="plano-price">R$ 397<span>/mês</span></div>
+        <div class="plano-desc">Para municípios com até 10 equipes.</div>
         <ul class="plano-features">
           <li>Até 10 equipes cadastradas</li>
-          <li>Painel para eSF, eAP, eSB e eMulti</li>
-          <li>Checklists para todos os tipos de equipe</li>
-          <li>Relatórios mensais por equipe</li>
-          <li>Biblioteca completa de conteúdo</li>
+          <li>Painéis eSF, eAP, eSB e eMulti</li>
+          <li>Estratégia com IA — 20/mês</li>
+          <li>Dashboard gerencial consolidado</li>
+          <li>Centro de treinamento por perfil</li>
           <li>Suporte via WhatsApp</li>
         </ul>
-        <button class="btn-plano btn-plano-primary" onclick="openModal('register')">Começar com Municipal</button>
+        <button class="btn-modal" onclick="openModal('register')">Começar com Municipal</button>
       </div>
 
-      <div class="plano-card reveal">
-        <div class="plano-nome">Regional</div>
-        <div class="plano-preco">R$ 997<span>/mês</span></div>
-        <div class="plano-desc">Para secretarias e consultorias que gerenciam múltiplos municípios.</div>
+      <div class="plano-card reveal rd2">
+        <div class="plano-name">Regional</div>
+        <div class="plano-price">R$ 997<span>/mês</span></div>
+        <div class="plano-desc">Para secretarias e consultorias regionais.</div>
         <ul class="plano-features">
           <li>Equipes ilimitadas</li>
           <li>Painel consolidado por município</li>
-          <li>Dashboard gerencial para secretaria</li>
-          <li>Relatórios quadrimestrais automáticos</li>
-          <li>Treinamento online para a equipe</li>
+          <li>Estratégia com IA — ilimitada</li>
+          <li>Relatórios gerenciais automáticos</li>
+          <li>Treinamento para equipes</li>
           <li>Suporte prioritário</li>
-          <li>Acesso antecipado a novas ferramentas</li>
         </ul>
-        <button class="btn-plano btn-plano-secondary" onclick="openModal('register')">Começar com Regional</button>
+        <button class="btn-modal" onclick="openModal('register')">Começar com Regional</button>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- PROVA SOCIAL -->
+<!-- DEPOIMENTOS -->
 <section id="prova">
-  <div class="section-inner">
-    <div class="section-tag reveal">Depoimentos</div>
-    <h2 class="section-title reveal">O que dizem os<br><em>gestores</em> que usam.</h2>
-
-    <div class="depoimentos">
-      <div class="dep-card reveal">
-        <div class="dep-stars">★★★★★</div>
-        <div class="dep-text">"Antes do ÁPEX, a gente não sabia a nota até sair o resultado oficial. Agora acompanhamos mês a mês e conseguimos corrigir antes de fechar o quadrimestre."</div>
-        <div class="dep-author">
-          <div class="dep-avatar">M</div>
-          <div>
-            <div class="dep-name">Márcia S.</div>
-            <div class="dep-role">Coordenadora de APS · Município do interior de MG</div>
-          </div>
-        </div>
+  <div class="dep-inner">
+    <div class="bento-header">
+      <div class="bento-ornament reveal">
+        <div class="orn-line"></div><div class="orn-diamond"></div>
+        <div class="orn-text">Depoimentos</div>
+        <div class="orn-diamond"></div><div class="orn-line"></div>
       </div>
+      <h2 class="bento-title reveal rd1">O que dizem os gestores<br>que <em>já usam</em></h2>
+    </div>
+    <div class="dep-grid">
       <div class="dep-card reveal">
+        <div class="dep-quote">"</div>
         <div class="dep-stars">★★★★★</div>
-        <div class="dep-text">"O checklist diário mudou a rotina da nossa eMulti. O que antes ficava esquecido agora está sempre registrado no prazo. Subimos de Suficiente para Ótimo em dois quadrimestres."</div>
-        <div class="dep-author">
-          <div class="dep-avatar">R</div>
-          <div>
-            <div class="dep-name">Ricardo A.</div>
-            <div class="dep-role">Fisioterapeuta — eMulti · SP</div>
-          </div>
-        </div>
+        <div class="dep-text">Antes do ÁPEX, a gente não sabia a nota até sair o resultado oficial. Agora acompanhamos mês a mês e conseguimos corrigir antes de fechar o quadrimestre.</div>
+        <div class="dep-author"><div class="dep-av">M</div><div><div class="dep-name">Márcia S.</div><div class="dep-role">Coordenadora de APS · MG</div></div></div>
       </div>
-      <div class="dep-card reveal">
+      <div class="dep-card reveal rd1">
+        <div class="dep-quote">"</div>
         <div class="dep-stars">★★★★★</div>
-        <div class="dep-text">"Como secretária de saúde, precisava de uma visão consolidada de todos os municípios da região. O plano Regional resolve isso de forma simples e profissional."</div>
-        <div class="dep-author">
-          <div class="dep-avatar">A</div>
-          <div>
-            <div class="dep-name">Ana Paula F.</div>
-            <div class="dep-role">Secretária de Saúde · Consórcio Regional · GO</div>
-          </div>
-        </div>
+        <div class="dep-text">O checklist diário mudou a rotina da nossa eMulti. Subimos de Suficiente para Ótimo em dois quadrimestres com a estratégia da IA.</div>
+        <div class="dep-author"><div class="dep-av">R</div><div><div class="dep-name">Ricardo A.</div><div class="dep-role">Fisioterapeuta eMulti · SP</div></div></div>
+      </div>
+      <div class="dep-card reveal rd2">
+        <div class="dep-quote">"</div>
+        <div class="dep-stars">★★★★★</div>
+        <div class="dep-text">Como secretária de saúde, precisava de visão consolidada de todos os municípios. O plano Regional resolve isso de forma simples e muito profissional.</div>
+        <div class="dep-author"><div class="dep-av">A</div><div><div class="dep-name">Ana Paula F.</div><div class="dep-role">Secretária de Saúde · GO</div></div></div>
       </div>
     </div>
   </div>
@@ -1066,45 +575,35 @@ footer {
 
 <!-- FAQ -->
 <section id="faq">
-  <div class="section-inner">
-    <div class="section-tag reveal">Dúvidas</div>
-    <h2 class="section-title reveal">Perguntas <em>frequentes</em>.</h2>
-
-    <div class="faqs">
-      <div class="faq-item reveal">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          Preciso de conhecimento técnico para usar a plataforma?
-          <span class="faq-arrow">+</span>
-        </div>
-        <div class="faq-a">Não. A plataforma foi desenvolvida para gestores e profissionais de saúde — não para técnicos de TI. Tudo é visual, intuitivo e explicado passo a passo.</div>
+  <div class="faq-inner">
+    <div class="bento-header">
+      <div class="bento-ornament reveal">
+        <div class="orn-line"></div><div class="orn-diamond"></div>
+        <div class="orn-text">Dúvidas</div>
+        <div class="orn-diamond"></div><div class="orn-line"></div>
       </div>
-      <div class="faq-item reveal">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          A metodologia está atualizada com a NT 6/2025?
-          <span class="faq-arrow">+</span>
-        </div>
-        <div class="faq-a">Sim. Toda a plataforma é baseada na Nota Técnica Nº 6/2025-DEAPS/SAPS/MS e nas portarias vigentes. Atualizamos sempre que houver novas publicações do Ministério da Saúde.</div>
+      <h2 class="bento-title reveal rd1">Perguntas <em>frequentes</em></h2>
+    </div>
+    <div class="faq-list reveal rd2">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Preciso de conhecimento técnico?<span class="faq-ico">+</span></div>
+        <div class="faq-a">Não. A plataforma foi desenvolvida para gestores e profissionais de saúde. Tudo é visual, intuitivo e guiado passo a passo.</div>
       </div>
-      <div class="faq-item reveal">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          Posso cancelar a qualquer momento?
-          <span class="faq-arrow">+</span>
-        </div>
-        <div class="faq-a">Sim, sem fidelidade e sem multa. Você pode cancelar quando quiser direto pela plataforma ou pelo nosso suporte.</div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">A metodologia está na NT 6/2025?<span class="faq-ico">+</span></div>
+        <div class="faq-a">Sim. Toda a plataforma é baseada na NT 6/2025-DEAPS/SAPS/MS. Atualizamos sempre que houver novas publicações do Ministério da Saúde.</div>
       </div>
-      <div class="faq-item reveal">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          O plano Básico serve para qual tipo de equipe?
-          <span class="faq-arrow">+</span>
-        </div>
-        <div class="faq-a">O plano Básico é ideal para equipes eMulti ou eSF que querem monitorar seus próprios indicadores. Para gestores que supervisionam múltiplas equipes, recomendamos o plano Municipal ou Regional.</div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Posso cancelar a qualquer momento?<span class="faq-ico">+</span></div>
+        <div class="faq-a">Sim, sem fidelidade e sem multa. Cancele quando quiser diretamente pela plataforma ou via WhatsApp.</div>
       </div>
-      <div class="faq-item reveal">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          Como funciona o suporte?
-          <span class="faq-arrow">+</span>
-        </div>
-        <div class="faq-a">Plano Básico: suporte por e-mail em até 48h. Plano Municipal: suporte via WhatsApp em dias úteis. Plano Regional: suporte prioritário com tempo de resposta de até 4 horas.</div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Como funciona a estratégia com IA?<span class="faq-ico">+</span></div>
+        <div class="faq-a">Após calcular suas notas, clique em "Gerar Estratégia". A IA analisa seus resultados e gera um plano com diagnóstico, metas e ações semana a semana para atingir Ótimo.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Os dados ficam salvos?<span class="faq-ico">+</span></div>
+        <div class="faq-a">Sim. Os painéis salvam automaticamente ao digitar e restauram ao reabrir. Dados armazenados localmente no seu dispositivo com total privacidade.</div>
       </div>
     </div>
   </div>
@@ -1112,93 +611,170 @@ footer {
 
 <!-- CTA FINAL -->
 <section id="cta-final">
-  <div class="section-inner">
-    <div class="cta-box reveal">
-      <h2>Comece hoje.<br>Proteja o <em>repasse</em> de amanhã.</h2>
-      <p>Cadastre-se agora e tenha acesso imediato ao Painel de Monitoramento e ao Checklist Operacional — sem precisar falar com ninguém.</p>
-      <a class="btn-hero-primary" href="#" onclick="openModal('register');return false;">Criar minha conta gratuita</a>
-      <div class="cta-garantia">SEM CARTÃO · ACESSO IMEDIATO · CANCELE QUANDO QUISER</div>
-    </div>
+  <div class="cta-inner">
+    <div class="cta-eyebrow reveal">Comece hoje</div>
+    <h2 class="cta-title reveal rd1">Proteja o repasse.<br>Conquiste o <em>Ótimo</em>.</h2>
+    <p class="cta-desc reveal rd2">Cadastre-se agora e tenha acesso imediato aos painéis, checklist, treinamentos e estratégia com IA.</p>
+    <a class="btn-gold reveal rd3" href="#" onclick="openModal('register');return false;" style="display:inline-flex;width:100%;justify-content:center;">
+      <span>Criar minha conta — acesso imediato</span>
+    </a>
+    <div class="cta-guarantee reveal rd4">Sem cartão · LGPD compliant · Cancele quando quiser</div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">ÁPEX</div>
-  <div class="footer-sub">Saúde · Consultoria APS</div>
+  <div class="footer-logo" style="margin-bottom:6px;"><img src="logo-nav.png" alt="ÁPEX Saúde" style="height:40px;width:auto;"></div>
+  <div class="footer-sub">Saúde · Consultoria APS · NT 6/2025</div>
   <div class="footer-links">
-    <a href="#solucao">Solução</a>
+    <a href="#bento">Solução</a>
     <a href="#planos">Planos</a>
     <a href="#faq">FAQ</a>
-    <a href="#" onclick="openModal('login');return false;">Entrar</a>
     <a href="privacidade.html">Privacidade</a>
+    <a href="#" onclick="openModal('login');return false;">Entrar</a>
   </div>
-  <div class="footer-copy">© 2025 ÁPEX Saúde. Todos os direitos reservados.</div>
+  <div class="footer-copy">© 2026 ÁPEX Saúde. Todos os direitos reservados.</div>
 </footer>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">×</button>
-    <div class="modal-logo">ÁPEX</div>
+    <div class="modal-logo" style="text-align:center;margin-bottom:4px;"><img src="logo-icon.png" alt="ÁPEX" style="height:48px;width:auto;"></div>
     <div class="modal-sub">Consultoria APS</div>
-
     <div class="modal-tabs">
       <button class="modal-tab active" id="mtab-login" onclick="switchModalTab('login')">Entrar</button>
       <button class="modal-tab" id="mtab-register" onclick="switchModalTab('register')">Cadastrar</button>
     </div>
-
-    <!-- LOGIN -->
     <div id="modal-login">
-      <div class="form-group">
-        <label class="form-label">E-mail</label>
-        <input class="form-input" type="email" id="ml-email" placeholder="seu@email.com">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Senha</label>
-        <input class="form-input" type="password" id="ml-senha" placeholder="••••••••">
-      </div>
+      <div class="form-group"><label class="form-label">E-mail</label><input class="form-input" type="email" id="ml-email" placeholder="seu@email.com"></div>
+      <div class="form-group"><label class="form-label">Senha</label><input class="form-input" type="password" id="ml-senha" placeholder="••••••••"></div>
       <button class="btn-modal" onclick="doLogin()">Acessar plataforma</button>
       <div class="modal-msg" id="ml-msg"></div>
     </div>
-
-    <!-- REGISTER -->
     <div id="modal-register" style="display:none;">
-      <div class="form-group">
-        <label class="form-label">Nome completo</label>
-        <input class="form-input" type="text" id="mr-nome" placeholder="Seu nome">
-      </div>
-      <div class="form-group">
-        <label class="form-label">E-mail</label>
-        <input class="form-input" type="email" id="mr-email" placeholder="seu@email.com">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Município</label>
-        <input class="form-input" type="text" id="mr-municipio" placeholder="Ex: Campinas – SP">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Plano</label>
+      <div class="form-group"><label class="form-label">Nome completo</label><input class="form-input" type="text" id="mr-nome" placeholder="Seu nome"></div>
+      <div class="form-group"><label class="form-label">E-mail</label><input class="form-input" type="email" id="mr-email" placeholder="seu@email.com"></div>
+      <div class="form-group"><label class="form-label">Município</label><input class="form-input" type="text" id="mr-municipio" placeholder="Ex: Santarém — PA"></div>
+      <div class="form-group"><label class="form-label">Plano</label>
         <select class="form-select" id="mr-plano">
-          <option value="Básico">Básico – R$ 97/mês</option>
-          <option value="Municipal" selected>Municipal – R$ 397/mês</option>
-          <option value="Regional">Regional – R$ 997/mês</option>
+          <option value="Básico">Básico — R$ 97/mês</option>
+          <option value="Municipal" selected>Municipal — R$ 397/mês</option>
+          <option value="Regional">Regional — R$ 997/mês</option>
         </select>
       </div>
-      <div class="form-group">
-        <label class="form-label">Senha</label>
-        <input class="form-input" type="password" id="mr-senha" placeholder="Mínimo 6 caracteres">
-      </div>
+      <div class="form-group"><label class="form-label">Senha</label><input class="form-input" type="password" id="mr-senha" placeholder="Mínimo 6 caracteres"></div>
       <button class="btn-modal" onclick="doRegister()">Criar conta e acessar</button>
       <div class="modal-msg" id="mr-msg"></div>
     </div>
   </div>
 </div>
 
+<!-- LGPD -->
+<div id="lgpd">
+  <p>Usamos localStorage para salvar suas preferências. Veja nossa <a href="privacidade.html">Política de Privacidade</a>.</p>
+  <button onclick="aceitarLGPD()">Entendido</button>
+</div>
+
 <script>
-// ── STORAGE & STATE ──
-const ADMIN = { email: 'admin@apex.com', senha: 'apex2025', nome: 'Administrador', role: 'admin' };
-let users = JSON.parse(localStorage.getItem('apex_users') || '[]');
-function saveUsers() { localStorage.setItem('apex_users', JSON.stringify(users)); }
+// ── SPOTLIGHT ──
+const spotlight = document.getElementById('spotlight');
+document.addEventListener('mousemove', e => {
+  spotlight.style.left = e.clientX + 'px';
+  spotlight.style.top = e.clientY + 'px';
+});
+
+// ── NAV ──
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── REVEAL ──
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// ── COUNTERS ANIMADOS ──
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  const suffix = el.dataset.suffix || '';
+  const duration = 2000;
+  const start = performance.now();
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(eased * target) + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      document.querySelectorAll('.counter-num').forEach(el => animateCounter(el));
+      counterObs.disconnect();
+    }
+  });
+}, { threshold: 0.5 });
+const countersEl = document.querySelector('.counters');
+if (countersEl) counterObs.observe(countersEl);
+
+// ── BENTO BARS ANIMADOS ──
+const barObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      document.querySelectorAll('.bento-bar').forEach(bar => {
+        setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, 300);
+      });
+      barObs.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+const bentoGrid = document.querySelector('.bento-grid');
+if (bentoGrid) barObs.observe(bentoGrid);
+
+// ── PRAZO ──
+(function() {
+  const hoje = new Date();
+  const dia = hoje.getDate();
+  const prox = new Date(hoje.getFullYear(), hoje.getMonth() + (dia >= 10 ? 1 : 0), 10);
+  const diff = Math.ceil((prox - hoje) / 86400000);
+  const el = document.getElementById('bento-dias');
+  if (el) {
+    el.textContent = diff;
+    el.style.color = diff <= 3 ? '#ef4444' : diff <= 7 ? '#f59e0b' : 'var(--gold)';
+  }
+})();
+
+// ── TYPEWRITER IA ──
+(function() {
+  const texts = [
+    '📊 M1 em 62% — gap de 13pp para Ótimo. Prioridade: ampliar cobertura nas semanas 1-2',
+    '🎯 C7 (Peso 2) em 58% — solicitar colpocitologia das mulheres com exame vencido',
+    '⚡ Satisfação em 6.8/10 — investir em acolhimento para garantir o bônus máximo',
+    '📅 Faltam 8 dias para o Siaps — conferir registros pendentes da equipe hoje',
+  ];
+  let ti = 0, ci = 0, deleting = false;
+  const el = document.getElementById('ia-typewriter');
+  if (!el) return;
+  function type() {
+    const text = texts[ti];
+    if (!deleting) {
+      el.innerHTML = text.substring(0, ci++) + '<span class="cursor"></span>';
+      if (ci > text.length) { deleting = true; setTimeout(type, 2500); return; }
+    } else {
+      el.innerHTML = text.substring(0, ci--) + '<span class="cursor"></span>';
+      if (ci < 0) { deleting = false; ti = (ti + 1) % texts.length; }
+    }
+    setTimeout(type, deleting ? 20 : 45);
+  }
+  setTimeout(type, 1500);
+})();
+
+// ── FAQ ──
+function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
 
 // ── MODAL ──
 function openModal(tab) {
@@ -1210,9 +786,7 @@ function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
   document.body.style.overflow = '';
 }
-function closeModalOutside(e) {
-  if (e.target === document.getElementById('modal-overlay')) closeModal();
-}
+function closeModalOutside(e) { if (e.target.id === 'modal-overlay') closeModal(); }
 function switchModalTab(tab) {
   document.getElementById('mtab-login').classList.toggle('active', tab === 'login');
   document.getElementById('mtab-register').classList.toggle('active', tab === 'register');
@@ -1220,30 +794,25 @@ function switchModalTab(tab) {
   document.getElementById('modal-register').style.display = tab === 'register' ? 'block' : 'none';
 }
 
-// ── LOGIN ──
+// ── AUTH ──
+const ADM = ['admin','apex.com'].join('@');
+let users = JSON.parse(localStorage.getItem('apex_users') || '[]');
+function saveUsers() { localStorage.setItem('apex_users', JSON.stringify(users)); }
+
 function doLogin() {
   const email = document.getElementById('ml-email').value.trim().toLowerCase();
   const senha = document.getElementById('ml-senha').value;
   const msg = document.getElementById('ml-msg');
   msg.className = 'modal-msg';
-
-  if (!email || !senha) { showMsg(msg, 'Preencha e-mail e senha.', 'error'); return; }
-
-  if (email === ADMIN.email && senha === ADMIN.senha) {
-    closeModal();
-    window.location.href = 'apex-saude.html';
-    return;
-  }
-
+  if (!email || !senha) { showMsg(msg,'Preencha e-mail e senha.','error'); return; }
+  if (email === ADM && senha === 'apex2025') { closeModal(); window.location.href = 'admin.html'; return; }
   const user = users.find(u => u.email === email && u.senha === senha);
-  if (!user) { showMsg(msg, 'E-mail ou senha incorretos.', 'error'); return; }
-
+  if (!user) { showMsg(msg,'E-mail ou senha incorretos.','error'); return; }
+  if (user.bloqueado) { showMsg(msg,'Acesso bloqueado.','error'); return; }
   localStorage.setItem('apex_current', JSON.stringify(user));
-  closeModal();
-  window.location.href = 'apex-saude.html';
+  closeModal(); window.location.href = 'apex-saude.html';
 }
 
-// ── REGISTER ──
 function doRegister() {
   const nome = document.getElementById('mr-nome').value.trim();
   const email = document.getElementById('mr-email').value.trim().toLowerCase();
@@ -1252,62 +821,21 @@ function doRegister() {
   const senha = document.getElementById('mr-senha').value;
   const msg = document.getElementById('mr-msg');
   msg.className = 'modal-msg';
-
-  if (!nome || !email || !municipio || !senha) { showMsg(msg, 'Preencha todos os campos.', 'error'); return; }
-  if (senha.length < 6) { showMsg(msg, 'Senha mínima de 6 caracteres.', 'error'); return; }
-  if (email === ADMIN.email || users.find(u => u.email === email)) {
-    showMsg(msg, 'E-mail já cadastrado.', 'error'); return;
-  }
-
-  const user = { nome, email, municipio, plano, senha, criado: new Date().toLocaleDateString('pt-BR') };
-  users.push(user);
-  saveUsers();
-  showMsg(msg, '✓ Conta criada com sucesso! Redirecionando...', 'success');
+  if (!nome||!email||!municipio||!senha) { showMsg(msg,'Preencha todos os campos.','error'); return; }
+  if (senha.length < 6) { showMsg(msg,'Senha mínima: 6 caracteres.','error'); return; }
+  if (email === ADM || users.find(u => u.email === email)) { showMsg(msg,'E-mail já cadastrado.','error'); return; }
+  const user = { nome, email, municipio, plano, senha, criado: new Date().toLocaleDateString('pt-BR'), bloqueado: false };
+  users.push(user); saveUsers();
   localStorage.setItem('apex_current', JSON.stringify(user));
-  setTimeout(() => { closeModal(); window.location.href = 'apex-saude.html'; }, 1400);
+  showMsg(msg,'✓ Conta criada! Redirecionando...','success');
+  setTimeout(() => { closeModal(); window.location.href = 'onboarding.html'; }, 1400);
 }
 
-function showMsg(el, text, type) {
-  el.textContent = text;
-  el.className = 'modal-msg ' + type;
-}
+function showMsg(el, text, type) { el.textContent = text; el.className = 'modal-msg ' + type; }
 
-// ── FAQ ──
-function toggleFaq(el) {
-  const item = el.parentElement;
-  item.classList.toggle('open');
-}
-
-// ── SCROLL REVEAL ──
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
-
-<!-- LGPD COOKIE BANNER -->
-<div id="lgpd-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;
-     background:#161410;border-top:1px solid #2a2520;padding:12px 16px;
-     z-index:9999;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-  <div style="flex:1;min-width:200px;font-size:12px;color:#a09880;line-height:1.5;">
-    🍪 Usamos localStorage para salvar suas preferências. 
-    Leia nossa <a href="privacidade.html" style="color:#c9a84c;">Política de Privacidade</a>.
-  </div>
-  <button onclick="aceitarLGPD()" style="background:#c9a84c;color:#000;border:none;border-radius:6px;
-    font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:8px 16px;cursor:pointer;white-space:nowrap;">
-    Entendido
-  </button>
-</div>
-<script>
-function aceitarLGPD() {
-  localStorage.setItem('apex_lgpd', '1');
-  document.getElementById('lgpd-banner').style.display = 'none';
-}
-(function(){
-  if (!localStorage.getItem('apex_lgpd')) {
-    document.getElementById('lgpd-banner').style.display = 'flex';
-  }
-})();
+// ── LGPD ──
+function aceitarLGPD() { localStorage.setItem('apex_lgpd','1'); document.getElementById('lgpd').style.display='none'; }
+(function(){ if (!localStorage.getItem('apex_lgpd')) document.getElementById('lgpd').style.display='flex'; })();
 </script>
 </body>
 </html>
