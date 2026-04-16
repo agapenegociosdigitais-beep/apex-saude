@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conquistas — ÁPEX Saúde</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@400;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+[data-theme="dark"]{--bg:#080604;--surface:#0f0d0a;--card:#141210;--border:#252018;--border2:#352e22;--text:#ede8df;--text2:#c8bfa8;--muted:#7a7060;--muted2:#504838;}
+[data-theme="light"]{--bg:#f9f7f4;--surface:#fff;--card:#fff;--border:#e8e2d8;--border2:#d0c8bc;--text:#1c1a16;--text2:#5a5448;--muted:#8c8070;--muted2:#b4a898;}
+:root{--gold:#c9a84c;--gold2:#e8c97a;--gold-dim:#c9a84c14;--otimo:#10b981;--bom:#3b82f6;--suf:#f59e0b;--reg:#ef4444;--lendario:#ff6b6b;--epico:#a78bfa;--raro:#3b82f6;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Lato',sans-serif;font-size:14px;min-height:100vh;padding-bottom:60px;transition:background .3s,color .3s;}
+
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:200;}
+.topbar-back{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);text-decoration:none;text-transform:uppercase;letter-spacing:1.5px;opacity:.8;cursor:pointer;}
+.topbar-back:hover{opacity:1;}
+.topbar-title{flex:1;font-family:'Playfair Display',serif;font-size:16px;font-weight:700;}
+.theme-btn{background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:15px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+
+.header{background:var(--surface);border-bottom:1px solid var(--border);padding:20px 16px;}
+.header-tag{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+.header-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;margin-bottom:6px;}
+.header-desc{font-size:13px;color:var(--muted);line-height:1.6;}
+
+.content{padding:16px;}
+
+.stats-row{display:grid;grid-template-columns:2fr 2fr 1fr;gap:12px;margin-bottom:20px;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;}
+.stat-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.stat-valor{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--gold);}
+
+.filtro-row{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.filtro-btn{background:var(--card);border:1px solid var(--border);color:var(--text2);padding:8px 14px;border-radius:6px;cursor:pointer;font-family:'DM Mono',monospace;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1px;transition:all .15s;}
+.filtro-btn.active{background:var(--gold);border-color:var(--gold);color:#000;}
+.filtro-btn:hover{border-color:var(--gold);}
+
+.conquistas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;}
+
+.conquista-card{background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.conquista-card.locked{opacity:.4;color:var(--muted);}
+.conquista-card:not(.locked):hover{transform:translateY(-4px);border-color:var(--gold);}
+.conquista-card::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at center,rgba(201,168,76,.1),transparent);opacity:0;transition:opacity .2s;pointer-events:none;}
+.conquista-card:not(.locked):hover::before{opacity:1;}
+
+.conquista-card.comum{border-color:#a3a3a3;}
+.conquista-card.raro{border-color:var(--raro);background:linear-gradient(135deg,var(--card),#3b82f605);}
+.conquista-card.epico{border-color:var(--epico);background:linear-gradient(135deg,var(--card),#a78bfa05);}
+.conquista-card.lendario{border-color:var(--lendario);background:linear-gradient(135deg,var(--card),#ff6b6b05);}
+
+.conquista-icon{font-size:48px;margin-bottom:12px;display:block;}
+.conquista-nome{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.conquista-desc{font-size:11px;color:var(--text2);line-height:1.4;margin-bottom:10px;min-height:32px;}
+.conquista-raridade{font-family:'DM Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:.5px;padding:4px 8px;border-radius:4px;display:inline-block;margin-bottom:8px;}
+.raridade-comum{background:#a3a3a320;color:#a3a3a3;}
+.raridade-raro{background:#3b82f620;color:var(--raro);}
+.raridade-epico{background:#a78bfa20;color:var(--epico);}
+.raridade-lendario{background:#ff6b6b20;color:var(--lendario);}
+
+.conquista-data{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);margin-top:8px;border-top:1px solid var(--border);padding-top:8px;}
+.conquista-lock{font-size:20px;opacity:.5;}
+
+.modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center;padding:20px;}
+.modal.show{display:flex;}
+.modal-content{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:30px;max-width:400px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+.modal-icon{font-size:80px;margin-bottom:16px;animation:bounce 0.6s ease;}
+.modal-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;margin-bottom:12px;color:var(--gold);}
+.modal-text{font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:20px;}
+.modal-btn{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:6px;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;padding:12px 24px;cursor:pointer;text-transform:uppercase;letter-spacing:1px;}
+
+@keyframes bounce{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
+}
+
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--gold);border-radius:8px;padding:14px 20px;font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);z-index:999;animation:slideUp 0.3s ease;max-width:90%;}
+
+@keyframes slideUp{
+  from{transform:translateX(-50%) translateY(100px);opacity:0;}
+  to{transform:translateX(-50%) translateY(0);opacity:1;}
+}
+
+.empty-state{text-align:center;padding:40px 20px;color:var(--muted);}
+.empty-state-icon{font-size:60px;margin-bottom:12px;}
+.empty-state-title{font-size:18px;margin-bottom:8px;}
+.empty-state-desc{font-size:13px;line-height:1.6;}
+
+@media (max-width:600px){
+  .stats-row{grid-template-columns:1fr;}
+  .conquistas-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="topbar-back" href="apex-saude.html">← Dashboard</a>
+  <div class="topbar-title">🏆 Conquistas</div>
+  <button class="theme-btn" id="theme-toggle">🌙</button>
+</div>
+
+<div class="header">
+  <div class="header-tag">Gamificação & Engajamento</div>
+  <div class="header-title">Desbloqueie Selos e Conquistas</div>
+  <div class="header-desc">Complete desafios, melhore seus indicadores e desbloqueie selos únicos no seu perfil</div>
+</div>
+
+<div class="content">
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">Conquistadas</div>
+      <div class="stat-valor" id="total-conquistadas">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Pendentes</div>
+      <div class="stat-valor" id="total-pendentes">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Progresso</div>
+      <div class="stat-valor" id="progresso-pct">0%</div>
+    </div>
+  </div>
+
+  <div class="filtro-row">
+    <button class="filtro-btn active" onclick="filtrarRaridade('')">Todas</button>
+    <button class="filtro-btn" onclick="filtrarRaridade('comum')">Comum</button>
+    <button class="filtro-btn" onclick="filtrarRaridade('raro')">Raro</button>
+    <button class="filtro-btn" onclick="filtrarRaridade('epico')">Épico</button>
+    <button class="filtro-btn" onclick="filtrarRaridade('lendario')">Lendário</button>
+    <button class="filtro-btn" onclick="filtrarStatus('desbloqueadas')">Desbloqueadas</button>
+    <button class="filtro-btn" onclick="filtrarStatus('bloqueadas')">Bloqueadas</button>
+  </div>
+
+  <div class="conquistas-grid" id="grid-conquistas"></div>
+  <div class="empty-state" id="empty-state" style="display:none;">
+    <div class="empty-state-icon">🎯</div>
+    <div class="empty-state-title">Nenhuma conquista encontrada</div>
+    <div class="empty-state-desc">Ajuste os filtros ou comece a registrar seus indicadores para desbloquear selos!</div>
+  </div>
+</div>
+
+<!-- MODAL DE DETALHE -->
+<div class="modal" id="modal-detalhe">
+  <div class="modal-content" id="modal-body"></div>
+</div>
+
+<!-- NOTIFICAÇÃO DE NOVA CONQUISTA -->
+<div class="toast" id="toast-novo" style="display:none;">
+  <span id="toast-msg"></span>
+</div>
+
+<script>
+// ══ DATA DE CONQUISTAS ══
+const TODAS_CONQUISTAS = [
+  // UNIVERSAIS
+  { id: 'primeiro_passo', nome: 'Primeiro Passo', desc: 'Abriu o dashboard pela primeira vez', icon: '👣', raridade: 'comum', condicao: () => true, univers: true },
+  { id: 'pontual', nome: 'Pontual', desc: 'Registrou produção por 7 dias seguidos', icon: '📅', raridade: 'comum', univers: true },
+  { id: 'em_chamas', nome: 'Em Chamas', desc: 'Checklist 100% por 4 semanas seguidas', icon: '🔥', raridade: 'raro', univers: true },
+  { id: 'ascensao', nome: 'Ascensão', desc: 'Melhorou 2 indicadores no mesmo mês', icon: '📈', raridade: 'raro', univers: true },
+  { id: 'parceiro_ia', nome: 'Parceiro da IA', desc: 'Gerou 5 planos PDCA completos', icon: '🤖', raridade: 'raro', univers: true },
+  { id: 'estrategista', nome: 'Estrategista', desc: 'Completou 1 ciclo PDCA (P→D→C→A)', icon: '💡', raridade: 'epico', univers: true },
+  { id: 'elite_aps', nome: 'Elite da APS', desc: 'Todos os indicadores acima de 80%', icon: '🏆', raridade: 'lendario', univers: true },
+
+  // DENTISTA
+  { id: 'dentista_primeiro', nome: 'Primeiro Passo', desc: 'Abriu o dashboard pela primeira vez', icon: '🦷', raridade: 'comum', perfil: 'dentista' },
+  { id: 'dentista_organizador', nome: 'Organizador', desc: 'Completou o checklist semanal 1x', icon: '📋', raridade: 'comum', perfil: 'dentista' },
+  { id: 'dentista_mira', nome: 'Mira Certeira', desc: 'B1 acima de 80% por 1 mês', icon: '🎯', raridade: 'raro', perfil: 'dentista' },
+  { id: 'dentista_guardiao', nome: 'Guardião dos Dentes', desc: 'B3 abaixo de 15% por 1 mês', icon: '🚫', raridade: 'raro', perfil: 'dentista' },
+  { id: 'dentista_prevencao', nome: 'Mestre da Prevenção', desc: 'B4+B5+B6 todos acima de 80%', icon: '⭐', raridade: 'epico', perfil: 'dentista' },
+  { id: 'dentista_otimo', nome: 'Dentista Ótimo', desc: 'Nota final eSB acima de 7,5', icon: '👑', raridade: 'lendario', perfil: 'dentista' },
+
+  // MÉDICO
+  { id: 'medico_primeiro', nome: 'Primeiro Passo', desc: 'Abriu o dashboard pela primeira vez', icon: '💊', raridade: 'comum', perfil: 'medico' },
+  { id: 'medico_cronicos', nome: 'Guardião dos Crônicos', desc: 'C4+C5 acima de 75% por 1 mês', icon: '💊', raridade: 'raro', perfil: 'medico' },
+  { id: 'medico_diagnostico', nome: 'Diagnóstico Perfeito', desc: 'C6 acima de 80% por 1 mês', icon: '🔬', raridade: 'raro', perfil: 'medico' },
+  { id: 'medico_completo', nome: 'Médico Completo', desc: 'C4+C5+C6+C7 acima de 75%', icon: '🩺', raridade: 'epico', perfil: 'medico' },
+  { id: 'medico_otimo', nome: 'Médico Ótimo', desc: 'Nota equipe acima de 7,5', icon: '👑', raridade: 'lendario', perfil: 'medico' },
+
+  // ENFERMEIRO
+  { id: 'enf_primeiro', nome: 'Primeiro Passo', desc: 'Abriu o dashboard pela primeira vez', icon: '👶', raridade: 'comum', perfil: 'enfermeiro' },
+  { id: 'enf_infancia', nome: 'Cuidador da Infância', desc: 'C2 acima de 75% por 1 mês', icon: '👶', raridade: 'raro', perfil: 'enfermeiro' },
+  { id: 'enf_gestante', nome: 'Anjo da Guarda Gestante', desc: 'C3 acima de 75%', icon: '🤱', raridade: 'raro', perfil: 'enfermeiro' },
+  { id: 'enf_completo', nome: 'Enfermeiro Completo', desc: 'C2+C3 acima de 75%', icon: '⭐', raridade: 'epico', perfil: 'enfermeiro' },
+  { id: 'enf_otimo', nome: 'Enfermeiro Ótimo', desc: 'Nota equipe acima de 7,5', icon: '👑', raridade: 'lendario', perfil: 'enfermeiro' },
+];
+
+let filtroRaridade = '';
+let filtroStatus = '';
+let perfilAtual = 'universal';
+
+// ══ TEMA ══
+const themeBtn = document.getElementById('theme-toggle');
+let isDark = localStorage.getItem('apex_theme') !== 'light';
+document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+themeBtn.textContent = isDark ? '🌙' : '☀️';
+themeBtn.addEventListener('click', () => {
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  themeBtn.textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('apex_theme', isDark ? 'dark' : 'light');
+});
+
+// ══ INICIALIZAÇÃO ══
+document.addEventListener('DOMContentLoaded', () => {
+  const user = localStorage.getItem('apex_current_user');
+  if (user) {
+    try {
+      const userData = JSON.parse(user);
+      const perfil = userData.perfil || 'universal';
+      perfilAtual = perfil;
+    } catch (e) {}
+  }
+  renderizar();
+  atualizarEstatisticas();
+});
+
+// ══ RENDERIZAR CONQUISTAS ══
+function renderizar() {
+  const grid = document.getElementById('grid-conquistas');
+  const empty = document.getElementById('empty-state');
+  const conquistadas = obterConquistadas();
+
+  let filtradas = TODAS_CONQUISTAS.filter(c => {
+    const matchPerfil = !c.perfil || c.perfil === perfilAtual || c.univers;
+    const matchRaridade = !filtroRaridade || c.raridade === filtroRaridade;
+    const matchStatus = !filtroStatus ||
+      (filtroStatus === 'desbloqueadas' && conquistadas.includes(c.id)) ||
+      (filtroStatus === 'bloqueadas' && !conquistadas.includes(c.id));
+    return matchPerfil && matchRaridade && matchStatus;
+  });
+
+  if (!filtradas.length) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+  grid.innerHTML = filtradas.map(c => {
+    const desbloqueada = conquistadas.includes(c.id);
+    const data = obterDataConquista(c.id);
+    return `
+      <div class="conquista-card ${desbloqueada ? '' : 'locked'} ${c.raridade}" onclick="mostrarDetalhe('${c.id}')">
+        <div class="conquista-icon">${desbloqueada ? c.icon : '🔒'}</div>
+        <div class="conquista-nome">${c.nome}</div>
+        <div class="conquista-desc">${c.desc}</div>
+        <div class="conquista-raridade raridade-${c.raridade}">${c.raridade}</div>
+        ${desbloqueada ? `<div class="conquista-data">${data}</div>` : `<div class="conquista-lock">🔓</div>`}
+      </div>
+    `;
+  }).join('');
+}
+
+function obterConquistadas() {
+  const key = `apex_conquistas_${perfilAtual}`;
+  const json = localStorage.getItem(key) || '[]';
+  try {
+    const arr = JSON.parse(json);
+    return arr.map(c => c.id || c);
+  } catch (e) {
+    return [];
+  }
+}
+
+function obterDataConquista(id) {
+  const key = `apex_conquistas_${perfilAtual}`;
+  const json = localStorage.getItem(key) || '[]';
+  try {
+    const arr = JSON.parse(json);
+    const item = arr.find(c => (c.id || c) === id);
+    if (item && item.data) {
+      const d = new Date(item.data);
+      return d.toLocaleDateString('pt-BR');
+    }
+  } catch (e) {}
+  return 'Desbloqueada';
+}
+
+// ══ FILTROS ══
+function filtrarRaridade(r) {
+  filtroRaridade = r;
+  document.querySelectorAll('.filtro-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.toLowerCase().includes(r) || (!r && btn.textContent.includes('Todas')));
+  });
+  renderizar();
+}
+
+function filtrarStatus(s) {
+  filtroStatus = filtroStatus === s ? '' : s;
+  document.querySelectorAll('.filtro-btn').forEach(btn => {
+    if (btn.textContent.includes('Desbloqueadas') || btn.textContent.includes('Bloqueadas')) {
+      btn.classList.toggle('active', btn.textContent.toLowerCase().includes(filtroStatus));
+    }
+  });
+  renderizar();
+}
+
+// ══ MODAL ══
+function mostrarDetalhe(id) {
+  const c = TODAS_CONQUISTAS.find(x => x.id === id);
+  if (!c) return;
+
+  const conquistadas = obterConquistadas();
+  const desbloqueada = conquistadas.includes(id);
+  const data = obterDataConquista(id);
+
+  const modal = document.getElementById('modal-detalhe');
+  const body = document.getElementById('modal-body');
+
+  body.innerHTML = `
+    <div style="font-size:60px;margin-bottom:16px;">${c.icon}</div>
+    <div class="modal-title">${c.nome}</div>
+    <div class="modal-text">${c.desc}</div>
+    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:16px;">
+      <span style="background:${getRarityColor(c.raridade)}22;color:${getRarityColor(c.raridade)};padding:6px 12px;border-radius:6px;font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;">${c.raridade}</span>
+      ${desbloqueada ? `<span style="background:var(--otimo)22;color:var(--otimo);padding:6px 12px;border-radius:6px;font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;">✓ Desbloqueada</span>` : `<span style="background:var(--reg)22;color:var(--reg);padding:6px 12px;border-radius:6px;font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;">Bloqueada</span>`}
+    </div>
+    ${desbloqueada ? `<div style="font-size:11px;color:var(--muted);margin-bottom:16px;">Desbloqueada em: ${data}</div>` : ''}
+    <button class="modal-btn" onclick="fecharModal()">Fechar</button>
+  `;
+
+  modal.classList.add('show');
+}
+
+function fecharModal() {
+  document.getElementById('modal-detalhe').classList.remove('show');
+}
+
+function getRarityColor(r) {
+  const cores = { comum: '#a3a3a3', raro: '#3b82f6', epico: '#a78bfa', lendario: '#ff6b6b' };
+  return cores[r] || '#a3a3a3';
+}
+
+// ══ ESTATÍSTICAS ══
+function atualizarEstatisticas() {
+  const conquistadas = obterConquistadas();
+  const total = TODAS_CONQUISTAS.filter(c => !c.perfil || c.perfil === perfilAtual || c.univers).length;
+  const pendentes = total - conquistadas.length;
+  const pct = total > 0 ? Math.round((conquistadas.length / total) * 100) : 0;
+
+  document.getElementById('total-conquistadas').textContent = conquistadas.length;
+  document.getElementById('total-pendentes').textContent = pendentes;
+  document.getElementById('progresso-pct').textContent = pct + '%';
+}
+
+// ══ FUNÇÕES PÚBLICAS (para IA e dashboards) ══
+
+// Desbloquear conquista
+function desbloquearConquista(id) {
+  const c = TODAS_CONQUISTAS.find(x => x.id === id);
+  if (!c) return;
+
+  const key = `apex_conquistas_${perfilAtual}`;
+  const existentes = obterConquistadas();
+
+  if (!existentes.includes(id)) {
+    existentes.push({
+      id: id,
+      data: new Date().toISOString()
+    });
+    localStorage.setItem(key, JSON.stringify(existentes));
+
+    // Mostrar notificação
+    mostrarNotificacao(`🎉 Nova conquista desbloqueada: ${c.nome}!`, c.icon);
+
+    renderizar();
+    atualizarEstatisticas();
+  }
+}
+
+function mostrarNotificacao(msg, icon = '🎉') {
+  const toast = document.getElementById('toast-novo');
+  document.getElementById('toast-msg').textContent = msg;
+  toast.style.display = 'block';
+
+  setTimeout(() => {
+    toast.style.display = 'none';
+  }, 3000);
+}
+
+// Verificar múltiplas conquistas
+function verificarConquistas(dados = {}) {
+  const conquistadas = obterConquistadas();
+
+  // Verificar "Primeiro Passo"
+  if (!conquistadas.includes('primeiro_passo')) {
+    desbloquearConquista('primeiro_passo');
+  }
+
+  // Verificar outras condições conforme dados passados
+  if (dados.checklistCompleto && !conquistadas.includes('dentista_organizador')) {
+    desbloquearConquista('dentista_organizador');
+  }
+
+  if (dados.pdcaConcluido && !conquistadas.includes('estrategista')) {
+    desbloquearConquista('estrategista');
+  }
+
+  // TODO: adicionar mais verificações conforme sistema evoluir
+}
+
+// Chamar do dashboard quando salva dados
+window.verificarConquistas = verificarConquistas;
+window.desbloquearConquista = desbloquearConquista;
+</script>
+
+</body>
+</html>
