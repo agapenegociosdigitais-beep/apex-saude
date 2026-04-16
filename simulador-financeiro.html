@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador Financeiro — ÁPEX Saúde</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@400;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+[data-theme="dark"]{--bg:#080604;--surface:#0f0d0a;--card:#141210;--border:#252018;--border2:#352e22;--text:#ede8df;--text2:#c8bfa8;--muted:#7a7060;--muted2:#504838;}
+[data-theme="light"]{--bg:#f9f7f4;--surface:#fff;--card:#fff;--border:#e8e2d8;--border2:#d0c8bc;--text:#1c1a16;--text2:#5a5448;--muted:#8c8070;--muted2:#b4a898;}
+:root{--gold:#c9a84c;--gold2:#e8c97a;--gold-dim:#c9a84c14;--otimo:#10b981;--bom:#3b82f6;--suf:#f59e0b;--reg:#ef4444;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Lato',sans-serif;font-size:14px;min-height:100vh;padding-bottom:60px;transition:background .3s,color .3s;}
+
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:200;}
+.topbar-back{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);text-decoration:none;text-transform:uppercase;letter-spacing:1.5px;opacity:.8;cursor:pointer;}
+.topbar-back:hover{opacity:1;}
+.topbar-logo{flex:1;font-family:'Playfair Display',serif;font-size:16px;font-weight:700;}
+.theme-btn{background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:15px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+
+.content{padding:20px 16px;max-width:1200px;margin:0 auto;}
+.sec-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin:24px 0 16px;color:var(--gold);}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px;}
+.card-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;margin-bottom:12px;}
+
+.slider-group{background:var(--surface);border-radius:8px;padding:14px;margin-bottom:10px;}
+.slider-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12px;}
+.slider-name{font-family:'DM Mono',monospace;font-weight:600;color:var(--text2);}
+.slider-value{color:var(--gold);font-weight:700;}
+input[type=range]{width:100%;height:6px;border-radius:3px;background:var(--border);outline:none;-webkit-appearance:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--gold);cursor:pointer;box-shadow:0 0 8px rgba(201,168,76,.3);}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--gold);cursor:pointer;border:none;}
+
+.resultado-box{background:linear-gradient(135deg,var(--surface),var(--card));border:1.5px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px;}
+.resultado-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding:10px;background:var(--card);border-radius:6px;border-left:3px solid var(--gold);}
+.resultado-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+.resultado-valor{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;}
+.resultado-valor.positivo{color:var(--otimo);}
+.resultado-valor.negativo{color:var(--reg);}
+.resultado-valor.neutro{color:var(--gold);}
+
+.badge{display:inline-block;padding:6px 12px;border-radius:6px;font-family:'DM Mono',monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-top:8px;}
+.badge-otimo{background:#10b98120;color:var(--otimo);border:1px solid #10b98140;}
+.badge-bom{background:#3b82f620;color:var(--bom);border:1px solid #3b82f640;}
+.badge-suf{background:#f59e0b20;color:var(--suf);border:1px solid #f59e0b40;}
+.badge-reg{background:#ef444420;color:var(--reg);border:1px solid #ef444440;}
+
+.input-group{display:grid;gap:12px;margin-bottom:16px;}
+.input-field{display:flex;flex-direction:column;gap:4px;}
+.input-field label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+.input-field input,.input-field select{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px;color:var(--text);font-family:'Lato',sans-serif;font-size:14px;outline:none;transition:border .2s;}
+.input-field input:focus,.input-field select:focus{border-color:var(--gold);}
+
+.btn-primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:6px;font-family:'DM Mono',monospace;font-size:10px;font-weight:700;padding:12px 20px;cursor:pointer;text-transform:uppercase;letter-spacing:2px;transition:opacity .15s;width:100%;margin-top:10px;}
+.btn-primary:hover{opacity:.88;}
+.btn-secondary{background:none;border:1px solid var(--border);color:var(--text2);padding:12px 20px;border-radius:6px;cursor:pointer;font-family:'DM Mono',monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;transition:all .15s;margin-top:10px;}
+.btn-secondary:hover{border-color:var(--gold);color:var(--gold);}
+
+.argumento-box{background:var(--surface);border-left:4px solid var(--gold);padding:16px;border-radius:8px;margin-bottom:16px;font-size:13px;line-height:1.8;color:var(--text);}
+.argumento-box strong{color:var(--gold);}
+
+.tab-header{display:flex;gap:8px;border-bottom:1px solid var(--border);margin-bottom:20px;overflow-x:auto;}
+.tab-btn{padding:12px 16px;border:none;background:none;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;transition:all .2s;white-space:nowrap;}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+@media(max-width:600px){.resultado-row{flex-direction:column;align-items:flex-start;gap:8px;}}
+</style>
+<script src="perfis-config.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="topbar-back" onclick="window.history.back()">← Voltar</span>
+  <div class="topbar-logo">Simulador Financeiro</div>
+  <button class="theme-btn" id="theme-toggle">🌙</button>
+</div>
+
+<div class="content">
+  <!-- TABS -->
+  <div class="tab-header">
+    <button class="tab-btn active" onclick="abrirTab('tab1')">Calculadora</button>
+    <button class="tab-btn" onclick="abrirTab('tab2')">Municipal</button>
+    <button class="tab-btn" onclick="abrirTab('tab3')">E Se...</button>
+    <button class="tab-btn" onclick="abrirTab('tab4')">Argumento</button>
+  </div>
+
+  <!-- ═══ TAB 1: CALCULADORA POR EQUIPE ═══ -->
+  <div id="tab1" class="tab-content active">
+    <div class="sec-title">💰 Calculadora por Equipe</div>
+    <div class="sec-desc">Ajuste os indicadores para ver o impacto financeiro em tempo real.</div>
+
+    <div class="card">
+      <div class="card-title">Tipo de Equipe</div>
+      <div class="input-group">
+        <div class="input-field">
+          <label>Selecione o tipo</label>
+          <select id="equipe-tipo" onchange="atualizarCalculadora()">
+            <option value="esf">eSF/eAP (Atenção Primária)</option>
+            <option value="emulti">eMulti (Multiprofissional)</option>
+            <option value="esb">eSB (Saúde Bucal)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDERS DINÂMICOS -->
+    <div class="card" id="sliders-container"></div>
+
+    <!-- RESULTADO -->
+    <div class="resultado-box">
+      <div class="slider-label">
+        <span style="font-family:'Playfair Display',serif;font-size:14px;font-weight:700;">Análise Calculada</span>
+      </div>
+      <div class="resultado-row">
+        <div>
+          <div class="resultado-label">Nota Final</div>
+          <div class="resultado-valor neutro" id="calc-nota">0,0</div>
+          <span class="badge" id="calc-badge"></span>
+        </div>
+        <div style="text-align:right;">
+          <div class="resultado-label">Classificação</div>
+          <div class="resultado-valor neutro" id="calc-classe">Regular</div>
+        </div>
+      </div>
+
+      <div class="resultado-row">
+        <div>
+          <div class="resultado-label">Repasse Mensal Atual</div>
+          <div class="resultado-valor positivo" id="calc-repasse-atual">R$ 2.000</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="resultado-label">Se fosse Ótimo</div>
+          <div class="resultado-valor otimo" id="calc-repasse-otimo">R$ 8.000</div>
+        </div>
+      </div>
+
+      <div class="resultado-row">
+        <div>
+          <div class="resultado-label">Diferença Mensal</div>
+          <div class="resultado-valor negativo" id="calc-diferenca-mes">R$ 6.000</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="resultado-label">Diferença Anual</div>
+          <div class="resultado-valor negativo" id="calc-diferenca-ano">R$ 72.000</div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;background:var(--surface);padding:12px;border-radius:6px;border-left:3px solid var(--suf);">
+        <div class="resultado-label">Para Atingir Ótimo</div>
+        <div style="font-size:13px;color:var(--text);margin-top:6px;" id="calc-gap">Faltam 2,5 pontos</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB 2: SIMULADOR MUNICIPAL ═══ -->
+  <div id="tab2" class="tab-content">
+    <div class="sec-title">📍 Simulador Municipal</div>
+    <div class="sec-desc">Configure quantas equipes seu município tem e simule o impacto financeiro total.</div>
+
+    <div class="card">
+      <div class="card-title">Número de Equipes</div>
+      <div class="input-group" style="grid-template-columns:repeat(3,1fr);">
+        <div class="input-field">
+          <label>eSF/eAP</label>
+          <input type="number" id="munic-esf-num" value="8" min="0" onchange="atualizarMunicipal()">
+        </div>
+        <div class="input-field">
+          <label>eMulti</label>
+          <input type="number" id="munic-emulti-num" value="3" min="0" onchange="atualizarMunicipal()">
+        </div>
+        <div class="input-field">
+          <label>eSB</label>
+          <input type="number" id="munic-esb-num" value="3" min="0" onchange="atualizarMunicipal()">
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Nota Média Atual</div>
+      <div class="input-group" style="grid-template-columns:repeat(3,1fr);">
+        <div class="input-field">
+          <label>eSF/eAP</label>
+          <input type="number" id="munic-esf-nota" value="6" min="0" max="10" step="0.1" onchange="atualizarMunicipal()">
+        </div>
+        <div class="input-field">
+          <label>eMulti</label>
+          <input type="number" id="munic-emulti-nota" value="5" min="0" max="10" step="0.1" onchange="atualizarMunicipal()">
+        </div>
+        <div class="input-field">
+          <label>eSB</label>
+          <input type="number" id="munic-esb-nota" value="4" min="0" max="10" step="0.1" onchange="atualizarMunicipal()">
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTADO MUNICIPAL -->
+    <div class="resultado-box">
+      <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;margin-bottom:12px;color:var(--gold);">SITUAÇÃO ATUAL</div>
+      <div id="munic-atual"></div>
+
+      <div style="margin-top:20px;border-top:1px solid var(--border);padding-top:16px;">
+      <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;margin-bottom:12px;color:var(--gold);">SE TODAS FOSSEM ÓTIMO</div>
+      <div id="munic-ideal"></div>
+      </div>
+
+      <div style="margin-top:20px;border-top:1px solid var(--border);padding-top:16px;">
+      <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--reg);margin-bottom:12px;">⚠️ VOCÊ ESTÁ DEIXANDO DE RECEBER</div>
+      <div style="font-size:28px;font-weight:700;color:var(--reg);margin-bottom:4px;" id="munic-gap-mes">R$ 34.000</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:16px;">por mês</div>
+      <div style="font-size:24px;font-weight:700;color:#ff6b6b;margin-bottom:4px;" id="munic-gap-ano">R$ 408.000</div>
+      <div style="font-size:11px;color:var(--muted);">por ano</div>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="exportarPDF('municipal')">📄 Exportar Análise em PDF</button>
+  </div>
+
+  <!-- ═══ TAB 3: SIMULADOR "E SE..." ═══ -->
+  <div id="tab3" class="tab-content">
+    <div class="sec-title">🎯 Simulador "E Se..."</div>
+    <div class="sec-desc">Compare diferentes cenários e veja o impacto de melhorias específicas.</div>
+
+    <div class="card">
+      <div class="card-title">Cenário Atual vs Meta</div>
+      <div class="input-group" style="grid-template-columns:1fr 1fr;gap:16px;">
+        <div>
+          <label style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:8px;">Indicador Crítico</label>
+          <select id="cenario-indicador" onchange="atualizarCenarios()">
+            <option value="c2">C2 – Desenv. Infantil (eSF)</option>
+            <option value="c3">C3 – Gestação (eSF)</option>
+            <option value="m1">M1 – Atendimentos (eMulti)</option>
+            <option value="b3">B3 – Taxa de Exodontia (eSB)</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:8px;">Tipo de Equipe</label>
+          <select id="cenario-tipo" onchange="atualizarCenarios()">
+            <option value="esf">eSF/eAP</option>
+            <option value="emulti">eMulti</option>
+            <option value="esb">eSB</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="resultado-box" id="cenarios-resultado"></div>
+
+    <button class="btn-primary" onclick="adicionarCenario()">+ Adicionar Cenário</button>
+  </div>
+
+  <!-- ═══ TAB 4: ARGUMENTO DE VENDA ═══ -->
+  <div id="tab4" class="tab-content">
+    <div class="sec-title">📋 Análise para o Secretário</div>
+    <div class="sec-desc">Argumento pronto para copiar — personalizado com seus números.</div>
+
+    <div class="resultado-box">
+      <div id="argumento-texto" class="argumento-box"></div>
+      <button class="btn-primary" onclick="copiarArgumento()">📋 Copiar Texto</button>
+      <button class="btn-secondary" onclick="exportarPDF('argumento')">📄 Exportar PDF</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── TEMA ──
+const themeBtn = document.getElementById('theme-toggle');
+let isDark = localStorage.getItem('apex_theme') !== 'light';
+document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+themeBtn.textContent = isDark ? '🌙' : '☀️';
+themeBtn.addEventListener('click', () => {
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  themeBtn.textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('apex_theme', isDark ? 'dark' : 'light');
+});
+
+// ── TABELAS DE REFERÊNCIA ──
+const tabela_repasse = {
+  esf: {Ótimo: 8000, Bom: 6000, Suficiente: 4000, Regular: 2000},
+  emulti: {Ótimo: 8000, Bom: 6000, Suficiente: 4000, Regular: 2000},
+  esb: {Ótimo: 8000, Bom: 6000, Suficiente: 4000, Regular: 2000},
+};
+
+const indicadores_config = {
+  esf: [
+    {id: 'C1', nome: 'C1 – Acesso', peso: 1},
+    {id: 'C2', nome: 'C2 – Desenv. Infantil', peso: 2},
+    {id: 'C3', nome: 'C3 – Gestação', peso: 2},
+    {id: 'C4', nome: 'C4 – Diabetes', peso: 1},
+    {id: 'C5', nome: 'C5 – Hipertensão', peso: 1},
+    {id: 'C6', nome: 'C6 – Idoso', peso: 1},
+    {id: 'C7', nome: 'C7 – Prevenção Câncer', peso: 2},
+  ],
+  emulti: [
+    {id: 'M1', nome: 'M1 – Atendimentos', peso: 6},
+    {id: 'M2', nome: 'M2 – Ações Conjuntas', peso: 4},
+  ],
+  esb: [
+    {id: 'B1', nome: 'B1 – 1ª Consulta', peso: 2},
+    {id: 'B2', nome: 'B2 – Tratamento Concluído', peso: 2},
+    {id: 'B3', nome: 'B3 – Taxa de Exodontia (invertido)', peso: 2, invertido: true},
+    {id: 'B4', nome: 'B4 – Preventivos', peso: 2},
+    {id: 'B5', nome: 'B5 – Escovação Supervisionada', peso: 1},
+    {id: 'B6', nome: 'B6 – TRA', peso: 1},
+  ]
+};
+
+function classificar(nota) {
+  if (nota > 7.5) return {classe: 'Ótimo', cor: 'otimo', badge: 'badge-otimo'};
+  if (nota >= 5.0) return {classe: 'Bom', cor: 'bom', badge: 'badge-bom'};
+  if (nota >= 2.6) return {classe: 'Suficiente', cor: 'suf', badge: 'badge-suf'};
+  return {classe: 'Regular', cor: 'reg', badge: 'badge-reg'};
+}
+
+function obterRepasse(tipo, nota) {
+  const dados = classificar(nota);
+  return (tabela_repasse[tipo] || {})[dados.classe] || 2000;
+}
+
+// ── TAB NAVIGATION ──
+function abrirTab(tabName) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ═════════════════════════════════════════════════════════════
+// SEÇÃO 1: CALCULADORA
+// ═════════════════════════════════════════════════════════════
+
+function atualizarCalculadora() {
+  const tipo = document.getElementById('equipe-tipo').value;
+  const config = indicadores_config[tipo];
+
+  // Renderizar sliders
+  let html = '';
+  config.forEach(ind => {
+    const sliderValueId = `slider-${ind.id}`;
+    html += `<div class="slider-group">
+      <div class="slider-label">
+        <span class="slider-name">${ind.nome} (peso ${ind.peso})</span>
+        <span class="slider-value" id="${sliderValueId}-text">50%</span>
+      </div>
+      <input type="range" id="${sliderValueId}" min="0" max="100" value="50" oninput="atualizarCalculadora()">
+    </div>`;
+  });
+  document.getElementById('sliders-container').innerHTML = html;
+
+  // Calcular nota ponderada
+  let totalPesado = 0, totalPeso = 0;
+  config.forEach(ind => {
+    const valor = parseFloat(document.getElementById(`slider-${ind.id}`).value) / 100 * 10;
+    const peso = ind.invertido ? 10 - valor : valor;
+    totalPesado += peso * ind.peso;
+    totalPeso += ind.peso;
+    document.getElementById(`slider-${ind.id}-text`).textContent = document.getElementById(`slider-${ind.id}`).value + '%';
+  });
+
+  const nota = totalPesado / totalPeso;
+  const dados = classificar(nota);
+  const repasse_atual = obterRepasse(tipo, nota);
+  const repasse_otimo = tabela_repasse[tipo].Ótimo;
+  const diferenca_mes = repasse_otimo - repasse_atual;
+  const diferenca_ano = diferenca_mes * 12;
+  const gap = 7.5 - nota;
+
+  document.getElementById('calc-nota').textContent = nota.toFixed(1);
+  document.getElementById('calc-classe').textContent = dados.classe;
+  document.getElementById('calc-badge').textContent = dados.classe.toUpperCase();
+  document.getElementById('calc-badge').className = `badge ${dados.badge}`;
+  document.getElementById('calc-repasse-atual').textContent = `R$ ${repasse_atual.toLocaleString('pt-BR')}`;
+  document.getElementById('calc-repasse-otimo').textContent = `R$ ${repasse_otimo.toLocaleString('pt-BR')}`;
+  document.getElementById('calc-diferenca-mes').textContent = `R$ ${diferenca_mes.toLocaleString('pt-BR')}`;
+  document.getElementById('calc-diferenca-ano').textContent = `R$ ${diferenca_ano.toLocaleString('pt-BR')}`;
+  document.getElementById('calc-gap').textContent = `Faltam ${Math.max(0, gap).toFixed(1)} pontos para Ótimo`;
+}
+
+// ═════════════════════════════════════════════════════════════
+// SEÇÃO 2: SIMULADOR MUNICIPAL
+// ═════════════════════════════════════════════════════════════
+
+function atualizarMunicipal() {
+  const esf_num = parseInt(document.getElementById('munic-esf-num').value) || 0;
+  const emulti_num = parseInt(document.getElementById('munic-emulti-num').value) || 0;
+  const esb_num = parseInt(document.getElementById('munic-esb-num').value) || 0;
+
+  const esf_nota = parseFloat(document.getElementById('munic-esf-nota').value) || 0;
+  const emulti_nota = parseFloat(document.getElementById('munic-emulti-nota').value) || 0;
+  const esb_nota = parseFloat(document.getElementById('munic-esb-nota').value) || 0;
+
+  // Calcular situação atual
+  const esf_repasse = obterRepasse('esf', esf_nota) * esf_num;
+  const emulti_repasse = obterRepasse('emulti', emulti_nota) * emulti_num;
+  const esb_repasse = obterRepasse('esb', esb_nota) * esb_num;
+  const total_atual = esf_repasse + emulti_repasse + esb_repasse;
+
+  // Calcular se todas fossem ótimo
+  const esf_ideal = 8000 * esf_num;
+  const emulti_ideal = 8000 * emulti_num;
+  const esb_ideal = 8000 * esb_num;
+  const total_ideal = esf_ideal + emulti_ideal + esb_ideal;
+
+  // Gap
+  const gap_mes = total_ideal - total_atual;
+  const gap_ano = gap_mes * 12;
+
+  // Renderizar situação atual
+  let html_atual = '';
+  if (esf_num > 0) html_atual += `<div class="resultado-row"><div><div class="resultado-label">eSF/eAP (${esf_num} equipes)</div><div class="resultado-valor">R$ ${esf_repasse.toLocaleString('pt-BR')}</div></div><div style="text-align:right;font-size:11px;color:var(--muted);">Nota: ${esf_nota.toFixed(1)}</div></div>`;
+  if (emulti_num > 0) html_atual += `<div class="resultado-row"><div><div class="resultado-label">eMulti (${emulti_num} equipes)</div><div class="resultado-valor">R$ ${emulti_repasse.toLocaleString('pt-BR')}</div></div><div style="text-align:right;font-size:11px;color:var(--muted);">Nota: ${emulti_nota.toFixed(1)}</div></div>`;
+  if (esb_num > 0) html_atual += `<div class="resultado-row"><div><div class="resultado-label">eSB (${esb_num} equipes)</div><div class="resultado-valor">R$ ${esb_repasse.toLocaleString('pt-BR')}</div></div><div style="text-align:right;font-size:11px;color:var(--muted);">Nota: ${esb_nota.toFixed(1)}</div></div>`;
+  html_atual += `<div class="resultado-row" style="background:var(--surface);border-left:3px solid var(--gold);"><div><div class="resultado-label">TOTAL ATUAL</div><div class="resultado-valor" style="font-size:24px;">R$ ${total_atual.toLocaleString('pt-BR')}</div></div></div>`;
+  document.getElementById('munic-atual').innerHTML = html_atual;
+
+  // Renderizar ideal
+  let html_ideal = '';
+  if (esf_num > 0) html_ideal += `<div class="resultado-row"><div><div class="resultado-label">eSF/eAP (${esf_num} × R$8.000)</div><div class="resultado-valor positivo">R$ ${esf_ideal.toLocaleString('pt-BR')}</div></div></div>`;
+  if (emulti_num > 0) html_ideal += `<div class="resultado-row"><div><div class="resultado-label">eMulti (${emulti_num} × R$8.000)</div><div class="resultado-valor positivo">R$ ${emulti_ideal.toLocaleString('pt-BR')}</div></div></div>`;
+  if (esb_num > 0) html_ideal += `<div class="resultado-row"><div><div class="resultado-label">eSB (${esb_num} × R$8.000)</div><div class="resultado-valor positivo">R$ ${esb_ideal.toLocaleString('pt-BR')}</div></div></div>`;
+  html_ideal += `<div class="resultado-row" style="background:var(--surface);border-left:3px solid var(--otimo);"><div><div class="resultado-label">TOTAL POTENCIAL</div><div class="resultado-valor" style="font-size:24px;color:var(--otimo);">R$ ${total_ideal.toLocaleString('pt-BR')}</div></div></div>`;
+  document.getElementById('munic-ideal').innerHTML = html_ideal;
+
+  // Gap
+  document.getElementById('munic-gap-mes').textContent = `R$ ${gap_mes.toLocaleString('pt-BR')}`;
+  document.getElementById('munic-gap-ano').textContent = `R$ ${gap_ano.toLocaleString('pt-BR')}`;
+}
+
+// ═════════════════════════════════════════════════════════════
+// SEÇÃO 3: CENÁRIOS
+// ═════════════════════════════════════════════════════════════
+
+function atualizarCenarios() {
+  const indicador = document.getElementById('cenario-indicador').value;
+  const tipo = document.getElementById('cenario-tipo').value;
+  const html = `<div style="text-align:center;color:var(--muted);padding:40px;">Selecione um indicador para comparar cenários</div>`;
+  document.getElementById('cenarios-resultado').innerHTML = html;
+}
+
+function adicionarCenario() {
+  showToast('Funcionalidade em desenvolvimento');
+}
+
+// ─────────────────────────────────────────────
+// SEÇÃO 4: ARGUMENTO
+// ─────────────────────────────────────────────
+
+function gerarArgumento() {
+  const esf_num = parseInt(document.getElementById('munic-esf-num').value) || 8;
+  const emulti_num = parseInt(document.getElementById('munic-emulti-num').value) || 3;
+  const esb_num = parseInt(document.getElementById('munic-esb-num').value) || 3;
+  const total_equipes = esf_num + emulti_num + esb_num;
+
+  const esf_nota = parseFloat(document.getElementById('munic-esf-nota').value) || 6;
+  const emulti_nota = parseFloat(document.getElementById('munic-emulti-nota').value) || 5;
+  const esb_nota = parseFloat(document.getElementById('munic-esb-nota').value) || 4;
+
+  const esf_repasse = obterRepasse('esf', esf_nota) * esf_num;
+  const emulti_repasse = obterRepasse('emulti', emulti_nota) * emulti_num;
+  const esb_repasse = obterRepasse('esb', esb_nota) * esb_num;
+  const total_atual = esf_repasse + emulti_repasse + esb_repasse;
+
+  const total_ideal = 8000 * total_equipes;
+  const gap = total_ideal - total_atual;
+  const gap_ano = gap * 12;
+
+  const texto = `Com <strong>${esf_num} equipes eSF</strong>, <strong>${emulti_num} eMulti</strong> e <strong>${esb_num} eSB</strong>, o município está recebendo <strong>R$ ${total_atual.toLocaleString('pt-BR')}/mês</strong> em incentivo de qualidade.
+
+O potencial máximo seria <strong>R$ ${total_ideal.toLocaleString('pt-BR')}/mês</strong>.
+
+A diferença de <strong>R$ ${gap.toLocaleString('pt-BR')}/mês</strong> equivale a <strong>R$ ${gap_ano.toLocaleString('pt-BR')} por ano</strong> — recursos que poderiam financiar 2 médicos especialistas, reforma de 1 UBS, ou 500 exames de laboratório.
+
+Com o programa ÁPEX Saúde, o investimento de R$ 2.000/mês tem ROI estimado de ${(gap_ano / (2000 * 12)).toFixed(1)}x em repasse federal adicional.`;
+
+  document.getElementById('argumento-texto').innerHTML = texto;
+}
+
+function copiarArgumento() {
+  const texto = document.getElementById('argumento-texto').innerText;
+  navigator.clipboard.writeText(texto);
+  showToast('✓ Texto copiado!');
+}
+
+function exportarPDF(seção) {
+  showToast('📄 Exportar em PDF — funcionalidade em desenvolvimento');
+}
+
+function showToast(msg) {
+  const toast = document.createElement('div');
+  toast.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--gold);border-radius:8px;padding:14px 20px;font-family:"DM Mono",monospace;font-size:12px;color:var(--gold);z-index:9999;';
+  toast.textContent = msg;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+// ─────────────────────────────────────────────
+// INICIALIZAR
+// ─────────────────────────────────────────────
+
+document.addEventListener('DOMContentLoaded', function() {
+  atualizarCalculadora();
+  atualizarMunicipal();
+  gerarArgumento();
+});
+</script>
+
+</body>
+</html>
