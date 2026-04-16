@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test Syntax</title>
+</head>
+<body>
+<h1>Teste de Sintaxe</h1>
+<p id="status">Carregando...</p>
+
+<script>
+// Tenta importar o arquivo e reporta erro
+fetch('dashboard-profissional.html')
+  .then(r => r.text())
+  .then(text => {
+    const script = text.match(/<script[^>]*>([\s\S]*?)<\/script>/g);
+    console.log('Scripts encontrados:', script ? script.length : 0);
+
+    // Tenta executar o JavaScript
+    try {
+      eval(script ? script[0].replace('<script>', '').replace('</script>', '') : '');
+      document.getElementById('status').textContent = '✅ Sintaxe OK!';
+    } catch(e) {
+      document.getElementById('status').innerHTML = `❌ Erro: ${e.message}<br>Linha: ${e.stack}`;
+      console.error(e);
+    }
+  })
+  .catch(e => {
+    document.getElementById('status').textContent = '❌ Erro ao carregar: ' + e.message;
+  });
+</script>
+</body>
+</html>
