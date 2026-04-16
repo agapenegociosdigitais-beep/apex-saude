@@ -195,6 +195,9 @@ input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-
   </div>
 </div>
 
+<!-- BANNER PRAZOS CRÍTICOS (PARTE 1) -->
+<div id="prazos-banner" style="display:none;padding:12px 16px;"></div>
+
 <!-- BANNER PLANO ATIVO -->
 <div id="banner-plano-ativo" style="display:none;background:var(--ai-bg);border-bottom:1px solid var(--ai-border);padding:12px 16px;">
   <div style="display:flex;gap:10px;align-items:center;font-size:12px;">
@@ -237,6 +240,15 @@ input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-
       </div>
       <div class="modulo-desc">Você escolhe o indicador, informa seus dados e a IA sugere ações específicas. Você edita, define prazos e acompanha o progresso.</div>
       <span class="modulo-badge badge-gold" id="badge-m1">Criar plano</span>
+    </div>
+
+    <div class="modulo-card" style="border-color:var(--gold);cursor:pointer;" onclick="abrirTelaHistorico()">
+      <div class="modulo-header">
+        <span class="modulo-icon">📚</span>
+        <div class="modulo-title">Histórico PDCA</div>
+      </div>
+      <div class="modulo-desc">Veja todos os ciclos PDCA que você já completou — resultado, duração, status de cada um e o que funcionou.</div>
+      <span class="modulo-badge badge-gold">Visualizar</span>
     </div>
 
   </div>
@@ -434,7 +446,17 @@ input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-
 
     <!-- BOTÕES DE AÇÃO -->
     <div id="acomp-botoes" style="display:grid;gap:8px;"></div>
+
+    <!-- MINI-GRÁFICO (PARTE 2) -->
+    <div style="margin-top:24px;">
+      <div class="sec-title">📈 Evolução do Indicador</div>
+      <div id="mini-grafico-container" style="margin-bottom:16px;"></div>
+    </div>
   </div>
+</div>
+
+<!-- TELA: HISTÓRICO PDCA (PARTE 3) -->
+<div class="screen" id="screen-historico">
 </div>
 
 <div class="toast" id="toast"></div>
@@ -517,6 +539,13 @@ function voltarHome() {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-home').classList.add('active');
   renderPlanosAtivos();
+  window.scrollTo(0,0);
+}
+
+function abrirTelaHistorico() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-historico').classList.add('active');
+  renderizarHistoricoPDCA(perfilId);
   window.scrollTo(0,0);
 }
 
@@ -1150,11 +1179,15 @@ function renderizarAcompanhamentoPDCA(planoAtivo) {
 
     let corDias = 'var(--otimo)';
     let textoDias = '—';
+    let badgeClass = '';
     if (diasRestantes !== null) {
-      if (diasRestantes < 0) { corDias = 'var(--reg)'; textoDias = `Vencida há ${Math.abs(diasRestantes)}d`; }
-      else if (diasRestantes === 0) { corDias = 'var(--reg)'; textoDias = 'Vence hoje'; }
-      else if (diasRestantes <= 7) { corDias = 'var(--suf)'; textoDias = `${diasRestantes}d restantes`; }
-      else { corDias = 'var(--otimo)'; textoDias = `${diasRestantes}d`; }
+      if (diasRestantes < 0) { corDias = 'var(--reg)'; textoDias = `🔴 Vencida`; badgeClass = 'vencida'; }
+      else if (diasRestantes === 0) { corDias = 'var(--reg)'; textoDias = '⏰ Hoje'; badgeClass = 'hoje'; }
+      else if (diasRestantes <= 7) { corDias = 'var(--suf)'; textoDias = `⏰ ${diasRestantes}d`; badgeClass = 'amarelo'; }
+      else { corDias = 'var(--otimo)'; textoDias = `✓ ${diasRestantes}d`; badgeClass = 'verde'; }
+    }
+    if (badgeClass === 'amarelo' || badgeClass === 'vencida') {
+      textoDias = `<span style="display:inline-block;padding:2px 6px;border-radius:3px;background:${badgeClass === 'vencida' ? '#ef444420' : '#f59e0b20'};border:1px solid ${badgeClass === 'vencida' ? '#ef444440' : '#f59e0b40'};font-size:9px;animation:${badgeClass === 'vencida' ? '' : 'pulse-badge 2s infinite'};">${textoDias}</span>`;
     }
 
     return `<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px;margin-bottom:8px;display:flex;gap:10px;align-items:flex-start;">
@@ -1216,6 +1249,9 @@ function renderizarAcompanhamentoPDCA(planoAtivo) {
   }
 
   containerBotoes.innerHTML = botoes;
+
+  // Renderizar mini-gráfico (PARTE 2)
+  gerarMiniGraficoEvolution(perfilId, planoAtivo.id, '#mini-grafico-container');
 
   // Salvar CHECK
   salvarCheckPDCA(planoAtivo, valorAtual, acoesConcluidas, variacao, pctPrazo, progresso);
@@ -1373,8 +1409,8 @@ function padronizarComoRotina() {
 
   // Arquivar plano como concluído
   const historicoPDCA = JSON.parse(localStorage.getItem(`apex_historico_pdca_${perfilId}`) || '[]');
-  planoAtivo.status = 'concluido_sucesso';
-  planoAtivo.data_conclusao = new Date().toLocaleDateString('pt-BR');
+  planoAtivo.status = 'padronizado';
+  planoAtivo.data_encerramento = new Date().toLocaleDateString('pt-BR');
   historicoPDCA.push(planoAtivo);
   localStorage.setItem(`apex_historico_pdca_${perfilId}`, JSON.stringify(historicoPDCA.slice(-20)));
 
@@ -1384,6 +1420,234 @@ function padronizarComoRotina() {
   showToast(`✅ ${acoesQueFuncionaram.length} ações padronizadas como rotina!`);
   voltarHome();
 }
+
+// ═════════════════════════════════════════════════════════════
+// PARTE 1 — RASTREAMENTO DE PRAZOS COM ALERTAS
+// ═════════════════════════════════════════════════════════════
+
+function calcularDiasRestantes(prazoStr) {
+  if (!prazoStr) return null;
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0);
+  const [dia, mes, ano] = prazoStr.split('/').map(Number);
+  const prazo = new Date(ano, mes - 1, dia);
+  const diff = Math.ceil((prazo - hoje) / (1000 * 60 * 60 * 24));
+  return diff;
+}
+
+function obterStatusPrazo(diasRestantes) {
+  if (diasRestantes === null) return { classe: 'neutro', texto: '—' };
+  if (diasRestantes < 0) return { classe: 'vencida', texto: '🔴 VENCIDA' };
+  if (diasRestantes === 0) return { classe: 'hoje', texto: '⏰ HOJE' };
+  if (diasRestantes <= 7) return { classe: 'amarelo', texto: `⏰ ${diasRestantes}d` };
+  return { classe: 'verde', texto: `✓ ${diasRestantes}d` };
+}
+
+function verificarAcoesVencendo() {
+  const alertas = [];
+
+  // Verificar todos os perfis
+  Object.keys(PERFIS_CONFIG).forEach(perfilId => {
+    const planoKey = `apex_plano_ativo_${perfilId}`;
+    const planoJson = localStorage.getItem(planoKey);
+    if (!planoJson) return;
+
+    const plano = JSON.parse(planoJson);
+    plano.acoes.forEach(acao => {
+      const diasRestantes = calcularDiasRestantes(acao.prazo);
+      if (diasRestantes !== null && diasRestantes <= 3 && diasRestantes >= 0) {
+        alertas.push({tipo: 'vencendo', perfil: perfilId, acao: acao.texto, dias: diasRestantes});
+      } else if (diasRestantes !== null && diasRestantes < 0) {
+        alertas.push({tipo: 'vencida', perfil: perfilId, acao: acao.texto});
+      }
+    });
+  });
+
+  return alertas;
+}
+
+function renderizarBannerPrazos(alertas) {
+  const container = document.getElementById('prazos-banner');
+  if (!container) return;
+
+  if (alertas.length === 0) {
+    container.style.display = 'none';
+    return;
+  }
+
+  const vencidas = alertas.filter(a => a.tipo === 'vencida').length;
+  const vencendo = alertas.filter(a => a.tipo === 'vencendo').length;
+
+  let html = '';
+  if (vencidas > 0) {
+    html += `<div style="background:#ef444420;border:1px solid #ef444440;border-radius:8px;padding:12px;margin-bottom:8px;cursor:pointer;" onclick="abrirModuloAcompanhamento()">
+      <span style="color:#ef4444;font-weight:700;">🔴 ${vencidas} ação(ões) VENCIDA(S)</span> no plano PDCA
+    </div>`;
+  }
+  if (vencendo > 0) {
+    html += `<div style="background:#f59e0b20;border:1px solid #f59e0b40;border-radius:8px;padding:12px;cursor:pointer;" onclick="abrirModuloAcompanhamento()">
+      <span style="color:#fcd34d;font-weight:700;">⏰ ${vencendo} ação(ões) vencem em <=3 dias</span> — Verifique o acompanhamento
+    </div>`;
+  }
+
+  container.innerHTML = html;
+  container.style.display = 'block';
+}
+
+// ═════════════════════════════════════════════════════════════
+// PARTE 2 — MINI-GRÁFICO SVG DE EVOLUÇÃO
+// ═════════════════════════════════════════════════════════════
+
+function gerarMiniGraficoEvolution(perfilId, planoId, containerSelector) {
+  const historico = JSON.parse(localStorage.getItem(`apex_check_historico_${perfilId}`) || '[]')
+    .filter(check => check.id.includes(planoId))
+    .sort((a, b) => new Date(a.data_check.split('/').reverse().join('-')) - new Date(b.data_check.split('/').reverse().join('-')));
+
+  if (historico.length === 0) {
+    document.querySelector(containerSelector).innerHTML = '<p style="text-align:center;color:var(--muted);font-size:12px;">Sem histórico de verificações ainda.</p>';
+    return;
+  }
+
+  const w = 280, h = 120, padding = 20;
+  const graphW = w - 2 * padding, graphH = h - 2 * padding;
+
+  const valores = historico.map(c => c.progresso_pct || 0);
+  const maxVal = Math.max(...valores, 100);
+  const minVal = 0;
+
+  const pontos = historico.map((check, i) => ({
+    x: padding + (i / Math.max(historico.length - 1, 1)) * graphW,
+    y: h - padding - ((check.progresso_pct || 0) / maxVal) * graphH,
+    valor: check.progresso_pct || 0,
+    data: check.data_check
+  }));
+
+  const cor = historico[historico.length - 1].progresso_pct >= historico[0].progresso_pct ? '#10b981' : '#ef4444';
+
+  let pathD = `M ${pontos[0].x} ${pontos[0].y}`;
+  for (let i = 1; i < pontos.length; i++) {
+    pathD += ` L ${pontos[i].x} ${pontos[i].y}`;
+  }
+
+  let svg = `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="background:var(--surface);border-radius:8px;border:1px solid var(--border);">`;
+  svg += `<line x1="${padding}" y1="${h - padding}" x2="${w - padding}" y2="${h - padding}" stroke="var(--border)" stroke-width="1"/>`;
+  svg += `<line x1="${padding}" y1="${padding}" x2="${padding}" y2="${h - padding}" stroke="var(--border)" stroke-width="1"/>`;
+
+  // Linha da meta (100%)
+  const metaY = h - padding - (100 / maxVal) * graphH;
+  svg += `<line x1="${padding}" y1="${metaY}" x2="${w - padding}" y2="${metaY}" stroke="var(--gold)" stroke-width="1" stroke-dasharray="4,2" opacity="0.5"/>`;
+
+  // Curva de progresso
+  svg += `<path d="${pathD}" stroke="${cor}" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+
+  // Pontos de dados
+  pontos.forEach((p, i) => {
+    svg += `<circle cx="${p.x}" cy="${p.y}" r="3" fill="${cor}" opacity="0.7" title="${p.data}: ${p.valor}%"/>`;
+    if (i === pontos.length - 1) {
+      svg += `<circle cx="${p.x}" cy="${p.y}" r="5" fill="none" stroke="${cor}" stroke-width="2" opacity="0.5"/>`;
+    }
+  });
+
+  svg += `</svg>`;
+
+  document.querySelector(containerSelector).innerHTML = svg;
+}
+
+// ═════════════════════════════════════════════════════════════
+// PARTE 3 — HISTÓRICO COMPLETO DE CICLOS PDCA
+// ═════════════════════════════════════════════════════════════
+
+function renderizarHistoricoPDCA(perfilId) {
+  const historicoPlanos = JSON.parse(localStorage.getItem(`apex_historico_pdca_${perfilId}`) || '[]');
+  const containerSelector = '#screen-historico';
+
+  if (historicoPlanos.length === 0) {
+    if (document.querySelector(containerSelector)) {
+      document.querySelector(containerSelector).innerHTML = '<p style="text-align:center;color:var(--muted);">Nenhum ciclo PDCA completo ainda.</p>';
+    }
+    return;
+  }
+
+  let html = `<div class="content">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+      <button class="btn-outline" style="width:auto;margin:0;padding:7px 12px;" onclick="voltarHome()">← Voltar</button>
+      <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;">📚 Histórico PDCA</div>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;">
+      <thead style="background:var(--border);border-bottom:1px solid var(--border2);">
+        <tr>
+          <th style="text-align:left;padding:8px;font-weight:700;">#</th>
+          <th style="text-align:left;padding:8px;font-weight:700;">Indicador</th>
+          <th style="text-align:left;padding:8px;font-weight:700;">Início</th>
+          <th style="text-align:left;padding:8px;font-weight:700;">Encerramento</th>
+          <th style="text-align:left;padding:8px;font-weight:700;">Resultado</th>
+          <th style="text-align:left;padding:8px;font-weight:700;">Status</th>
+        </tr>
+      </thead>
+      <tbody>`;
+
+  historicoPlanos.reverse().forEach((plano, idx) => {
+    const numProximo = historicoPlanos.length - idx;
+    const indId = Object.keys(plano.indicadores || {})[0] || '?';
+    const indValores = plano.indicadores[indId] || {};
+    const resultado = `${indValores.valor_inicial || '—'}→${indValores.valor_atual || '—'}`;
+    let statusEmoji = '❓';
+    if (plano.status === 'padronizado') statusEmoji = '✅ Padronizado';
+    else if (plano.versao === 2) statusEmoji = '🔄 Ajustado';
+    else statusEmoji = '🎯 Ativa';
+
+    html += `<tr style="border-bottom:1px solid var(--border);cursor:pointer;transition:background .2s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='transparent'" onclick="mostrarDetalhesPlanoPDCA(${JSON.stringify(plano).replace(/"/g, '&quot;')})">
+      <td style="text-align:left;padding:8px;">${numProximo}</td>
+      <td style="text-align:left;padding:8px;">${indId}</td>
+      <td style="text-align:left;padding:8px;">${plano.data_criacao || '—'}</td>
+      <td style="text-align:left;padding:8px;">${plano.data_encerramento || '—'}</td>
+      <td style="text-align:left;padding:8px;">${resultado}</td>
+      <td style="text-align:left;padding:8px;">${statusEmoji}</td>
+    </tr>`;
+  });
+
+  html += `</tbody></table></div>`;
+
+  const container = document.querySelector(containerSelector);
+  if (container) {
+    container.innerHTML = html;
+  }
+}
+
+function mostrarDetalhesPlanoPDCA(plano) {
+  const modal = document.createElement('div');
+  modal.style.cssText = `position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:9999;padding:16px;`;
+
+  const indId = Object.keys(plano.indicadores || {})[0] || '?';
+  const indDados = plano.indicadores[indId] || {};
+
+  modal.innerHTML = `<div style="background:var(--card);border:1px solid var(--border);border-radius:10px;max-width:500px;max-height:80vh;overflow-y:auto;padding:20px;">
+    <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;margin-bottom:12px;">📋 Detalhes do Ciclo</div>
+    <div style="background:var(--surface);padding:12px;border-radius:6px;margin-bottom:12px;font-size:12px;border-left:3px solid var(--gold);">
+      <div><strong>Indicador:</strong> ${indId}</div>
+      <div><strong>Versão:</strong> ${plano.versao || 1}</div>
+      <div><strong>Criado:</strong> ${plano.data_criacao || '—'}</div>
+      <div><strong>Encerrado:</strong> ${plano.data_encerramento || '—'}</div>
+      <div><strong>Valor Initial:</strong> ${indDados.valor_inicial || '—'}</div>
+      <div><strong>Valor Final:</strong> ${indDados.valor_atual || '—'}</div>
+      <div><strong>Meta:</strong> ${indDados.meta || '—'}</div>
+      <div><strong>Status:</strong> ${plano.status || 'ativo'}</div>
+    </div>
+    <div style="font-family:'Playfair Display',serif;font-size:13px;font-weight:700;margin-top:12px;margin-bottom:6px;">Ações:</div>
+    <div style="background:var(--surface);padding:12px;border-radius:6px;font-size:11px;max-height:200px;overflow-y:auto;">
+      ${(plano.acoes || []).map(a => `<div style="margin-bottom:6px;">• ${a.texto} ${a.status === 'concluida' ? '✅' : '◯'}</div>`).join('')}
+    </div>
+    <button class="btn-outline" style="width:100%;margin-top:12px;" onclick="this.parentElement.parentElement.remove()">Fechar</button>
+  </div>`;
+
+  document.body.appendChild(modal);
+}
+
+// Inicializar verificação de prazos ao abrir
+document.addEventListener('DOMContentLoaded', function() {
+  const alertas = verificarAcoesVencendo();
+  renderizarBannerPrazos(alertas);
+});
 </script>
 </body>
 </html>

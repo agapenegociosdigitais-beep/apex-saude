@@ -159,7 +159,6 @@ body{background:var(--bg);color:var(--text);font-family:'Lato',sans-serif;font-s
 <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <script src="security.js"></script>
-<script src="perfis-config.js"></script>
 </head>
 <body>
 
@@ -633,26 +632,13 @@ function voltarSelecao() {
   document.getElementById('screen-dashboard').style.display = 'none';
 }
 
-// Abrir IA com perfil pré-selecionado
-function abrirIAModulo(perfilId, modulo) {
-  localStorage.setItem('apex_dash_perfil', perfilId);
-  const url = `ia-profissional.html?modulo=${modulo}`;
-  window.open(url, '_blank');
-}
-
 // ════════════════════════════════════════════════════════════════
 // CONFIGURAÇÃO DE PERFIS — TODOS OS 11 PERFIS RESTANTES
 // ════════════════════════════════════════════════════════════════
 
-// ════════════════════════════════════════════════════════════
-// CONFIGURAÇÃO DE PERFIS PARA DASHBOARD
-// Usa PERFIS_CONFIG de perfis-config.js (compartilhado com IA)
-// Adiciona métodos específicos do dashboard
-// ════════════════════════════════════════════════════════════
-
 const perfilConfigs = {
   medico: {
-    metricas: PERFIS_CONFIG.medico.metricas,
+    metricas: { c4: 0, c5: 0, c6: 0, c7: 0 },
     calcularIndicadores() {
       const m = JSON.parse(localStorage.getItem('apex_dash_medico_metricas') || '{"c4":0,"c5":0,"c6":0,"c7":0}');
       return {
@@ -674,12 +660,12 @@ const perfilConfigs = {
     renderRegistroDiario() {
       const hoje = new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' });
       const m = JSON.parse(localStorage.getItem('apex_dash_medico_metricas') || '{"c4":0,"c5":0,"c6":0,"c7":0}');
-      return `<div class="sec-title">📝 Registro Rápido do Dia</div><div class="card" style="background:var(--gold-dim);border:1px solid var(--gold)44;"><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);margin-bottom:8px;">${hoje}</div><div style="display:grid;gap:8px;margin-bottom:12px;"><input class="sim-input" type="number" id="prod-c4" placeholder="Consultas diabéticos com HbA1c" style="font-size:12px;"><input class="sim-input" type="number" id="prod-c5" placeholder="Consultas hipertensos com PA" style="font-size:12px;"><input class="sim-input" type="number" id="prod-c6" placeholder="Avaliações geriátricas" style="font-size:12px;"><input class="sim-input" type="number" id="prod-c7" placeholder="Solicitações colpo/mamografia" style="font-size:12px;"></div><button onclick="salvarProducaoDiaria('medico')" style="width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:6px;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;padding:12px;cursor:pointer;text-transform:uppercase;">Salvar Produção</button></div>`;
+      return `<div class="sec-title">📝 Registro Rápido do Dia</div><div class="card" style="background:var(--gold-dim);border:1px solid var(--gold)44;"><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);margin-bottom:8px;">${hoje}</div><div style="display:grid;gap:8px;margin-bottom:12px;"><input class="sim-input" type="number" id="prod-c4" placeholder="Consultas diabéticos com HbA1c" style="font-size:12px;"><input class="sim-input" type="number" id="prod-c5" placeholder="Consultas hipertensos com PA" style="font-size:12px;"><input class="sim-input" type="number" id="prod-c7-1" placeholder="Solicitações colpocitologia" style="font-size:12px;"><input class="sim-input" type="number" id="prod-c7-2" placeholder="Solicitações mamografia" style="font-size:12px;"><input class="sim-input" type="number" id="prod-c6" placeholder="Avaliações geriátricas" style="font-size:12px;"><input class="sim-input" type="number" id="prod-plano" placeholder="Planos terapêuticos atualizados" style="font-size:12px;"></div><button onclick="salvarProducaoDiaria('medico')" style="width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:6px;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;padding:12px;cursor:pointer;text-transform:uppercase;">Salvar Produção</button></div>`;
     }
   },
 
   enfermeiro: {
-    metricas: PERFIS_CONFIG.enfermeiro.metricas,
+    metricas: { c2: 0, c3: 0, c1: 0, comp2: 0 },
     calcularIndicadores() {
       const m = JSON.parse(localStorage.getItem('apex_dash_enfermeiro_metricas') || '{"c2":0,"c3":0,"c1":0,"comp2":0}');
       return {
@@ -704,7 +690,7 @@ const perfilConfigs = {
   },
 
   tecnico: {
-    metricas: PERFIS_CONFIG.tecnico.metricas,
+    metricas: { pa: 0, glicemia: 0, vacina: 0, pendentes: 0 },
     calcularIndicadores() {
       const m = JSON.parse(localStorage.getItem('apex_dash_tecnico_metricas') || '{"pa":0,"glicemia":0,"vacina":0,"pendentes":0}');
       return {
@@ -726,7 +712,7 @@ const perfilConfigs = {
   },
 
   acs: {
-    metricas: PERFIS_CONFIG.acs.metricas,
+    metricas: { visitas: 0, cadastros: 0, faltosos: 0, sync: 0 },
     calcularIndicadores() {
       const m = JSON.parse(localStorage.getItem('apex_dash_acs_metricas') || '{"visitas":0,"cadastros":0,"faltosos":0,"sync":0}');
       return {
@@ -748,7 +734,7 @@ const perfilConfigs = {
   },
 
   psicologo: {
-    metricas: PERFIS_CONFIG.psicologo.metricas,
+    metricas: { m1: 0, m2: 0, grupos: 0, pts: 0 },
     calcularIndicadores() {
       const m = JSON.parse(localStorage.getItem('apex_dash_psicologo_metricas') || '{"m1":0,"m2":0}');
       return {
@@ -769,7 +755,7 @@ const perfilConfigs = {
   },
 
   fisio: {
-    metricas: PERFIS_CONFIG.fisio.metricas,
+    metricas: { m1: 0, m2: 0, grupos: 0, vdm: 0 },
     calcularIndicadores() {
       const m = JSON.parse(localStorage.getItem('apex_dash_fisio_metricas') || '{"m1":0,"m2":0}');
       return {
@@ -789,7 +775,7 @@ const perfilConfigs = {
   },
 
   nutricionista: {
-    metricas: PERFIS_CONFIG.nutricionista.metricas,
+    metricas: { m1: 0, m2: 0, grupos: 0, pn: 0 },
     calcularIndicadores() {
       const m = JSON.parse(localStorage.getItem('apex_dash_nutricionista_metricas') || '{"m1":0,"m2":0}');
       return {
@@ -808,7 +794,7 @@ const perfilConfigs = {
   },
 
   assistente: {
-    metricas: PERFIS_CONFIG.assistente.metricas,
+    metricas: { m1: 0, m2: 0, articulacoes: 0, encaminhamentos: 0 },
     calcularIndicadores() {
       const m = JSON.parse(localStorage.getItem('apex_dash_assistente_metricas') || '{"m1":0,"m2":0}');
       return {
@@ -827,7 +813,7 @@ const perfilConfigs = {
   },
 
   farmaceutico: {
-    metricas: PERFIS_CONFIG.farmaceutico.metricas,
+    metricas: { m1: 0, m2: 0, consultas: 0, grupos: 0 },
     calcularIndicadores() {
       const m = JSON.parse(localStorage.getItem('apex_dash_farmaceutico_metricas') || '{"m1":0,"m2":0}');
       return {
@@ -1061,44 +1047,32 @@ function renderDashboard(id) {
   html += `<div class="prog-wrap" style="margin-bottom:16px;"><div class="prog-bar" style="width:${pct}%;background:var(--otimo)"></div></div>`;
 
 
-  // Cards de IA com status dinâmico
+  // Cards de IA
   html += \`<div class="sec-title">🤖 Módulos de Inteligência Artificial</div>\`;
-
-  // Calcular badges dinamicamente
-  const planoM3 = JSON.parse(localStorage.getItem('apex_planos_m3') || '[]').find(p => p.perfil === id);
-  const planoM1 = JSON.parse(localStorage.getItem('apex_planos_m1') || '[]').find(p => p.perfil === id);
-  const relatorio = JSON.parse(localStorage.getItem('apex_relatorios') || '[]').find(r => r.perfil === id);
-
-  const badgeM3 = planoM3 ? \`<span style="background:#7c3aed22;color:#a78bfa;border:1px solid #7c3aed44;padding:2px 8px;border-radius:3px;font-family:'DM Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:.5px;">\${planoM3.data}</span>\` : '✦ Gerar agora';
-  const badgeM1 = planoM1 ? \`<span style="background:#f59e0b20;color:#fcd34d;border:1px solid #f59e0b40;padding:2px 8px;border-radius:3px;font-family:'DM Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:.5px;">\${planoM1.acoes.length} ações</span>\` : '✦ Criar';
-
   html += \`<div style="display:grid;gap:8px;margin-bottom:16px;">
-    <div onclick="abrirIAModulo('${id}', 'm3')" style="background:var(--ai-bg,#a78bfa12);border:1.5px solid var(--ai-border,#a78bfa40);border-radius:10px;padding:14px;cursor:pointer;display:flex;gap:12px;align-items:center;transition:all .2s;">
+    <div onclick="window.open('ia-profissional.html','_blank')" style="background:var(--ai-bg,#a78bfa12);border:1.5px solid var(--ai-border,#a78bfa40);border-radius:10px;padding:14px;cursor:pointer;display:flex;gap:12px;align-items:center;transition:all .2s;">
       <span style="font-size:22px;">🤖</span>
-      <div style="flex:1;">
+      <div>
         <div style="font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--text);">Plano de Melhoria IA</div>
         <div style="font-size:11px;color:var(--muted);margin-top:2px;">IA analisa seus indicadores e gera plano priorizado automaticamente</div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;">
-        \${badgeM3}
-        <span style="color:var(--gold);font-size:18px;">›</span>
-      </div>
+      <span style="margin-left:auto;color:var(--gold);font-size:18px;">›</span>
     </div>
-    <div onclick="abrirIAModulo('${id}', 'm2')" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;display:flex;gap:12px;align-items:center;transition:all .2s;">
+    <div onclick="window.open('ia-profissional.html','_blank')" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;display:flex;gap:12px;align-items:center;transition:all .2s;">
       <span style="font-size:22px;">📊</span>
-      <div style="flex:1;">
+      <div>
         <div style="font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--text);">Relatório de Desempenho</div>
         <div style="font-size:11px;color:var(--muted);margin-top:2px;">Análise completa com projeção, pontos fortes e pendências</div>
       </div>
       <span style="margin-left:auto;color:var(--gold);font-size:18px;">›</span>
     </div>
-    <div onclick="abrirIAModulo('${id}', 'm1')" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;display:flex;gap:12px;align-items:center;transition:all .2s;">
+    <div onclick="window.open('ia-profissional.html','_blank')" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;display:flex;gap:12px;align-items:center;transition:all .2s;">
       <span style="font-size:22px;">🎯</span>
-      <div style="flex:1;">
+      <div>
         <div style="font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--text);">Meu Plano de Ação</div>
         <div style="font-size:11px;color:var(--muted);margin-top:2px;">Escolha o indicador e receba sugestões personalizadas da IA</div>
       </div>
-      <div style="margin-left:auto;color:var(--gold);font-size:18px;">›</div>
+      <span style="margin-left:auto;color:var(--gold);font-size:18px;">›</span>
     </div>
   </div>\`;
 
@@ -1142,19 +1116,19 @@ function salvarProducaoDiaria(perfilId) {
   if (!config) return;
 
   const producao = {};
-  // Percorrer cada métrica do perfil e ler seu input correspondente
+  const inputs = document.querySelectorAll(`#prod-${perfilId} input, .card:last-of-type input`);
+  let count = 0;
   Object.keys(config.metricas).forEach(key => {
-    const el = document.getElementById(`prod-${key}`);
+    const el = document.getElementById(`prod-${key}`) || document.querySelectorAll('input[type="number"]')[count];
     if (el) {
       producao[key] = parseFloat(el.value) || 0;
-      el.value = ''; // Limpar após ler
+      el.value = '';
+      count++;
     }
   });
 
-  // Salvar produção diária com data
   localStorage.setItem(`apex_prod_${perfilId}_${hoje}`, JSON.stringify(producao));
 
-  // Acumular no total do mês
   const metricas = JSON.parse(localStorage.getItem(`apex_dash_${perfilId}_metricas`) || JSON.stringify(config.metricas));
   Object.keys(producao).forEach(key => {
     metricas[key] = (parseFloat(metricas[key]) || 0) + producao[key];
