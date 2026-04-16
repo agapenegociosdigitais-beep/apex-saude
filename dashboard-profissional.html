@@ -632,64 +632,225 @@ function voltarSelecao() {
   document.getElementById('screen-dashboard').style.display = 'none';
 }
 
-// ── DENTISTA: Calcular indicadores dinâmicos ──
-function calcularIndicadoresDentista() {
-  const metricas = JSON.parse(localStorage.getItem('apex_dash_dentista_metricas') || '{"b1":0,"b2":0,"b3":0,"b4":0,"b5":0,"b6":0}');
-  const b1 = parseFloat(metricas.b1) || 0; // 1ªs consultas
-  const b2 = parseFloat(metricas.b2) || 0; // Tratamentos concluídos
-  const b3 = parseFloat(metricas.b3) || 0; // Taxa extração (0-100)
-  const b4 = parseFloat(metricas.b4) || 0; // Procedimentos preventivos
-  const b5 = parseFloat(metricas.b5) || 0; // Escovação supervisionada
-  const b6 = parseFloat(metricas.b6) || 0; // TRA
+// ════════════════════════════════════════════════════════════════
+// CONFIGURAÇÃO DE PERFIS — TODOS OS 11 PERFIS RESTANTES
+// ════════════════════════════════════════════════════════════════
 
-  return {
-    b1: { val: b1, cls: b1 >= 80 ? 'verde' : (b1 >= 60 ? 'amarelo' : 'vermelho') },
-    b2: { val: b2, cls: b2 >= 80 ? 'verde' : (b2 >= 60 ? 'amarelo' : 'vermelho') },
-    b3: { val: b3, cls: b3 <= 15 ? 'verde' : (b3 <= 25 ? 'amarelo' : 'vermelho') }, // INVERTIDO
-    b4: { val: b4, cls: b4 >= 80 ? 'verde' : (b4 >= 60 ? 'amarelo' : 'vermelho') },
-    b5: { val: b5, cls: b5 >= 80 ? 'verde' : (b5 >= 60 ? 'amarelo' : 'vermelho') },
-    b6: { val: b6, cls: b6 >= 80 ? 'verde' : (b6 >= 60 ? 'amarelo' : 'vermelho') }
-  };
+const perfilConfigs = {
+  medico: {
+    metricas: { c4: 0, c5: 0, c6: 0, c7: 0 },
+    calcularIndicadores() {
+      const m = JSON.parse(localStorage.getItem('apex_dash_medico_metricas') || '{"c4":0,"c5":0,"c6":0,"c7":0}');
+      return {
+        c4: { val: m.c4, cls: m.c4 >= 80 ? 'verde' : (m.c4 >= 60 ? 'amarelo' : 'vermelho'), peso: 1 },
+        c5: { val: m.c5, cls: m.c5 >= 80 ? 'verde' : (m.c5 >= 60 ? 'amarelo' : 'vermelho'), peso: 1 },
+        c6: { val: m.c6, cls: m.c6 >= 80 ? 'verde' : (m.c6 >= 60 ? 'amarelo' : 'vermelho'), peso: 1 },
+        c7: { val: m.c7, cls: m.c7 >= 80 ? 'verde' : (m.c7 >= 60 ? 'amarelo' : 'vermelho'), peso: 2 }
+      };
+    },
+    gerarAlertas() {
+      const ind = this.calcularIndicadores();
+      const alertas = [];
+      if (ind.c7.val < 60) alertas.push({ tipo: 'vermelho', icon: '🔴', txt: '<strong>CRÍTICO:</strong> C7 tem Peso 2 e janela de 60 meses. Organize lista de mulheres com exames vencidos e convoque ativamente.' });
+      if (ind.c4.val < 60) alertas.push({ tipo: 'amarelo', icon: '⚠️', txt: 'Diabéticos sem HbA1c. A SOLICITAÇÃO já conta — mesmo sem resultado em mãos.' });
+      if (ind.c5.val < 60) alertas.push({ tipo: 'amarelo', icon: '⚠️', txt: 'Hipertensos sem PA registrada. Registre com código correto no PEC.' });
+      if (Object.values(ind).every(i => i.val >= 80)) alertas.push({ tipo: 'verde', icon: '✅', txt: '<strong>EXCELENTE!</strong> Todos C4, C5, C6 e C7 na meta. Sua equipe está Ótimo.' });
+      return alertas;
+    },
+    renderRegistroDiario() {
+      const hoje = new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' });
+      const m = JSON.parse(localStorage.getItem('apex_dash_medico_metricas') || '{"c4":0,"c5":0,"c6":0,"c7":0}');
+      return `<div class="sec-title">📝 Registro Rápido do Dia</div><div class="card" style="background:var(--gold-dim);border:1px solid var(--gold)44;"><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);margin-bottom:8px;">${hoje}</div><div style="display:grid;gap:8px;margin-bottom:12px;"><input class="sim-input" type="number" id="prod-c4" placeholder="Consultas diabéticos com HbA1c" style="font-size:12px;"><input class="sim-input" type="number" id="prod-c5" placeholder="Consultas hipertensos com PA" style="font-size:12px;"><input class="sim-input" type="number" id="prod-c7-1" placeholder="Solicitações colpocitologia" style="font-size:12px;"><input class="sim-input" type="number" id="prod-c7-2" placeholder="Solicitações mamografia" style="font-size:12px;"><input class="sim-input" type="number" id="prod-c6" placeholder="Avaliações geriátricas" style="font-size:12px;"><input class="sim-input" type="number" id="prod-plano" placeholder="Planos terapêuticos atualizados" style="font-size:12px;"></div><button onclick="salvarProducaoDiaria('medico')" style="width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:6px;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;padding:12px;cursor:pointer;text-transform:uppercase;">Salvar Produção</button></div>`;
+    }
+  },
+
+  enfermeiro: {
+    metricas: { c2: 0, c3: 0, c1: 0, comp2: 0 },
+    calcularIndicadores() {
+      const m = JSON.parse(localStorage.getItem('apex_dash_enfermeiro_metricas') || '{"c2":0,"c3":0,"c1":0,"comp2":0}');
+      return {
+        c2: { val: m.c2, cls: m.c2 >= 80 ? 'verde' : (m.c2 >= 60 ? 'amarelo' : 'vermelho'), peso: 2 },
+        c3: { val: m.c3, cls: m.c3 >= 80 ? 'verde' : (m.c3 >= 60 ? 'amarelo' : 'vermelho'), peso: 2 },
+        c1: { val: m.c1, cls: m.c1 >= 80 ? 'verde' : (m.c1 >= 60 ? 'amarelo' : 'vermelho'), peso: 1 },
+        comp2: { val: m.comp2, cls: m.comp2 >= 80 ? 'verde' : (m.comp2 >= 60 ? 'amarelo' : 'vermelho'), peso: 0 }
+      };
+    },
+    gerarAlertas() {
+      const ind = this.calcularIndicadores();
+      const alertas = [];
+      if (ind.c2.val < 60) alertas.push({ tipo: 'vermelho', icon: '🔴', txt: '<strong>CRÍTICO:</strong> C2 tem Peso 2 com regra especial. Identifique crianças completando 2 anos — agende puericultura.' });
+      if (ind.c3.val < 60) alertas.push({ tipo: 'vermelho', icon: '🔴', txt: '<strong>CRÍTICO:</strong> C3 tem Peso 2. Verifique gestantes com consultas faltantes e puérperas até 42 dias.' });
+      if (ind.c1.val < 60) alertas.push({ tipo: 'amarelo', icon: '⚠️', txt: 'Acesso abaixo da meta. Organize acolhimento e agenda.' });
+      if (ind.c2.val >= 80 && ind.c3.val >= 80) alertas.push({ tipo: 'verde', icon: '✅', txt: 'C2 e C3 na meta! Seus trabalhos em puericultura e gestação definem a classificação da equipe.' });
+      return alertas;
+    },
+    renderRegistroDiario() {
+      return `<div class="sec-title">📝 Registro Rápido do Dia</div><div class="card" style="background:var(--gold-dim);"><div style="display:grid;gap:8px;margin-bottom:12px;"><input class="sim-input" type="number" id="prod-pn" placeholder="Consultas pré-natal" style="font-size:12px;"><input class="sim-input" type="number" id="prod-pc" placeholder="Puericultura" style="font-size:12px;"><input class="sim-input" type="number" id="prod-pp" placeholder="Puerpério (<42 dias)" style="font-size:12px;"><input class="sim-input" type="number" id="prod-cit" placeholder="Citopatológicos" style="font-size:12px;"><input class="sim-input" type="number" id="prod-sup" placeholder="Registros supervisionados" style="font-size:12px;"></div><button onclick="salvarProducaoDiaria('enfermeiro')" style="width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:6px;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;padding:12px;cursor:pointer;">Salvar Produção</button></div>`;
+    }
+  },
+
+  tecnico: {
+    metricas: { pa: 0, glicemia: 0, vacina: 0, pendentes: 0 },
+    calcularIndicadores() {
+      const m = JSON.parse(localStorage.getItem('apex_dash_tecnico_metricas') || '{"pa":0,"glicemia":0,"vacina":0,"pendentes":0}');
+      return {
+        c5: { val: m.pa, cls: m.pa >= 80 ? 'verde' : (m.pa >= 60 ? 'amarelo' : 'vermelho'), peso: 1 },
+        c4: { val: m.glicemia, cls: m.glicemia >= 80 ? 'verde' : (m.glicemia >= 60 ? 'amarelo' : 'vermelho'), peso: 1 },
+        c6: { val: m.vacina, cls: m.vacina >= 80 ? 'verde' : (m.vacina >= 60 ? 'amarelo' : 'vermelho'), peso: 1 }
+      };
+    },
+    gerarAlertas() {
+      const alertas = [];
+      alertas.push({ tipo: 'vermelho', icon: '🚨', txt: '<strong>REGRA DE OURO:</strong> Procedimento feito sem registro = ZERO. Nunca deixe para depois — registre no mesmo dia.' });
+      const m = JSON.parse(localStorage.getItem('apex_dash_tecnico_metricas') || '{"pendentes":0}');
+      if (m.pendentes > 0) alertas.push({ tipo: 'vermelho', icon: '🔴', txt: `Você tem ${m.pendentes} procedimentos pendentes de registro.` });
+      return alertas;
+    },
+    renderRegistroDiario() {
+      return `<div class="sec-title">📝 Registro Rápido do Dia</div><div class="card" style="background:var(--gold-dim);"><div style="display:grid;gap:8px;margin-bottom:12px;"><input class="sim-input" type="number" id="prod-pa" placeholder="Aferições PA" style="font-size:12px;"><input class="sim-input" type="number" id="prod-glic" placeholder="Glicemias capilares" style="font-size:12px;"><input class="sim-input" type="number" id="prod-vac" placeholder="Vacinas aplicadas" style="font-size:12px;"><input class="sim-input" type="number" id="prod-cur" placeholder="Curativos realizados" style="font-size:12px;"></div><button onclick="salvarProducaoDiaria('tecnico')" style="width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:6px;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;padding:12px;cursor:pointer;">Salvar Produção</button></div>`;
+    }
+  },
+
+  acs: {
+    metricas: { visitas: 0, cadastros: 0, faltosos: 0, sync: 0 },
+    calcularIndicadores() {
+      const m = JSON.parse(localStorage.getItem('apex_dash_acs_metricas') || '{"visitas":0,"cadastros":0,"faltosos":0,"sync":0}');
+      return {
+        cadastro: { val: m.cadastros, cls: m.cadastros >= 80 ? 'verde' : (m.cadastros >= 60 ? 'amarelo' : 'vermelho'), peso: 0 },
+        acompanhamento: { val: m.visitas, cls: m.visitas >= 80 ? 'verde' : (m.visitas >= 60 ? 'amarelo' : 'vermelho'), peso: 0 },
+        c1: { val: m.faltosos, cls: m.faltosos >= 80 ? 'verde' : (m.faltosos >= 60 ? 'amarelo' : 'vermelho'), peso: 1 }
+      };
+    },
+    gerarAlertas() {
+      const alertas = [];
+      alertas.push({ tipo: 'amarelo', icon: '⚠️', txt: 'Registre a visita ANTES de sair de campo. Tentativa de visita (ausência) TAMBÉM conta para acompanhamento.' });
+      const m = JSON.parse(localStorage.getItem('apex_dash_acs_metricas') || '{}');
+      if (m.sync === 0) alertas.push({ tipo: 'vermelho', icon: '🔴', txt: 'Sincronize o app ao chegar na UBS!' });
+      return alertas;
+    },
+    renderRegistroDiario() {
+      return `<div class="sec-title">📝 Registro Rápido do Dia</div><div class="card" style="background:var(--gold-dim);"><div style="display:grid;gap:8px;margin-bottom:12px;"><input class="sim-input" type="number" id="prod-vis" placeholder="Visitas domiciliares" style="font-size:12px;"><input class="sim-input" type="number" id="prod-cad" placeholder="Cadastros atualizados" style="font-size:12px;"><input class="sim-input" type="number" id="prod-gest" placeholder="Gestantes identificadas" style="font-size:12px;"><input class="sim-input" type="number" id="prod-crian" placeholder="Crianças < 2 anos" style="font-size:12px;"><input class="sim-input" type="number" id="prod-falt" placeholder="Faltosos (busca ativa)" style="font-size:12px;"></div><button onclick="salvarProducaoDiaria('acs')" style="width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:6px;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;padding:12px;cursor:pointer;">Salvar Produção</button></div>`;
+    }
+  },
+
+  psicologo: {
+    metricas: { m1: 0, m2: 0, grupos: 0, pts: 0 },
+    calcularIndicadores() {
+      const m = JSON.parse(localStorage.getItem('apex_dash_psicologo_metricas') || '{"m1":0,"m2":0}');
+      return {
+        m1: { val: m.m1, cls: m.m1 >= 80 ? 'verde' : (m.m1 >= 60 ? 'amarelo' : 'vermelho'), peso: 6 },
+        m2: { val: m.m2, cls: m.m2 >= 80 ? 'verde' : (m.m2 >= 60 ? 'amarelo' : 'vermelho'), peso: 4 }
+      };
+    },
+    gerarAlertas() {
+      const ind = this.calcularIndicadores();
+      const alertas = [];
+      if (ind.m2.val < 60) alertas.push({ tipo: 'amarelo', icon: '⚠️', txt: 'M2 (Peso 4) depende de ações interprofissionais. PTS bem documentada = alto valor.' });
+      if (ind.m1.val < 60) alertas.push({ tipo: 'amarelo', icon: '⚠️', txt: 'Registre cada participante de grupo. Cada participante = 1 atendimento M1.' });
+      return alertas;
+    },
+    renderRegistroDiario() {
+      return `<div class="sec-title">📝 Registro Rápido do Dia</div><div class="card" style="background:var(--gold-dim);"><div style="display:grid;gap:8px;margin-bottom:12px;"><input class="sim-input" type="number" id="prod-atnd" placeholder="Atendimentos individuais" style="font-size:12px;"><input class="sim-input" type="number" id="prod-grup" placeholder="Participantes em grupo" style="font-size:12px;"><input class="sim-input" type="number" id="prod-matr" placeholder="Matriciamentos realizados" style="font-size:12px;"><input class="sim-input" type="number" id="prod-pts" placeholder="PTS documentados" style="font-size:12px;"><input class="sim-input" type="number" id="prod-vdm" placeholder="Visitas domiciliares conjuntas" style="font-size:12px;"></div><button onclick="salvarProducaoDiaria('psicologo')" style="width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:6px;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;padding:12px;cursor:pointer;">Salvar Produção</button></div>`;
+    }
+  },
+
+  fisio: {
+    metricas: { m1: 0, m2: 0, grupos: 0, vdm: 0 },
+    calcularIndicadores() {
+      const m = JSON.parse(localStorage.getItem('apex_dash_fisio_metricas') || '{"m1":0,"m2":0}');
+      return {
+        m1: { val: m.m1, cls: m.m1 >= 80 ? 'verde' : (m.m1 >= 60 ? 'amarelo' : 'vermelho'), peso: 6 },
+        m2: { val: m.m2, cls: m.m2 >= 80 ? 'verde' : (m.m2 >= 60 ? 'amarelo' : 'vermelho'), peso: 4 }
+      };
+    },
+    gerarAlertas() {
+      const ind = this.calcularIndicadores();
+      const alertas = [];
+      if (ind.m1.val < 60) alertas.push({ tipo: 'amarelo', icon: '⚠️', txt: 'M1 tem Peso 6. Grupos de reabilitação = múltiplos atendimentos por sessão.' });
+      return alertas;
+    },
+    renderRegistroDiario() {
+      return `<div class="sec-title">📝 Registro Rápido do Dia</div><div class="card" style="background:var(--gold-dim);"><div style="display:grid;gap:8px;margin-bottom:12px;"><input class="sim-input" type="number" id="prod-atnd" placeholder="Atendimentos individuais" style="font-size:12px;"><input class="sim-input" type="number" id="prod-grup" placeholder="Participantes grupo reabilitação" style="font-size:12px;"><input class="sim-input" type="number" id="prod-vdm" placeholder="Visitas domiciliares" style="font-size:12px;"><input class="sim-input" type="number" id="prod-conjunta" placeholder="Atendimentos compartilhados" style="font-size:12px;"></div><button onclick="salvarProducaoDiaria('fisio')" style="width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:6px;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;padding:12px;cursor:pointer;">Salvar Produção</button></div>`;
+    }
+  },
+
+  nutricionista: {
+    metricas: { m1: 0, m2: 0, grupos: 0, pn: 0 },
+    calcularIndicadores() {
+      const m = JSON.parse(localStorage.getItem('apex_dash_nutricionista_metricas') || '{"m1":0,"m2":0}');
+      return {
+        m1: { val: m.m1, cls: m.m1 >= 80 ? 'verde' : (m.m1 >= 60 ? 'amarelo' : 'vermelho'), peso: 6 },
+        m2: { val: m.m2, cls: m.m2 >= 80 ? 'verde' : (m.m2 >= 60 ? 'amarelo' : 'vermelho'), peso: 4 }
+      };
+    },
+    gerarAlertas() {
+      const alertas = [];
+      alertas.push({ tipo: 'gold', icon: '💡', txt: 'Grupos de alimentação saudável: cada participante = 1 atendimento M1.' });
+      return alertas;
+    },
+    renderRegistroDiario() {
+      return `<div class="sec-title">📝 Registro Rápido do Dia</div><div class="card" style="background:var(--gold-dim);"><div style="display:grid;gap:8px;margin-bottom:12px;"><input class="sim-input" type="number" id="prod-cons" placeholder="Consultas nutricionais" style="font-size:12px;"><input class="sim-input" type="number" id="prod-grup" placeholder="Participantes grupo alimentação" style="font-size:12px;"><input class="sim-input" type="number" id="prod-pn" placeholder="Pré-natal nutricional" style="font-size:12px;"><input class="sim-input" type="number" id="prod-edu" placeholder="Atividades educativas coletivas" style="font-size:12px;"></div><button onclick="salvarProducaoDiaria('nutricionista')" style="width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:6px;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;padding:12px;cursor:pointer;">Salvar Produção</button></div>`;
+    }
+  },
+
+  assistente: {
+    metricas: { m1: 0, m2: 0, articulacoes: 0, encaminhamentos: 0 },
+    calcularIndicadores() {
+      const m = JSON.parse(localStorage.getItem('apex_dash_assistente_metricas') || '{"m1":0,"m2":0}');
+      return {
+        m1: { val: m.m1, cls: m.m1 >= 80 ? 'verde' : (m.m1 >= 60 ? 'amarelo' : 'vermelho'), peso: 6 },
+        m2: { val: m.m2, cls: m.m2 >= 80 ? 'verde' : (m.m2 >= 60 ? 'amarelo' : 'vermelho'), peso: 4 }
+      };
+    },
+    gerarAlertas() {
+      const alertas = [];
+      alertas.push({ tipo: 'gold', icon: '💡', txt: 'Articulações com CRAS/CREAS = ação intersetorial para M2. Documente!' });
+      return alertas;
+    },
+    renderRegistroDiario() {
+      return `<div class="sec-title">📝 Registro Rápido do Dia</div><div class="card" style="background:var(--gold-dim);"><div style="display:grid;gap:8px;margin-bottom:12px;"><input class="sim-input" type="number" id="prod-atnd" placeholder="Atendimentos individuais" style="font-size:12px;"><input class="sim-input" type="number" id="prod-articu" placeholder="Articulações intersetoriais" style="font-size:12px;"><input class="sim-input" type="number" id="prod-reuniao" placeholder="Reuniões de rede" style="font-size:12px;"><input class="sim-input" type="number" id="prod-encam" placeholder="Famílias encaminhadas" style="font-size:12px;"></div><button onclick="salvarProducaoDiaria('assistente')" style="width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:6px;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;padding:12px;cursor:pointer;">Salvar Produção</button></div>`;
+    }
+  },
+
+  farmaceutico: {
+    metricas: { m1: 0, m2: 0, consultas: 0, grupos: 0 },
+    calcularIndicadores() {
+      const m = JSON.parse(localStorage.getItem('apex_dash_farmaceutico_metricas') || '{"m1":0,"m2":0}');
+      return {
+        m1: { val: m.m1, cls: m.m1 >= 80 ? 'verde' : (m.m1 >= 60 ? 'amarelo' : 'vermelho'), peso: 6 },
+        m2: { val: m.m2, cls: m.m2 >= 80 ? 'verde' : (m.m2 >= 60 ? 'amarelo' : 'vermelho'), peso: 4 }
+      };
+    },
+    gerarAlertas() {
+      const alertas = [];
+      alertas.push({ tipo: 'gold', icon: '💡', txt: 'Discussões com médico sobre prescrições = M2. Documente no prontuário!' });
+      return alertas;
+    },
+    renderRegistroDiario() {
+      return `<div class="sec-title">📝 Registro Rápido do Dia</div><div class="card" style="background:var(--gold-dim);"><div style="display:grid;gap:8px;margin-bottom:12px;"><input class="sim-input" type="number" id="prod-cons" placeholder="Consultas farmacêuticas" style="font-size:12px;"><input class="sim-input" type="number" id="prod-poli" placeholder="Revisões polifarmácia" style="font-size:12px;"><input class="sim-input" type="number" id="prod-med" placeholder="Discussões com médico" style="font-size:12px;"><input class="sim-input" type="number" id="prod-grup" placeholder="Grupo uso racional medicamentos" style="font-size:12px;"></div><button onclick="salvarProducaoDiaria('farmaceutico')" style="width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:6px;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;padding:12px;cursor:pointer;">Salvar Produção</button></div>`;
+    }
+  }
+};
+
+// ── GENÉRICO: Calcular indicadores para qualquer perfil ──
+function calcularIndicadores(perfilId) {
+  const config = perfilConfigs[perfilId];
+  if (!config || !config.calcularIndicadores) return {};
+  return config.calcularIndicadores();
 }
 
-// ── DENTISTA: Gerar alertas dinâmicos ──
-function gerarAlertasDentista() {
-  const ind = calcularIndicadoresDentista();
-  const alertas = [];
+// ── GENÉRICO: Gerar alertas para qualquer perfil ──
+function gerarAlertas(perfilId) {
+  const config = perfilConfigs[perfilId];
+  if (!config || !config.gerarAlertas) return [];
+  return config.gerarAlertas();
+}
 
-  if (ind.b3.val > 25) {
-    alertas.push({
-      tipo: 'vermelho',
-      icon: '🚨',
-      txt: `<strong>CRÍTICO:</strong> Taxa de extração em ${ind.b3.val.toFixed(1)}%. Meta: abaixo de 15%. Este é o único indicador INVERTIDO — cada extração sem tentativa de restauração DIMINUI sua pontuação. Peso 2.`
-    });
-  }
-
-  if (ind.b1.val < 60) {
-    alertas.push({
-      tipo: 'amarelo',
-      icon: '⚠️',
-      txt: `Primeiras consultas em ${ind.b1.val.toFixed(0)}%. Meta: acima de 80%. Reserve horários exclusivos para consulta programada — famílias novas são base para crescimento.`
-    });
-  }
-
-  if (ind.b2.val < 60) {
-    alertas.push({
-      tipo: 'amarelo',
-      icon: '⚠️',
-      txt: `Tratamentos concluídos em ${ind.b2.val.toFixed(0)}%. Revise lista de pacientes com tratamento iniciado e não finalizado — conclusão aumenta confiança e indicador.`
-    });
-  }
-
-  if (ind.b1.val >= 80 && ind.b2.val >= 80 && ind.b4.val >= 80 && ind.b5.val >= 80 && ind.b6.val >= 80 && ind.b3.val <= 15) {
-    alertas.push({
-      tipo: 'verde',
-      icon: '✅',
-      txt: `<strong>PARABÉNS!</strong> Todos os indicadores na meta! Sua equipe está no caminho para classificação ÓTIMO. Continue mantendo essa performance.`
-    });
-  }
-
-  return alertas;
+// ── GENÉRICO: Renderizar formulário de registro diário ──
+function renderRegistroDiario(perfilId) {
+  const config = perfilConfigs[perfilId];
+  if (!config || !config.renderRegistroDiario) return '';
+  return config.renderRegistroDiario();
 }
 
 // ── DENTISTA: Renderizar formulário de registro diário ──
@@ -797,20 +958,15 @@ function renderDashboard(id) {
   document.getElementById('dash-nome').textContent = p.nome;
   document.getElementById('dash-equipe').textContent = p.equipe;
 
-  // ESPECIAL DENTISTA: Indicadores dinâmicos
-  if (id === 'dentista') {
-    const ind = calcularIndicadoresDentista();
-    const indicadoresHTML = [
-      `<div class="ind-chip ${ind.b1.cls}"><span class="ind-dot"></span>B1 1ªs Consultas ×2</div>`,
-      `<div class="ind-chip ${ind.b2.cls}"><span class="ind-dot"></span>B2 Trat. Concluído ×2</div>`,
-      `<div class="ind-chip ${ind.b3.cls}"><span class="ind-dot"></span>B3 Taxa Extração ×2 ⚠️</div>`,
-      `<div class="ind-chip ${ind.b4.cls}"><span class="ind-dot"></span>B4 Preventivos ×2</div>`,
-      `<div class="ind-chip ${ind.b5.cls}"><span class="ind-dot"></span>B5 Escovação ×1</div>`,
-      `<div class="ind-chip ${ind.b6.cls}"><span class="ind-dot"></span>B6 TRA ×1</div>`
-    ].join('');
+  // Indicadores dinâmicos para todos os perfis
+  if (perfilConfigs[id]) {
+    const ind = calcularIndicadores(id);
+    const indicadoresHTML = Object.entries(ind).map(([key, i]) =>
+      `<div class="ind-chip ${i.cls}"><span class="ind-dot"></span>${key.toUpperCase()} ${i.peso > 0 ? '×' + i.peso : ''}</div>`
+    ).join('');
     document.getElementById('dash-indicadores').innerHTML = indicadoresHTML;
   } else {
-    // Outros perfis: manter padrão
+    // Padrão para perfis sem config especial
     document.getElementById('dash-indicadores').innerHTML = p.indicadores.map(i =>
       `<div class="ind-chip ${i.cls}"><span class="ind-dot"></span>${i.label}</div>`
     ).join('');
@@ -820,32 +976,22 @@ function renderDashboard(id) {
   const c = document.getElementById('dash-content');
   let html = '';
 
-  // ESPECIAL DENTISTA: Métricas editáveis
-  if (id === 'dentista') {
-    const metricas = JSON.parse(localStorage.getItem('apex_dash_dentista_metricas') || '{"b1":0,"b2":0,"b3":0,"b4":0,"b5":0,"b6":0}');
+  // Métricas editáveis para perfis com config
+  if (perfilConfigs[id]) {
+    const metricas = JSON.parse(localStorage.getItem(`apex_dash_${id}_metricas`) || JSON.stringify(perfilConfigs[id].metricas));
+    const metricKeys = Object.keys(metricas);
     html += `<div class="sec-title">📊 Seus indicadores este mês</div>`;
-    html += `<div class="metric-grid">
-      <div class="metric-item" style="position:relative;">
-        <input type="number" id="met-b1" value="${metricas.b1}" min="0" step="1" onchange="salvarMetricasDentista()" style="position:absolute;top:0;right:0;width:60px;height:30px;border:1px solid var(--border);background:var(--surface);color:var(--gold);font-weight:700;border-radius:4px;text-align:center;font-family:'Playfair Display',serif;font-size:14px;cursor:pointer;" title="Clique para editar">
-        <div class="metric-val">${metricas.b1}</div>
-        <div class="metric-label">1ªs consultas/mês</div>
-      </div>
-      <div class="metric-item" style="position:relative;">
-        <input type="number" id="met-b2" value="${metricas.b2}" min="0" step="1" onchange="salvarMetricasDentista()" style="position:absolute;top:0;right:0;width:60px;height:30px;border:1px solid var(--border);background:var(--surface);color:var(--gold);font-weight:700;border-radius:4px;text-align:center;font-family:'Playfair Display',serif;font-size:14px;cursor:pointer;" title="Clique para editar">
-        <div class="metric-val">${metricas.b2}</div>
-        <div class="metric-label">Tratamentos concluídos</div>
-      </div>
-      <div class="metric-item" style="position:relative;">
-        <input type="number" id="met-b3" value="${metricas.b3}" min="0" max="100" step="0.1" onchange="salvarMetricasDentista()" style="position:absolute;top:0;right:0;width:60px;height:30px;border:1px solid var(--border);background:var(--surface);color:var(--suf);font-weight:700;border-radius:4px;text-align:center;font-family:'Playfair Display',serif;font-size:14px;cursor:pointer;" title="Clique para editar">
-        <div class="metric-val">${metricas.b3}</div>
-        <div class="metric-label">Taxa extração %</div>
-      </div>
-      <div class="metric-item" style="position:relative;">
-        <input type="number" id="met-b4" value="${metricas.b4}" min="0" step="1" onchange="salvarMetricasDentista()" style="position:absolute;top:0;right:0;width:60px;height:30px;border:1px solid var(--border);background:var(--surface);color:var(--gold);font-weight:700;border-radius:4px;text-align:center;font-family:'Playfair Display',serif;font-size:14px;cursor:pointer;" title="Clique para editar">
-        <div class="metric-val">${metricas.b4}</div>
-        <div class="metric-label">Procedimentos prev.</div>
-      </div>
-    </div>`;
+    html += `<div class="metric-grid">`;
+    const ind = calcularIndicadores(id);
+    Object.entries(ind).forEach(([key, i]) => {
+      const val = metricas[key] || 0;
+      html += `<div class="metric-item" style="position:relative;">
+        <input type="number" id="met-${key}" value="${val}" min="0" step="1" onchange="salvarMetricas('${id}')" style="position:absolute;top:0;right:0;width:60px;height:30px;border:1px solid var(--border);background:var(--surface);color:var(--gold);font-weight:700;border-radius:4px;text-align:center;font-family:'Playfair Display',serif;font-size:14px;cursor:pointer;">
+        <div class="metric-val">${val}</div>
+        <div class="metric-label">${key.toUpperCase()}</div>
+      </div>`;
+    });
+    html += `</div>`;
   } else {
     // Outros perfis
     html += `<div class="sec-title">📊 Seus indicadores este mês</div>`;
@@ -865,11 +1011,11 @@ function renderDashboard(id) {
     html += renderGestor();
   }
 
-  // ESPECIAL DENTISTA: Registro diário + alertas dinâmicos
-  if (id === 'dentista') {
-    html += renderRegistroDiarioDentista();
+  // Registro diário + alertas para perfis com config
+  if (perfilConfigs[id] && perfilConfigs[id].renderRegistroDiario) {
+    html += perfilConfigs[id].renderRegistroDiario();
     html += `<div class="sec-title">⚠️ Alertas do seu perfil</div>`;
-    html += gerarAlertasDentista().map(a => `
+    html += gerarAlertas(id).map(a => `
       <div class="alerta ${a.tipo}">
         <span class="alerta-icon">${a.icon}</span>
         <span>${a.txt}</span>
@@ -940,24 +1086,57 @@ function renderDashboard(id) {
   // Links
   html += `<div class="sec-title">🔗 Acesso rápido</div>`;
   let linksList = p.links.map(l => `<a class="link-btn" href="${l.url}">${l.label} →</a>`).join('');
-  // ESPECIAL DENTISTA: Adicionar link de treinamento
-  if (id === 'dentista') {
-    linksList = `<a class="link-btn" href="treinamento.html?perfil=dentista">📚 Treinamento Completo →</a>` + linksList;
+  // Adicionar link de treinamento para todos os perfis com config
+  if (perfilConfigs[id]) {
+    linksList = `<a class="link-btn" href="treinamento.html?perfil=${id}">📚 Treinamento Completo →</a>` + linksList;
   }
   html += `<div class="link-row">${linksList}</div>`;
 
   c.innerHTML = html;
 }
 
-// ── DENTISTA: Salvar métricas ──
-function salvarMetricasDentista() {
-  const b1 = parseFloat(document.getElementById('met-b1').value) || 0;
-  const b2 = parseFloat(document.getElementById('met-b2').value) || 0;
-  const b3 = parseFloat(document.getElementById('met-b3').value) || 0;
-  const b4 = parseFloat(document.getElementById('met-b4').value) || 0;
-  localStorage.setItem('apex_dash_dentista_metricas', JSON.stringify({ b1, b2, b3, b4, b5: 0, b6: 0 }));
-  renderDashboard('dentista');
+// ── GENÉRICO: Salvar métricas para qualquer perfil ──
+function salvarMetricas(perfilId) {
+  const config = perfilConfigs[perfilId];
+  if (!config) return;
+  const metricas = {};
+  Object.keys(config.metricas).forEach(key => {
+    const el = document.getElementById(`met-${key}`);
+    metricas[key] = parseFloat(el?.value) || 0;
+  });
+  localStorage.setItem(`apex_dash_${perfilId}_metricas`, JSON.stringify(metricas));
+  renderDashboard(perfilId);
   showToast('✓ Métricas atualizadas!');
+}
+
+// ── GENÉRICO: Salvar produção diária ──
+function salvarProducaoDiaria(perfilId) {
+  const hoje = new Date().toISOString().split('T')[0];
+  const config = perfilConfigs[perfilId];
+  if (!config) return;
+
+  const producao = {};
+  const inputs = document.querySelectorAll(`#prod-${perfilId} input, .card:last-of-type input`);
+  let count = 0;
+  Object.keys(config.metricas).forEach(key => {
+    const el = document.getElementById(`prod-${key}`) || document.querySelectorAll('input[type="number"]')[count];
+    if (el) {
+      producao[key] = parseFloat(el.value) || 0;
+      el.value = '';
+      count++;
+    }
+  });
+
+  localStorage.setItem(`apex_prod_${perfilId}_${hoje}`, JSON.stringify(producao));
+
+  const metricas = JSON.parse(localStorage.getItem(`apex_dash_${perfilId}_metricas`) || JSON.stringify(config.metricas));
+  Object.keys(producao).forEach(key => {
+    metricas[key] = (parseFloat(metricas[key]) || 0) + producao[key];
+  });
+  localStorage.setItem(`apex_dash_${perfilId}_metricas`, JSON.stringify(metricas));
+
+  showToast('✓ Produção do dia salva!');
+  renderDashboard(perfilId);
 }
 
 // ── COORDENADOR EXTRA ──
