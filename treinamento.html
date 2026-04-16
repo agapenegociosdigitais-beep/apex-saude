@@ -589,6 +589,19 @@ function selectPerfil(id, btn) {
   document.getElementById('mod-' + id).scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+// AUTO-LOAD perfil se tiver parâmetro ?perfil=
+window.addEventListener('DOMContentLoaded', function() {
+  const params = new URLSearchParams(window.location.search);
+  const perfilParam = params.get('perfil');
+
+  if (perfilParam) {
+    const btn = document.querySelector(`[onclick="selectPerfil('${perfilParam}',this)"]`);
+    if (btn) {
+      selectPerfil(perfilParam, btn);
+    }
+  }
+});
+
 // CHECKLIST
 function tc(el) { el.classList.toggle('done'); }
 

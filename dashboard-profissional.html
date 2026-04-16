@@ -632,6 +632,162 @@ function voltarSelecao() {
   document.getElementById('screen-dashboard').style.display = 'none';
 }
 
+// ── DENTISTA: Calcular indicadores dinâmicos ──
+function calcularIndicadoresDentista() {
+  const metricas = JSON.parse(localStorage.getItem('apex_dash_dentista_metricas') || '{"b1":0,"b2":0,"b3":0,"b4":0,"b5":0,"b6":0}');
+  const b1 = parseFloat(metricas.b1) || 0; // 1ªs consultas
+  const b2 = parseFloat(metricas.b2) || 0; // Tratamentos concluídos
+  const b3 = parseFloat(metricas.b3) || 0; // Taxa extração (0-100)
+  const b4 = parseFloat(metricas.b4) || 0; // Procedimentos preventivos
+  const b5 = parseFloat(metricas.b5) || 0; // Escovação supervisionada
+  const b6 = parseFloat(metricas.b6) || 0; // TRA
+
+  return {
+    b1: { val: b1, cls: b1 >= 80 ? 'verde' : (b1 >= 60 ? 'amarelo' : 'vermelho') },
+    b2: { val: b2, cls: b2 >= 80 ? 'verde' : (b2 >= 60 ? 'amarelo' : 'vermelho') },
+    b3: { val: b3, cls: b3 <= 15 ? 'verde' : (b3 <= 25 ? 'amarelo' : 'vermelho') }, // INVERTIDO
+    b4: { val: b4, cls: b4 >= 80 ? 'verde' : (b4 >= 60 ? 'amarelo' : 'vermelho') },
+    b5: { val: b5, cls: b5 >= 80 ? 'verde' : (b5 >= 60 ? 'amarelo' : 'vermelho') },
+    b6: { val: b6, cls: b6 >= 80 ? 'verde' : (b6 >= 60 ? 'amarelo' : 'vermelho') }
+  };
+}
+
+// ── DENTISTA: Gerar alertas dinâmicos ──
+function gerarAlertasDentista() {
+  const ind = calcularIndicadoresDentista();
+  const alertas = [];
+
+  if (ind.b3.val > 25) {
+    alertas.push({
+      tipo: 'vermelho',
+      icon: '🚨',
+      txt: `<strong>CRÍTICO:</strong> Taxa de extração em ${ind.b3.val.toFixed(1)}%. Meta: abaixo de 15%. Este é o único indicador INVERTIDO — cada extração sem tentativa de restauração DIMINUI sua pontuação. Peso 2.`
+    });
+  }
+
+  if (ind.b1.val < 60) {
+    alertas.push({
+      tipo: 'amarelo',
+      icon: '⚠️',
+      txt: `Primeiras consultas em ${ind.b1.val.toFixed(0)}%. Meta: acima de 80%. Reserve horários exclusivos para consulta programada — famílias novas são base para crescimento.`
+    });
+  }
+
+  if (ind.b2.val < 60) {
+    alertas.push({
+      tipo: 'amarelo',
+      icon: '⚠️',
+      txt: `Tratamentos concluídos em ${ind.b2.val.toFixed(0)}%. Revise lista de pacientes com tratamento iniciado e não finalizado — conclusão aumenta confiança e indicador.`
+    });
+  }
+
+  if (ind.b1.val >= 80 && ind.b2.val >= 80 && ind.b4.val >= 80 && ind.b5.val >= 80 && ind.b6.val >= 80 && ind.b3.val <= 15) {
+    alertas.push({
+      tipo: 'verde',
+      icon: '✅',
+      txt: `<strong>PARABÉNS!</strong> Todos os indicadores na meta! Sua equipe está no caminho para classificação ÓTIMO. Continue mantendo essa performance.`
+    });
+  }
+
+  return alertas;
+}
+
+// ── DENTISTA: Renderizar formulário de registro diário ──
+function renderRegistroDiarioDentista() {
+  const hoje = new Date();
+  const dataStr = hoje.toISOString().split('T')[0]; // YYYY-MM-DD
+  const diaFormatado = hoje.toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' });
+
+  let html = `<div class="sec-title">📝 Registro Rápido do Dia</div>`;
+  html += `<div class="card" style="background:var(--gold-dim);border:1px solid var(--gold)44;">
+    <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Data: ${diaFormatado}</div>
+    <div style="display:grid;gap:8px;margin-bottom:12px;">
+      <div><label style="font-size:11px;color:var(--text);display:block;margin-bottom:4px;">1ªs consultas programadas realizadas</label><input class="sim-input" type="number" id="prod-b1" placeholder="0" style="font-size:14px;"></div>
+      <div><label style="font-size:11px;color:var(--text);display:block;margin-bottom:4px;">Tratamentos concluídos</label><input class="sim-input" type="number" id="prod-b2" placeholder="0" style="font-size:14px;"></div>
+      <div><label style="font-size:11px;color:var(--text);display:block;margin-bottom:4px;">Extrações realizadas</label><input class="sim-input" type="number" id="prod-b3" placeholder="0" style="font-size:14px;"></div>
+      <div><label style="font-size:11px;color:var(--text);display:block;margin-bottom:4px;">Procedimentos preventivos</label><input class="sim-input" type="number" id="prod-b4" placeholder="0" style="font-size:14px;"></div>
+      <div><label style="font-size:11px;color:var(--text);display:block;margin-bottom:4px;">Escovação supervisionada (nº crianças)</label><input class="sim-input" type="number" id="prod-b5" placeholder="0" style="font-size:14px;"></div>
+      <div><label style="font-size:11px;color:var(--text);display:block;margin-bottom:4px;">TRA realizados</label><input class="sim-input" type="number" id="prod-b6" placeholder="0" style="font-size:14px;"></div>
+    </div>
+    <button onclick="salvarProducaoDiariaDentista('${dataStr}')" style="width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:6px;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;padding:12px;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:opacity .15s;" onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">Salvar Produção do Dia</button>
+  </div>`;
+
+  // Mini histórico (últimos 7 dias)
+  html += `<div class="sec-title">📅 Histórico dos últimos 7 dias</div>`;
+
+  let totalMesB1 = 0, totalMesB2 = 0, totalMesB3 = 0, totalMesB4 = 0, totalMesB5 = 0, totalMesB6 = 0;
+  let historicoHtml = `<div style="display:grid;gap:6px;">`;
+
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(hoje);
+    d.setDate(d.getDate() - i);
+    const dateKey = d.toISOString().split('T')[0];
+    const prod = JSON.parse(localStorage.getItem(`apex_prod_dentista_${dateKey}`) || '{"b1":0,"b2":0,"b3":0,"b4":0,"b5":0,"b6":0}');
+
+    totalMesB1 += parseFloat(prod.b1) || 0;
+    totalMesB2 += parseFloat(prod.b2) || 0;
+    totalMesB3 += parseFloat(prod.b3) || 0;
+    totalMesB4 += parseFloat(prod.b4) || 0;
+    totalMesB5 += parseFloat(prod.b5) || 0;
+    totalMesB6 += parseFloat(prod.b6) || 0;
+
+    const dataLabel = d.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short' });
+    const total = (parseFloat(prod.b1) + parseFloat(prod.b2) + parseFloat(prod.b4) + parseFloat(prod.b5) + parseFloat(prod.b6)) || 0;
+
+    historicoHtml += `<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 10px;display:flex;justify-content:space-between;align-items:center;font-size:11px;">
+      <span style="color:var(--muted);">${dataLabel}</span>
+      <span style="font-family:'DM Mono',monospace;color:var(--gold);">+${total} produção</span>
+    </div>`;
+  }
+
+  historicoHtml += `</div>`;
+  html += historicoHtml;
+
+  // Total do mês
+  html += `<div class="sec-title">📊 Total acumulado neste mês</div>`;
+  html += `<div class="metric-grid" style="margin-bottom:16px;">
+    <div class="metric-item"><div class="metric-val" style="color:var(--otimo);">${totalMesB1.toFixed(0)}</div><div class="metric-label">1ªs consultas</div></div>
+    <div class="metric-item"><div class="metric-val" style="color:var(--otimo);">${totalMesB2.toFixed(0)}</div><div class="metric-label">Tratamentos</div></div>
+    <div class="metric-item"><div class="metric-val" style="color:var(--suf);">${totalMesB3.toFixed(0)}</div><div class="metric-label">Extrações</div></div>
+    <div class="metric-item"><div class="metric-val" style="color:var(--otimo);">${(totalMesB4 + totalMesB5 + totalMesB6).toFixed(0)}</div><div class="metric-label">Preventivos</div></div>
+  </div>`;
+
+  return html;
+}
+
+function salvarProducaoDiariaDentista(dateStr) {
+  const b1 = parseFloat(document.getElementById('prod-b1').value) || 0;
+  const b2 = parseFloat(document.getElementById('prod-b2').value) || 0;
+  const b3 = parseFloat(document.getElementById('prod-b3').value) || 0;
+  const b4 = parseFloat(document.getElementById('prod-b4').value) || 0;
+  const b5 = parseFloat(document.getElementById('prod-b5').value) || 0;
+  const b6 = parseFloat(document.getElementById('prod-b6').value) || 0;
+
+  localStorage.setItem(`apex_prod_dentista_${dateStr}`, JSON.stringify({ b1, b2, b3, b4, b5, b6 }));
+
+  // Acumular no total do mês
+  const metricas = JSON.parse(localStorage.getItem('apex_dash_dentista_metricas') || '{"b1":0,"b2":0,"b3":0,"b4":0,"b5":0,"b6":0}');
+  metricas.b1 = (parseFloat(metricas.b1) || 0) + b1;
+  metricas.b2 = (parseFloat(metricas.b2) || 0) + b2;
+  metricas.b3 = (parseFloat(metricas.b3) || 0) + b3;
+  metricas.b4 = (parseFloat(metricas.b4) || 0) + b4;
+  metricas.b5 = (parseFloat(metricas.b5) || 0) + b5;
+  metricas.b6 = (parseFloat(metricas.b6) || 0) + b6;
+  localStorage.setItem('apex_dash_dentista_metricas', JSON.stringify(metricas));
+
+  document.getElementById('prod-b1').value = '';
+  document.getElementById('prod-b2').value = '';
+  document.getElementById('prod-b3').value = '';
+  document.getElementById('prod-b4').value = '';
+  document.getElementById('prod-b5').value = '';
+  document.getElementById('prod-b6').value = '';
+
+  showToast('✓ Produção do dia salva!');
+
+  // Recarregar dashboard
+  renderDashboard('dentista');
+}
+
 // ── RENDER DASHBOARD ──
 function renderDashboard(id) {
   const p = perfis[id];
@@ -641,22 +797,64 @@ function renderDashboard(id) {
   document.getElementById('dash-nome').textContent = p.nome;
   document.getElementById('dash-equipe').textContent = p.equipe;
 
-  // Indicadores
-  document.getElementById('dash-indicadores').innerHTML = p.indicadores.map(i =>
-    `<div class="ind-chip ${i.cls}"><span class="ind-dot"></span>${i.label}</div>`
-  ).join('');
+  // ESPECIAL DENTISTA: Indicadores dinâmicos
+  if (id === 'dentista') {
+    const ind = calcularIndicadoresDentista();
+    const indicadoresHTML = [
+      `<div class="ind-chip ${ind.b1.cls}"><span class="ind-dot"></span>B1 1ªs Consultas ×2</div>`,
+      `<div class="ind-chip ${ind.b2.cls}"><span class="ind-dot"></span>B2 Trat. Concluído ×2</div>`,
+      `<div class="ind-chip ${ind.b3.cls}"><span class="ind-dot"></span>B3 Taxa Extração ×2 ⚠️</div>`,
+      `<div class="ind-chip ${ind.b4.cls}"><span class="ind-dot"></span>B4 Preventivos ×2</div>`,
+      `<div class="ind-chip ${ind.b5.cls}"><span class="ind-dot"></span>B5 Escovação ×1</div>`,
+      `<div class="ind-chip ${ind.b6.cls}"><span class="ind-dot"></span>B6 TRA ×1</div>`
+    ].join('');
+    document.getElementById('dash-indicadores').innerHTML = indicadoresHTML;
+  } else {
+    // Outros perfis: manter padrão
+    document.getElementById('dash-indicadores').innerHTML = p.indicadores.map(i =>
+      `<div class="ind-chip ${i.cls}"><span class="ind-dot"></span>${i.label}</div>`
+    ).join('');
+  }
 
   // Conteúdo
   const c = document.getElementById('dash-content');
   let html = '';
 
-  // Métricas
-  html += `<div class="sec-title">📊 Seus indicadores este mês</div>`;
-  html += `<div class="metric-grid">${p.metricas.map(m => `
-    <div class="metric-item">
-      <div class="metric-val">${m.val}</div>
-      <div class="metric-label">${m.label}</div>
-    </div>`).join('')}</div>`;
+  // ESPECIAL DENTISTA: Métricas editáveis
+  if (id === 'dentista') {
+    const metricas = JSON.parse(localStorage.getItem('apex_dash_dentista_metricas') || '{"b1":0,"b2":0,"b3":0,"b4":0,"b5":0,"b6":0}');
+    html += `<div class="sec-title">📊 Seus indicadores este mês</div>`;
+    html += `<div class="metric-grid">
+      <div class="metric-item" style="position:relative;">
+        <input type="number" id="met-b1" value="${metricas.b1}" min="0" step="1" onchange="salvarMetricasDentista()" style="position:absolute;top:0;right:0;width:60px;height:30px;border:1px solid var(--border);background:var(--surface);color:var(--gold);font-weight:700;border-radius:4px;text-align:center;font-family:'Playfair Display',serif;font-size:14px;cursor:pointer;" title="Clique para editar">
+        <div class="metric-val">${metricas.b1}</div>
+        <div class="metric-label">1ªs consultas/mês</div>
+      </div>
+      <div class="metric-item" style="position:relative;">
+        <input type="number" id="met-b2" value="${metricas.b2}" min="0" step="1" onchange="salvarMetricasDentista()" style="position:absolute;top:0;right:0;width:60px;height:30px;border:1px solid var(--border);background:var(--surface);color:var(--gold);font-weight:700;border-radius:4px;text-align:center;font-family:'Playfair Display',serif;font-size:14px;cursor:pointer;" title="Clique para editar">
+        <div class="metric-val">${metricas.b2}</div>
+        <div class="metric-label">Tratamentos concluídos</div>
+      </div>
+      <div class="metric-item" style="position:relative;">
+        <input type="number" id="met-b3" value="${metricas.b3}" min="0" max="100" step="0.1" onchange="salvarMetricasDentista()" style="position:absolute;top:0;right:0;width:60px;height:30px;border:1px solid var(--border);background:var(--surface);color:var(--suf);font-weight:700;border-radius:4px;text-align:center;font-family:'Playfair Display',serif;font-size:14px;cursor:pointer;" title="Clique para editar">
+        <div class="metric-val">${metricas.b3}</div>
+        <div class="metric-label">Taxa extração %</div>
+      </div>
+      <div class="metric-item" style="position:relative;">
+        <input type="number" id="met-b4" value="${metricas.b4}" min="0" step="1" onchange="salvarMetricasDentista()" style="position:absolute;top:0;right:0;width:60px;height:30px;border:1px solid var(--border);background:var(--surface);color:var(--gold);font-weight:700;border-radius:4px;text-align:center;font-family:'Playfair Display',serif;font-size:14px;cursor:pointer;" title="Clique para editar">
+        <div class="metric-val">${metricas.b4}</div>
+        <div class="metric-label">Procedimentos prev.</div>
+      </div>
+    </div>`;
+  } else {
+    // Outros perfis
+    html += `<div class="sec-title">📊 Seus indicadores este mês</div>`;
+    html += `<div class="metric-grid">${p.metricas.map(m => `
+      <div class="metric-item">
+        <div class="metric-val">${m.val}</div>
+        <div class="metric-label">${m.label}</div>
+      </div>`).join('')}</div>`;
+  }
 
   // Extra Coordenador
   if (p.extra === 'coordenador') {
@@ -667,13 +865,24 @@ function renderDashboard(id) {
     html += renderGestor();
   }
 
-  // Alertas
-  html += `<div class="sec-title">⚠️ Alertas do seu perfil</div>`;
-  html += p.alertas.map(a => `
-    <div class="alerta ${a.tipo}">
-      <span class="alerta-icon">${a.icon}</span>
-      <span>${a.txt}</span>
-    </div>`).join('');
+  // ESPECIAL DENTISTA: Registro diário + alertas dinâmicos
+  if (id === 'dentista') {
+    html += renderRegistroDiarioDentista();
+    html += `<div class="sec-title">⚠️ Alertas do seu perfil</div>`;
+    html += gerarAlertasDentista().map(a => `
+      <div class="alerta ${a.tipo}">
+        <span class="alerta-icon">${a.icon}</span>
+        <span>${a.txt}</span>
+      </div>`).join('');
+  } else {
+    // Outros perfis
+    html += `<div class="sec-title">⚠️ Alertas do seu perfil</div>`;
+    html += p.alertas.map(a => `
+      <div class="alerta ${a.tipo}">
+        <span class="alerta-icon">${a.icon}</span>
+        <span>${a.txt}</span>
+      </div>`).join('');
+  }
 
   // Checklist
   html += `<div class="sec-title">✅ Seu checklist</div>`;
@@ -730,9 +939,25 @@ function renderDashboard(id) {
 
   // Links
   html += `<div class="sec-title">🔗 Acesso rápido</div>`;
-  html += `<div class="link-row">${p.links.map(l => `<a class="link-btn" href="${l.url}">${l.label} →</a>`).join('')}</div>`;
+  let linksList = p.links.map(l => `<a class="link-btn" href="${l.url}">${l.label} →</a>`).join('');
+  // ESPECIAL DENTISTA: Adicionar link de treinamento
+  if (id === 'dentista') {
+    linksList = `<a class="link-btn" href="treinamento.html?perfil=dentista">📚 Treinamento Completo →</a>` + linksList;
+  }
+  html += `<div class="link-row">${linksList}</div>`;
 
   c.innerHTML = html;
+}
+
+// ── DENTISTA: Salvar métricas ──
+function salvarMetricasDentista() {
+  const b1 = parseFloat(document.getElementById('met-b1').value) || 0;
+  const b2 = parseFloat(document.getElementById('met-b2').value) || 0;
+  const b3 = parseFloat(document.getElementById('met-b3').value) || 0;
+  const b4 = parseFloat(document.getElementById('met-b4').value) || 0;
+  localStorage.setItem('apex_dash_dentista_metricas', JSON.stringify({ b1, b2, b3, b4, b5: 0, b6: 0 }));
+  renderDashboard('dentista');
+  showToast('✓ Métricas atualizadas!');
 }
 
 // ── COORDENADOR EXTRA ──
