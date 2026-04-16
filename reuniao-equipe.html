@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reunião de Equipe — ÁPEX Saúde</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@400;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+[data-theme="dark"]{--bg:#080604;--surface:#0f0d0a;--card:#141210;--border:#252018;--border2:#352e22;--text:#ede8df;--text2:#c8bfa8;--muted:#7a7060;--muted2:#504838;}
+[data-theme="light"]{--bg:#f9f7f4;--surface:#fff;--card:#fff;--border:#e8e2d8;--border2:#d0c8bc;--text:#1c1a16;--text2:#5a5448;--muted:#8c8070;--muted2:#b4a898;}
+:root{--gold:#c9a84c;--gold2:#e8c97a;--gold-dim:#c9a84c14;--otimo:#10b981;--bom:#3b82f6;--suf:#f59e0b;--reg:#ef4444;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Lato',sans-serif;min-height:100vh;transition:background .3s,color .3s;}
+
+.screen{display:none;min-height:100vh;}
+.screen.active{display:flex;flex-direction:column;}
+
+#screen-config{align-items:center;justify-content:center;padding:40px 20px;background:linear-gradient(135deg,var(--bg),var(--surface));}
+.config-box{background:var(--card);border:1px solid var(--border);border-radius:12px;width:100%;max-width:500px;padding:32px;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+.cfg-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;margin-bottom:8px;}
+.cfg-desc{font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.6;}
+.cfg-group{margin-bottom:16px;}
+.cfg-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;display:block;}
+.cfg-input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 12px;color:var(--text);font-family:'Lato',sans-serif;font-size:14px;outline:none;transition:border .15s;}
+.cfg-input:focus{border-color:var(--gold);}
+.cfg-btn{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:6px;font-family:'DM Mono',monospace;font-size:10px;font-weight:700;padding:12px;cursor:pointer;text-transform:uppercase;letter-spacing:2px;margin-top:10px;transition:opacity .15s;}
+.cfg-btn:hover{opacity:.88;}
+
+#screen-apresentacao{flex-direction:column;align-items:center;justify-content:center;padding:20px;}
+.apresentacao-container{width:100%;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+
+.slide-wrapper{width:90%;max-width:1200px;aspect-ratio:16/9;background:var(--card);border:1px solid var(--border);border-radius:12px;display:flex;padding:60px;position:relative;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.4);}
+.slide{display:none;flex-direction:column;justify-content:center;align-items:center;width:100%;height:100%;text-align:center;}
+.slide.active{display:flex;}
+
+.slide-1 .logo-apex{height:120px;margin-bottom:40px;object-fit:contain;}
+.slide-1 .title{font-family:'Playfair Display',serif;font-size:56px;font-weight:700;margin-bottom:20px;color:var(--gold);}
+.slide-1 .ubs-nome{font-family:'Lato',sans-serif;font-size:28px;margin-bottom:8px;}
+.slide-1 .municipio{font-size:18px;color:var(--muted);margin-bottom:40px;}
+.slide-1 .data-reuniao{font-size:14px;color:var(--muted2);}
+
+.slide-2{background:linear-gradient(135deg,var(--surface),var(--card));}
+.slide-2 .title-slide{font-family:'Playfair Display',serif;font-size:48px;font-weight:700;margin-bottom:40px;color:var(--gold);}
+.blocos-resumo{display:flex;gap:30px;width:100%;justify-content:space-around;}
+.bloco-resumo{background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:30px;flex:1;min-width:0;}
+.bloco-icon{font-size:40px;margin-bottom:12px;}
+.bloco-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;}
+.bloco-items{font-size:14px;line-height:1.8;text-align:left;}
+
+.slide-3{background:var(--surface);}
+.slide-3 .title-slide{font-family:'Playfair Display',serif;font-size:44px;font-weight:700;margin-bottom:30px;color:var(--gold);}
+.tabela-equipes{width:100%;border-collapse:collapse;font-size:13px;}
+.tabela-equipes th{background:var(--gold);color:#000;padding:12px;font-weight:700;text-align:left;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:1px;}
+.tabela-equipes td{border-bottom:1px solid var(--border);padding:12px;font-family:'Lato',sans-serif;}
+.tabela-equipes tr:nth-child(even) td{background:#0f0d0a;}
+
+.slide-4,.slide-5{padding:80px !important;}
+.destaque-card{background:linear-gradient(135deg,var(--gold)20,var(--gold)05);border:2px solid var(--gold);border-radius:12px;padding:40px;width:100%;max-width:600px;margin:0 auto;}
+.destaque-card .emoji{font-size:60px;margin-bottom:20px;}
+.destaque-card .resultado{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;margin-bottom:16px;color:var(--text);}
+.destaque-card .parabenizacao{font-size:24px;color:var(--gold);margin-top:20px;}
+
+.slide-5 .destaque-card{background:linear-gradient(135deg,var(--reg)20,var(--reg)05);border-color:var(--reg);}
+.slide-5 .destaque-card .emoji{color:var(--reg);}
+.slide-5 .destaque-card .resultado{color:var(--reg);}
+.slide-5 .impacto-financeiro{font-size:20px;color:var(--muted);margin-top:20px;font-family:'DM Mono',monospace;}
+
+.slide-6 .title-slide{font-family:'Playfair Display',serif;font-size:44px;font-weight:700;margin-bottom:40px;color:var(--gold);}
+.acoes-lista{display:flex;flex-direction:column;gap:20px;width:100%;max-width:700px;margin:0 auto;}
+.acao-item{background:var(--surface);border-left:4px solid var(--gold);border-radius:8px;padding:20px;text-align:left;}
+.acao-numero{font-family:'DM Mono',monospace;font-weight:700;color:var(--gold);font-size:14px;}
+.acao-desc{font-size:18px;margin:8px 0;font-weight:500;}
+.acao-responsavel{font-size:12px;color:var(--muted);margin-top:8px;border-top:1px solid var(--border);padding-top:8px;}
+.resp-campo{border-bottom:1px solid var(--text);display:inline-block;min-width:200px;padding:0 4px;}
+
+.slide-7 .title-slide{font-family:'Playfair Display',serif;font-size:44px;font-weight:700;margin-bottom:30px;color:var(--gold);}
+.calendario-visual{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;width:100%;max-width:600px;margin:0 auto;font-size:12px;}
+.cal-day{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px 8px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:500;}
+.cal-day.acao{background:var(--gold)20;border-color:var(--gold);color:var(--gold);}
+.cal-day.critico{background:var(--reg)20;border-color:var(--reg);color:var(--reg);}
+.cal-day-num{font-size:16px;font-weight:700;}
+.cal-day-label{font-size:9px;color:var(--muted);}
+.cal-day.acao .cal-day-label{color:var(--gold);}
+.cal-day.critico .cal-day-label{color:var(--reg);}
+
+.slide-8 .title-slide{font-family:'Playfair Display',serif;font-size:48px;font-weight:700;margin-bottom:30px;color:var(--gold);}
+.slide-8 .prox-reuniao{font-size:24px;margin-bottom:40px;color:var(--text2);}
+.slide-8 .feedback-prompt{font-size:18px;color:var(--muted);margin-bottom:20px;}
+.slide-8 .logo-footer{height:80px;margin-top:40px;object-fit:contain;}
+.slide-8 .powered{font-size:11px;color:var(--muted);margin-top:20px;font-family:'DM Mono',monospace;}
+
+.controls{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 24px;display:flex;align-items:center;gap:16px;z-index:100;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+.control-nav{display:flex;align-items:center;gap:12px;}
+.nav-btn{background:none;border:1px solid var(--border);color:var(--text2);padding:8px 14px;border-radius:6px;cursor:pointer;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;transition:all .15s;}
+.nav-btn:hover{border-color:var(--gold);color:var(--gold);}
+.slide-info{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);min-width:80px;text-align:center;font-weight:600;}
+.control-actions{display:flex;gap:8px;}
+.action-btn{background:none;border:none;color:var(--text2);font-size:16px;cursor:pointer;transition:color .15s;padding:4px 8px;}
+.action-btn:hover{color:var(--gold);}
+
+@media print{
+  .controls,.cfg-btn,#screen-config{display:none !important;}
+  body{padding:0;margin:0;}
+  .apresentacao-container{height:auto;padding:0;}
+  .slide-wrapper{width:100%;max-width:none;aspect-ratio:auto;display:block;page-break-after:always;margin-bottom:0;border:none;box-shadow:none;padding:0;}
+  .slide{display:block !important;page-break-after:always;padding:40px;height:auto;min-height:100vh;}
+}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.slide.active{animation:fadeIn .3s ease;}
+
+#fullscreen-toggle{display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<!-- ══ TELA CONFIG ══ -->
+<div class="screen active" id="screen-config">
+  <div class="config-box">
+    <div class="cfg-title">Reunião de Equipe</div>
+    <div class="cfg-desc">Configure os dados básicos da sua reunião para gerar a apresentação automaticamente.</div>
+
+    <div class="cfg-group">
+      <label class="cfg-label">Nome da UBS</label>
+      <input class="cfg-input" type="text" id="cfg-ubs" placeholder="Ex: UBS Saúde do Povo">
+    </div>
+
+    <div class="cfg-group">
+      <label class="cfg-label">Município</label>
+      <input class="cfg-input" type="text" id="cfg-municipio" placeholder="Ex: Belém, PA">
+    </div>
+
+    <div class="cfg-group">
+      <label class="cfg-label">Data da reunião</label>
+      <input class="cfg-input" type="date" id="cfg-data">
+    </div>
+
+    <div class="cfg-group">
+      <label class="cfg-label">Mês de referência</label>
+      <select class="cfg-input" id="cfg-mes">
+        <option value="">Mês anterior (automático)</option>
+        <option value="1Q/2026">1Q/2026 (jan-abr)</option>
+        <option value="2Q/2025">2Q/2025 (mai-ago)</option>
+        <option value="3Q/2025">3Q/2025 (set-dez)</option>
+      </select>
+    </div>
+
+    <div class="cfg-group">
+      <label class="cfg-label">Nome do Coordenador</label>
+      <input class="cfg-input" type="text" id="cfg-coordenador" placeholder="Seu nome">
+    </div>
+
+    <button class="cfg-btn" onclick="gerarApresentacao()">⚡ Gerar apresentação</button>
+  </div>
+</div>
+
+<!-- ══ TELA APRESENTAÇÃO ══ -->
+<div class="screen" id="screen-apresentacao">
+  <div class="apresentacao-container">
+    <div class="slide-wrapper">
+      <!-- SLIDE 1: CAPA -->
+      <div class="slide slide-1">
+        <img src="logo-nav.png" class="logo-apex" alt="ÁPEX Saúde">
+        <div class="title">REUNIÃO DE EQUIPE</div>
+        <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--muted);margin-bottom:30px;" id="slide1-mesano">— Mês —</div>
+        <div class="ubs-nome" id="slide1-ubs">UBS Saúde do Povo</div>
+        <div class="municipio" id="slide1-municipio">Belém, PA</div>
+        <div class="data-reuniao" id="slide1-data">Reunião: 16 de abril de 2026</div>
+      </div>
+
+      <!-- SLIDE 2: RESUMO DO MÊS -->
+      <div class="slide slide-2">
+        <div class="title-slide">Resumo do Mês</div>
+        <div class="blocos-resumo">
+          <div class="bloco-resumo">
+            <div class="bloco-icon">✅</div>
+            <div class="bloco-label">Melhorou</div>
+            <div class="bloco-items" id="resumo-melhorou">
+              <div>C2 Desenvolvimento Infantil: 78%</div>
+              <div>C3 Gestação: 65%</div>
+            </div>
+          </div>
+          <div class="bloco-resumo">
+            <div class="bloco-icon">⚠️</div>
+            <div class="bloco-label">Atenção</div>
+            <div class="bloco-items" id="resumo-atencao">
+              <div>C4 Diabetes: 55% (sem mudança)</div>
+              <div>C5 Hipertensão: 52%</div>
+            </div>
+          </div>
+          <div class="bloco-resumo">
+            <div class="bloco-icon">🔴</div>
+            <div class="bloco-label">Crítico</div>
+            <div class="bloco-items" id="resumo-critico">
+              <div>C1 Acesso: 48% (caiu 5%)</div>
+              <div>C6 Prevenção: 42% (abaixo de 60%)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 3: INDICADORES POR EQUIPE -->
+      <div class="slide slide-3">
+        <div class="title-slide">Indicadores por Equipe</div>
+        <table class="tabela-equipes">
+          <thead>
+            <tr>
+              <th>Equipe</th>
+              <th>Tipo</th>
+              <th>C3</th>
+              <th>C2</th>
+              <th>Classificação</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-equipes-body">
+            <tr>
+              <td>Equipe A</td>
+              <td>eSF</td>
+              <td style="color:var(--otimo);font-weight:700;">8.2</td>
+              <td style="color:var(--bom);font-weight:700;">7.5</td>
+              <td><span style="background:var(--otimo)20;padding:4px 8px;border-radius:4px;color:var(--otimo);">Ótimo</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- SLIDE 4: DESTAQUE DO MÊS -->
+      <div class="slide slide-4">
+        <div class="destaque-card">
+          <div class="emoji">🏆</div>
+          <div class="resultado" id="destaque-resultado">Melhor resultado: Desenvolvimento Infantil (78%)</div>
+          <div class="parabenizacao" id="destaque-parabens">👏 Parabéns pela dedicação!</div>
+        </div>
+      </div>
+
+      <!-- SLIDE 5: PONTO CRÍTICO -->
+      <div class="slide slide-5">
+        <div class="destaque-card">
+          <div class="emoji">🚨</div>
+          <div class="resultado" id="critico-resultado">Atenção prioritária: Acesso (48%)</div>
+          <div class="impacto-financeiro" id="critico-impacto">Impacto: R$ 1.200/mês perdidos</div>
+          <div style="font-size:14px;color:var(--text2);margin-top:12px;">
+            <a href="simulador-financeiro.html" style="color:var(--gold);text-decoration:none;">→ Ver simulador financeiro</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 6: PLANO DO PRÓXIMO MÊS -->
+      <div class="slide slide-6">
+        <div class="title-slide">Plano do Próximo Mês</div>
+        <div class="acoes-lista">
+          <div class="acao-item">
+            <div class="acao-numero">1.</div>
+            <div class="acao-desc" id="acao1-desc">Fortalecer busca ativa para ampliar acesso</div>
+            <div class="acao-responsavel">Responsável: <span class="resp-campo" contenteditable></span></div>
+          </div>
+          <div class="acao-item">
+            <div class="acao-numero">2.</div>
+            <div class="acao-desc" id="acao2-desc">Revisar protocolo de atendimento de gestação</div>
+            <div class="acao-responsavel">Responsável: <span class="resp-campo" contenteditable></span></div>
+          </div>
+          <div class="acao-item">
+            <div class="acao-numero">3.</div>
+            <div class="acao-desc" id="acao3-desc">Intensificar campanha de prevenção do câncer</div>
+            <div class="acao-responsavel">Responsável: <span class="resp-campo" contenteditable></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 7: CALENDÁRIO CRÍTICO -->
+      <div class="slide slide-7">
+        <div class="title-slide">Calendário Crítico - Próximo Mês</div>
+        <div style="font-size:18px;color:var(--muted);margin-bottom:20px;" id="cal-mes-ano">Maio de 2026</div>
+        <div class="calendario-visual" id="calendario">
+          <div class="cal-day acao">
+            <div class="cal-day-num">1</div>
+            <div class="cal-day-label">Início</div>
+          </div>
+          <div class="cal-day" style="grid-column:2/4;"><div class="cal-day-num" style="font-size:12px;">2-5</div><div style="font-size:10px;color:var(--muted);">Registros</div></div>
+          <div class="cal-day" style="grid-column:4/6;"><div class="cal-day-num" style="font-size:12px;">6-8</div><div style="font-size:10px;color:var(--muted);">Conf.</div></div>
+          <div class="cal-day acao">
+            <div class="cal-day-num">8</div>
+            <div class="cal-day-label">Reunião</div>
+          </div>
+          <div class="cal-day critico">
+            <div class="cal-day-num">10</div>
+            <div class="cal-day-label">SIAPS!</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 8: ENCERRAMENTO -->
+      <div class="slide slide-8">
+        <div class="title-slide">Até o próximo mês!</div>
+        <div class="prox-reuniao" id="slide8-proxreuniao">Próxima reunião: 16 de maio de 2026</div>
+        <div style="font-size:20px;margin-bottom:30px;color:var(--text2);">Dúvidas, sugestões e feedbacks?</div>
+        <img src="logo-nav.png" class="slide-8 logo-footer" alt="ÁPEX Saúde">
+        <div class="powered">Powered by ÁPEX Saúde • Consultoria APS</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTROLES -->
+  <div class="controls">
+    <div class="control-nav">
+      <button class="nav-btn" onclick="slideAnterior()">← Anterior</button>
+      <div class="slide-info"><span id="slide-atual">1</span> de <span id="slide-total">8</span></div>
+      <button class="nav-btn" onclick="proximoSlide()">Próximo →</button>
+    </div>
+    <div class="control-actions">
+      <button class="action-btn" id="fullscreen-toggle" onclick="toggleFullscreen()" title="Tela cheia (F11)">🖥️</button>
+      <button class="action-btn" onclick="window.print()" title="Imprimir (Ctrl+P)">🖨️</button>
+      <button class="action-btn" onclick="habilitarEdicao()" title="Editar dados">✏️</button>
+      <button class="action-btn" onclick="compartilhar()" title="Compartilhar">🔗</button>
+      <button class="action-btn" onclick="voltarConfig()" title="Voltar para config">⬅️</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══ ESTADO ══
+let slideAtual = 0;
+const totalSlides = 8;
+let dadosApresentacao = {};
+
+// ══ INICIALIZAÇÃO ══
+document.addEventListener('DOMContentLoaded', () => {
+  const hoje = new Date();
+  const ano = hoje.getFullYear();
+  const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+  document.getElementById('cfg-data').value = `${ano}-${mes}-${String(hoje.getDate()).padStart(2, '0')}`;
+});
+
+// ══ GERAR APRESENTAÇÃO ══
+function gerarApresentacao() {
+  const ubs = document.getElementById('cfg-ubs').value.trim() || 'UBS Saúde';
+  const municipio = document.getElementById('cfg-municipio').value.trim() || 'Município';
+  const data = document.getElementById('cfg-data').value || new Date().toISOString().split('T')[0];
+  const mes = document.getElementById('cfg-mes').value || obterMesAnterior();
+  const coordenador = document.getElementById('cfg-coordenador').value.trim() || 'Coordenador';
+
+  dadosApresentacao = { ubs, municipio, data, mes, coordenador };
+
+  preencherSlides();
+  slideAtual = 0;
+  atualizarSlide();
+
+  document.getElementById('screen-config').classList.remove('active');
+  document.getElementById('screen-apresentacao').classList.add('active');
+}
+
+function obterMesAnterior() {
+  const hoje = new Date();
+  const mesAnterior = hoje.getMonth();
+  const ano = hoje.getFullYear();
+  const meses = ['01', '02', '03', '04'];
+  const mesStr = meses[mesAnterior % 4];
+  const anoStr = String(ano).slice(2);
+  return mesStr + 'Q/' + anoStr;
+}
+
+// ══ PREENCHER SLIDES ══
+function preencherSlides() {
+  const { ubs, municipio, data, mes, coordenador } = dadosApresentacao;
+
+  // Slide 1
+  const datObj = new Date(data);
+  const mesNome = datObj.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }).toUpperCase();
+  document.getElementById('slide1-mesano').textContent = '— ' + mesNome + ' —';
+  document.getElementById('slide1-ubs').textContent = ubs;
+  document.getElementById('slide1-municipio').textContent = municipio;
+  document.getElementById('slide1-data').textContent = 'Reunião: ' + datObj.toLocaleDateString('pt-BR');
+
+  // Dados do localStorage
+  const resultados = JSON.parse(localStorage.getItem('apex_resultados') || '[]');
+  const mesInterno = mes.split('/')[0] + '/20' + mes.split('/')[1];
+  const dadosMes = resultados.filter(r => r.quad === mes || r.quad === mesInterno);
+
+  // Slide 2: Resumo
+  preencherResumo(dadosMes);
+
+  // Slide 3: Tabela
+  preencherTabela(dadosMes);
+
+  // Slide 4: Destaque
+  preencherDestaque(dadosMes);
+
+  // Slide 5: Crítico
+  preencherCritico(dadosMes);
+
+  // Slide 6: Ações
+  preencherAcoes(dadosMes);
+
+  // Slide 7: Calendário
+  preencherCalendario(datObj);
+
+  // Slide 8
+  const proxReuniao = new Date(datObj);
+  proxReuniao.setDate(proxReuniao.getDate() + 30);
+  document.getElementById('slide8-proxreuniao').textContent = 'Próxima reunião: ' + proxReuniao.toLocaleDateString('pt-BR');
+}
+
+function preencherResumo(dados) {
+  if (!dados.length) {
+    document.getElementById('resumo-melhorou').innerHTML = '<div>Sem dados registrados</div>';
+    document.getElementById('resumo-atencao').innerHTML = '<div>Sem dados registrados</div>';
+    document.getElementById('resumo-critico').innerHTML = '<div>Sem dados registrados</div>';
+    return;
+  }
+
+  const melhorou = dados.filter(d => d.c3 > 7.5).slice(0, 2).map(d => `C${d.c3 > 8 ? '1' : '2'}: ${d.c3.toFixed(0)}%`).join('<div>') || 'Nenhum avanço';
+  const atencao = dados.filter(d => d.c3 >= 5 && d.c3 <= 7.5).slice(0, 2).map(d => `C${d.c3 > 7 ? '2' : '3'}: ${d.c3.toFixed(0)}%`).join('<div>') || 'Situação estável';
+  const critico = dados.filter(d => d.c3 < 5).slice(0, 2).map(d => `C3: ${d.c3.toFixed(0)}%`).join('<div>') || 'Sem dados críticos';
+
+  document.getElementById('resumo-melhorou').innerHTML = melhorou;
+  document.getElementById('resumo-atencao').innerHTML = atencao;
+  document.getElementById('resumo-critico').innerHTML = critico;
+}
+
+function preencherTabela(dados) {
+  const tbody = document.getElementById('tabela-equipes-body');
+  if (!dados.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;">Sem dados de equipes para este período</td></tr>';
+    return;
+  }
+
+  const classC3 = n => n > 7.5 ? 'otimo' : n >= 5 ? 'bom' : n >= 2.6 ? 'suf' : 'reg';
+  const classC2 = n => n > 8.5 ? 'otimo' : n >= 7 ? 'bom' : n >= 5 ? 'suf' : 'reg';
+  const labelClass = c => ({ otimo: 'Ótimo', bom: 'Bom', suf: 'Suficiente', reg: 'Regular' }[c] || '—');
+  const colorClass = c => ({ otimo: 'var(--otimo)', bom: 'var(--bom)', suf: 'var(--suf)', reg: 'var(--reg)' }[c] || '#999');
+
+  const equipes = {};
+  dados.forEach(d => {
+    const key = d.equipe + '|' + d.tipo;
+    if (!equipes[key] || d.c3 > equipes[key].c3) equipes[key] = d;
+  });
+
+  tbody.innerHTML = Object.values(equipes).slice(0, 10).map(d => {
+    const cls3 = classC3(d.c3);
+    const cls2 = classC2(d.c2);
+    return `<tr>
+      <td>${d.equipe}</td>
+      <td>${d.tipo}</td>
+      <td style="color:${colorClass(cls3)};font-weight:700;">${d.c3.toFixed(1)}</td>
+      <td style="color:${colorClass(cls2)};font-weight:700;">${d.c2.toFixed(1)}</td>
+      <td><span style="background:${colorClass(cls3)}22;padding:4px 8px;border-radius:4px;color:${colorClass(cls3)};">${labelClass(cls3)}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function preencherDestaque(dados) {
+  if (!dados.length) {
+    document.getElementById('destaque-resultado').textContent = '🏆 Dados não disponíveis este mês';
+    return;
+  }
+  const melhor = dados.reduce((prev, current) => (prev.c3 > current.c3) ? prev : current);
+  document.getElementById('destaque-resultado').textContent = `🏆 Melhor equipe: ${melhor.equipe} (Nota: ${melhor.c3.toFixed(1)})`;
+  document.getElementById('destaque-parabens').textContent = `👏 ${melhor.equipe} está arrasando!`;
+}
+
+function preencherCritico(dados) {
+  if (!dados.length) {
+    document.getElementById('critico-resultado').textContent = '✅ Nenhum ponto crítico';
+    document.getElementById('critico-impacto').textContent = 'Todas as equipes estão em bom andamento!';
+    return;
+  }
+  const pior = dados.reduce((prev, current) => (prev.c3 < current.c3) ? prev : current);
+  document.getElementById('critico-resultado').textContent = `🚨 Atenção: ${pior.equipe} (Nota: ${pior.c3.toFixed(1)})`;
+  const impactoR = 2000 - (pior.c3 * 250); // Simplificado
+  document.getElementById('critico-impacto').textContent = `⚠️ Impacto: R$ ${Math.max(0, impactoR).toFixed(0)}/mês perdidos`;
+}
+
+function preencherAcoes(dados) {
+  const acoes = [
+    `Fortalecer indicador crítico (${dados.length ? 'equipe em foco' : 'registro pendente'})`,
+    'Revisar protocolos e procedimentos com toda equipe',
+    'Intensificar estratégias de cobertura e prevenção'
+  ];
+
+  acoes.forEach((acao, i) => {
+    document.getElementById(`acao${i + 1}-desc`).textContent = acao;
+  });
+}
+
+function preencherCalendario(datObj) {
+  const proxMes = new Date(datObj);
+  proxMes.setMonth(proxMes.getMonth() + 1);
+  document.getElementById('cal-mes-ano').textContent = proxMes.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }).toUpperCase();
+}
+
+// ══ NAVEGAÇÃO ══
+function proximoSlide() {
+  if (slideAtual < totalSlides - 1) {
+    slideAtual++;
+    atualizarSlide();
+  }
+}
+
+function slideAnterior() {
+  if (slideAtual > 0) {
+    slideAtual--;
+    atualizarSlide();
+  }
+}
+
+function atualizarSlide() {
+  const slides = document.querySelectorAll('.slide');
+  slides.forEach((s, i) => s.classList.toggle('active', i === slideAtual));
+  document.getElementById('slide-atual').textContent = slideAtual + 1;
+}
+
+// ══ TECLADO ══
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); proximoSlide(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); slideAnterior(); }
+  if (e.key === 'F11') { toggleFullscreen(); }
+  if (e.key === 'Escape') { voltarConfig(); }
+});
+
+// ══ AÇÕES ══
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(err => console.log(err));
+  } else {
+    document.exitFullscreen();
+  }
+}
+
+function habilitarEdicao() {
+  const slides = document.querySelectorAll('.slide');
+  slides.forEach(s => s.querySelectorAll('[id$="-desc"], [id$="-resultado"]').forEach(el => {
+    el.contentEditable = !el.contentEditable;
+  }));
+}
+
+function compartilhar() {
+  const dados = btoa(JSON.stringify(dadosApresentacao));
+  const url = window.location.origin + window.location.pathname + '?dados=' + dados;
+  navigator.clipboard.writeText(url);
+  alert('Link copiado! Compartilhe com sua equipe.');
+}
+
+function voltarConfig() {
+  document.getElementById('screen-apresentacao').classList.remove('active');
+  document.getElementById('screen-config').classList.add('active');
+}
+
+// ══ CARREGAR DE URL ══
+window.addEventListener('load', () => {
+  const params = new URLSearchParams(window.location.search);
+  const dados = params.get('dados');
+  if (dados) {
+    try {
+      const obj = JSON.parse(atob(dados));
+      document.getElementById('cfg-ubs').value = obj.ubs || '';
+      document.getElementById('cfg-municipio').value = obj.municipio || '';
+      document.getElementById('cfg-data').value = obj.data || '';
+      document.getElementById('cfg-mes').value = obj.mes || '';
+      document.getElementById('cfg-coordenador').value = obj.coordenador || '';
+      gerarApresentacao();
+    } catch (e) { console.log('Erro ao carregar dados compartilhados'); }
+  }
+});
+</script>
+
+</body>
+</html>
