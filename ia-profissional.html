@@ -173,6 +173,7 @@ input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-
 <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <script src="security.js"></script>
+<script src="perfis-config.js"></script>
 </head>
 <body>
 
@@ -378,20 +379,18 @@ themeBtn.addEventListener('click', () => {
 });
 
 // ── DADOS DOS PERFIS ──
-const perfisData = {
-  medico:      { nome:'Médico', equipe:'eSF / eAP', icon:'👨‍⚕️', inds:[{id:'C4',nome:'C4 – Diabetes',peso:1,meta:75},{id:'C5',nome:'C5 – Hipertensão',peso:1,meta:75},{id:'C6',nome:'C6 – Pessoa Idosa',peso:1,meta:75},{id:'C7',nome:'C7 – Prevenção do Câncer',peso:2,meta:75}]},
-  enfermeiro:  { nome:'Enfermeiro', equipe:'eSF / eAP', icon:'👩‍⚕️', inds:[{id:'C1',nome:'C1 – Acesso',peso:1,meta:75},{id:'C2',nome:'C2 – Desenvolvimento Infantil',peso:2,meta:75},{id:'C3',nome:'C3 – Gestação e Puerpério',peso:2,meta:75}]},
-  tecnico:     { nome:'Técnico de Enfermagem', equipe:'eSF / eAP', icon:'🩺', inds:[{id:'C4',nome:'C4 – Diabetes (Glicemia)',peso:1,meta:75},{id:'C5',nome:'C5 – Hipertensão (PA)',peso:1,meta:75},{id:'C6',nome:'C6 – Idoso (Vacinação)',peso:1,meta:75}]},
-  acs:         { nome:'ACS', equipe:'eSF / eAP', icon:'🏘️', inds:[{id:'CAD',nome:'Dimensão Cadastro',peso:1,meta:85},{id:'ACOMP',nome:'Dimensão Acompanhamento',peso:1,meta:85},{id:'C1',nome:'C1 – Acesso (Busca Ativa)',peso:1,meta:75}]},
-  dentista:    { nome:'Dentista', equipe:'eSB', icon:'🦷', inds:[{id:'B1',nome:'B1 – 1ª Consulta Programada',peso:2,meta:75},{id:'B2',nome:'B2 – Tratamento Concluído',peso:2,meta:75},{id:'B3',nome:'B3 – Taxa de Exodontia (INVERTIDO)',peso:2,meta:25,invertido:true},{id:'B4',nome:'B4 – Procedimentos Preventivos',peso:2,meta:75},{id:'B5',nome:'B5 – Escovação Supervisionada',peso:1,meta:75},{id:'B6',nome:'B6 – TRA',peso:1,meta:75}]},
-  psicologo:   { nome:'Psicólogo', equipe:'eMulti', icon:'🧠', inds:[{id:'M1',nome:'M1 – Atendimentos por Pessoa',peso:6,meta:75},{id:'M2',nome:'M2 – Ações Interprofissionais',peso:4,meta:75}]},
-  fisio:       { nome:'Fisioterapeuta', equipe:'eMulti', icon:'🏃', inds:[{id:'M1',nome:'M1 – Atendimentos por Pessoa',peso:6,meta:75},{id:'M2',nome:'M2 – Ações Conjuntas',peso:4,meta:75}]},
-  nutricionista:{ nome:'Nutricionista', equipe:'eMulti', icon:'🥗', inds:[{id:'M1',nome:'M1 – Atendimentos/Grupos',peso:6,meta:75},{id:'M2',nome:'M2 – Ações Interprofissionais',peso:4,meta:75}]},
-  assistente:  { nome:'Assistente Social', equipe:'eMulti', icon:'🤝', inds:[{id:'M1',nome:'M1 – Atendimentos Individuais',peso:6,meta:75},{id:'M2',nome:'M2 – Ações Intersetoriais',peso:4,meta:75}]},
-  farmaceutico:{ nome:'Farmacêutico', equipe:'eMulti', icon:'💊', inds:[{id:'M1',nome:'M1 – Consultas Farmacêuticas',peso:6,meta:75},{id:'M2',nome:'M2 – Discussões de Caso',peso:4,meta:75}]},
-  coordenador: { nome:'Coordenador de UBS', equipe:'Gestão', icon:'📋', inds:[{id:'C3',nome:'Nota C3 (0-10)',peso:1,meta:7.5,escala10:true},{id:'C2',nome:'Nota C2 (0-10)',peso:1,meta:8.5,escala10:true}]},
-  gestor:      { nome:'Gestor Municipal', equipe:'Secretaria', icon:'🏛️', inds:[{id:'MED_C3',nome:'Média C3 do município (0-10)',peso:1,meta:7.5,escala10:true},{id:'MED_C2',nome:'Média C2 do município (0-10)',peso:1,meta:8.5,escala10:true}]},
-};
+// Usar PERFIS_CONFIG unificado de perfis-config.js
+// Converter para formato que IA espera
+const perfisData = {};
+Object.keys(PERFIS_CONFIG).forEach(perfilId => {
+  const p = PERFIS_CONFIG[perfilId];
+  perfisData[perfilId] = {
+    nome: p.nome,
+    equipe: p.equipe,
+    icon: p.icon,
+    inds: p.indicadores
+  };
+});
 
 // ── CARREGAR PERFIL ──
 let perfilAtual = null;
@@ -415,9 +414,19 @@ window.addEventListener('DOMContentLoaded', () => {
   renderPlanosAtivos();
   renderHistoricoM1();
 
+  // PRÉ-PREENCHER com métricas do dashboard
+  preencherMetricasDoLocalStorage();
+
   // Mês atual
   const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
   document.getElementById('m3-mes').textContent = meses[new Date().getMonth()] + '/' + new Date().getFullYear();
+
+  // Abrir módulo específico se vindo do dashboard
+  const params = new URLSearchParams(window.location.search);
+  const moduloParam = params.get('modulo');
+  if (moduloParam && ['m1','m2','m3'].includes(moduloParam)) {
+    abrirModulo(moduloParam);
+  }
 });
 
 // ── NAVEGAÇÃO ──
@@ -431,6 +440,38 @@ function voltarHome() {
   document.getElementById('screen-home').classList.add('active');
   renderPlanosAtivos();
   window.scrollTo(0,0);
+}
+
+// ─────────────────────────────────────────────
+// PRÉ-PREENCHER: Carregar métricas do Dashboard
+// ─────────────────────────────────────────────
+function preencherMetricasDoLocalStorage() {
+  // Carregar métricas atuais do dashboard
+  const metricas = carregarMetricasDoLocalStorage(perfilId);
+
+  // Pré-preencher M3 (Módulo 3 - Plano Automático)
+  perfilAtual.inds.forEach(ind => {
+    const el = document.getElementById('m3-' + ind.id);
+    if (el && metricas[ind.id.toLowerCase()] !== undefined) {
+      el.value = metricas[ind.id.toLowerCase()];
+    }
+  });
+
+  // Pré-preencher M2 (Módulo 2 - Relatório com últimos 3 meses)
+  const ultimos3Meses = obterUltimos3Meses(perfilId);
+  if (ultimos3Meses.length >= 3) {
+    perfilAtual.inds.forEach(ind => {
+      for (let i = 0; i < 3; i++) {
+        const el = document.getElementById(`m2-${ind.id}-${i}`);
+        if (el && ultimos3Meses[i] && ultimos3Meses[i].acumulado) {
+          const val = ultimos3Meses[i].acumulado[ind.id.toLowerCase()];
+          if (val !== undefined) {
+            el.value = val;
+          }
+        }
+      }
+    });
+  }
 }
 
 // ─────────────────────────────────────────────
@@ -553,6 +594,30 @@ function renderPlanoAutomatico(texto) {
       </div>`;
     }).join('');
   }
+
+  // Salvar plano com estrutura PDCA padronizada
+  salvarPlanoComEstruturaPDCA(texto, linhas);
+}
+
+function salvarPlanoComEstruturaPDCA(texto, linhas) {
+  const hoje = new Date();
+  const acoes = linhas.map(l => ({
+    texto: l.replace('•', '').trim(),
+    prazo: '',
+    status: 'pendente'
+  }));
+
+  const plano = {
+    id: `plano_${Date.now()}`,
+    data_criacao: hoje.toLocaleDateString('pt-BR'),
+    ciclo_pdca: 'plan',
+    versao: 1,
+    indicadores: dadosM3,
+    acoes: acoes,
+    texto_completo: texto
+  };
+
+  localStorage.setItem(`apex_plano_ativo_${perfilId}`, JSON.stringify(plano));
 }
 
 function toggleM3Acao(idx, total, el) {

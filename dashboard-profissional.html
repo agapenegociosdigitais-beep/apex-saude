@@ -159,6 +159,7 @@ body{background:var(--bg);color:var(--text);font-family:'Lato',sans-serif;font-s
 <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <script src="security.js"></script>
+<script src="perfis-config.js"></script>
 </head>
 <body>
 
@@ -632,13 +633,26 @@ function voltarSelecao() {
   document.getElementById('screen-dashboard').style.display = 'none';
 }
 
+// Abrir IA com perfil pré-selecionado
+function abrirIAModulo(perfilId, modulo) {
+  localStorage.setItem('apex_dash_perfil', perfilId);
+  const url = `ia-profissional.html?modulo=${modulo}`;
+  window.open(url, '_blank');
+}
+
 // ════════════════════════════════════════════════════════════════
 // CONFIGURAÇÃO DE PERFIS — TODOS OS 11 PERFIS RESTANTES
 // ════════════════════════════════════════════════════════════════
 
+// ════════════════════════════════════════════════════════════
+// CONFIGURAÇÃO DE PERFIS PARA DASHBOARD
+// Usa PERFIS_CONFIG de perfis-config.js (compartilhado com IA)
+// Adiciona métodos específicos do dashboard
+// ════════════════════════════════════════════════════════════
+
 const perfilConfigs = {
   medico: {
-    metricas: { c4: 0, c5: 0, c6: 0, c7: 0 },
+    metricas: PERFIS_CONFIG.medico.metricas,
     calcularIndicadores() {
       const m = JSON.parse(localStorage.getItem('apex_dash_medico_metricas') || '{"c4":0,"c5":0,"c6":0,"c7":0}');
       return {
@@ -665,7 +679,7 @@ const perfilConfigs = {
   },
 
   enfermeiro: {
-    metricas: { c2: 0, c3: 0, c1: 0, comp2: 0 },
+    metricas: PERFIS_CONFIG.enfermeiro.metricas,
     calcularIndicadores() {
       const m = JSON.parse(localStorage.getItem('apex_dash_enfermeiro_metricas') || '{"c2":0,"c3":0,"c1":0,"comp2":0}');
       return {
@@ -690,7 +704,7 @@ const perfilConfigs = {
   },
 
   tecnico: {
-    metricas: { pa: 0, glicemia: 0, vacina: 0, pendentes: 0 },
+    metricas: PERFIS_CONFIG.tecnico.metricas,
     calcularIndicadores() {
       const m = JSON.parse(localStorage.getItem('apex_dash_tecnico_metricas') || '{"pa":0,"glicemia":0,"vacina":0,"pendentes":0}');
       return {
@@ -712,7 +726,7 @@ const perfilConfigs = {
   },
 
   acs: {
-    metricas: { visitas: 0, cadastros: 0, faltosos: 0, sync: 0 },
+    metricas: PERFIS_CONFIG.acs.metricas,
     calcularIndicadores() {
       const m = JSON.parse(localStorage.getItem('apex_dash_acs_metricas') || '{"visitas":0,"cadastros":0,"faltosos":0,"sync":0}');
       return {
@@ -734,7 +748,7 @@ const perfilConfigs = {
   },
 
   psicologo: {
-    metricas: { m1: 0, m2: 0, grupos: 0, pts: 0 },
+    metricas: PERFIS_CONFIG.psicologo.metricas,
     calcularIndicadores() {
       const m = JSON.parse(localStorage.getItem('apex_dash_psicologo_metricas') || '{"m1":0,"m2":0}');
       return {
@@ -755,7 +769,7 @@ const perfilConfigs = {
   },
 
   fisio: {
-    metricas: { m1: 0, m2: 0, grupos: 0, vdm: 0 },
+    metricas: PERFIS_CONFIG.fisio.metricas,
     calcularIndicadores() {
       const m = JSON.parse(localStorage.getItem('apex_dash_fisio_metricas') || '{"m1":0,"m2":0}');
       return {
@@ -775,7 +789,7 @@ const perfilConfigs = {
   },
 
   nutricionista: {
-    metricas: { m1: 0, m2: 0, grupos: 0, pn: 0 },
+    metricas: PERFIS_CONFIG.nutricionista.metricas,
     calcularIndicadores() {
       const m = JSON.parse(localStorage.getItem('apex_dash_nutricionista_metricas') || '{"m1":0,"m2":0}');
       return {
@@ -794,7 +808,7 @@ const perfilConfigs = {
   },
 
   assistente: {
-    metricas: { m1: 0, m2: 0, articulacoes: 0, encaminhamentos: 0 },
+    metricas: PERFIS_CONFIG.assistente.metricas,
     calcularIndicadores() {
       const m = JSON.parse(localStorage.getItem('apex_dash_assistente_metricas') || '{"m1":0,"m2":0}');
       return {
@@ -813,7 +827,7 @@ const perfilConfigs = {
   },
 
   farmaceutico: {
-    metricas: { m1: 0, m2: 0, consultas: 0, grupos: 0 },
+    metricas: PERFIS_CONFIG.farmaceutico.metricas,
     calcularIndicadores() {
       const m = JSON.parse(localStorage.getItem('apex_dash_farmaceutico_metricas') || '{"m1":0,"m2":0}');
       return {
@@ -1047,32 +1061,44 @@ function renderDashboard(id) {
   html += `<div class="prog-wrap" style="margin-bottom:16px;"><div class="prog-bar" style="width:${pct}%;background:var(--otimo)"></div></div>`;
 
 
-  // Cards de IA
+  // Cards de IA com status dinâmico
   html += \`<div class="sec-title">🤖 Módulos de Inteligência Artificial</div>\`;
+
+  // Calcular badges dinamicamente
+  const planoM3 = JSON.parse(localStorage.getItem('apex_planos_m3') || '[]').find(p => p.perfil === id);
+  const planoM1 = JSON.parse(localStorage.getItem('apex_planos_m1') || '[]').find(p => p.perfil === id);
+  const relatorio = JSON.parse(localStorage.getItem('apex_relatorios') || '[]').find(r => r.perfil === id);
+
+  const badgeM3 = planoM3 ? \`<span style="background:#7c3aed22;color:#a78bfa;border:1px solid #7c3aed44;padding:2px 8px;border-radius:3px;font-family:'DM Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:.5px;">\${planoM3.data}</span>\` : '✦ Gerar agora';
+  const badgeM1 = planoM1 ? \`<span style="background:#f59e0b20;color:#fcd34d;border:1px solid #f59e0b40;padding:2px 8px;border-radius:3px;font-family:'DM Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:.5px;">\${planoM1.acoes.length} ações</span>\` : '✦ Criar';
+
   html += \`<div style="display:grid;gap:8px;margin-bottom:16px;">
-    <div onclick="window.open('ia-profissional.html','_blank')" style="background:var(--ai-bg,#a78bfa12);border:1.5px solid var(--ai-border,#a78bfa40);border-radius:10px;padding:14px;cursor:pointer;display:flex;gap:12px;align-items:center;transition:all .2s;">
+    <div onclick="abrirIAModulo('${id}', 'm3')" style="background:var(--ai-bg,#a78bfa12);border:1.5px solid var(--ai-border,#a78bfa40);border-radius:10px;padding:14px;cursor:pointer;display:flex;gap:12px;align-items:center;transition:all .2s;">
       <span style="font-size:22px;">🤖</span>
-      <div>
+      <div style="flex:1;">
         <div style="font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--text);">Plano de Melhoria IA</div>
         <div style="font-size:11px;color:var(--muted);margin-top:2px;">IA analisa seus indicadores e gera plano priorizado automaticamente</div>
       </div>
-      <span style="margin-left:auto;color:var(--gold);font-size:18px;">›</span>
+      <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;">
+        \${badgeM3}
+        <span style="color:var(--gold);font-size:18px;">›</span>
+      </div>
     </div>
-    <div onclick="window.open('ia-profissional.html','_blank')" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;display:flex;gap:12px;align-items:center;transition:all .2s;">
+    <div onclick="abrirIAModulo('${id}', 'm2')" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;display:flex;gap:12px;align-items:center;transition:all .2s;">
       <span style="font-size:22px;">📊</span>
-      <div>
+      <div style="flex:1;">
         <div style="font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--text);">Relatório de Desempenho</div>
         <div style="font-size:11px;color:var(--muted);margin-top:2px;">Análise completa com projeção, pontos fortes e pendências</div>
       </div>
       <span style="margin-left:auto;color:var(--gold);font-size:18px;">›</span>
     </div>
-    <div onclick="window.open('ia-profissional.html','_blank')" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;display:flex;gap:12px;align-items:center;transition:all .2s;">
+    <div onclick="abrirIAModulo('${id}', 'm1')" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;display:flex;gap:12px;align-items:center;transition:all .2s;">
       <span style="font-size:22px;">🎯</span>
-      <div>
+      <div style="flex:1;">
         <div style="font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--text);">Meu Plano de Ação</div>
         <div style="font-size:11px;color:var(--muted);margin-top:2px;">Escolha o indicador e receba sugestões personalizadas da IA</div>
       </div>
-      <span style="margin-left:auto;color:var(--gold);font-size:18px;">›</span>
+      <div style="margin-left:auto;color:var(--gold);font-size:18px;">›</div>
     </div>
   </div>\`;
 
