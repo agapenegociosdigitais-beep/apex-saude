@@ -487,6 +487,10 @@ body {
 .reveal { opacity: 0; transform: translateY(12px); transition: all 0.5s ease; }
 .reveal.on { opacity: 1; transform: none; }
 </style>
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="security.js"></script>
 </head>
 <body>
 
@@ -1022,6 +1026,21 @@ const revealObs = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
 }, { threshold: 0.08 });
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const currentUser = localStorage.getItem('apex_current_user');
+  if (currentUser && typeof initializeInactivityMonitor === 'function') {
+    initializeInactivityMonitor();
+  }
+  const sessionExpired = new URLSearchParams(window.location.search).get('msg');
+  if (sessionExpired === 'session-expired') {
+    localStorage.removeItem('apex_current_user');
+    localStorage.removeItem('apex_session_token');
+    localStorage.removeItem('apex_session_start');
+  }
+});
 </script>
 </body>
 </html>

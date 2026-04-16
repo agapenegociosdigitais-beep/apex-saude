@@ -138,6 +138,10 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .comunicado-form{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:16px;}
 textarea.form-input{min-height:80px;resize:vertical;}
 </style>
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="security.js"></script>
 </head>
 <body>
 
@@ -759,6 +763,21 @@ document.getElementById('btn-logout').addEventListener('click', () => {
 // ── INIT ──
 updateVisaoGeral();
 updatePrazos();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const currentUser = localStorage.getItem('apex_current_user');
+  if (currentUser && typeof initializeInactivityMonitor === 'function') {
+    initializeInactivityMonitor();
+  }
+  const sessionExpired = new URLSearchParams(window.location.search).get('msg');
+  if (sessionExpired === 'session-expired') {
+    localStorage.removeItem('apex_current_user');
+    localStorage.removeItem('apex_session_token');
+    localStorage.removeItem('apex_session_start');
+  }
+});
 </script>
 </body>
 </html>

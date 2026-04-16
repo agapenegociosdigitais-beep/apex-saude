@@ -250,6 +250,10 @@ body {
 .rv { opacity: 0; transform: translateY(10px); transition: all 0.4s ease; }
 .rv.on { opacity: 1; transform: none; }
 </style>
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="security.js"></script>
 </head>
 <body>
 
@@ -597,6 +601,21 @@ const secObs = new IntersectionObserver(e => {
   e.forEach(x => { if (x.isIntersecting) navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href')==='#'+x.target.id)); });
 }, { threshold: 0.2 });
 secs.forEach(id => { const el = document.getElementById(id); if (el) secObs.observe(el); });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const currentUser = localStorage.getItem('apex_current_user');
+  if (currentUser && typeof initializeInactivityMonitor === 'function') {
+    initializeInactivityMonitor();
+  }
+  const sessionExpired = new URLSearchParams(window.location.search).get('msg');
+  if (sessionExpired === 'session-expired') {
+    localStorage.removeItem('apex_current_user');
+    localStorage.removeItem('apex_session_token');
+    localStorage.removeItem('apex_session_start');
+  }
+});
 </script>
 </body>
 </html>

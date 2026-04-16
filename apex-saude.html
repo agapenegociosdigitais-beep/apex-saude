@@ -5,8 +5,12 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 <title>ÁPEX Saúde</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<!-- Security: crypto-js para hash de senhas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="security.js"></script>
 <style>
 :root {
   --black: #0a0906;
@@ -1041,6 +1045,49 @@ function switchAuthTab(tab) {
   document.getElementById('auth-register').style.display = tab === 'register' ? 'block' : 'none';
 }
 
+// ═══════════════════════════════════════════════════════════════
+// 🔒 SEGURANÇA — Hash de Senhas + Session Timeout
+// ═══════════════════════════════════════════════════════════════
+
+let inactivityTimer = null;
+const INACTIVITY_TIMEOUT = 15 * 60 * 1000; // 15 minutes
+
+/**
+ * Reset inactivity timer — Logout após 15 min de inatividade
+ */
+function resetInactivityTimer() {
+  if (inactivityTimer) clearTimeout(inactivityTimer);
+  if (!currentUser) return; // Se não está logado, não fazer nada
+
+  inactivityTimer = setTimeout(() => {
+    console.warn('⏰ Sessão expirada por inatividade');
+    alert('Sua sessão expirou por inatividade (15 minutos). Faça login novamente.');
+    doLogout();
+  }, INACTIVITY_TIMEOUT);
+}
+
+/**
+ * Iniciar monitor de inatividade
+ */
+function startInactivityMonitor() {
+  const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+  events.forEach(evt => {
+    document.addEventListener(evt, resetInactivityTimer, true);
+  });
+  resetInactivityTimer();
+}
+
+/**
+ * Parar monitor de inatividade
+ */
+function stopInactivityMonitor() {
+  if (inactivityTimer) clearTimeout(inactivityTimer);
+  const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+  events.forEach(evt => {
+    document.removeEventListener(evt, resetInactivityTimer, true);
+  });
+}
+
 // ── LOGIN ──
 function doLogin() {
   const email = document.getElementById('login-email').value.trim().toLowerCase();
@@ -1052,17 +1099,28 @@ function doLogin() {
 
   // Admin — string literal para evitar ofuscamento
   const adm = ['admin','apex.com'].join('@');
-  if (email === adm && senha === 'apex2025') {
+  if (email === adm && CryptoJS.SHA256('apex2025').toString() === CryptoJS.SHA256(senha).toString()) {
     currentUser = { nome: 'Administrador', email: adm, role: 'admin' };
+    localStorage.setItem('apex_session_start', Date.now().toString());
+    startInactivityMonitor(); // ← 🔒 Iniciar monitor de inatividade
     window.location.href = 'admin.html';
     return;
   }
 
   // User
-  const user = users.find(u => u.email === email && u.senha === senha);
+  const user = users.find(u => u.email === email);
   if (!user) { showMsg(msg, 'E-mail ou senha incorretos.', 'error'); return; }
 
+  // 🔒 Verificar senha com hash SHA-256
+  const inputHash = CryptoJS.SHA256(senha).toString();
+  if (inputHash !== user.senha_hash) {
+    showMsg(msg, 'E-mail ou senha incorretos.', 'error');
+    return;
+  }
+
   currentUser = user;
+  localStorage.setItem('apex_session_start', Date.now().toString());
+  startInactivityMonitor(); // ← 🔒 Iniciar monitor de inatividade
   showScreen('dashboard');
   populateDash();
 }
@@ -1078,11 +1136,33 @@ function doRegister() {
   msg.className = 'auth-msg';
 
   if (!nome || !email || !municipio || !senha) { showMsg(msg, 'Preencha todos os campos.', 'error'); return; }
-  if (senha.length < 6) { showMsg(msg, 'Senha deve ter pelo menos 6 caracteres.', 'error'); return; }
+
+  // 🔒 Validar força da senha (8+ chars, maiúscula, número)
+  const minLength = senha.length >= 8;
+  const hasUppercase = /[A-Z]/.test(senha);
+  const hasLowercase = /[a-z]/.test(senha);
+  const hasNumber = /\d/.test(senha);
+  const noSpaces = !/\s/.test(senha);
+
+  if (!(minLength && hasUppercase && hasLowercase && hasNumber && noSpaces)) {
+    showMsg(msg, 'Senha fraca. Use 8+ chars, maiúscula, minúscula e número.', 'error');
+    return;
+  }
+
   if (email === ADMIN.email) { showMsg(msg, 'E-mail não disponível.', 'error'); return; }
   if (users.find(u => u.email === email)) { showMsg(msg, 'E-mail já cadastrado.', 'error'); return; }
 
-  const user = { nome, email, municipio, plano, senha, criado: new Date().toLocaleDateString('pt-BR') };
+  // 🔒 Hash da senha com SHA-256
+  const user = {
+    id: Date.now().toString(),
+    nome,
+    email,
+    municipio,
+    plano,
+    senha_hash: CryptoJS.SHA256(senha).toString(), // ← HASH, não plaintext!
+    criado: new Date().toLocaleDateString('pt-BR')
+  };
+
   users.push(user);
   saveUsers();
   showMsg(msg, '✓ Conta criada! Faça login para acessar.', 'success');
@@ -1092,6 +1172,8 @@ function doRegister() {
 // ── LOGOUT ──
 function doLogout() {
   currentUser = null;
+  localStorage.removeItem('apex_session_start');
+  stopInactivityMonitor(); // ← 🔒 Parar monitor de inatividade
   showScreen('auth');
 }
 

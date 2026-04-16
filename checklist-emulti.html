@@ -355,6 +355,10 @@
   .tab-content { display: none; }
   .tab-content.active { display: block; }
 </style>
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="security.js"></script>
 </head>
 <body>
 
@@ -911,7 +915,22 @@ function exportarChecklistPDF() {
   <h2>Pendentes (${unchecked.length})</h2>
   ${Array.from(unchecked).map(el=>`<div class="item pending"><span class="check">○</span>${el.textContent}</div>`).join('')}
   <div class="rodape">ÁPEX Saúde · Consultoria APS · NT 6/2025-DEAPS/SAPS/MS</div>
-  </body></html>`;
+  
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const currentUser = localStorage.getItem('apex_current_user');
+  if (currentUser && typeof initializeInactivityMonitor === 'function') {
+    initializeInactivityMonitor();
+  }
+  const sessionExpired = new URLSearchParams(window.location.search).get('msg');
+  if (sessionExpired === 'session-expired') {
+    localStorage.removeItem('apex_current_user');
+    localStorage.removeItem('apex_session_token');
+    localStorage.removeItem('apex_session_start');
+  }
+});
+</script>
+</body></html>`;
   
   const blob = new Blob([html], {type:'text/html'});
   const url = URL.createObjectURL(blob);

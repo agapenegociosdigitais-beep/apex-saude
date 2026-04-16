@@ -169,6 +169,10 @@ input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-
 /* PDF */
 @media print{.topbar,.btn-primary,.btn-ai,.btn-outline,.modulos-grid,.perfil-trocar{display:none!important;}.ia-box{border:1px solid #7c3aed;break-inside:avoid;}body{background:#fff!important;color:#000!important;}}
 </style>
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="security.js"></script>
 </head>
 <body>
 
@@ -888,7 +892,22 @@ function exportarPDF(tipo) {
   <div class="meta">${perfilAtual.equipe} · Gerado em ${new Date().toLocaleDateString('pt-BR')} · ÁPEX Saúde · NT 6/2025</div>
   <div class="conteudo">${conteudo.replace(/<[^>]*>/g, '').trim()}</div>
   <div class="rodape">ÁPEX Saúde · Consultoria APS · NT 6/2025-DEAPS/SAPS/MS</div>
-  </body></html>`;
+  
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const currentUser = localStorage.getItem('apex_current_user');
+  if (currentUser && typeof initializeInactivityMonitor === 'function') {
+    initializeInactivityMonitor();
+  }
+  const sessionExpired = new URLSearchParams(window.location.search).get('msg');
+  if (sessionExpired === 'session-expired') {
+    localStorage.removeItem('apex_current_user');
+    localStorage.removeItem('apex_session_token');
+    localStorage.removeItem('apex_session_start');
+  }
+});
+</script>
+</body></html>`;
   const blob = new Blob([html], { type: 'text/html' });
   const url = URL.createObjectURL(blob);
   const win = window.open(url, '_blank');

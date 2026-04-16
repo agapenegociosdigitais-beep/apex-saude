@@ -5,8 +5,12 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
 <title>ÁPEX Saúde — Consultoria APS</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Security: crypto-js para hash de senhas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <style>
 :root {
   --black:#050403;--black2:#080604;--ink:#0d0b08;--card:#100e0b;
@@ -663,7 +667,11 @@ footer{background:var(--black2);border-top:1px solid var(--border);padding:32px 
           <option value="Regional">Regional — R$ 997/mês</option>
         </select>
       </div>
-      <div class="form-group"><label class="form-label">Senha</label><input class="form-input" type="password" id="mr-senha" placeholder="Mínimo 6 caracteres"></div>
+      <div class="form-group">
+        <label class="form-label">Senha (8+ chars, maiúscula, número)</label>
+        <input class="form-input" type="password" id="mr-senha" placeholder="Digite uma senha forte">
+        <div id="mr-senha-feedback" style="display:none;"></div>
+      </div>
       <button class="btn-modal" onclick="doRegister()">Criar conta e acessar</button>
       <div class="modal-msg" id="mr-msg"></div>
     </div>
@@ -794,23 +802,90 @@ function switchModalTab(tab) {
   document.getElementById('modal-register').style.display = tab === 'register' ? 'block' : 'none';
 }
 
+// ═══════════════════════════════════════════════════════════════
+// 🔒 SEGURANÇA — Hash de Senhas + Validação
+// ═══════════════════════════════════════════════════════════════
+
 // ── AUTH ──
 const ADM = ['admin','apex.com'].join('@');
 let users = JSON.parse(localStorage.getItem('apex_users') || '[]');
-function saveUsers() { localStorage.setItem('apex_users', JSON.stringify(users)); }
+
+function saveUsers() {
+  localStorage.setItem('apex_users', JSON.stringify(users));
+}
+
+/**
+ * Validar força da senha
+ * Requer: 8+ chars, maiúscula, minúscula, número, sem espaços
+ */
+function validatePasswordStrength(password) {
+  const rules = {
+    minLength: password.length >= 8,
+    hasUppercase: /[A-Z]/.test(password),
+    hasLowercase: /[a-z]/.test(password),
+    hasNumber: /\d/.test(password),
+    noSpaces: !/\s/.test(password)
+  };
+
+  const passedRules = Object.values(rules).filter(Boolean).length;
+  const valid = passedRules >= 4; // Precisa passar em 4+ regras
+
+  return {
+    valid,
+    rules,
+    strength: passedRules <= 2 ? 'Muito fraca' : passedRules <= 3 ? 'Fraca' : 'Média ou melhor'
+  };
+}
 
 function doLogin() {
   const email = document.getElementById('ml-email').value.trim().toLowerCase();
   const senha = document.getElementById('ml-senha').value;
   const msg = document.getElementById('ml-msg');
   msg.className = 'modal-msg';
-  if (!email || !senha) { showMsg(msg,'Preencha e-mail e senha.','error'); return; }
-  if (email === ADM && senha === 'apex2025') { closeModal(); window.location.href = 'admin.html'; return; }
-  const user = users.find(u => u.email === email && u.senha === senha);
-  if (!user) { showMsg(msg,'E-mail ou senha incorretos.','error'); return; }
-  if (user.bloqueado) { showMsg(msg,'Acesso bloqueado.','error'); return; }
-  localStorage.setItem('apex_current', JSON.stringify(user));
-  closeModal(); window.location.href = 'apex-saude.html';
+
+  if (!email || !senha) {
+    showMsg(msg,'Preencha e-mail e senha.','error');
+    return;
+  }
+
+  // Admin hardcoded (demo)
+  if (email === ADM && CryptoJS.SHA256('apex2025').toString() === CryptoJS.SHA256(senha).toString()) {
+    localStorage.setItem('apex_current_user', JSON.stringify({ email, isAdmin: true, id: 'admin' }));
+    localStorage.setItem('apex_session_start', Date.now().toString());
+    closeModal();
+    window.location.href = 'admin.html';
+    return;
+  }
+
+  // Buscar user
+  const user = users.find(u => u.email === email);
+  if (!user) {
+    showMsg(msg,'E-mail ou senha incorretos.','error');
+    return;
+  }
+
+  // Verificar senha com hash (SHA-256)
+  const inputHash = CryptoJS.SHA256(senha).toString();
+  if (inputHash !== user.senha_hash) {
+    showMsg(msg,'E-mail ou senha incorretos.','error');
+    return;
+  }
+
+  if (user.bloqueado) {
+    showMsg(msg,'Acesso bloqueado.','error');
+    return;
+  }
+
+  // ✅ Login bem-sucedido
+  const safeUser = { id: user.id, nome: user.nome, email: user.email, municipio: user.municipio, plano: user.plano };
+  localStorage.setItem('apex_current_user', JSON.stringify(safeUser));
+  localStorage.setItem('apex_session_start', Date.now().toString());
+
+  showMsg(msg,'✓ Login bem-sucedido!','success');
+  setTimeout(() => {
+    closeModal();
+    window.location.href = 'apex-saude.html';
+  }, 800);
 }
 
 function doRegister() {
@@ -820,18 +895,97 @@ function doRegister() {
   const plano = document.getElementById('mr-plano').value;
   const senha = document.getElementById('mr-senha').value;
   const msg = document.getElementById('mr-msg');
+  const feedbackEl = document.getElementById('mr-senha-feedback');
+
   msg.className = 'modal-msg';
-  if (!nome||!email||!municipio||!senha) { showMsg(msg,'Preencha todos os campos.','error'); return; }
-  if (senha.length < 6) { showMsg(msg,'Senha mínima: 6 caracteres.','error'); return; }
-  if (email === ADM || users.find(u => u.email === email)) { showMsg(msg,'E-mail já cadastrado.','error'); return; }
-  const user = { nome, email, municipio, plano, senha, criado: new Date().toLocaleDateString('pt-BR'), bloqueado: false };
-  users.push(user); saveUsers();
-  localStorage.setItem('apex_current', JSON.stringify(user));
+
+  if (!nome || !email || !municipio || !senha) {
+    showMsg(msg,'Preencha todos os campos.','error');
+    return;
+  }
+
+  // 🔒 Validar força da senha
+  const pwdValidation = validatePasswordStrength(senha);
+  if (!pwdValidation.valid) {
+    showMsg(msg,'Senha fraca. Use 8+ chars, maiúscula, número.','error');
+    return;
+  }
+
+  if (email === ADM || users.find(u => u.email === email)) {
+    showMsg(msg,'E-mail já cadastrado.','error');
+    return;
+  }
+
+  // 🔒 Hash da senha com SHA-256
+  const user = {
+    id: Date.now().toString(),
+    nome,
+    email,
+    municipio,
+    plano,
+    senha_hash: CryptoJS.SHA256(senha).toString(), // ← HASH, não plaintext!
+    criado: new Date().toLocaleDateString('pt-BR'),
+    bloqueado: false
+  };
+
+  users.push(user);
+  saveUsers();
+
+  const safeUser = { id: user.id, nome: user.nome, email: user.email, municipio: user.municipio, plano: user.plano };
+  localStorage.setItem('apex_current_user', JSON.stringify(safeUser));
+  localStorage.setItem('apex_session_start', Date.now().toString());
+
   showMsg(msg,'✓ Conta criada! Redirecionando...','success');
-  setTimeout(() => { closeModal(); window.location.href = 'onboarding.html'; }, 1400);
+  setTimeout(() => {
+    closeModal();
+    window.location.href = 'onboarding.html';
+  }, 1400);
 }
 
-function showMsg(el, text, type) { el.textContent = text; el.className = 'modal-msg ' + type; }
+function showMsg(el, text, type) {
+  el.textContent = text;
+  el.className = 'modal-msg ' + type;
+}
+
+// Feedback de força de senha em tempo real
+window.addEventListener('DOMContentLoaded', () => {
+  const senhaInput = document.getElementById('mr-senha');
+  if (senhaInput) {
+    senhaInput.addEventListener('input', function() {
+      const feedbackEl = document.getElementById('mr-senha-feedback');
+      if (!feedbackEl) return;
+
+      const result = validatePasswordStrength(this.value);
+      feedbackEl.style.display = this.value ? 'block' : 'none';
+
+      if (!this.value) {
+        feedbackEl.innerHTML = '';
+        return;
+      }
+
+      const rulesHTML = Object.entries(result.rules).map(([rule, passed]) => {
+        const ruleNames = {
+          minLength: '8+ caracteres',
+          hasUppercase: 'Maiúscula (A-Z)',
+          hasLowercase: 'Minúscula (a-z)',
+          hasNumber: 'Número (0-9)',
+          noSpaces: 'Sem espaços'
+        };
+        const icon = passed ? '✓' : '✗';
+        const color = passed ? '#10b981' : '#ef4444';
+        return `<div style="font-size:11px;color:${color};margin:3px 0;">${icon} ${ruleNames[rule]}</div>`;
+      }).join('');
+
+      feedbackEl.innerHTML = rulesHTML;
+      feedbackEl.style.color = result.valid ? '#10b981' : '#ef4444';
+      feedbackEl.style.fontFamily = "'DM Mono', monospace";
+      feedbackEl.style.marginTop = '8px';
+      feedbackEl.style.padding = '8px';
+      feedbackEl.style.background = result.valid ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)';
+      feedbackEl.style.borderRadius = '4px';
+    });
+  }
+});
 
 // ── LGPD ──
 function aceitarLGPD() { localStorage.setItem('apex_lgpd','1'); document.getElementById('lgpd').style.display='none'; }
