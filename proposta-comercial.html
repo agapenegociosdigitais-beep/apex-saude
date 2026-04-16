@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elaborador de Propostas — ÁPEX Saúde</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+[data-theme="dark"]{--bg:#080604;--surface:#0f0d0a;--card:#141210;--border:#252018;--border2:#352e22;--text:#ede8df;--text2:#c8bfa8;--muted:#7a7060;--muted2:#504838;}
+[data-theme="light"]{--bg:#f9f7f4;--surface:#fff;--card:#fff;--border:#e8e2d8;--border2:#d0c8bc;--text:#1c1a16;--text2:#5a5448;--muted:#8c8070;--muted2:#b4a898;}
+:root{--gold:#c9a84c;--gold2:#e8c97a;--gold-dim:#c9a84c14;--gold-glow:#c9a84c28;--otimo:#10b981;--bom:#3b82f6;--suf:#f59e0b;--reg:#ef4444;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Lato',sans-serif;font-size:14px;min-height:100vh;padding-bottom:60px;transition:background .3s,color .3s;}
+
+/* TOPBAR */
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:200;}
+.topbar-back{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);text-decoration:none;text-transform:uppercase;letter-spacing:1.5px;opacity:.8;}
+.topbar-back:hover{opacity:1;}
+.topbar-logo{flex:1;display:flex;align-items:center;}
+.topbar-logo img{height:30px;width:auto;}
+.theme-btn{background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:15px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+
+/* LAYOUT */
+.content{padding:16px;}
+.sec-title{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin:20px 0 10px;display:flex;align-items:center;gap:8px;}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px;}
+
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.form-group{display:flex;flex-direction:column;gap:5px;}
+.form-group.full{grid-column:1/-1;}
+.form-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+.form-input,.form-select,.form-textarea{background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Lato',sans-serif;font-size:13px;padding:10px 12px;outline:none;transition:border-color .2s;width:100%;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--gold);}
+.form-select{appearance:none;cursor:pointer;}
+.form-textarea{min-height:60px;resize:vertical;}
+input[type=number]{-moz-appearance:textfield;}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
+
+/* BOTÕES */
+.btn-primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:8px;font-family:'DM Mono',monospace;font-size:10px;font-weight:700;padding:14px 20px;cursor:pointer;text-transform:uppercase;letter-spacing:2px;transition:opacity .15s;width:100%;margin-top:12px;}
+.btn-primary:hover{opacity:.88;}
+.btn-outline{background:none;border:1px solid var(--border2);border-radius:6px;font-family:'DM Mono',monospace;font-size:10px;color:var(--text2);padding:10px 16px;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:all .15s;}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+
+/* PLANOS GERADOS */
+.planos-grid{display:grid;gap:12px;}
+.plano-card{border-radius:12px;padding:18px;position:relative;overflow:hidden;cursor:pointer;transition:all .2s;border:2px solid transparent;}
+.plano-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.plano-card.essencial{background:var(--card);border-color:var(--border);}
+.plano-card.essencial::before{background:var(--muted);}
+.plano-card.pro{background:var(--card);border-color:var(--border2);}
+.plano-card.pro::before{background:linear-gradient(90deg,var(--gold),var(--gold2));}
+.plano-card.pro{box-shadow:0 0 0 1px var(--gold)33;}
+.plano-card.premium{background:var(--card);border-color:var(--border2);}
+.plano-card.premium::before{background:linear-gradient(90deg,#7c3aed,#a78bfa);}
+.plano-card.regional{background:var(--card);border-color:var(--border2);}
+.plano-card.regional::before{background:linear-gradient(90deg,var(--otimo),#34d399);}
+.plano-card.selected{border-color:var(--gold)!important;background:var(--gold-dim)!important;}
+.plano-badge{position:absolute;top:16px;right:16px;font-family:'DM Mono',monospace;font-size:8px;padding:3px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.5px;}
+.badge-recomendado{background:var(--gold-dim);color:var(--gold);border:1px solid var(--gold)44;}
+.badge-premium{background:#7c3aed22;color:#a78bfa;border:1px solid #7c3aed44;}
+.badge-regional{background:#10b98120;color:var(--otimo);border:1px solid #10b98140;}
+.plano-nome{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:4px;}
+.plano-desc{font-size:11px;color:var(--muted);margin-bottom:14px;line-height:1.5;}
+.plano-valores{display:grid;gap:6px;margin-bottom:14px;}
+.valor-row{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:var(--surface);border-radius:5px;font-size:12px;}
+.valor-label{color:var(--muted);}
+.valor-num{font-family:'DM Mono',monospace;font-weight:500;}
+.valor-num.destaque{color:var(--gold);font-size:14px;}
+.valor-num.positivo{color:var(--otimo);}
+.plano-itens{list-style:none;display:grid;gap:4px;margin-bottom:14px;}
+.plano-item{font-size:11px;color:var(--text2);display:flex;gap:6px;align-items:flex-start;}
+.plano-item::before{content:'✓';color:var(--gold);flex-shrink:0;margin-top:1px;}
+.plano-item.negativo::before{content:'—';color:var(--muted);}
+.plano-roi{background:var(--gold-dim);border:1px solid var(--gold)33;border-radius:6px;padding:10px 12px;font-size:11px;color:var(--text2);line-height:1.6;}
+.plano-roi strong{color:var(--gold);}
+
+/* PROPOSTA GERADA */
+.proposta-doc{background:#fff;color:#1a1a1a;border-radius:12px;overflow:hidden;margin-bottom:12px;}
+.prop-page{padding:32px;border-bottom:1px solid #e8e2d8;min-height:200px;}
+.prop-page:last-child{border-bottom:none;}
+.prop-capa{background:#080604;color:#ede8df;text-align:center;padding:48px 32px;}
+.prop-capa-logo{margin-bottom:24px;}
+.prop-capa-titulo{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--gold);margin-bottom:8px;}
+.prop-capa-sub{font-family:'DM Mono',monospace;font-size:11px;color:#7a7060;letter-spacing:3px;text-transform:uppercase;margin-bottom:32px;}
+.prop-capa-municipio{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:4px;}
+.prop-capa-data{font-family:'DM Mono',monospace;font-size:9px;color:#504838;letter-spacing:2px;margin-top:24px;}
+.prop-capa-num{font-family:'DM Mono',monospace;font-size:8px;color:#352e22;margin-top:4px;}
+
+.prop-section{margin-bottom:24px;}
+.prop-h1{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#080604;border-bottom:2px solid var(--gold);padding-bottom:8px;margin-bottom:16px;}
+.prop-h2{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:8px;}
+.prop-p{font-size:12px;line-height:1.8;color:#3a3530;margin-bottom:10px;}
+.prop-alert{border-radius:6px;padding:12px 16px;margin-bottom:10px;font-size:12px;line-height:1.6;}
+.prop-alert.vermelho{background:#fef2f2;border-left:4px solid #ef4444;color:#991b1b;}
+.prop-alert.verde{background:#f0fdf4;border-left:4px solid #10b981;color:#065f46;}
+.prop-alert.dourado{background:#fffbeb;border-left:4px solid #c9a84c;color:#7c5a00;}
+.prop-table{width:100%;border-collapse:collapse;margin-bottom:12px;font-size:12px;}
+.prop-table th{background:#080604;color:#c9a84c;font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:1px;padding:8px 10px;text-align:left;}
+.prop-table td{padding:8px 10px;border-bottom:1px solid #e8e2d8;color:#3a3530;}
+.prop-table tr:last-child td{border-bottom:none;}
+.prop-table tr.total td{font-weight:700;color:#080604;background:#f9f7f4;}
+.prop-timeline{display:grid;gap:8px;}
+.prop-step{display:flex;gap:12px;align-items:flex-start;}
+.prop-step-num{width:28px;height:28px;border-radius:50%;background:#080604;color:#c9a84c;font-family:'DM Mono',monospace;font-size:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.prop-step-body{}
+.prop-step-title{font-size:12px;font-weight:700;margin-bottom:2px;}
+.prop-step-desc{font-size:11px;color:#7a7060;line-height:1.5;}
+.prop-assinatura{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px;}
+.prop-ass-box{border-top:1px solid #1a1a1a;padding-top:8px;}
+.prop-ass-label{font-family:'DM Mono',monospace;font-size:8px;color:#7a7060;text-transform:uppercase;letter-spacing:1px;}
+.prop-ass-name{font-size:12px;font-weight:700;margin-top:4px;}
+.prop-ass-cargo{font-size:11px;color:#7a7060;}
+.prop-rodape{text-align:center;font-family:'DM Mono',monospace;font-size:8px;color:#b4a898;padding-top:16px;border-top:1px solid #e8e2d8;letter-spacing:1px;}
+.prop-numero-grande{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;text-align:center;padding:8px;color:#ef4444;}
+.prop-numero-grande.verde{color:#10b981;}
+.prop-numero-grande.gold{color:#c9a84c;}
+
+/* CONTROLES PROPOSTA */
+.prop-nav{display:flex;align-items:center;gap:8px;padding:12px 0;}
+.prop-nav-btn{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:7px 14px;font-family:'DM Mono',monospace;font-size:9px;color:var(--text2);cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:all .15s;}
+.prop-nav-btn:hover{border-color:var(--gold);color:var(--gold);}
+.prop-nav-info{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);flex:1;text-align:center;}
+.acoes-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.acoes-row .btn-outline{flex:1;min-width:120px;}
+
+/* HISTORICO */
+.hist-item{background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:12px;display:flex;gap:12px;align-items:center;margin-bottom:7px;cursor:pointer;transition:all .15s;}
+.hist-item:hover{border-color:var(--border2);}
+.hist-info{flex:1;}
+.hist-municipio{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;}
+.hist-plano{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+.hist-data{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);}
+.hist-valor{font-family:'DM Mono',monospace;font-size:13px;color:var(--gold);font-weight:500;}
+.hist-status{font-family:'DM Mono',monospace;font-size:8px;padding:2px 7px;border-radius:3px;text-transform:uppercase;}
+.status-rascunho{background:var(--border);color:var(--muted);}
+.status-enviada{background:#3b82f620;color:var(--bom);border:1px solid #3b82f640;}
+.status-analise{background:#f59e0b20;color:var(--suf);border:1px solid #f59e0b40;}
+.status-aceita{background:#10b98120;color:var(--otimo);border:1px solid #10b98140;}
+.status-recusada{background:#ef444420;color:var(--reg);border:1px solid #ef444440;}
+
+/* TABS */
+.tabs{display:flex;gap:2px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:3px;margin-bottom:16px;}
+.tab{flex:1;padding:8px;font-family:'DM Mono',monospace;font-size:9px;text-align:center;text-transform:uppercase;letter-spacing:1px;border-radius:6px;cursor:pointer;color:var(--muted);border:none;background:none;transition:all .15s;}
+.tab.active{background:var(--gold);color:#000;font-weight:700;}
+
+/* EMAIL */
+.email-box{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;font-size:12px;line-height:1.8;color:var(--text2);white-space:pre-wrap;margin-bottom:10px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card);border:1px solid var(--gold);border-radius:8px;padding:10px 18px;font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);z-index:9999;transition:transform .3s;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+@media print{
+  .topbar,.tabs,.prop-nav,.acoes-row,.btn-primary,.sec-title{display:none!important;}
+  .proposta-doc{border-radius:0;box-shadow:none;}
+  .prop-capa{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  body{background:#fff!important;}
+}
+@media(min-width:600px){
+  .planos-grid{grid-template-columns:repeat(2,1fr);}
+  .form-grid{grid-template-columns:repeat(3,1fr);}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="topbar-back" href="admin.html">← Admin</a>
+  <div class="topbar-logo"><img src="logo-nav.png" alt="ÁPEX Saúde"></div>
+  <button class="theme-btn" id="theme-toggle">🌙</button>
+</div>
+
+<div class="content">
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('elaborar')">🧮 Elaborar Proposta</button>
+    <button class="tab" onclick="switchTab('historico')">📋 Histórico</button>
+  </div>
+
+  <!-- ══ ABA ELABORAR ══ -->
+  <div id="tab-elaborar">
+
+    <div class="sec-title">📍 Dados do município</div>
+    <div class="card">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Nome do município</label>
+          <input class="form-input" type="text" id="municipio" placeholder="Ex: Belterra">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Estado (UF)</label>
+          <select class="form-select" id="uf">
+            <option value="PA">PA — Pará</option>
+            <option value="AM">AM — Amazonas</option>
+            <option value="MA">MA — Maranhão</option>
+            <option value="TO">TO — Tocantins</option>
+            <option value="RO">RO — Rondônia</option>
+            <option value="AC">AC — Acre</option>
+            <option value="RR">RR — Roraima</option>
+            <option value="AP">AP — Amapá</option>
+            <option value="MT">MT — Mato Grosso</option>
+            <option value="GO">GO — Goiás</option>
+            <option value="outro">Outro estado</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">População estimada</label>
+          <input class="form-input" type="number" id="populacao" placeholder="Ex: 19000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nº equipes eSF/eAP</label>
+          <input class="form-input" type="number" id="esf" placeholder="Ex: 5" min="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nº equipes eSB</label>
+          <input class="form-input" type="number" id="esb" placeholder="Ex: 2" min="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nº equipes eMulti</label>
+          <input class="form-input" type="number" id="emulti" placeholder="Ex: 1" min="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Classificação atual estimada</label>
+          <select class="form-select" id="classificacao">
+            <option value="regular">Regular (nota ≤ 2,5)</option>
+            <option value="suficiente">Suficiente (2,6–4,9)</option>
+            <option value="bom" selected>Bom (5,0–7,5)</option>
+            <option value="otimo">Ótimo (> 7,5)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Secretário de Saúde</label>
+          <input class="form-input" type="text" id="secretario" placeholder="Nome completo">
+        </div>
+        <div class="form-group">
+          <label class="form-label">E-mail do secretário</label>
+          <input class="form-input" type="email" id="email-sec" placeholder="secretario@municipio.gov.br">
+        </div>
+      </div>
+
+      <div class="sec-title" style="margin-top:16px;">👤 Dados do consultor</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Seu nome</label>
+          <input class="form-input" type="text" id="consultor" placeholder="Dr. Ben" value="Dr. Ben">
+        </div>
+        <div class="form-group">
+          <label class="form-label">CRO</label>
+          <input class="form-input" type="text" id="cro" placeholder="CRO-PA XXXXX">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Telefone / WhatsApp</label>
+          <input class="form-input" type="text" id="telefone" placeholder="(93) 99999-9999">
+        </div>
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input class="form-input" type="email" id="email-consultor" placeholder="seu@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">CNPJ</label>
+          <input class="form-input" type="text" id="cnpj" placeholder="XX.XXX.XXX/0001-XX">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Empresa</label>
+          <input class="form-input" type="text" id="empresa" placeholder="ÁPEX Saúde Consultoria Ltda" value="ÁPEX Saúde Consultoria Ltda">
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="gerarPlanos()">🧮 Gerar 4 modelos de proposta →</button>
+    </div>
+
+    <!-- PLANOS GERADOS -->
+    <div id="planos-wrap" style="display:none;">
+      <div class="sec-title">💼 Selecione o modelo de proposta</div>
+      <div class="planos-grid" id="planos-grid"></div>
+
+      <!-- AJUSTE FINO -->
+      <div class="sec-title">🎛️ Ajuste fino dos valores</div>
+      <div class="card">
+        <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Ajuste os valores do modelo selecionado antes de gerar a proposta final.</p>
+        <div class="form-grid" id="ajuste-grid"></div>
+        <button class="btn-primary" onclick="gerarProposta()">📄 Gerar Proposta Completa →</button>
+      </div>
+    </div>
+
+    <!-- PROPOSTA GERADA -->
+    <div id="proposta-wrap" style="display:none;">
+      <div class="sec-title">📄 Proposta gerada</div>
+
+      <div class="acoes-row">
+        <button class="btn-outline" onclick="imprimirProposta()">🖨️ Imprimir / PDF</button>
+        <button class="btn-outline" onclick="gerarEmail()">📧 Gerar e-mail</button>
+        <button class="btn-outline" onclick="salvarProposta()">💾 Salvar no histórico</button>
+        <button class="btn-outline" onclick="voltarPlanos()">← Ajustar valores</button>
+      </div>
+
+      <!-- NAVEGAÇÃO ENTRE PÁGINAS -->
+      <div class="prop-nav">
+        <button class="prop-nav-btn" onclick="navProp(-1)">← Anterior</button>
+        <span class="prop-nav-info" id="nav-info">Página 1 de 7</span>
+        <button class="prop-nav-btn" onclick="navProp(1)">Próxima →</button>
+      </div>
+
+      <div id="proposta-doc-wrap"></div>
+
+      <!-- EMAIL GERADO -->
+      <div id="email-wrap" style="display:none;">
+        <div class="sec-title">📧 E-mail gerado</div>
+        <div class="email-box" id="email-content"></div>
+        <button class="btn-outline" onclick="copiarEmail()">📋 Copiar e-mail</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ ABA HISTÓRICO ══ -->
+  <div id="tab-historico" style="display:none;">
+    <div class="sec-title">📋 Propostas salvas</div>
+    <div id="historico-wrap">
+      <div style="text-align:center;padding:32px;color:var(--muted);font-size:12px;">
+        Nenhuma proposta salva ainda.<br>Elabore e salve sua primeira proposta.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── TEMA ──
+const themeBtn = document.getElementById('theme-toggle');
+let isDark = localStorage.getItem('apex_theme') !== 'light';
+document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+themeBtn.textContent = isDark ? '🌙' : '☀️';
+themeBtn.addEventListener('click', () => {
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  themeBtn.textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('apex_theme', isDark ? 'dark' : 'light');
+});
+
+// ── TABS ──
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-elaborar').style.display = tab === 'elaborar' ? 'block' : 'none';
+  document.getElementById('tab-historico').style.display = tab === 'historico' ? 'block' : 'none';
+  if (tab === 'historico') renderHistorico();
+}
+
+// ── TABELA DE PREÇOS (baseada na análise de mercado real) ──
+const PRECO = {
+  implantacao: { micro: 6000, pequeno: 12000, medio: 22000, grande: 40000 },
+  sistema: { micro: 1200, pequeno: 1800, medio: 2800, grande: 3500 },
+  consultoria_basica: { micro: 1800, pequeno: 2500, medio: 4000, grande: 6000 },
+  consultoria_completa: { micro: 3000, pequeno: 4500, medio: 7000, grande: 10000 },
+};
+
+const REPASSE = { regular: 2000, suficiente: 4000, bom: 6000, otimo: 8000 };
+
+let dadosMunicipio = {};
+let planoSelecionado = null;
+let valoresAjustados = {};
+let paginaAtual = 0;
+let paginas = [];
+
+// ── CALCULAR PORTE ──
+function calcularPorte(pop) {
+  if (pop <= 15000) return 'micro';
+  if (pop <= 40000) return 'pequeno';
+  if (pop <= 100000) return 'medio';
+  return 'grande';
+}
+
+function nomePorte(p) {
+  return { micro: 'Micro (<15 mil hab.)', pequeno: 'Pequeno (15–40 mil hab.)', medio: 'Médio (40–100 mil hab.)', grande: 'Grande (>100 mil hab.)' }[p];
+}
+
+// ── CALCULAR ROI ──
+function calcularROI(dados, planoNome) {
+  const totalEq = dados.esf + dados.esb + dados.emulti;
+  const repasseAtual = totalEq * REPASSE[dados.classificacao];
+  const repasseOtimo = totalEq * 8000;
+  const gap = repasseOtimo - repasseAtual;
+  const gapAnual = gap * 12;
+
+  let investAnual = 0;
+  if (planoNome === 'essencial') investAnual = (valoresAjustados.implantacao || 0) + (valoresAjustados.mensal || 0) * 12;
+  if (planoNome === 'pro') investAnual = (valoresAjustados.implantacao || 0) + (valoresAjustados.mensal || 0) * 12;
+  if (planoNome === 'premium') investAnual = (valoresAjustados.implantacao || 0) + (valoresAjustados.mensal || 0) * 12;
+  if (planoNome === 'regional') investAnual = (valoresAjustados.implantacao || 0) + (valoresAjustados.mensal || 0) * 12;
+
+  const roi = investAnual > 0 ? (gapAnual / investAnual).toFixed(1) : '∞';
+  const payback = investAnual > 0 && gap > 0 ? Math.ceil(investAnual / gap) : 999;
+
+  return { repasseAtual, repasseOtimo, gap, gapAnual, investAnual, roi, payback };
+}
+
+// ── GERAR PLANOS ──
+function gerarPlanos() {
+  const municipio = document.getElementById('municipio').value.trim();
+  if (!municipio) { showToast('Informe o nome do município'); return; }
+
+  const pop = parseInt(document.getElementById('populacao').value) || 10000;
+  const esf = parseInt(document.getElementById('esf').value) || 0;
+  const esb = parseInt(document.getElementById('esb').value) || 0;
+  const emulti = parseInt(document.getElementById('emulti').value) || 0;
+
+  if (esf + esb + emulti === 0) { showToast('Informe pelo menos 1 equipe'); return; }
+
+  const porte = calcularPorte(pop);
+
+  dadosMunicipio = {
+    municipio,
+    uf: document.getElementById('uf').value,
+    populacao: pop,
+    esf, esb, emulti,
+    classificacao: document.getElementById('classificacao').value,
+    secretario: document.getElementById('secretario').value || 'Secretário(a) de Saúde',
+    emailSec: document.getElementById('email-sec').value,
+    consultor: document.getElementById('consultor').value || 'Dr. Ben',
+    cro: document.getElementById('cro').value,
+    telefone: document.getElementById('telefone').value,
+    emailConsultor: document.getElementById('email-consultor').value,
+    cnpj: document.getElementById('cnpj').value,
+    empresa: document.getElementById('empresa').value || 'ÁPEX Saúde Consultoria Ltda',
+    porte,
+    totalEquipes: esf + esb + emulti,
+  };
+
+  const p = PRECO;
+  const impl = p.implantacao[porte];
+  const sis = p.sistema[porte];
+  const cb = p.consultoria_basica[porte];
+  const cc = p.consultoria_completa[porte];
+
+  const planos = [
+    {
+      id: 'essencial',
+      cls: 'essencial',
+      nome: 'ÁPEX Essencial',
+      desc: 'Sistema completo + suporte básico. Ideal para municípios que querem começar sem alto investimento.',
+      badge: null,
+      implantacao: impl * 0.75,
+      mensal: sis,
+      total_mensal: sis,
+      itens: [
+        'Acesso completo ao ÁPEX Saúde',
+        '12 dashboards individuais por profissional',
+        'IA gerando planos automáticos mensalmente',
+        'Ciclo PDCA integrado',
+        'Simulador financeiro em tempo real',
+        'Suporte via WhatsApp (horário comercial)',
+        'Atualizações incluídas',
+      ],
+      nao_inclui: ['Consultoria mensal ativa', 'Visitas presenciais', 'Relatório para secretário'],
+    },
+    {
+      id: 'pro',
+      cls: 'pro',
+      nome: 'ÁPEX Pro',
+      desc: 'O mais recomendado. Sistema + consultoria mensal ativa + 1 visita presencial por quadrimestre.',
+      badge: 'Recomendado',
+      badge_cls: 'badge-recomendado',
+      implantacao: impl,
+      mensal: sis + cb,
+      total_mensal: sis + cb,
+      itens: [
+        'Tudo do plano Essencial',
+        '1 reunião online mensal com coordenadores',
+        'Análise dos indicadores + recomendações',
+        '1 visita presencial por quadrimestre',
+        'Relatório executivo mensal',
+        'Preparação para fechamento do Siaps',
+        'Suporte prioritário',
+      ],
+      nao_inclui: ['Visitas mensais presenciais', 'Relatório para secretário mensal'],
+    },
+    {
+      id: 'premium',
+      cls: 'premium',
+      nome: 'ÁPEX Premium',
+      desc: 'Gestão completa. Você ativo todo mês como consultor estratégico — o secretário recebe relatório mensal.',
+      badge: 'Premium',
+      badge_cls: 'badge-premium',
+      implantacao: impl * 1.3,
+      mensal: sis + cc,
+      total_mensal: sis + cc,
+      itens: [
+        'Tudo do plano Pro',
+        '2 reuniões online mensais',
+        '1 visita presencial mensal',
+        'Relatório mensal para o secretário de saúde',
+        'Gestão dos ciclos PDCA de cada equipe',
+        'Análise individual de todos os profissionais',
+        'Suporte VIP — resposta em até 2h',
+        'Relatório quadrimestral para o prefeito',
+      ],
+      nao_inclui: [],
+    },
+    {
+      id: 'regional',
+      cls: 'regional',
+      nome: 'ÁPEX Regional',
+      desc: 'Para consórcios ou gestão de múltiplos municípios. Visão consolidada de toda a região.',
+      badge: 'Consórcio',
+      badge_cls: 'badge-regional',
+      implantacao: impl * 2.5,
+      mensal: (sis + cc) * 2.2,
+      total_mensal: (sis + cc) * 2.2,
+      itens: [
+        'Tudo do plano Premium',
+        'Múltiplos municípios na mesma plataforma',
+        'Dashboard regional consolidado',
+        'Ranking entre municípios',
+        'Relatório para a secretaria estadual',
+        'Capacitação presencial trimestral',
+        'Assessoria para editais e licitações',
+        'Suporte dedicado 7 dias/semana',
+      ],
+      nao_inclui: [],
+    },
+  ];
+
+  // Renderizar cards dos planos
+  const grid = document.getElementById('planos-grid');
+  grid.innerHTML = planos.map(pl => {
+    const repasseAtual = dadosMunicipio.totalEquipes * REPASSE[dadosMunicipio.classificacao];
+    const repasseOtimo = dadosMunicipio.totalEquipes * 8000;
+    const gap = repasseOtimo - repasseAtual;
+    const investAnual = pl.implantacao + pl.mensal * 12;
+    const roi = gap > 0 ? (gap * 12 / investAnual).toFixed(1) : '—';
+
+    return `<div class="plano-card ${pl.cls}" id="plano-${pl.id}" onclick="selecionarPlano('${pl.id}')">
+      ${pl.badge ? `<span class="plano-badge ${pl.badge_cls}">${pl.badge}</span>` : ''}
+      <div class="plano-nome">${pl.nome}</div>
+      <div class="plano-desc">${pl.desc}</div>
+      <div class="plano-valores">
+        <div class="valor-row">
+          <span class="valor-label">Implantação (único)</span>
+          <span class="valor-num">${fmt(pl.implantacao)}</span>
+        </div>
+        <div class="valor-row">
+          <span class="valor-label">Mensal</span>
+          <span class="valor-num destaque">${fmt(pl.mensal)}/mês</span>
+        </div>
+        <div class="valor-row">
+          <span class="valor-label">Total ano 1</span>
+          <span class="valor-num">${fmt(pl.implantacao + pl.mensal * 12)}</span>
+        </div>
+        <div class="valor-row">
+          <span class="valor-label">ROI estimado</span>
+          <span class="valor-num positivo">${roi}x</span>
+        </div>
+      </div>
+      <ul class="plano-itens">
+        ${pl.itens.map(i => `<li class="plano-item">${i}</li>`).join('')}
+        ${pl.nao_inclui.map(i => `<li class="plano-item negativo">${i}</li>`).join('')}
+      </ul>
+      <div class="plano-roi">
+        Gap potencial do município: <strong>${fmt(gap)}/mês</strong><br>
+        Seu investimento anual: <strong>${fmt(investAnual)}</strong><br>
+        ROI: <strong>${roi}x em repasse adicional</strong>
+      </div>
+    </div>`;
+  }).join('');
+
+  window._planos = planos;
+  document.getElementById('planos-wrap').style.display = 'block';
+  document.getElementById('proposta-wrap').style.display = 'none';
+  document.getElementById('planos-wrap').scrollIntoView({ behavior: 'smooth' });
+}
+
+function selecionarPlano(id) {
+  document.querySelectorAll('.plano-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('plano-' + id).classList.add('selected');
+  planoSelecionado = window._planos.find(p => p.id === id);
+
+  // Preencher ajuste fino
+  const grid = document.getElementById('ajuste-grid');
+  valoresAjustados = {
+    implantacao: planoSelecionado.implantacao,
+    mensal: planoSelecionado.mensal,
+    vigencia: 12,
+  };
+  grid.innerHTML = `
+    <div class="form-group">
+      <label class="form-label">Implantação (R$)</label>
+      <input class="form-input" type="number" id="aj-impl" value="${Math.round(planoSelecionado.implantacao)}" oninput="valoresAjustados.implantacao=parseFloat(this.value)||0">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Mensalidade (R$)</label>
+      <input class="form-input" type="number" id="aj-men" value="${Math.round(planoSelecionado.mensal)}" oninput="valoresAjustados.mensal=parseFloat(this.value)||0">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Vigência (meses)</label>
+      <select class="form-select" id="aj-vig" onchange="valoresAjustados.vigencia=parseInt(this.value)">
+        <option value="4">4 meses (quadrimestral)</option>
+        <option value="6">6 meses (semestral)</option>
+        <option value="12" selected>12 meses (anual)</option>
+        <option value="24">24 meses (bienal)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Validade da proposta</label>
+      <select class="form-select" id="aj-val">
+        <option value="15">15 dias</option>
+        <option value="30" selected>30 dias</option>
+        <option value="60">60 dias</option>
+      </select>
+    </div>
+    <div class="form-group full">
+      <label class="form-label">Observações adicionais (opcional)</label>
+      <textarea class="form-textarea" id="aj-obs" placeholder="Ex: Desconto especial aplicado por ser município-piloto"></textarea>
+    </div>
+  `;
+}
+
+// ── GERAR PROPOSTA COMPLETA ──
+function gerarProposta() {
+  if (!planoSelecionado) { showToast('Selecione um modelo de proposta'); return; }
+
+  const d = dadosMunicipio;
+  const impl = valoresAjustados.implantacao;
+  const men = valoresAjustados.mensal;
+  const vig = valoresAjustados.vigencia;
+  const val = document.getElementById('aj-val')?.value || '30';
+  const obs = document.getElementById('aj-obs')?.value || '';
+  const totalContrato = impl + men * vig;
+
+  const repasseAtual = d.totalEquipes * REPASSE[d.classificacao];
+  const repasseOtimo = d.totalEquipes * 8000;
+  const gap = repasseOtimo - repasseAtual;
+  const gapAnual = gap * 12;
+  const roi = gapAnual > 0 ? (gapAnual / (impl + men * 12)).toFixed(1) : '—';
+  const payback = gap > 0 ? Math.ceil((impl + men * 12) / (gap * 12) * 12) : '—';
+  const hoje = new Date().toLocaleDateString('pt-BR');
+  const propNum = 'APEX-' + new Date().getFullYear() + '-' + String(Date.now()).slice(-4);
+  const classLabel = { regular: 'REGULAR', suficiente: 'SUFICIENTE', bom: 'BOM', otimo: 'ÓTIMO' }[d.classificacao];
+
+  // Texto de argumento
+  const argumento = `Com ${d.totalEquipes} ${d.totalEquipes === 1 ? 'equipe' : 'equipes'} na classificação ${classLabel}, o município de ${d.municipio} recebe atualmente R$ ${fmt(repasseAtual)}/mês em incentivo de qualidade do governo federal. O potencial máximo, com todas as equipes classificadas como ÓTIMO, é de R$ ${fmt(repasseOtimo)}/mês — uma diferença de R$ ${fmt(gap)}/mês, ou R$ ${fmt(gapAnual)}/ano. O ÁPEX Saúde foi desenvolvido para eliminar esse gap, com resultado documentado e auditável via ciclo PDCA.`;
+
+  paginas = [
+    // PÁGINA 1 — CAPA
+    `<div class="prop-page prop-capa">
+      <div class="prop-capa-logo"><img src="logo-full.png" alt="ÁPEX Saúde" style="height:70px;width:auto;" onerror="this.style.display='none'"></div>
+      <div style="color:#c9a84c;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:32px;">Consultoria em Atenção Primária à Saúde</div>
+      <div class="prop-capa-titulo">PROPOSTA COMERCIAL</div>
+      <div class="prop-capa-sub">${planoSelecionado.nome}</div>
+      <div class="prop-capa-municipio">Município de ${d.municipio} — ${d.uf}</div>
+      <div style="font-size:13px;color:#7a7060;margin-top:8px;">${d.populacao.toLocaleString('pt-BR')} habitantes · ${d.totalEquipes} equipes de saúde</div>
+      <div class="prop-capa-data">Emitida em ${hoje}</div>
+      <div class="prop-capa-num">Nº ${propNum} · Válida por ${val} dias</div>
+    </div>`,
+
+    // PÁGINA 2 — O PROBLEMA
+    `<div class="prop-page">
+      <div class="prop-section">
+        <div class="prop-h1">O desafio financeiro de ${d.municipio}</div>
+        <div class="prop-alert vermelho">
+          <strong>⚠️ SITUAÇÃO ATUAL</strong><br>
+          Com ${d.totalEquipes} equipe${d.totalEquipes>1?'s':''} classificada${d.totalEquipes>1?'s':''} como <strong>${classLabel}</strong>, o município recebe<br>
+          <div class="prop-numero-grande">${fmt(repasseAtual)}<span style="font-size:14px;font-weight:400">/mês</span></div>
+          em Componente de Qualidade do cofinanciamento federal (NT 6/2025).
+        </div>
+        <div class="prop-alert verde">
+          <strong>✅ POTENCIAL MÁXIMO (Classificação ÓTIMO)</strong><br>
+          Com todas as equipes em ÓTIMO, o município receberia<br>
+          <div class="prop-numero-grande verde">${fmt(repasseOtimo)}<span style="font-size:14px;font-weight:400">/mês</span></div>
+        </div>
+        <div class="prop-alert dourado">
+          <strong>💰 O QUE ESTÁ EM JOGO</strong><br>
+          Diferença mensal: <strong>${fmt(gap)}</strong> · Diferença anual: <strong>${fmt(gapAnual)}</strong><br>
+          Em 3 anos sem melhorar: <strong>${fmt(gapAnual * 3)}</strong> de repasse federal não recebido.
+        </div>
+        <div class="prop-p">A partir de janeiro de 2026, o período de transição encerrou. Todos os municípios agora recebem conforme seu desempenho REAL nos 15 indicadores da Portaria GM/MS 3.493/2024. Não existe mais "BOM garantido" para todos — apenas quem trabalha com método e monitoramento contínuo mantém a classificação.</div>
+      </div>
+    </div>`,
+
+    // PÁGINA 3 — A SOLUÇÃO
+    `<div class="prop-page">
+      <div class="prop-section">
+        <div class="prop-h1">A solução: ÁPEX Saúde</div>
+        <div class="prop-p">O ÁPEX Saúde é uma plataforma de gestão de indicadores da Atenção Primária à Saúde desenvolvida por profissionais com mais de 8 anos de atuação direta em UBS. Não é um sistema genérico de dashboard — é uma ferramenta construída por quem conhece a realidade da ponta.</div>
+        <table class="prop-table">
+          <thead><tr><th>Funcionalidade</th><th>Concorrentes</th><th>ÁPEX Saúde</th></tr></thead>
+          <tbody>
+            <tr><td>Monitoramento dos 15 indicadores</td><td>✓</td><td>✓</td></tr>
+            <tr><td>Dashboard por tipo de equipe</td><td>✓</td><td>✓</td></tr>
+            <tr><td>Dashboard individual por profissional (12 perfis)</td><td>✗</td><td>✓ Exclusivo</td></tr>
+            <tr><td>IA gerando plano de melhoria automático</td><td>✗</td><td>✓ Exclusivo</td></tr>
+            <tr><td>Ciclo PDCA integrado (P→D→C→A)</td><td>✗</td><td>✓ Exclusivo</td></tr>
+            <tr><td>Simulador financeiro de repasse federal</td><td>✗</td><td>✓ Exclusivo</td></tr>
+            <tr><td>Modo reunião de equipe automático</td><td>✗</td><td>✓ Exclusivo</td></tr>
+            <tr><td>Sistema de gamificação e conquistas</td><td>✗</td><td>✓ Exclusivo</td></tr>
+          </tbody>
+        </table>
+        <div class="prop-p" style="font-size:11px;color:#7a7060;">Comparativo com base em funcionalidades públicas de IDS Saúde, P2 Saúde e eSUS Feedback (abril/2026).</div>
+      </div>
+    </div>`,
+
+    // PÁGINA 4 — INVESTIMENTO E ROI
+    `<div class="prop-page">
+      <div class="prop-section">
+        <div class="prop-h1">Investimento e retorno</div>
+        <div class="prop-h2">Plano ${planoSelecionado.nome} — ${d.municipio}/${d.uf}</div>
+        <table class="prop-table">
+          <thead><tr><th>Item</th><th>Periodicidade</th><th>Valor</th></tr></thead>
+          <tbody>
+            <tr><td>Implantação e treinamento inicial</td><td>Pagamento único</td><td><strong>${fmt(impl)}</strong></td></tr>
+            <tr><td>Sistema ÁPEX Saúde + IA</td><td>Mensal</td><td>${fmt(men)}/mês</td></tr>
+            ${planoSelecionado.id !== 'essencial' ? `<tr><td>Consultoria ativa mensal</td><td>Mensal</td><td>Incluso</td></tr>` : ''}
+            <tr class="total"><td colspan="2">Total do contrato (${vig} meses)</td><td>${fmt(totalContrato)}</td></tr>
+          </tbody>
+        </table>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:16px 0;">
+          <div class="prop-alert dourado" style="text-align:center;">
+            <div style="font-size:10px;color:#7c5a00;margin-bottom:4px;">ROI estimado</div>
+            <div style="font-size:28px;font-weight:700;font-family:'Playfair Display',serif;color:#c9a84c;">${roi}x</div>
+            <div style="font-size:10px;color:#7c5a00;">em repasse adicional</div>
+          </div>
+          <div class="prop-alert verde" style="text-align:center;">
+            <div style="font-size:10px;color:#065f46;margin-bottom:4px;">Payback estimado</div>
+            <div style="font-size:28px;font-weight:700;font-family:'Playfair Display',serif;color:#10b981;">${payback === 999 ? '—' : payback + ' meses'}</div>
+          </div>
+          <div class="prop-alert vermelho" style="text-align:center;">
+            <div style="font-size:10px;color:#991b1b;margin-bottom:4px;">Perda anual atual</div>
+            <div style="font-size:20px;font-weight:700;font-family:'Playfair Display',serif;color:#ef4444;">${fmt(gapAnual)}</div>
+          </div>
+        </div>
+        <div class="prop-alert dourado"><strong>🎯 Argumento objetivo:</strong> ${argumento}</div>
+        ${obs ? `<div class="prop-alert" style="background:#f9f7f4;border-left:4px solid #c9a84c;color:#3a3530;"><strong>Observações:</strong> ${obs}</div>` : ''}
+      </div>
+    </div>`,
+
+    // PÁGINA 5 — COMO FUNCIONA
+    `<div class="prop-page">
+      <div class="prop-section">
+        <div class="prop-h1">Como funciona — Linha do tempo</div>
+        <div class="prop-timeline">
+          <div class="prop-step"><div class="prop-step-num">1</div><div class="prop-step-body"><div class="prop-step-title">Mês 1 — Implantação e treinamento</div><div class="prop-step-desc">Configuração do ÁPEX para o município, treinamento de todos os profissionais por perfil (médico, enfermeiro, dentista, ACS, eMulti, coordenador), primeira coleta de dados e estabelecimento da linha de base.</div></div></div>
+          <div class="prop-step"><div class="prop-step-num">2</div><div class="prop-step-body"><div class="prop-step-title">Mês 2 — Primeiros dados reais</div><div class="prop-step-desc">Equipes usando o sistema diariamente. IA começa a gerar planos de melhoria por profissional. Coordenadores com visão consolidada de todos os indicadores em tempo real.</div></div></div>
+          <div class="prop-step"><div class="prop-step-num">3</div><div class="prop-step-body"><div class="prop-step-title">Mês 3 — Primeiros ciclos PDCA em execução</div><div class="prop-step-desc">Cada profissional acompanhando seu plano de ação. Sistema rastreando prazos e progresso. Reunião de equipe com apresentação automática gerada pelo ÁPEX.</div></div></div>
+          <div class="prop-step"><div class="prop-step-num">4</div><div class="prop-step-body"><div class="prop-step-title">Mês 4 — Primeira avaliação real (fechamento Siaps)</div><div class="prop-step-desc">Primeira avaliação do quadrimestre com o sistema ativo. Dados organizados, registros completos, equipe preparada para o fechamento. Resultado documentado e auditável.</div></div></div>
+          <div class="prop-step"><div class="prop-step-num">5</div><div class="prop-step-body"><div class="prop-step-title">Meses 5–12 — Melhoria contínua</div><div class="prop-step-desc">Cada quadrimestre com resultados melhores que o anterior. Ciclos PDCA gerando aprendizado institucional. Equipes engajadas com gamificação. Meta: classificação ÓTIMO sustentável.</div></div></div>
+        </div>
+      </div>
+    </div>`,
+
+    // PÁGINA 6 — CONDIÇÕES
+    `<div class="prop-page">
+      <div class="prop-section">
+        <div class="prop-h1">Condições comerciais</div>
+        <table class="prop-table">
+          <tbody>
+            <tr><td><strong>Forma de contratação</strong></td><td>Inexigibilidade de licitação — Art. 74, III, Lei 14.133/2021 (serviço técnico especializado singular)</td></tr>
+            <tr><td><strong>Vigência</strong></td><td>${vig} meses, com renovação automática mediante aditivo</td></tr>
+            <tr><td><strong>Forma de pagamento</strong></td><td>Implantação: à vista na assinatura. Mensalidade: até o dia 10 de cada mês</td></tr>
+            <tr><td><strong>Cancelamento</strong></td><td>30 dias de aviso prévio por escrito</td></tr>
+            <tr><td><strong>Suporte</strong></td><td>WhatsApp em horário comercial — resposta em até ${planoSelecionado.id === 'premium' || planoSelecionado.id === 'regional' ? '2' : '4'} horas úteis</td></tr>
+            <tr><td><strong>Atualizações</strong></td><td>Incluídas sem custo adicional durante a vigência</td></tr>
+            <tr><td><strong>LGPD</strong></td><td>Plataforma em conformidade total com a Lei Geral de Proteção de Dados</td></tr>
+            <tr><td><strong>Validade desta proposta</strong></td><td>${val} dias a partir de ${hoje}</td></tr>
+          </tbody>
+        </table>
+        <div class="prop-h2" style="margin-top:16px;">Sobre o consultor</div>
+        <div class="prop-p"><strong>${d.consultor}</strong> — ${d.cro || 'CRO-PA'}. Cirurgião-dentista desde 2012, com 8 anos de atuação contínua em Unidade Básica de Saúde na Atenção Primária à Saúde. Criador e desenvolvedor do ÁPEX Saúde — sistema testado e validado em UBS municipal antes da comercialização. Especialista nos 15 indicadores da NT 6/2025-DEAPS/SAPS/MS e no novo modelo de cofinanciamento federal (Portaria GM/MS 3.493/2024).</div>
+        <div class="prop-p">${d.empresa}${d.cnpj ? ' · CNPJ: ' + d.cnpj : ''}</div>
+      </div>
+    </div>`,
+
+    // PÁGINA 7 — ACEITE
+    `<div class="prop-page">
+      <div class="prop-section">
+        <div class="prop-h1">Aceite e assinatura</div>
+        <div class="prop-alert dourado" style="margin-bottom:24px;">
+          <strong>Ao assinar esta proposta, o município de ${d.municipio} concorda com os termos acima e autoriza o início dos serviços do ÁPEX Saúde Consultoria.</strong>
+        </div>
+        <div class="prop-assinatura">
+          <div class="prop-ass-box">
+            <div class="prop-ass-label">Município de ${d.municipio} — ${d.uf}</div>
+            <div style="margin:24px 0;border-bottom:1px solid #1a1a1a;"></div>
+            <div class="prop-ass-name">${d.secretario}</div>
+            <div class="prop-ass-cargo">Secretário(a) Municipal de Saúde</div>
+            <div class="prop-ass-cargo" style="margin-top:4px;">Data: ___/___/______</div>
+          </div>
+          <div class="prop-ass-box">
+            <div class="prop-ass-label">${d.empresa}</div>
+            <div style="margin:24px 0;border-bottom:1px solid #1a1a1a;"></div>
+            <div class="prop-ass-name">${d.consultor}</div>
+            <div class="prop-ass-cargo">${d.cro || 'CRO-PA'} · Consultor Responsável</div>
+            <div class="prop-ass-cargo" style="margin-top:4px;">Data: ___/___/______</div>
+          </div>
+        </div>
+        <div class="prop-rodape" style="margin-top:32px;">
+          ÁPEX Saúde Consultoria · ${d.empresa}${d.cnpj ? ' · CNPJ: ' + d.cnpj : ''}<br>
+          ${d.emailConsultor || ''} · ${d.telefone || ''}<br>
+          Proposta Nº ${propNum} · Emitida em ${hoje} · Válida por ${val} dias
+        </div>
+      </div>
+    </div>`,
+  ];
+
+  paginaAtual = 0;
+  renderPagina();
+  document.getElementById('proposta-wrap').style.display = 'block';
+  document.getElementById('proposta-wrap').scrollIntoView({ behavior: 'smooth' });
+}
+
+function renderPagina() {
+  document.getElementById('proposta-doc-wrap').innerHTML = `<div class="proposta-doc">${paginas[paginaAtual]}</div>`;
+  document.getElementById('nav-info').textContent = `Página ${paginaAtual + 1} de ${paginas.length}`;
+}
+
+function navProp(dir) {
+  paginaAtual = Math.max(0, Math.min(paginas.length - 1, paginaAtual + dir));
+  renderPagina();
+}
+
+function voltarPlanos() {
+  document.getElementById('proposta-wrap').style.display = 'none';
+}
+
+// ── EMAIL ──
+function gerarEmail() {
+  const d = dadosMunicipio;
+  const impl = valoresAjustados.implantacao;
+  const men = valoresAjustados.mensal;
+  const repasseAtual = d.totalEquipes * REPASSE[d.classificacao];
+  const repasseOtimo = d.totalEquipes * 8000;
+  const gap = repasseOtimo - repasseAtual;
+  const gapAnual = gap * 12;
+
+  const texto = `Assunto: Proposta ÁPEX Saúde — Consultoria APS — ${d.municipio}/${d.uf}
+
+Prezado(a) ${d.secretario},
+
+Conforme nossa conversa, encaminho proposta de consultoria em Atenção Primária à Saúde para o município de ${d.municipio}.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SITUAÇÃO IDENTIFICADA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Com ${d.totalEquipes} equipe${d.totalEquipes>1?'s':''} de saúde, o município está recebendo R$ ${fmt(repasseAtual)}/mês em Componente de Qualidade (NT 6/2025). O potencial máximo com classificação ÓTIMO seria R$ ${fmt(repasseOtimo)}/mês.
+
+Diferença: R$ ${fmt(gap)}/mês — R$ ${fmt(gapAnual)}/ano que o município pode estar deixando de receber.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+O QUE O ÁPEX SAÚDE ENTREGA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Monitoramento em tempo real dos 15 indicadores oficiais
+✅ Dashboards individuais para cada profissional (12 perfis)
+✅ Inteligência Artificial gerando planos de melhoria mensalmente
+✅ Ciclo PDCA integrado e documentado — auditável pelo TCU/TCE
+✅ Simulador financeiro mostrando impacto de cada indicador
+✅ Treinamento por perfil profissional incluído
+
+Nenhum sistema concorrente oferece esse conjunto integrado.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INVESTIMENTO — ${planoSelecionado?.nome || 'Plano selecionado'}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Implantação (único): R$ ${fmt(impl)}
+Mensalidade: R$ ${fmt(men)}/mês
+ROI estimado: ${gapAnual > 0 ? (gapAnual / (impl + men * 12)).toFixed(1) : '—'}x em repasse adicional
+
+Contratação por inexigibilidade de licitação — Art. 74, III, Lei 14.133/2021.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PRÓXIMO PASSO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Proponho uma demonstração de 30 minutos — presencial ou online — onde apresento o sistema funcionando com os dados reais de ${d.municipio}. Você verá exatamente o que cada profissional vai usar no dia a dia.
+
+Estou disponível nesta semana. Qual horário seria melhor para o senhor(a)?
+
+Atenciosamente,
+
+${d.consultor}
+${d.cro || ''}
+${d.empresa}${d.cnpj ? ' · CNPJ: ' + d.cnpj : ''}
+${d.telefone ? 'WhatsApp: ' + d.telefone : ''}
+${d.emailConsultor || ''}`;
+
+  document.getElementById('email-wrap').style.display = 'block';
+  document.getElementById('email-content').textContent = texto;
+  document.getElementById('email-wrap').scrollIntoView({ behavior: 'smooth' });
+}
+
+function copiarEmail() {
+  const txt = document.getElementById('email-content').textContent;
+  navigator.clipboard.writeText(txt).then(() => showToast('✓ E-mail copiado!'));
+}
+
+// ── SALVAR ──
+function salvarProposta() {
+  if (!planoSelecionado || !dadosMunicipio.municipio) { showToast('Gere uma proposta primeiro'); return; }
+  const propostas = JSON.parse(localStorage.getItem('apex_propostas') || '[]');
+  propostas.unshift({
+    id: Date.now(),
+    municipio: dadosMunicipio.municipio,
+    uf: dadosMunicipio.uf,
+    plano: planoSelecionado.nome,
+    implantacao: valoresAjustados.implantacao,
+    mensal: valoresAjustados.mensal,
+    total: valoresAjustados.implantacao + valoresAjustados.mensal * (valoresAjustados.vigencia || 12),
+    data: new Date().toLocaleDateString('pt-BR'),
+    status: 'rascunho',
+    dados: dadosMunicipio,
+  });
+  localStorage.setItem('apex_propostas', JSON.stringify(propostas.slice(0, 20)));
+  showToast('✓ Proposta salva no histórico!');
+}
+
+// ── IMPRIMIR ──
+function imprimirProposta() {
+  // Mostrar todas as páginas antes de imprimir
+  document.getElementById('proposta-doc-wrap').innerHTML = `<div class="proposta-doc">${paginas.join('')}</div>`;
+  setTimeout(() => window.print(), 300);
+}
+
+// ── HISTÓRICO ──
+function renderHistorico() {
+  const propostas = JSON.parse(localStorage.getItem('apex_propostas') || '[]');
+  const wrap = document.getElementById('historico-wrap');
+  if (!propostas.length) {
+    wrap.innerHTML = '<div style="text-align:center;padding:32px;color:var(--muted);font-size:12px;">Nenhuma proposta salva ainda.</div>';
+    return;
+  }
+  const statusCls = { rascunho:'status-rascunho', enviada:'status-enviada', analise:'status-analise', aceita:'status-aceita', recusada:'status-recusada' };
+  const statusLabel = { rascunho:'Rascunho', enviada:'Enviada', analise:'Em análise', aceita:'Aceita ✓', recusada:'Recusada' };
+
+  wrap.innerHTML = propostas.map(p => `
+    <div class="hist-item">
+      <div style="font-size:22px;">🏛️</div>
+      <div class="hist-info">
+        <div class="hist-municipio">${p.municipio} — ${p.uf}</div>
+        <div class="hist-plano">${p.plano}</div>
+        <div class="hist-data">${p.data}</div>
+      </div>
+      <div style="text-align:right;display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+        <span class="hist-valor">${fmt(p.mensal)}/mês</span>
+        <select onchange="atualizarStatus(${p.id},this.value)" style="font-family:'DM Mono',monospace;font-size:8px;background:var(--surface);border:1px solid var(--border);border-radius:4px;color:var(--text);padding:3px 6px;cursor:pointer;">
+          <option value="rascunho" ${p.status==='rascunho'?'selected':''}>Rascunho</option>
+          <option value="enviada" ${p.status==='enviada'?'selected':''}>Enviada</option>
+          <option value="analise" ${p.status==='analise'?'selected':''}>Em análise</option>
+          <option value="aceita" ${p.status==='aceita'?'selected':''}>Aceita</option>
+          <option value="recusada" ${p.status==='recusada'?'selected':''}>Recusada</option>
+        </select>
+      </div>
+    </div>`).join('');
+}
+
+function atualizarStatus(id, status) {
+  const propostas = JSON.parse(localStorage.getItem('apex_propostas') || '[]');
+  const idx = propostas.findIndex(p => p.id === id);
+  if (idx >= 0) { propostas[idx].status = status; localStorage.setItem('apex_propostas', JSON.stringify(propostas)); }
+  showToast('✓ Status atualizado');
+}
+
+// ── UTILS ──
+function fmt(v) { return 'R$ ' + Math.round(v || 0).toLocaleString('pt-BR'); }
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// Pré-preencher Belterra se localStorage tiver
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('apex_proposta_dados');
+  if (saved) {
+    const d = JSON.parse(saved);
+    if (d.municipio) document.getElementById('municipio').value = d.municipio;
+  }
+});
+</script>
+</body>
+</html>
