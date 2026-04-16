@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA por Profissional — ÁPEX Saúde</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@400;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+[data-theme="dark"]{--bg:#080604;--surface:#0f0d0a;--card:#141210;--border:#252018;--border2:#352e22;--text:#ede8df;--text2:#c8bfa8;--muted:#7a7060;--muted2:#504838;}
+[data-theme="light"]{--bg:#f9f7f4;--surface:#fff;--card:#fff;--border:#e8e2d8;--border2:#d0c8bc;--text:#1c1a16;--text2:#5a5448;--muted:#8c8070;--muted2:#b4a898;}
+:root{--gold:#c9a84c;--gold2:#e8c97a;--gold-dim:#c9a84c14;--gold-glow:#c9a84c28;--ai:#a78bfa;--ai-bg:#a78bfa12;--ai-border:#a78bfa40;--otimo:#10b981;--bom:#3b82f6;--suf:#f59e0b;--reg:#ef4444;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Lato',sans-serif;font-size:14px;min-height:100vh;padding-bottom:60px;transition:background .3s,color .3s;}
+
+/* TOPBAR */
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:200;}
+.topbar-back{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);text-decoration:none;text-transform:uppercase;letter-spacing:1.5px;opacity:.8;}
+.topbar-back:hover{opacity:1;}
+.topbar-logo{flex:1;display:flex;align-items:center;}
+.topbar-logo img{height:30px;width:auto;}
+.theme-btn{background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:15px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+
+/* HEADER DO PERFIL */
+.perfil-header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 16px;position:relative;}
+.perfil-header::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);}
+.perfil-row{display:flex;align-items:center;gap:12px;}
+.perfil-avatar{width:44px;height:44px;border-radius:50%;border:2px solid var(--gold);background:var(--gold-dim);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.perfil-nome{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;}
+.perfil-equipe{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-top:2px;}
+.perfil-trocar{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:4px 10px;border-radius:4px;margin-left:auto;flex-shrink:0;transition:all .2s;}
+.perfil-trocar:hover{color:var(--gold);border-color:var(--gold);}
+
+/* MÓDULO CARDS (acesso rápido) */
+.modulos-grid{display:grid;gap:10px;padding:14px 16px;}
+.modulo-card{background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.modulo-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transform:scaleX(0);transition:transform .3s;}
+.modulo-card:hover{border-color:var(--border2);transform:translateY(-1px);}
+.modulo-card:hover::before{transform:scaleX(1);}
+.modulo-card.m1::before{background:linear-gradient(90deg,var(--gold),var(--gold2));}
+.modulo-card.m2::before{background:linear-gradient(90deg,var(--bom),#60a5fa);}
+.modulo-card.m3::before{background:linear-gradient(90deg,var(--ai),#c4b5fd);}
+.modulo-card.m3{border-color:var(--ai-border);}
+.modulo-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.modulo-icon{font-size:22px;}
+.modulo-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;}
+.modulo-desc{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:10px;}
+.modulo-badge{font-family:'DM Mono',monospace;font-size:8px;padding:3px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.5px;display:inline-flex;align-items:center;gap:4px;}
+.badge-critico{background:#ef444420;color:var(--reg);border:1px solid #ef444440;}
+.badge-atencao{background:#f59e0b20;color:var(--suf);border:1px solid #f59e0b40;}
+.badge-bom{background:#10b98120;color:var(--otimo);border:1px solid #10b98140;}
+.badge-gold{background:var(--gold-dim);color:var(--gold);border:1px solid var(--gold)44;}
+.badge-ai{background:var(--ai-bg);color:var(--ai);border:1px solid var(--ai-border);}
+.badge-pulse{animation:pulse-badge 2s infinite;}
+@keyframes pulse-badge{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* TELAS DOS MÓDULOS */
+.screen{display:none;}
+.screen.active{display:block;}
+
+/* CONTEÚDO */
+.content{padding:14px 16px;}
+.sec-title{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin:16px 0 10px;display:flex;align-items:center;gap:8px;}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* CARD GENÉRICO */
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;}
+.card-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;margin-bottom:8px;}
+
+/* FORM */
+.form-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px;display:block;margin-top:12px;}
+.form-select,.form-input,.form-textarea{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:5px;color:var(--text);font-family:'Lato',sans-serif;font-size:13px;padding:10px 12px;outline:none;transition:border-color .2s;}
+.form-select{appearance:none;cursor:pointer;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--gold);}
+.form-textarea{min-height:70px;resize:vertical;}
+
+/* BOTÕES */
+.btn-primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:6px;font-family:'DM Mono',monospace;font-size:10px;font-weight:700;padding:12px 20px;cursor:pointer;text-transform:uppercase;letter-spacing:2px;transition:opacity .15s;width:100%;margin-top:10px;}
+.btn-primary:hover{opacity:.88;}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed;}
+.btn-ai{background:linear-gradient(135deg,#7c3aed,var(--ai));color:#fff;border:none;border-radius:6px;font-family:'DM Mono',monospace;font-size:10px;font-weight:700;padding:12px 20px;cursor:pointer;text-transform:uppercase;letter-spacing:2px;transition:opacity .15s;width:100%;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-ai:hover{opacity:.88;}
+.btn-ai:disabled{opacity:.45;cursor:not-allowed;}
+.btn-outline{background:none;border:1px solid var(--border2);border-radius:6px;font-family:'DM Mono',monospace;font-size:10px;color:var(--text2);padding:10px 16px;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:all .15s;margin-top:8px;width:100%;}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+
+/* LOADING */
+.loading-dots{display:inline-flex;gap:4px;align-items:center;}
+.loading-dots span{width:6px;height:6px;border-radius:50%;background:currentColor;animation:bounce 1.2s infinite;}
+.loading-dots span:nth-child(2){animation-delay:.2s;}
+.loading-dots span:nth-child(3){animation-delay:.4s;}
+@keyframes bounce{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
+
+/* IA BOX */
+.ia-box{background:var(--ai-bg);border:1px solid var(--ai-border);border-radius:10px;padding:16px;margin-top:10px;display:none;}
+.ia-box.show{display:block;}
+.ia-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--ai-border);}
+.ia-tag{font-family:'DM Mono',monospace;font-size:8px;background:#7c3aed22;color:var(--ai);border:1px solid var(--ai-border);padding:2px 8px;border-radius:3px;text-transform:uppercase;letter-spacing:1px;}
+.ia-title{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--ai);}
+.ia-content{font-size:13px;color:var(--text);line-height:1.8;white-space:pre-wrap;}
+
+/* PLANO DE AÇÃO */
+.acao-item{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 12px;margin-bottom:7px;display:flex;gap:10px;align-items:flex-start;}
+.acao-item.concluida{background:#10b98110;border-color:#10b98130;}
+.acao-item.andamento{background:#f59e0b10;border-color:#f59e0b30;}
+.acao-check{width:20px;height:20px;border-radius:4px;border:1.5px solid var(--border2);flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;margin-top:1px;}
+.acao-item.concluida .acao-check{background:var(--otimo);border-color:var(--otimo);}
+.acao-ck{display:none;color:#fff;font-size:10px;font-weight:700;}
+.acao-item.concluida .acao-ck{display:block;}
+.acao-body{flex:1;}
+.acao-texto{font-size:12px;line-height:1.5;margin-bottom:4px;}
+.acao-item.concluida .acao-texto{color:var(--muted);text-decoration:line-through;}
+.acao-meta{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;}
+.acao-prazo{color:var(--suf);}
+.acao-resp{color:var(--bom);}
+
+/* STATUS */
+.status-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.status-row:last-child{border-bottom:none;}
+.status-nome{color:var(--muted);}
+.status-val{font-family:'DM Mono',monospace;}
+
+/* TABELA INDICADORES */
+.ind-table{width:100%;border-collapse:collapse;margin-bottom:10px;}
+.ind-table th{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;padding:6px 8px;text-align:left;border-bottom:1px solid var(--border);}
+.ind-table td{font-size:12px;padding:8px 8px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.ind-table tr:last-child td{border-bottom:none;}
+.tend-up{color:var(--otimo);}
+.tend-flat{color:var(--muted);}
+.tend-down{color:var(--reg);}
+
+/* PROGRESSO */
+.prog-wrap{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin:6px 0;}
+.prog-bar{height:100%;border-radius:2px;transition:width .6s ease;}
+
+/* PRIORIDADE CARD */
+.prior-card{border-radius:8px;padding:14px;margin-bottom:10px;position:relative;overflow:hidden;}
+.prior-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;}
+.prior-card.critico{background:#ef444410;border:1px solid #ef444430;}
+.prior-card.critico::before{background:var(--reg);}
+.prior-card.atencao{background:#f59e0b10;border:1px solid #f59e0b30;}
+.prior-card.atencao::before{background:var(--suf);}
+.prior-card.manter{background:#10b98110;border:1px solid #10b98130;}
+.prior-card.manter::before{background:var(--otimo);}
+.prior-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.prior-num{font-family:'DM Mono',monospace;font-size:8px;padding:2px 6px;border-radius:3px;text-transform:uppercase;letter-spacing:.5px;}
+.critico .prior-num{background:#ef444420;color:var(--reg);border:1px solid #ef444440;}
+.atencao .prior-num{background:#f59e0b20;color:var(--suf);border:1px solid #f59e0b40;}
+.manter .prior-num{background:#10b98120;color:var(--otimo);border:1px solid #10b98140;}
+.prior-ind{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;}
+.prior-situacao{font-size:11px;color:var(--text2);margin-bottom:8px;line-height:1.5;}
+.prior-acoes{list-style:none;display:grid;gap:5px;}
+.prior-acao{font-size:11px;color:var(--text2);display:flex;gap:8px;align-items:flex-start;padding:5px 8px;background:var(--surface);border-radius:4px;cursor:pointer;transition:all .15s;}
+.prior-acao:hover{border-color:var(--border2);}
+.prior-acao-check{width:14px;height:14px;border:1.5px solid var(--border2);border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:2px;transition:all .2s;}
+.prior-acao.done .prior-acao-check{background:var(--otimo);border-color:var(--otimo);}
+.prior-acao-ck{display:none;color:#fff;font-size:8px;}
+.prior-acao.done .prior-acao-ck{display:block;}
+.prior-acao.done span:last-child{text-decoration:line-through;color:var(--muted);}
+
+/* INPUT NUMÉRICO */
+input[type=number]{-moz-appearance:textfield;}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--card);border:1px solid var(--gold);border-radius:8px;padding:10px 18px;font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);z-index:9999;transition:transform .3s;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* PDF */
+@media print{.topbar,.btn-primary,.btn-ai,.btn-outline,.modulos-grid,.perfil-trocar{display:none!important;}.ia-box{border:1px solid #7c3aed;break-inside:avoid;}body{background:#fff!important;color:#000!important;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="topbar-back" href="dashboard-profissional.html">← Dashboard</a>
+  <div class="topbar-logo"><img src="logo-nav.png" alt="ÁPEX Saúde"></div>
+  <button class="theme-btn" id="theme-toggle">🌙</button>
+</div>
+
+<!-- HEADER PERFIL -->
+<div class="perfil-header">
+  <div class="perfil-row">
+    <div class="perfil-avatar" id="p-avatar">👨‍⚕️</div>
+    <div>
+      <div class="perfil-nome" id="p-nome">Carregando...</div>
+      <div class="perfil-equipe" id="p-equipe">—</div>
+    </div>
+    <a class="perfil-trocar" href="dashboard-profissional.html">Trocar perfil</a>
+  </div>
+</div>
+
+<!-- TELA INICIAL: 3 MÓDULOS -->
+<div class="screen active" id="screen-home">
+  <div class="modulos-grid">
+
+    <div class="modulo-card m3" onclick="abrirModulo('m3')">
+      <div class="modulo-header">
+        <span class="modulo-icon">🤖</span>
+        <div class="modulo-title">Plano de Melhoria IA</div>
+      </div>
+      <div class="modulo-desc">A IA analisa todos os seus indicadores e gera um plano priorizado automaticamente. Identifica o que está crítico e o que fazer primeiro.</div>
+      <span class="modulo-badge badge-ai badge-pulse" id="badge-m3">✦ IA Proativa</span>
+    </div>
+
+    <div class="modulo-card m2" onclick="abrirModulo('m2')">
+      <div class="modulo-header">
+        <span class="modulo-icon">📊</span>
+        <div class="modulo-title">Relatório de Desempenho</div>
+      </div>
+      <div class="modulo-desc">Análise completa do seu desempenho com insights da IA — pontos fortes, críticos, projeção até o fim do quadrimestre e pendências.</div>
+      <span class="modulo-badge badge-gold" id="badge-m2">Gerar relatório</span>
+    </div>
+
+    <div class="modulo-card m1" onclick="abrirModulo('m1')">
+      <div class="modulo-header">
+        <span class="modulo-icon">🎯</span>
+        <div class="modulo-title">Meu Plano de Ação</div>
+      </div>
+      <div class="modulo-desc">Você escolhe o indicador, informa seus dados e a IA sugere ações específicas. Você edita, define prazos e acompanha o progresso.</div>
+      <span class="modulo-badge badge-gold" id="badge-m1">Criar plano</span>
+    </div>
+
+  </div>
+
+  <div class="content">
+    <div class="sec-title">📋 Planos ativos</div>
+    <div id="planos-ativos-wrap">
+      <div style="text-align:center;padding:24px;color:var(--muted);font-size:12px;">
+        Nenhum plano de ação criado ainda.<br>Use os módulos acima para começar.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MÓDULO 3: PLANO DE MELHORIA AUTOMÁTICO ══ -->
+<div class="screen" id="screen-m3">
+  <div class="content">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+      <button class="btn-outline" style="width:auto;margin:0;padding:7px 12px;" onclick="voltarHome()">← Voltar</button>
+      <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;">Plano de Melhoria IA</div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:16px;">A IA analisa seus indicadores e gera um plano priorizado pelo maior impacto na nota.</p>
+
+    <div class="sec-title">📥 Informe seus dados atuais</div>
+    <div class="card">
+      <div id="inputs-m3"></div>
+      <button class="btn-ai" id="btn-gerar-m3" onclick="gerarPlanoAutomatico()">
+        <span>🤖 Gerar Plano de Melhoria com IA</span>
+      </button>
+    </div>
+
+    <div class="ia-box" id="ia-m3">
+      <div class="ia-header">
+        <span class="ia-tag">✦ IA ÁPEX</span>
+        <span class="ia-title">Plano de Melhoria — <span id="m3-mes"></span></span>
+      </div>
+      <div id="m3-plano-wrap"></div>
+    </div>
+
+    <div id="m3-acoes-wrap" style="display:none;">
+      <div class="sec-title">✅ Acompanhar ações do plano</div>
+      <div id="m3-acoes-lista"></div>
+      <button class="btn-outline" onclick="exportarPDF('m3')">⬇ Exportar Plano em PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MÓDULO 2: RELATÓRIO DE DESEMPENHO ══ -->
+<div class="screen" id="screen-m2">
+  <div class="content">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+      <button class="btn-outline" style="width:auto;margin:0;padding:7px 12px;" onclick="voltarHome()">← Voltar</button>
+      <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;">Relatório de Desempenho</div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:16px;">Análise completa com insights da IA sobre seu desempenho.</p>
+
+    <div class="sec-title">📥 Informe seus resultados</div>
+    <div class="card">
+      <div id="inputs-m2"></div>
+      <button class="btn-ai" id="btn-gerar-m2" onclick="gerarRelatorio()">
+        <span>📊 Gerar Relatório com IA</span>
+      </button>
+    </div>
+
+    <div class="ia-box" id="ia-m2">
+      <div class="ia-header">
+        <span class="ia-tag">✦ IA ÁPEX</span>
+        <span class="ia-title">Relatório de Desempenho</span>
+      </div>
+      <div id="m2-content"></div>
+    </div>
+
+    <div id="m2-extra" style="display:none;">
+      <button class="btn-outline" onclick="exportarPDF('m2')">⬇ Exportar Relatório em PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MÓDULO 1: PLANO MANUAL ══ -->
+<div class="screen" id="screen-m1">
+  <div class="content">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+      <button class="btn-outline" style="width:auto;margin:0;padding:7px 12px;" onclick="voltarHome()">← Voltar</button>
+      <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;">Meu Plano de Ação</div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:16px;">Escolha o indicador, informe seus dados e receba sugestões da IA.</p>
+
+    <div class="sec-title">Passo 1 — Selecione o indicador</div>
+    <div class="card">
+      <label class="form-label">Indicador que deseja melhorar</label>
+      <select class="form-select" id="m1-indicador" onchange="onIndicadorChange()">
+        <option value="">Selecione...</option>
+      </select>
+
+      <div id="m1-step2" style="display:none;">
+        <label class="form-label">Resultado atual (%)</label>
+        <input class="form-input" type="number" min="0" max="100" step="0.1" id="m1-atual" placeholder="Ex: 42">
+        <label class="form-label">Quadrimestre</label>
+        <select class="form-select" id="m1-quad">
+          <option value="1Q/2026">1Q/2026 — Jan a Abr</option>
+          <option value="2Q/2026">2Q/2026 — Mai a Ago</option>
+          <option value="3Q/2026">3Q/2026 — Set a Dez</option>
+        </select>
+        <label class="form-label">Observações (opcional)</label>
+        <textarea class="form-textarea" id="m1-obs" placeholder="Ex: Faltam 2 meses, equipe com médico de férias..."></textarea>
+        <button class="btn-ai" id="btn-gerar-m1" onclick="gerarPlanoManual()">
+          <span>✦ Passo 2 — Gerar sugestões da IA</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="ia-box" id="ia-m1">
+      <div class="ia-header">
+        <span class="ia-tag">✦ IA ÁPEX</span>
+        <span class="ia-title">Sugestões para <span id="m1-ind-nome">—</span></span>
+      </div>
+      <div id="m1-sugestoes"></div>
+    </div>
+
+    <div id="m1-plano-wrap" style="display:none;">
+      <div class="sec-title">Passo 3 — Monte seu plano</div>
+      <div class="card">
+        <div id="m1-acoes-edit"></div>
+        <button class="btn-outline" onclick="addAcaoManual()">+ Adicionar ação própria</button>
+        <button class="btn-primary" onclick="salvarPlanoManual()">Salvar plano de ação</button>
+      </div>
+    </div>
+
+    <div id="m1-historico-wrap">
+      <div class="sec-title">Planos anteriores</div>
+      <div id="m1-historico"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG ──
+const PROXY = 'https://apex-ai-proxy.agapenegociosdigitais.workers.dev';
+const MODEL = 'claude-haiku-4-5-20251001';
+
+// ── TEMA ──
+const themeBtn = document.getElementById('theme-toggle');
+let isDark = localStorage.getItem('apex_theme') !== 'light';
+document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+themeBtn.textContent = isDark ? '🌙' : '☀️';
+themeBtn.addEventListener('click', () => {
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  themeBtn.textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('apex_theme', isDark ? 'dark' : 'light');
+});
+
+// ── DADOS DOS PERFIS ──
+const perfisData = {
+  medico:      { nome:'Médico', equipe:'eSF / eAP', icon:'👨‍⚕️', inds:[{id:'C4',nome:'C4 – Diabetes',peso:1,meta:75},{id:'C5',nome:'C5 – Hipertensão',peso:1,meta:75},{id:'C6',nome:'C6 – Pessoa Idosa',peso:1,meta:75},{id:'C7',nome:'C7 – Prevenção do Câncer',peso:2,meta:75}]},
+  enfermeiro:  { nome:'Enfermeiro', equipe:'eSF / eAP', icon:'👩‍⚕️', inds:[{id:'C1',nome:'C1 – Acesso',peso:1,meta:75},{id:'C2',nome:'C2 – Desenvolvimento Infantil',peso:2,meta:75},{id:'C3',nome:'C3 – Gestação e Puerpério',peso:2,meta:75}]},
+  tecnico:     { nome:'Técnico de Enfermagem', equipe:'eSF / eAP', icon:'🩺', inds:[{id:'C4',nome:'C4 – Diabetes (Glicemia)',peso:1,meta:75},{id:'C5',nome:'C5 – Hipertensão (PA)',peso:1,meta:75},{id:'C6',nome:'C6 – Idoso (Vacinação)',peso:1,meta:75}]},
+  acs:         { nome:'ACS', equipe:'eSF / eAP', icon:'🏘️', inds:[{id:'CAD',nome:'Dimensão Cadastro',peso:1,meta:85},{id:'ACOMP',nome:'Dimensão Acompanhamento',peso:1,meta:85},{id:'C1',nome:'C1 – Acesso (Busca Ativa)',peso:1,meta:75}]},
+  dentista:    { nome:'Dentista', equipe:'eSB', icon:'🦷', inds:[{id:'B1',nome:'B1 – 1ª Consulta Programada',peso:2,meta:75},{id:'B2',nome:'B2 – Tratamento Concluído',peso:2,meta:75},{id:'B3',nome:'B3 – Taxa de Exodontia (INVERTIDO)',peso:2,meta:25,invertido:true},{id:'B4',nome:'B4 – Procedimentos Preventivos',peso:2,meta:75},{id:'B5',nome:'B5 – Escovação Supervisionada',peso:1,meta:75},{id:'B6',nome:'B6 – TRA',peso:1,meta:75}]},
+  psicologo:   { nome:'Psicólogo', equipe:'eMulti', icon:'🧠', inds:[{id:'M1',nome:'M1 – Atendimentos por Pessoa',peso:6,meta:75},{id:'M2',nome:'M2 – Ações Interprofissionais',peso:4,meta:75}]},
+  fisio:       { nome:'Fisioterapeuta', equipe:'eMulti', icon:'🏃', inds:[{id:'M1',nome:'M1 – Atendimentos por Pessoa',peso:6,meta:75},{id:'M2',nome:'M2 – Ações Conjuntas',peso:4,meta:75}]},
+  nutricionista:{ nome:'Nutricionista', equipe:'eMulti', icon:'🥗', inds:[{id:'M1',nome:'M1 – Atendimentos/Grupos',peso:6,meta:75},{id:'M2',nome:'M2 – Ações Interprofissionais',peso:4,meta:75}]},
+  assistente:  { nome:'Assistente Social', equipe:'eMulti', icon:'🤝', inds:[{id:'M1',nome:'M1 – Atendimentos Individuais',peso:6,meta:75},{id:'M2',nome:'M2 – Ações Intersetoriais',peso:4,meta:75}]},
+  farmaceutico:{ nome:'Farmacêutico', equipe:'eMulti', icon:'💊', inds:[{id:'M1',nome:'M1 – Consultas Farmacêuticas',peso:6,meta:75},{id:'M2',nome:'M2 – Discussões de Caso',peso:4,meta:75}]},
+  coordenador: { nome:'Coordenador de UBS', equipe:'Gestão', icon:'📋', inds:[{id:'C3',nome:'Nota C3 (0-10)',peso:1,meta:7.5,escala10:true},{id:'C2',nome:'Nota C2 (0-10)',peso:1,meta:8.5,escala10:true}]},
+  gestor:      { nome:'Gestor Municipal', equipe:'Secretaria', icon:'🏛️', inds:[{id:'MED_C3',nome:'Média C3 do município (0-10)',peso:1,meta:7.5,escala10:true},{id:'MED_C2',nome:'Média C2 do município (0-10)',peso:1,meta:8.5,escala10:true}]},
+};
+
+// ── CARREGAR PERFIL ──
+let perfilAtual = null;
+let perfilId = null;
+let dadosM3 = {};
+let dadosM2 = {};
+let acoesM1 = [];
+
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('apex_dash_perfil') || 'medico';
+  perfilId = saved;
+  perfilAtual = perfisData[saved] || perfisData.medico;
+
+  document.getElementById('p-avatar').textContent = perfilAtual.icon;
+  document.getElementById('p-nome').textContent = perfilAtual.nome;
+  document.getElementById('p-equipe').textContent = perfilAtual.equipe;
+
+  renderInputsM3();
+  renderInputsM2();
+  renderSelectM1();
+  renderPlanosAtivos();
+  renderHistoricoM1();
+
+  // Mês atual
+  const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  document.getElementById('m3-mes').textContent = meses[new Date().getMonth()] + '/' + new Date().getFullYear();
+});
+
+// ── NAVEGAÇÃO ──
+function abrirModulo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function voltarHome() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-home').classList.add('active');
+  renderPlanosAtivos();
+  window.scrollTo(0,0);
+}
+
+// ─────────────────────────────────────────────
+// MÓDULO 3 — PLANO AUTOMÁTICO
+// ─────────────────────────────────────────────
+function renderInputsM3() {
+  const el = document.getElementById('inputs-m3');
+  if (!el || !perfilAtual) return;
+  el.innerHTML = perfilAtual.inds.map(ind => `
+    <div style="margin-bottom:10px;">
+      <label class="form-label">${ind.nome} ${ind.invertido ? '⚠️ Menor = melhor' : ''} — atual (%)</label>
+      <input class="form-input" type="number" min="0" max="${ind.escala10 ? 10 : 100}" step="0.1"
+        id="m3-${ind.id}" placeholder="${ind.escala10 ? 'Ex: 7.2 (de 0 a 10)' : 'Ex: 42'}">
+    </div>`).join('');
+}
+
+async function gerarPlanoAutomatico() {
+  const btn = document.getElementById('btn-gerar-m3');
+  btn.disabled = true;
+  btn.innerHTML = `<div class="loading-dots"><span></span><span></span><span></span></div> Analisando indicadores...`;
+
+  // Coletar dados
+  dadosM3 = {};
+  perfilAtual.inds.forEach(ind => {
+    const el = document.getElementById('m3-' + ind.id);
+    dadosM3[ind.id] = { ...ind, valor: el ? parseFloat(el.value) || null : null };
+  });
+
+  const hoje = new Date();
+  const diasNoMes = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0).getDate();
+  const diasRestantes = diasNoMes - hoje.getDate();
+
+  const contexto = perfilAtual.inds.map(ind => {
+    const v = dadosM3[ind.id]?.valor;
+    const meta = ind.meta;
+    const status = v === null ? 'não informado' :
+      ind.invertido ? (v <= meta ? 'ÓTIMO' : v <= meta * 1.5 ? 'ATENÇÃO' : 'CRÍTICO') :
+      (v >= meta ? 'ÓTIMO' : v >= meta * 0.7 ? 'ATENÇÃO' : 'CRÍTICO');
+    return `${ind.nome} (Peso ${ind.peso}): ${v !== null ? v + (ind.escala10 ? '/10' : '%') : 'não informado'} — meta: ${ind.invertido ? 'abaixo de ' : ''}${meta}${ind.escala10 ? '/10' : '%'} — Status: ${status}`;
+  }).join('\n');
+
+  const prompt = `Você é consultor especialista em APS do Brasil com domínio total da NT 6/2025-DEAPS/SAPS/MS.
+
+Profissional: ${perfilAtual.nome} (${perfilAtual.equipe})
+Data: ${hoje.toLocaleDateString('pt-BR')} — Faltam aproximadamente ${diasRestantes} dias para o próximo prazo do Siaps.
+
+INDICADORES ATUAIS:
+${contexto}
+
+Gere um PLANO DE MELHORIA PRIORIZADO pelo maior impacto na nota final (considere os pesos).
+Use este formato EXATO:
+
+🔴 PRIORIDADE 1 — [INDICADOR] — [STATUS]
+Situação: [análise em 1-2 linhas, com números]
+Impacto: [explique o peso e o que está em jogo]
+AÇÕES RECOMENDADAS:
+• [ação concreta e específica]
+• [ação concreta e específica]
+• [ação concreta e específica]
+Prazo sugerido: [X dias]
+
+⚠️ PRIORIDADE 2 — [INDICADOR] — [STATUS]
+[mesmo formato]
+
+✅ MANTER — [INDICADORES em ótimo]
+[frase curta sobre o que está indo bem]
+
+📊 PROJEÇÃO:
+Se executar o plano: [classificação esperada]
+Se mantiver ritmo atual: [classificação esperada]
+
+Seja específico, use números reais dos indicadores informados. Linguagem direta para profissional de saúde.`;
+
+  try {
+    const res = await fetch(PROXY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: MODEL, max_tokens: 3000, messages: [{ role: 'user', content: prompt }] })
+    });
+    const data = await res.json();
+    const texto = data.content?.map(i => i.text || '').join('') || 'Erro ao gerar plano.';
+
+    const box = document.getElementById('ia-m3');
+    box.classList.add('show');
+
+    // Parsear prioridades do texto
+    renderPlanoAutomatico(texto);
+
+    // Salvar
+    const planos = JSON.parse(localStorage.getItem('apex_planos_m3') || '[]');
+    planos.unshift({ perfil: perfilId, data: hoje.toLocaleDateString('pt-BR'), texto, dados: dadosM3 });
+    localStorage.setItem('apex_planos_m3', JSON.stringify(planos.slice(0, 5)));
+
+  } catch(e) {
+    document.getElementById('ia-m3').classList.add('show');
+    document.getElementById('m3-plano-wrap').innerHTML = `<div style="color:var(--reg);font-size:12px;">❌ Erro ao conectar com a IA. Verifique sua conexão.</div>`;
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '🤖 Gerar novo plano';
+}
+
+function renderPlanoAutomatico(texto) {
+  // Exibir texto principal
+  document.getElementById('m3-plano-wrap').innerHTML = `<div class="ia-content">${texto}</div>`;
+
+  // Extrair ações e criar lista de acompanhamento
+  const linhas = texto.split('\n').filter(l => l.trim().startsWith('•'));
+  if (linhas.length > 0) {
+    const wrap = document.getElementById('m3-acoes-wrap');
+    wrap.style.display = 'block';
+    const lista = document.getElementById('m3-acoes-lista');
+    const saved = JSON.parse(localStorage.getItem(`apex_m3_ck_${perfilId}`) || '[]');
+    lista.innerHTML = linhas.map((l, i) => {
+      const txt = l.replace('•', '').trim();
+      const done = saved.includes(i);
+      return `<div class="prior-acao ${done ? 'done' : ''}" onclick="toggleM3Acao(${i},${linhas.length},this)">
+        <div class="prior-acao-check"><span class="prior-acao-ck">✓</span></div>
+        <span>${txt}</span>
+      </div>`;
+    }).join('');
+  }
+}
+
+function toggleM3Acao(idx, total, el) {
+  el.classList.toggle('done');
+  const key = `apex_m3_ck_${perfilId}`;
+  let saved = JSON.parse(localStorage.getItem(key) || '[]');
+  if (el.classList.contains('done')) { if (!saved.includes(idx)) saved.push(idx); }
+  else { saved = saved.filter(i => i !== idx); }
+  localStorage.setItem(key, JSON.stringify(saved));
+  if (saved.length === total) showToast('✓ Plano 100% concluído! Parabéns!');
+}
+
+// ─────────────────────────────────────────────
+// MÓDULO 2 — RELATÓRIO DE DESEMPENHO
+// ─────────────────────────────────────────────
+function renderInputsM2() {
+  const el = document.getElementById('inputs-m2');
+  if (!el || !perfilAtual) return;
+
+  const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const m = new Date().getMonth();
+  const m3 = [meses[m], meses[(m+11)%12], meses[(m+10)%12]];
+
+  el.innerHTML = `
+    <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Informe seus resultados dos últimos 3 meses para que a IA possa analisar tendências.</p>
+    ${perfilAtual.inds.map(ind => `
+    <div style="margin-bottom:12px;">
+      <label class="form-label">${ind.nome} — últimos 3 meses</label>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+        ${m3.map((mes, i) => `<input class="form-input" type="number" min="0" max="${ind.escala10?10:100}" step="0.1" id="m2-${ind.id}-${i}" placeholder="${mes}">`).join('')}
+      </div>
+    </div>`).join('')}
+    <label class="form-label">Nome do profissional (opcional)</label>
+    <input class="form-input" type="text" id="m2-nome" placeholder="Ex: Dr. Carlos Silva">
+  `;
+}
+
+async function gerarRelatorio() {
+  const btn = document.getElementById('btn-gerar-m2');
+  btn.disabled = true;
+  btn.innerHTML = `<div class="loading-dots"><span></span><span></span><span></span></div> Gerando relatório...`;
+
+  const nome = document.getElementById('m2-nome')?.value || perfilAtual.nome;
+  const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const m = new Date().getMonth();
+  const ultimos = [meses[m], meses[(m+11)%12], meses[(m+10)%12]];
+
+  const dadosPorInd = perfilAtual.inds.map(ind => {
+    const vals = [0,1,2].map(i => {
+      const el = document.getElementById(`m2-${ind.id}-${i}`);
+      return el ? parseFloat(el.value) || null : null;
+    });
+    const validos = vals.filter(v => v !== null);
+    const media = validos.length ? validos.reduce((a,b) => a+b, 0) / validos.length : null;
+    const tend = validos.length >= 2 ? (validos[0] > validos[validos.length-1] ? '↑' : validos[0] < validos[validos.length-1] ? '↓' : '→') : '→';
+    return { ...ind, vals, media, tend };
+  });
+
+  const tabelaCtx = dadosPorInd.map(d =>
+    `${d.nome}: ${d.vals.map((v,i) => v !== null ? `${ultimos[i]}=${v}${d.escala10?'/10':'%'}` : `${ultimos[i]}=s/d`).join(', ')} | Média=${d.media!==null?d.media.toFixed(1):'s/d'} | Tendência=${d.tend}`
+  ).join('\n');
+
+  const prompt = `Você é consultor especialista em APS do Brasil com domínio da NT 6/2025-DEAPS/SAPS/MS.
+
+RELATÓRIO DE DESEMPENHO — ${nome} — ${perfilAtual.nome} (${perfilAtual.equipe})
+Data: ${new Date().toLocaleDateString('pt-BR')}
+
+DADOS DOS ÚLTIMOS 3 MESES:
+${tabelaCtx}
+
+Gere um RELATÓRIO DE DESEMPENHO COMPLETO com este formato:
+
+📋 RESUMO EXECUTIVO
+[Texto direto, máximo 4 linhas, cite o nome do profissional, mencione pontos fortes e críticos e a projeção para o quadrimestre. Use os números reais.]
+
+📊 ANÁLISE POR INDICADOR
+[Para cada indicador: situação atual, tendência e interpretação em 1-2 linhas]
+
+💪 PONTOS FORTES
+[2-3 pontos específicos com os números — o que está indo bem]
+
+⚠️ PONTOS CRÍTICOS
+[2-3 pontos específicos com urgência — o que precisa melhorar urgente]
+
+📈 PROJEÇÃO ATÉ O FIM DO QUADRIMESTRE
+[Projeção realista baseada na tendência atual de cada indicador]
+Classificação provável: [Ótimo/Bom/Suficiente/Regular]
+
+📋 PENDÊNCIAS IDENTIFICADAS
+[Lista de ações concretas que o profissional provavelmente não está fazendo, baseada nos dados baixos]
+
+Linguagem direta, profissional, sem enrolação. Cite números reais dos dados fornecidos.`;
+
+  try {
+    const res = await fetch(PROXY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: MODEL, max_tokens: 3000, messages: [{ role: 'user', content: prompt }] })
+    });
+    const data = await res.json();
+    const texto = data.content?.map(i => i.text || '').join('') || 'Erro ao gerar relatório.';
+
+    const box = document.getElementById('ia-m2');
+    box.classList.add('show');
+    document.getElementById('m2-content').innerHTML = `<div class="ia-content">${texto}</div>`;
+    document.getElementById('m2-extra').style.display = 'block';
+
+    // Salvar
+    const rels = JSON.parse(localStorage.getItem('apex_relatorios') || '[]');
+    rels.unshift({ perfil: perfilId, data: new Date().toLocaleDateString('pt-BR'), texto });
+    localStorage.setItem('apex_relatorios', JSON.stringify(rels.slice(0, 5)));
+
+  } catch(e) {
+    document.getElementById('ia-m2').classList.add('show');
+    document.getElementById('m2-content').innerHTML = `<div style="color:var(--reg);font-size:12px;">❌ Erro ao conectar com a IA.</div>`;
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '📊 Gerar novo relatório';
+}
+
+// ─────────────────────────────────────────────
+// MÓDULO 1 — PLANO MANUAL
+// ─────────────────────────────────────────────
+function renderSelectM1() {
+  const sel = document.getElementById('m1-indicador');
+  if (!sel || !perfilAtual) return;
+  sel.innerHTML = '<option value="">Selecione...</option>' +
+    perfilAtual.inds.map(ind => `<option value="${ind.id}">${ind.nome} (Peso ${ind.peso})</option>`).join('');
+}
+
+function onIndicadorChange() {
+  const val = document.getElementById('m1-indicador').value;
+  document.getElementById('m1-step2').style.display = val ? 'block' : 'none';
+  document.getElementById('ia-m1').classList.remove('show');
+  document.getElementById('m1-plano-wrap').style.display = 'none';
+}
+
+async function gerarPlanoManual() {
+  const indId = document.getElementById('m1-indicador').value;
+  const atual = parseFloat(document.getElementById('m1-atual').value);
+  const quad = document.getElementById('m1-quad').value;
+  const obs = document.getElementById('m1-obs').value;
+
+  if (!indId || isNaN(atual)) { showToast('Selecione o indicador e informe o resultado atual.'); return; }
+
+  const ind = perfilAtual.inds.find(i => i.id === indId);
+  const btn = document.getElementById('btn-gerar-m1');
+  btn.disabled = true;
+  btn.innerHTML = `<div class="loading-dots"><span></span><span></span><span></span></div> Gerando sugestões...`;
+
+  document.getElementById('m1-ind-nome').textContent = ind.nome;
+
+  const hoje = new Date();
+  const diasRestantes = Math.ceil((new Date(hoje.getFullYear(), hoje.getMonth() + (hoje.getDate() > 15 ? 2 : 1), 0) - hoje) / 86400000);
+  const gap = ind.invertido ? (atual - ind.meta) : (ind.meta - atual);
+
+  const prompt = `Você é consultor especialista em APS do Brasil com domínio da NT 6/2025-DEAPS/SAPS/MS.
+
+Profissional: ${perfilAtual.nome} (${perfilAtual.equipe})
+Indicador escolhido: ${ind.nome} (Peso ${ind.peso})
+Resultado atual: ${atual}${ind.escala10 ? '/10' : '%'}
+Meta para Ótimo: ${ind.invertido ? 'abaixo de ' : ''}${ind.meta}${ind.escala10 ? '/10' : '%'}
+Gap: ${Math.abs(gap).toFixed(1)} pontos ${ind.invertido ? 'acima do limite' : 'abaixo da meta'}
+Quadrimestre: ${quad}
+Dias restantes estimados: ${diasRestantes}
+Observações do profissional: ${obs || 'nenhuma'}
+
+Gere:
+
+🔍 DIAGNÓSTICO ATUAL
+[Análise de 2-3 linhas do gap — seja específico com os números. Se invertido, explique a lógica]
+
+🎯 META NUMÉRICA
+[O que precisa alcançar, quantas ações concretas, em quantos dias]
+
+✦ 5 AÇÕES SUGERIDAS PELA IA
+1. [ação específica e concreta para este indicador e este profissional]
+2. [ação específica]
+3. [ação específica]
+4. [ação específica]
+5. [ação específica]
+
+⏱️ PRAZO RECOMENDADO
+[Distribuição das ações ao longo dos dias restantes]
+
+⚠️ RISCO SE NÃO AGIR
+[O que acontece com a nota da equipe se continuar no ritmo atual]
+
+Seja muito específico — cite ações práticas do dia a dia do ${perfilAtual.nome} na UBS/APS.`;
+
+  try {
+    const res = await fetch(PROXY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: MODEL, max_tokens: 2000, messages: [{ role: 'user', content: prompt }] })
+    });
+    const data = await res.json();
+    const texto = data.content?.map(i => i.text || '').join('') || 'Erro.';
+
+    const box = document.getElementById('ia-m1');
+    box.classList.add('show');
+    document.getElementById('m1-sugestoes').innerHTML = `<div class="ia-content">${texto}</div>`;
+
+    // Extrair ações numeradas e montar editor
+    const linhas = texto.split('\n').filter(l => /^[1-5]\./.test(l.trim()));
+    acoesM1 = linhas.map((l, i) => ({ texto: l.replace(/^[1-5]\.\s*/, '').trim(), prazo: '', responsavel: 'Eu', status: 'pendente' }));
+
+    if (acoesM1.length > 0) {
+      document.getElementById('m1-plano-wrap').style.display = 'block';
+      renderAcoesEditorM1();
+    }
+  } catch(e) {
+    document.getElementById('ia-m1').classList.add('show');
+    document.getElementById('m1-sugestoes').innerHTML = `<div style="color:var(--reg);font-size:12px;">❌ Erro ao conectar com a IA.</div>`;
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '✦ Gerar novas sugestões';
+}
+
+function renderAcoesEditorM1() {
+  const el = document.getElementById('m1-acoes-edit');
+  el.innerHTML = acoesM1.map((a, i) => `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 12px;margin-bottom:8px;">
+      <div style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:4px;">AÇÃO ${i+1}</div>
+      <input class="form-input" type="text" value="${a.texto}" onchange="acoesM1[${i}].texto=this.value" style="margin-bottom:6px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+        <input class="form-input" type="text" placeholder="Prazo (ex: 7 dias)" onchange="acoesM1[${i}].prazo=this.value">
+        <input class="form-input" type="text" placeholder="Responsável" value="${a.responsavel}" onchange="acoesM1[${i}].responsavel=this.value">
+      </div>
+    </div>`).join('');
+}
+
+function addAcaoManual() {
+  acoesM1.push({ texto: '', prazo: '', responsavel: 'Eu', status: 'pendente' });
+  renderAcoesEditorM1();
+}
+
+function salvarPlanoManual() {
+  const indId = document.getElementById('m1-indicador').value;
+  const ind = perfilAtual.inds.find(i => i.id === indId);
+  const atual = parseFloat(document.getElementById('m1-atual').value) || 0;
+  const quad = document.getElementById('m1-quad').value;
+
+  const plano = {
+    perfil: perfilId,
+    indicador: ind.nome,
+    meta: ind.meta,
+    atual,
+    quad,
+    data: new Date().toLocaleDateString('pt-BR'),
+    acoes: acoesM1.filter(a => a.texto.trim()),
+    id: Date.now()
+  };
+
+  const planos = JSON.parse(localStorage.getItem('apex_planos_m1') || '[]');
+  planos.unshift(plano);
+  localStorage.setItem('apex_planos_m1', JSON.stringify(planos.slice(0, 10)));
+
+  showToast('✓ Plano salvo com sucesso!');
+  renderHistoricoM1();
+  renderPlanosAtivos();
+  document.getElementById('m1-plano-wrap').style.display = 'none';
+}
+
+function renderHistoricoM1() {
+  const el = document.getElementById('m1-historico');
+  if (!el) return;
+  const planos = JSON.parse(localStorage.getItem('apex_planos_m1') || '[]')
+    .filter(p => p.perfil === perfilId);
+  if (!planos.length) { el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);font-size:12px;">Nenhum plano salvo ainda.</div>'; return; }
+  el.innerHTML = planos.map(p => {
+    const concluidas = p.acoes.filter(a => a.status === 'concluida').length;
+    const pct = p.acoes.length ? Math.round(concluidas / p.acoes.length * 100) : 0;
+    return `<div class="card" style="margin-bottom:8px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+        <div>
+          <div style="font-size:13px;font-weight:700;">${p.indicador}</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);">${p.quad} · ${p.data}</div>
+        </div>
+        <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);">${pct}%</span>
+      </div>
+      <div class="prog-wrap"><div class="prog-bar" style="width:${pct}%;background:${pct>=75?'var(--otimo)':pct>=40?'var(--suf)':'var(--reg)'}"></div></div>
+      <div style="font-size:11px;color:var(--muted);margin-top:6px;">${p.acoes.length} ações · atual: ${p.atual}% → meta: ${p.meta}%</div>
+    </div>`;
+  }).join('');
+}
+
+function renderPlanosAtivos() {
+  const el = document.getElementById('planos-ativos-wrap');
+  if (!el) return;
+  const m1 = JSON.parse(localStorage.getItem('apex_planos_m1') || '[]').filter(p => p.perfil === perfilId);
+  const m3 = JSON.parse(localStorage.getItem('apex_planos_m3') || '[]').filter(p => p.perfil === perfilId);
+  if (!m1.length && !m3.length) {
+    el.innerHTML = '<div style="text-align:center;padding:24px;color:var(--muted);font-size:12px;">Nenhum plano de ação ainda.<br>Use os módulos acima para começar.</div>';
+    return;
+  }
+  el.innerHTML = [...m1.slice(0,2).map(p => `
+    <div class="card" style="margin-bottom:8px;">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
+        <span style="font-size:14px;">🎯</span>
+        <div>
+          <div style="font-size:12px;font-weight:700;">${p.indicador}</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);">${p.quad} · Plano Manual</div>
+        </div>
+      </div>
+      <div class="prog-wrap"><div class="prog-bar" style="width:${Math.round(p.acoes.filter(a=>a.status==='concluida').length/Math.max(p.acoes.length,1)*100)}%;background:var(--otimo)"></div></div>
+    </div>`),
+  ...m3.slice(0,1).map(p => `
+    <div class="card" style="margin-bottom:8px;">
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span style="font-size:14px;">🤖</span>
+        <div>
+          <div style="font-size:12px;font-weight:700;">Plano IA Automático</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);">${p.data} · IA ÁPEX</div>
+        </div>
+      </div>
+    </div>`)
+  ].join('');
+}
+
+// ── EXPORTAR PDF ──
+function exportarPDF(tipo) {
+  const conteudo = tipo === 'm3'
+    ? document.getElementById('m3-plano-wrap')?.innerHTML || ''
+    : document.getElementById('m2-content')?.innerHTML || '';
+  const titulo = tipo === 'm3' ? 'Plano de Melhoria IA' : 'Relatório de Desempenho';
+  const html = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
+  <style>body{font-family:Arial,sans-serif;font-size:13px;color:#1a1a1e;padding:32px;max-width:720px;margin:0 auto;}
+  h1{font-size:20px;color:#c9a84c;border-bottom:2px solid #c9a84c;padding-bottom:8px;margin-bottom:16px;}
+  .meta{background:#f9f7f4;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:11px;color:#7a7060;}
+  .conteudo{white-space:pre-wrap;line-height:1.8;background:#faf8f5;border:1px solid #e8e2d8;border-radius:8px;padding:20px;}
+  .rodape{margin-top:24px;font-size:10px;color:#94a3b8;text-align:center;border-top:1px solid #e8e2d8;padding-top:12px;}
+  </style></head><body>
+  <h1>${titulo} — ${perfilAtual.nome}</h1>
+  <div class="meta">${perfilAtual.equipe} · Gerado em ${new Date().toLocaleDateString('pt-BR')} · ÁPEX Saúde · NT 6/2025</div>
+  <div class="conteudo">${conteudo.replace(/<[^>]*>/g, '').trim()}</div>
+  <div class="rodape">ÁPEX Saúde · Consultoria APS · NT 6/2025-DEAPS/SAPS/MS</div>
+  </body></html>`;
+  const blob = new Blob([html], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const win = window.open(url, '_blank');
+  setTimeout(() => { win.print(); }, 700);
+}
+
+// ── TOAST ──
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>

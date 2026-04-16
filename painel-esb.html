@@ -392,7 +392,7 @@ Semanas 13-16: [fechamento]
 Seja específico, prático e direto. Linguagem acessível para profissionais de saúde bucal.`;
 
   try{
-    const res=await fetch('https://apex-ai-proxy.agapenegociosdigitais.workers.dev',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1500,messages:[{role:'user',content:prompt}]})});
+    const res=await fetch('https://apex-ai-proxy.agapenegociosdigitais.workers.dev',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:3000,messages:[{role:'user',content:prompt}]})});
     const data=await res.json();
     content.textContent=data.content?.map(i=>i.text||'').join('')||'Erro ao gerar estratégia.';
     document.getElementById('btn-pdf').classList.add('show');

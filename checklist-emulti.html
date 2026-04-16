@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<link rel="icon" type="image/png" href="favicon.png">
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Checklist eMulti – APS</title>
@@ -888,7 +890,9 @@ function exportarChecklistPDF() {
   const unchecked = document.querySelectorAll('.item:not(.checked) .item-text');
   const quad = document.querySelector('.period-btn.active')?.textContent || '—';
   
-  const html = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
+  const html = `<!DOCTYPE html><html lang="pt-BR"><head>
+<link rel="icon" type="image/png" href="favicon.png">
+<meta charset="UTF-8">
   <style>
     body{font-family:Arial,sans-serif;font-size:13px;color:#1c1a16;padding:32px;max-width:680px;margin:0 auto;}
     h1{font-size:20px;color:#1a6b3a;border-bottom:2px solid #1a6b3a;padding-bottom:8px;margin-bottom:16px;}
