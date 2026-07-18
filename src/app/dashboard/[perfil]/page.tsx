@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { DashboardHeader } from '@/components/dashboard/dashboard-header';
 import { IndicadorCard } from '@/components/dashboard/indicador-card';
@@ -47,6 +48,21 @@ export default async function DashboardPerfilPage({
             <p className="mt-3 text-sm leading-relaxed text-apex-text">{config.impacto}</p>
           </section>
         </div>
+
+        <nav className="mt-8 flex flex-wrap gap-3">
+          {config.links
+            // Rotas /guias, /gerencial e /admin chegam na Fase 3 — só linka o que existe
+            .filter((link) => link.url.startsWith('/paineis'))
+            .map((link) => (
+            <Link
+              key={link.url}
+              href={link.url}
+              className="rounded-lg border border-apex-border bg-white px-4 py-2 text-sm font-medium text-apex-ink shadow-sm transition hover:border-apex-gold hover:text-apex-gold"
+            >
+              {link.label} →
+            </Link>
+          ))}
+        </nav>
       </main>
     </div>
   );

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { PERFIS, PERFIL_IDS } from '@/lib/mock/perfis';
+import { EQUIPES, EQUIPE_IDS } from '@/lib/mock/equipes';
 
 export default function HomePage() {
   return (
@@ -48,6 +49,29 @@ export default function HomePage() {
           );
         })}
       </div>
+      <section className="mt-14">
+        <h2 className="text-center font-display text-2xl font-semibold text-apex-ink">
+          Painéis de equipe
+        </h2>
+        <div className="mt-6 grid gap-4 sm:grid-cols-3">
+          {EQUIPE_IDS.map((id) => {
+            const equipe = EQUIPES[id];
+            return (
+              <Link
+                key={id}
+                href={`/paineis/${id}`}
+                className="group rounded-xl border border-apex-border bg-white p-5 text-center shadow-sm transition hover:border-apex-gold hover:shadow-md"
+              >
+                <span className="text-3xl">{equipe.icon}</span>
+                <h3 className="mt-2 font-semibold text-apex-ink group-hover:text-apex-gold">
+                  {equipe.nome}
+                </h3>
+                <p className="mt-1 text-xs text-apex-muted">{equipe.descricao}</p>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
     </main>
   );
 }
