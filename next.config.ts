@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Fix: monorepo warning — há outro package-lock.json em C:\Users\benja
+  turbopack: {
+    root: process.cwd(),
+  },
 };
 
 export default nextConfig;
