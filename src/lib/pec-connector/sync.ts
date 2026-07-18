@@ -4,7 +4,7 @@
  */
 
 import { IntegracaoPecConfig, SyncResult } from './types'
-import { executarQuery, testarConexao } from './connection'
+import { executarQuery } from './connection'
 import { PEC_INDICADOR_QUERIES } from './queries'
 import { criarClienteSupabase } from '@/lib/supabase/server'
 
@@ -90,14 +90,15 @@ export async function sincronizarIndicadores(
       })
       result.total_atualizados++
 
-    } catch (err: any) {
-      console.error(`[PEC] Erro ${codigo}:`, err.message)
-      result.erros.push(`${codigo}: ${err.message}`)
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Erro desconhecido'
+      console.error(`[PEC] Erro ${codigo}:`, message)
+      result.erros.push(`${codigo}: ${message}`)
       result.total_erros++
       result.indicadores_atualizados.push({
         codigo, equipe_id: equipeIne,
         valor_anterior: null, valor_novo: 0,
-        periodo: dataInicio, status: 'erro', erro: err.message,
+        periodo: dataInicio, status: 'erro', erro: message,
       })
     }
   }
@@ -111,15 +112,15 @@ export async function sincronizarIndicadores(
   return result
 }
 
-function calcularValorIndicador(codigo: string, row: Record<string, any>): number {
+function calcularValorIndicador(codigo: string, row: Record<string, unknown>): number {
   const keys = Object.keys(row)
   const numerador = keys.find(k => k !== 'total_cadastrados' && k !== 'total' && !k.startsWith('total_'))
   const denominador = keys.find(k => k === 'total_cadastrados' || k === 'total') || 'total'
-  
-  if (!numerador) return row[keys[0]] || 0
-  
-  const num = parseFloat(row[numerador]) || 0
-  const den = parseFloat(row[denominador]) || 1
+
+  if (!numerador) return Number(row[keys[0]]) || 0
+
+  const num = parseFloat(String(row[numerador])) || 0
+  const den = parseFloat(String(row[denominador])) || 1
   
   if (den === 0) return 0
   

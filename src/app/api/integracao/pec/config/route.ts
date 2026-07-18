@@ -3,7 +3,7 @@ import { criarClienteSupabase } from '@/lib/supabase/server'
 import { testarConexao, validarSchema } from '@/lib/pec-connector/connection'
 import { IntegracaoPecConfig } from '@/lib/pec-connector/types'
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const supabase = await criarClienteSupabase()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ erro: 'Nao autorizado' }, { status: 401 })
@@ -11,8 +11,9 @@ export async function GET(req: NextRequest) {
   if (!usuario) return NextResponse.json({ erro: 'Usuario nao encontrado' }, { status: 404 })
   const { data: config } = await supabase.from('integracoes_pec').select('*').eq('municipio_id', usuario.municipio_id).single()
   if (!config) return NextResponse.json({ configurado: false })
-  const { host, porta, database, usuario: userDb, ...safeConfig } = config
-  return NextResponse.json({ configurado: true, config: { ...safeConfig, host: '***', usuario: '***' }, ultima_sincronizacao: config.ultima_sincronizacao, status: config.status_sincronizacao })
+  // Whitelist: nunca expor senha/host/credenciais do banco PEC na resposta
+  const safeConfig = { ativo: config.ativo, ssl: config.ssl, updated_at: config.updated_at }
+  return NextResponse.json({ configurado: true, config: safeConfig, ultima_sincronizacao: config.ultima_sincronizacao, status: config.status_sincronizacao })
 }
 
 export async function POST(req: NextRequest) {

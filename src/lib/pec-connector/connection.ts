@@ -62,10 +62,10 @@ export async function testarConexao(
       ok: true,
       versao: result.rows[0]?.version?.split(',')[0] || 'desconhecida',
     }
-  } catch (err: any) {
+  } catch (err: unknown) {
     return {
       ok: false,
-      erro: err.message || 'Erro desconhecido',
+      erro: err instanceof Error ? err.message : 'Erro desconhecido',
     }
   } finally {
     if (client) client.release()
@@ -78,8 +78,8 @@ export async function testarConexao(
 export async function executarQuery(
   config: IntegracaoPecConfig,
   query: string,
-  params: any[] = []
-): Promise<any[]> {
+  params: unknown[] = []
+): Promise<Record<string, unknown>[]> {
   const pool = getPool(config)
   const client = await pool.connect()
   
@@ -122,7 +122,7 @@ export async function validarSchema(
        ORDER BY table_name`
     )
     
-    const found = rows.map((r: any) => r.table_name)
+    const found = rows.map(r => String(r.table_name))
     const expected = expectedTables
     const missing = expected.filter(t => !found.includes(t))
     
@@ -131,7 +131,8 @@ export async function validarSchema(
       tabelas_encontradas: found,
       tabelas_faltantes: missing,
     }
-  } catch (err: any) {
+  } catch (err: unknown) {
+    console.error('[PEC] Falha ao validar schema:', err instanceof Error ? err.message : err)
     return {
       ok: false,
       tabelas_encontradas: [],

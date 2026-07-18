@@ -1,10 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { criarClienteSupabase } from '@/lib/supabase/server'
 import { sincronizarMunicipio } from '@/lib/pec-connector/sync'
-import { testarConexao } from '@/lib/pec-connector/connection'
 import { IntegracaoPecConfig } from '@/lib/pec-connector/types'
 
-export async function POST(req: NextRequest) {
+export async function POST() {
   try {
     const supabase = await criarClienteSupabase()
     const { data: { user } } = await supabase.auth.getUser()
@@ -40,8 +39,9 @@ export async function POST(req: NextRequest) {
     })
 
     return NextResponse.json({ sucesso: true, resultados })
-  } catch (err: any) {
-    console.error('[PEC API] Erro:', err)
-    return NextResponse.json({ erro: err.message }, { status: 500 })
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Erro desconhecido'
+    console.error('[PEC API] Erro:', message)
+    return NextResponse.json({ erro: message }, { status: 500 })
   }
 }
