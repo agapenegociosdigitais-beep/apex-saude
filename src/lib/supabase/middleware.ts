@@ -1,7 +1,7 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
-const ROTAS_PUBLICAS = ['/login']
+const ROTAS_PUBLICAS = ['/login', '/admin', '/api/admin']
 
 function urlEpublica(pathname: string): boolean {
   return ROTAS_PUBLICAS.some((r) => pathname.startsWith(r))
