@@ -15,18 +15,33 @@ Sucessor do MVP HTML (`C:\Users\benja\apex-saude`). Migração iniciada em 18/07
 ```
 src/
 ├── app/
-│   ├── page.tsx                    # Home: seletor dos 12 perfis
-│   ├── dashboard/[perfil]/page.tsx # Dashboard SSG parametrizado (12 rotas)
-│   └── api/integracao/pec/         # Rotas PEC (config/sincronizar/status) — Fase 2
+│   ├── page.tsx                    # Home: seletor 12 perfis + paineis + ferramentas
+│   ├── dashboard/[perfil]/page.tsx # 12 dashboards SSG (mock deterministico)
+│   ├── paineis/[equipe]/page.tsx   # 3 paineis de equipe (nota ponderada)
+│   ├── guias/[equipe]/page.tsx     # Conteudo educativo dos 15 indicadores
+│   ├── gerencial/page.tsx          # Notas + repasse simulado do municipio
+│   ├── simulador/page.tsx          # Projecao repasse anual (client)
+│   ├── ia/page.tsx                 # PDCA por perfil (motor de regras)
+│   ├── proposta/page.tsx           # Planos + inexigibilidade Art. 74
+│   ├── admin/page.tsx              # Status implantacao + rotas PEC
+│   ├── privacidade/page.tsx        # LGPD
+│   ├── login/page.tsx              # Magic link (aguardando Supabase)
+│   └── api/integracao/pec/         # Rotas PEC (config/sincronizar/status)
 ├── components/dashboard/           # Header, IndicadorCard, ChecklistCard
 ├── lib/
-│   ├── mock/                       # perfis.ts (12 perfis tipados) + indicadores.ts (mock determinístico)
-│   ├── pec-connector/              # Conector PEC→PostgreSQL (types/connection/queries/sync)
-│   └── supabase/server.ts          # criarClienteSupabase (@supabase/ssr)
+│   ├── mock/                       # perfis, equipes, indicadores, nota, repasse,
+│   │   ├── municipio, guias-content + __tests__/ (Vitest, 18 testes)
+│   ├── pec-connector/              # Conector PEC→PostgreSQL
+│   └── supabase/                   # server.ts, client.ts, middleware.ts
+├── middleware.ts                   # updateSession (passthrough sem env)
 scripts/                            # pec-sync.py + setup-vps.sh (cron 6h na VPS)
 supabase/                           # Schema SQL 17 tabelas + RPC + migrations
 public/brand/                       # Logos oficiais
 ```
+
+## Comandos
+- Gate pre-commit: `npm run lint && npm run test && npm run build` (todos verdes)
+- Deploy: `vercel --prod --yes` (alias automatico para apex-saude-next.vercel.app)
 
 ## Regras
 - Dados atuais = mock determinístico (`valorMock`) — trocar por Supabase na Fase 2
