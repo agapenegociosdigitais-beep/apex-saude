@@ -50,10 +50,7 @@ export default async function DashboardPerfilPage({
         </div>
 
         <nav className="mt-8 flex flex-wrap gap-3">
-          {config.links
-            // Rotas /guias, /gerencial e /admin chegam na Fase 3 — só linka o que existe
-            .filter((link) => link.url.startsWith('/paineis'))
-            .map((link) => (
+          {config.links.map((link) => (
             <Link
               key={link.url}
               href={link.url}

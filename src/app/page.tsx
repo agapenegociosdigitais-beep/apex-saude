@@ -72,6 +72,31 @@ export default function HomePage() {
           })}
         </div>
       </section>
+      <section className="mt-14">
+        <h2 className="text-center font-display text-2xl font-semibold text-apex-ink">
+          Gestão e ferramentas
+        </h2>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { href: '/gerencial', icon: '📊', nome: 'Visão gerencial', desc: 'Notas e repasse do município' },
+            { href: '/simulador', icon: '💰', nome: 'Simulador financeiro', desc: 'Projeção do repasse anual' },
+            { href: '/ia', icon: '🧭', nome: 'Plano PDCA', desc: 'Ação por indicador' },
+            { href: '/proposta', icon: '📄', nome: 'Proposta comercial', desc: 'Planos e contratação' },
+          ].map((f) => (
+            <Link
+              key={f.href}
+              href={f.href}
+              className="group rounded-xl border border-apex-border bg-white p-5 shadow-sm transition hover:border-apex-gold hover:shadow-md"
+            >
+              <span className="text-2xl">{f.icon}</span>
+              <h3 className="mt-2 font-semibold text-apex-ink group-hover:text-apex-gold">
+                {f.nome}
+              </h3>
+              <p className="mt-1 text-xs text-apex-muted">{f.desc}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
