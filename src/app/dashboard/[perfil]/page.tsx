@@ -4,6 +4,7 @@ import { DashboardHeader } from '@/components/dashboard/dashboard-header';
 import { IndicadorCard } from '@/components/dashboard/indicador-card';
 import { ChecklistCard } from '@/components/dashboard/checklist-card';
 import { InsightsPanel } from '@/components/dashboard/insights-panel';
+import { PerfilGuard } from '@/components/perfil-guard';
 import { PERFIS, PERFIL_IDS, isPerfilId, type PerfilId } from '@/lib/mock/perfis';
 import { statusDoIndicador, valorMock, tendencia, iconeTendencia, ultimosMeses, dicaIndicador } from '@/lib/mock/indicadores';
 
@@ -39,6 +40,7 @@ export default async function DashboardPerfilPage({ params }: { params: Promise<
   return (
     <div className="min-h-screen bg-apex-bg">
       <DashboardHeader />
+      <PerfilGuard>
       <main className="mx-auto max-w-6xl px-6 py-8">
         {/* Banner PEC */}
         <div className="mb-6 rounded-xl border border-amber-300 bg-amber-50 p-4 flex items-center gap-3">
@@ -139,6 +141,7 @@ export default async function DashboardPerfilPage({ params }: { params: Promise<
           ))}
         </nav>
       </main>
+      </PerfilGuard>
     </div>
   );
 }
