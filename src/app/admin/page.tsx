@@ -20,7 +20,7 @@ const ESTADOS = [
 ];
 
 export default function AdminPage() {
-  const [tab, setTab] = useState<'municipios'|'equipes'|'indicadores'>('municipios');
+  const [tab, setTab] = useState<'municipios'|'equipes'|'indicadores'|'integracao'|'usuarios'|'gestao'>('municipios');
   const [municipios, setMunicipios] = useState<M[]>([]);
   const [equipes, setEquipes] = useState<E[]>([]);
   const [indicadores, setIndicadores] = useState<Ind[]>([]);
@@ -45,18 +45,26 @@ export default function AdminPage() {
   const [editingInd, setEditingInd] = useState<Ind | null>(null);
   const [indForm, setIndForm] = useState({ peso:0, meta:0 });
   const [filtroMunicipio, setFiltroMunicipio] = useState('');
+  const [pecForms, setPecForms] = useState<Record<string, any>>({});
+  const [pecStatus, setPecStatus] = useState<Record<string, string>>({});
+  const [usuarios, setUsuarios] = useState<any[]>([]);
+  const [showUserForm, setShowUserForm] = useState(false);
+  const [userForm, setUserForm] = useState({ email:'', nome:'', role:'profissional', municipio_id:'', unidade_id:'', equipe_id:'', perfil_id:'medico', password:'mudar123' });
+  const [filtroUbs, setFiltroUbs] = useState('');
 
   const carregar = useCallback(async () => {
     setLoading(true);
     try {
-      const [mr, er, ir] = await Promise.all([
+      const [mr, er, ir, ur] = await Promise.all([
         fetch('/api/admin/municipios'),
         fetch('/api/admin/equipes'),
         fetch('/api/admin/indicadores'),
+        fetch('/api/admin/usuarios'),
       ]);
       if (mr.ok) setMunicipios((await mr.json()).data || []);
       if (er.ok) setEquipes((await er.json()).data || []);
       if (ir.ok) setIndicadores((await ir.json()).data || []);
+      if (ur.ok) setUsuarios((await ur.json()).data || []);
     } catch {} finally { setLoading(false); }
   }, []);
 
@@ -114,14 +122,14 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-apex-bg">
-      <DashboardHeader nomePerfil="Administração" equipe="Controle total do sistema" icon="⚙️" />
+      <DashboardHeader />
       <main className="mx-auto max-w-6xl px-6 py-8">
         {/* Tabs */}
         <div className="flex gap-1 rounded-xl bg-gray-100 p-1 mb-6 w-fit">
-          {(['municipios','equipes','indicadores'] as const).map(t => (
+          {(['municipios','equipes','indicadores','integracao','usuarios','gestao'] as const).map(t => (
             <button key={t} onClick={() => setTab(t)}
               className={`px-4 py-2 rounded-lg text-sm font-semibold transition ${tab===t?'bg-white shadow text-apex-ink':'text-gray-500 hover:text-apex-ink'}`}>
-              {{municipios:'🏙️ Municípios', equipes:'👥 Equipes', indicadores:'📊 Indicadores'}[t]}
+              {{municipios:'🏙️ Municípios', equipes:'👥 Equipes', indicadores:'📊 Indicadores', integracao:'🔌 PEC', usuarios:'🩺 Profissionais', gestao:'📊 Gestão'}[t]}
             </button>
           ))}
         </div>
@@ -311,6 +319,179 @@ export default function AdminPage() {
               </table>
             </div>
           }
+        </>}
+
+        {/* ========== INTEGRACAO PEC TAB ========== */}
+        {tab === 'integracao' && <>
+          <h1 className="text-2xl font-semibold mb-4">🔌 Integração PEC</h1>
+          <p className="text-sm text-gray-500 mb-6">Configure a conexão com o banco do Prontuário Eletrônico para sincronizar dados.</p>
+
+          {municipios.map(mun => {
+            const pf = pecForms[mun.id] || { host:'', porta:'5432', database:'esus', usuario:'', senha:'', ativo:false };
+            const st = pecStatus[mun.id] || '';
+            return (
+              <div key={mun.id} className="mb-4 rounded-xl border bg-white shadow-sm p-5">
+                <h3 className="text-lg font-semibold">{mun.nome} — {mun.uf}</h3>
+                <div className="mt-4 grid gap-4 sm:grid-cols-3">
+                  {['host','porta','database','usuario','senha'].map((campo, i) => (
+                    <label key={i} className="flex flex-col gap-1 text-sm">{campo==='host'?'Host/IP':campo==='porta'?'Porta':campo==='database'?'Database':campo==='usuario'?'Usuário':'Senha'}
+                      <input type={campo==='senha'?'password':'text'} value={pf[campo]||''}
+                        onChange={e => setPecForms(f => ({...f, [mun.id]: {...pf, [campo]:e.target.value}}))}
+                        className="rounded-md border px-3 py-2" placeholder={campo==='host'?'192.168.1.100':campo==='porta'?'5432':campo==='database'?'esus':''} />
+                    </label>
+                  ))}
+                </div>
+                <div className="mt-4 flex gap-3 items-center flex-wrap">
+                  <button onClick={async () => {
+                    setPecStatus(s => ({...s, [mun.id]: 'Testando...'}));
+                    try {
+                      const res = await fetch('/api/integracao/pec/config', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ municipio_id:mun.id, ...pf }) });
+                      const j = await res.json();
+                      setPecStatus(s => ({...s, [mun.id]: j.ok?'✅ Conectado!': '❌ '+j.error}));
+                    } catch { setPecStatus(s => ({...s, [mun.id]: '❌ Falha'})); }
+                  }} className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">🔍 Testar Conexão</button>
+                  <button onClick={async () => {
+                    setPecStatus(s => ({...s, [mun.id]: 'Salvando...'}));
+                    await fetch('/api/integracao/pec/config', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ municipio_id:mun.id, ...pf }) });
+                    setPecStatus(s => ({...s, [mun.id]: '✅ Salvo!'}));
+                  }} className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700">💾 Salvar Configuração</button>
+                  <button onClick={async () => {
+                    setPecStatus(s => ({...s, [mun.id]: 'Sincronizando...'}));
+                    const res = await fetch('/api/integracao/pec/sincronizar', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ municipio_id:mun.id }) });
+                    const j = await res.json();
+                    setPecStatus(s => ({...s, [mun.id]: j.ok?`✅ ${j.total||0} registros`:'❌ '+j.error}));
+                  }} className="rounded-lg bg-amber-600 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-700">🔄 Sincronizar Agora</button>
+                  {st && <span className="text-sm font-medium">{st}</span>}
+                </div>
+              </div>
+            );
+          })}
+        </>}
+        {/* ========== USUARIOS TAB ========== */}
+        {tab === 'usuarios' && <>
+          <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center gap-4">
+              <h1 className="text-2xl font-semibold">Profissionais</h1>
+              <select value={filtroUbs} onChange={e => setFiltroUbs(e.target.value)} className="rounded-lg border px-3 py-2 text-sm">
+                <option value="">Todas as UBS</option>
+                {municipios.flatMap(m => m.unidades).map(u => <option key={u.id} value={u.id}>{u.nome}</option>)}
+              </select>
+            </div>
+            <button onClick={() => setShowUserForm(true)} className="rounded-lg bg-apex-gold px-4 py-2 text-sm font-semibold text-white hover:bg-amber-600">+ Novo</button>
+          </div>
+
+          {showUserForm && (
+            <form onSubmit={async e => {
+              e.preventDefault(); setSaving(true);
+              const res = await fetch('/api/admin/usuarios', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(userForm) });
+              const j = await res.json();
+              if (!res.ok) { alert(j.error); setSaving(false); return; }
+              alert(`✅ Criado! Senha: ${j.senha}`);
+              setShowUserForm(false); setUserForm({ email:'', nome:'', role:'profissional', municipio_id:'', unidade_id:'', equipe_id:'', perfil_id:'medico', password:'mudar123' });
+              carregar(); setSaving(false);
+            }} className="mb-6 rounded-xl border bg-white p-6 shadow-sm">
+              <h2 className="text-lg font-semibold">Novo Profissional</h2>
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                <label className="flex flex-col gap-1 text-sm">Nome *<input value={userForm.nome} onChange={e => setUserForm({...userForm, nome:e.target.value})} className="rounded-md border px-3 py-2" required /></label>
+                <label className="flex flex-col gap-1 text-sm">Email *<input type="email" value={userForm.email} onChange={e => setUserForm({...userForm, email:e.target.value})} className="rounded-md border px-3 py-2" required /></label>
+                <label className="flex flex-col gap-1 text-sm">Cargo
+                  <select value={userForm.perfil_id} onChange={e => setUserForm({...userForm, perfil_id:e.target.value})} className="rounded-md border px-3 py-2">
+                    {['medico','enfermeiro','tecnico','acs','dentista','asb','asco','psicologo','nutricionista','fisioterapeuta','farmaceutico','assistente_social','coordenador','gestor'].map(p => <option key={p} value={p}>{p}</option>)}
+                  </select>
+                </label>
+                <label className="flex flex-col gap-1 text-sm">Nível
+                  <select value={userForm.role} onChange={e => setUserForm({...userForm, role:e.target.value})} className="rounded-md border px-3 py-2">
+                    <option value="profissional">Profissional</option><option value="coordenador">Coordenador</option><option value="gestor">Gestor</option><option value="admin">Admin</option>
+                  </select>
+                </label>
+                <label className="flex flex-col gap-1 text-sm">Município *
+                  <select value={userForm.municipio_id} onChange={e => setUserForm({...userForm, municipio_id:e.target.value, unidade_id:'', equipe_id:''})} className="rounded-md border px-3 py-2" required>
+                    <option value="">Selecione...</option>{municipios.map(m => <option key={m.id} value={m.id}>{m.nome}</option>)}
+                  </select>
+                </label>
+                <label className="flex flex-col gap-1 text-sm">UBS *
+                  <select value={userForm.unidade_id} onChange={e => setUserForm({...userForm, unidade_id:e.target.value, equipe_id:''})} className="rounded-md border px-3 py-2" required>
+                    <option value="">Selecione...</option>
+                    {(municipios.find(m => m.id === userForm.municipio_id)?.unidades||[]).map(u => <option key={u.id} value={u.id}>{u.nome}</option>)}
+                  </select>
+                </label>
+                <label className="flex flex-col gap-1 text-sm">Equipe
+                  <select value={userForm.equipe_id} onChange={e => setUserForm({...userForm, equipe_id:e.target.value})} className="rounded-md border px-3 py-2">
+                    <option value="">Nenhuma</option>
+                    {equipes.filter(e => e.unidade_id === userForm.unidade_id).map(e => <option key={e.id} value={e.id}>{e.nome} ({e.tipo})</option>)}
+                  </select>
+                </label>
+                <label className="flex flex-col gap-1 text-sm">Senha inicial<input value={userForm.password} onChange={e => setUserForm({...userForm, password:e.target.value})} className="rounded-md border px-3 py-2" /></label>
+              </div>
+              <div className="mt-4 flex gap-3">
+                <button type="submit" disabled={saving} className="rounded-lg bg-emerald-600 px-5 py-2 text-sm font-semibold text-white disabled:opacity-50">Salvar</button>
+                <button type="button" onClick={() => setShowUserForm(false)} className="rounded-lg border px-5 py-2 text-sm text-gray-500">Cancelar</button>
+              </div>
+            </form>
+          )}
+
+          <div className="overflow-x-auto rounded-xl border bg-white">
+            <table className="w-full text-sm">
+              <thead className="bg-gray-50"><tr>
+                <th className="p-3 text-left">Nome</th><th className="p-3 text-left">Email</th><th className="p-3 text-left">Cargo</th><th className="p-3 text-left">Nível</th><th className="p-3 text-left">UBS</th><th className="p-3 text-left">Equipe</th><th className="p-3"></th>
+              </tr></thead>
+              <tbody>
+                {usuarios.filter((u:any) => !filtroUbs || u.unidade_id === filtroUbs).map((u:any) => {
+                  const ubs = municipios.flatMap(m => m.unidades).find(ub => ub.id === u.unidade_id);
+                  const eq = equipes.find(e => e.id === u.equipe_id);
+                  return (
+                    <tr key={u.id} className="border-t hover:bg-gray-50">
+                      <td className="p-3 font-medium">{u.nome}</td><td className="p-3 text-xs">{u.email}</td>
+                      <td className="p-3 text-xs">{u.perfil_id}</td><td className="p-3"><span className="text-xs rounded bg-gray-100 px-2 py-0.5">{u.role}</span></td>
+                      <td className="p-3 text-xs">{ubs?.nome||'—'}</td><td className="p-3 text-xs">{eq?.nome||'—'}</td>
+                      <td className="p-3"><button onClick={async () => { if(!confirm('Excluir?')) return; await fetch(`/api/admin/usuarios?id=${u.id}`,{method:'DELETE'}); carregar(); }} className="text-xs text-red-400 hover:text-red-600">🗑️</button></td>
+                    </tr>
+                  );
+                })}
+                {usuarios.filter((u:any) => !filtroUbs || u.unidade_id === filtroUbs).length === 0 && (
+                  <tr><td colSpan={7} className="p-6 text-center text-gray-400">Nenhum profissional cadastrado.</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </>}
+        {/* ========== GESTAO TAB ========== */}
+        {tab === 'gestao' && <>
+          <div className="flex items-center gap-4 mb-6">
+            <h1 className="text-2xl font-semibold">📊 Gestão Geral de Indicadores</h1>
+            <select value={filtroMunicipio} onChange={e => setFiltroMunicipio(e.target.value)}
+              className="rounded-lg border px-3 py-2 text-sm">
+              <option value="">Todos os municípios</option>
+              {municipios.map(m => <option key={m.id} value={m.id}>{m.nome} — {m.uf}</option>)}
+            </select>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-8">
+            {[{ id:'medico', icon:'👨‍⚕️', nome:'Médico', grupo:'eSF', ind:4 },{ id:'enfermeiro', icon:'👩‍⚕️', nome:'Enfermeiro', grupo:'eSF', ind:3 },{ id:'tecnico', icon:'🩺', nome:'Técnico Enfermagem', grupo:'eSF', ind:3 },{ id:'acs', icon:'🏘️', nome:'ACS', grupo:'eSF', ind:3 },{ id:'dentista', icon:'🦷', nome:'Dentista', grupo:'eSB', ind:6 },{ id:'psicologo', icon:'🧠', nome:'Psicólogo', grupo:'eMulti', ind:2 },{ id:'fisio', icon:'🏃', nome:'Fisioterapeuta', grupo:'eMulti', ind:2 },{ id:'nutricionista', icon:'🥗', nome:'Nutricionista', grupo:'eMulti', ind:2 },{ id:'assistente', icon:'🤝', nome:'Assistente Social', grupo:'eMulti', ind:2 },{ id:'farmaceutico', icon:'💊', nome:'Farmacêutico', grupo:'eMulti', ind:2 },{ id:'coordenador', icon:'📋', nome:'Coordenador', grupo:'Gestão', ind:2 },{ id:'gestor', icon:'🏛️', nome:'Gestor', grupo:'Gestão', ind:2 }].map(p => (
+              <a key={p.id} href={`/dashboard/${p.id}`} target="_blank" className="rounded-xl border bg-white p-5 shadow-sm hover:shadow-md hover:border-apex-gold transition-all group">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">{p.icon}</span>
+                  <div><h3 className="font-semibold">{p.nome}</h3><p className="text-xs text-gray-500">{p.grupo} · {p.ind} indicadores</p></div>
+                </div>
+                <div className="mt-3 text-xs text-apex-gold opacity-0 group-hover:opacity-100 transition-opacity">Ver dashboard →</div>
+              </a>
+            ))}
+          </div>
+          <h2 className="text-lg font-semibold mt-4 mb-3">🚀 Acesso por município</h2>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {(filtroMunicipio ? municipios.filter(m => m.id === filtroMunicipio) : municipios).map(mun => (
+              <div key={mun.id} className="rounded-xl border bg-white p-4 shadow-sm">
+                <h3 className="font-semibold">{mun.nome} — {mun.uf}</h3>
+                <p className="text-xs text-gray-500 mb-3">{mun.unidades_count} UBS · {equipes.filter(e=>e.municipio_id===mun.id).length} equipes</p>
+                <div className="flex flex-wrap gap-1.5">
+                  <a href="/gerencial" className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200">📊 Gerencial</a>
+                  <a href="/paineis/esf" className="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded hover:bg-emerald-200">🏥 eSF</a>
+                  <a href="/paineis/esb" className="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded hover:bg-amber-200">🦷 eSB</a>
+                  <a href="/paineis/emulti" className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">🤝 eMulti</a>
+                  <a href="/guias/esf" className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded hover:bg-gray-200">📖 Guia</a>
+                </div>
+              </div>
+            ))}
+          </div>
         </>}
       </main>
     </div>

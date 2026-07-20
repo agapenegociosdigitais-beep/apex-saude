@@ -25,7 +25,7 @@ export default async function PainelEquipePage({
 
   return (
     <div className="min-h-screen bg-apex-bg">
-      <DashboardHeader nomePerfil={config.nome} equipe="Painel de equipe" icon={config.icon} />
+      <DashboardHeader />
       <main className="mx-auto max-w-6xl px-6 py-8">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>

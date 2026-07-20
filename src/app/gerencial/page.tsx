@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { DashboardHeader } from '@/components/dashboard/dashboard-header';
+import { InsightsPanel } from '@/components/dashboard/insights-panel';
 import { MUNICIPIO_MOCK } from '@/lib/mock/municipio';
 import { EQUIPES } from '@/lib/mock/equipes';
 import { classificacaoDaNota } from '@/lib/mock/nota';
@@ -13,11 +14,7 @@ export default function GerencialPage() {
 
   return (
     <div className="min-h-screen bg-apex-bg">
-      <DashboardHeader
-        nomePerfil="Gestão Municipal"
-        equipe={`${MUNICIPIO_MOCK.nome} — ${MUNICIPIO_MOCK.uf}`}
-        icon="🏛️"
-      />
+      <DashboardHeader />
       <main className="mx-auto max-w-6xl px-6 py-8">
         <h1 className="font-display text-3xl font-semibold text-apex-ink">Visão gerencial</h1>
         <p className="mt-1 text-apex-muted">
@@ -94,6 +91,14 @@ export default function GerencialPage() {
           Valores de repasse são ilustrativos e configuráveis por município. Para projeções
           detalhadas, use o <Link href="/simulador" className="text-apex-gold underline">simulador financeiro</Link>.
         </p>
+
+        <InsightsPanel indicadores={[]} equipes={[
+          { nome: 'eSF Santa Luzia', nota: 10.1, classificacao: 'Ótimo' },
+          { nome: 'eSF Floresta', nota: 10.5, classificacao: 'Ótimo' },
+          { nome: 'eSF Nova Belterra', nota: 10.3, classificacao: 'Ótimo' },
+          { nome: 'eSB Centro', nota: 10.4, classificacao: 'Ótimo' },
+          { nome: 'eMulti 1', nota: 9.9, classificacao: 'Ótimo' },
+        ]} />
       </main>
     </div>
   );

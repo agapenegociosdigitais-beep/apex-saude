@@ -1,11 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { PERFIS, PERFIL_IDS } from '@/lib/mock/perfis';
 import { EQUIPES, EQUIPE_IDS } from '@/lib/mock/equipes';
+import HomeRedirect from '@/components/home-redirect';
 
 export default function HomePage() {
   return (
     <main className="mx-auto w-full max-w-6xl px-6 py-12">
+      <Suspense fallback={null}><HomeRedirect /></Suspense>
       <div className="flex flex-col items-center text-center">
         <Image
           src="/brand/logo-full.png"
