@@ -92,7 +92,7 @@ export function formatarMeta(ind: IndicadorConfig): string {
 }
 
 /** Gera dica contextual baseada no status e tendência do indicador */
-export function dicaIndicador(codigo: string, valor: number, meta: number, status: StatusIndicador, trend: 'subindo' | 'estavel' | 'caindo', invertido: boolean): string {
+export function dicaIndicador(codigo: string, valor: number, meta: number, status: StatusIndicador, trend: 'subindo' | 'estavel' | 'caindo'): string {
   const pct = Math.round(valor);
   const nomes: Record<string, string> = {
     C1:'Acesso',C2:'Desenvolvimento infantil',C3:'Gestação e puerpério',C4:'Diabetes (HbA1c)',C5:'Hipertensão (PA)',C6:'Pessoa idosa',C7:'Prevenção do câncer',

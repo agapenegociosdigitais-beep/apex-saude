@@ -5,7 +5,7 @@ import { IndicadorCard } from '@/components/dashboard/indicador-card';
 import { ChecklistCard } from '@/components/dashboard/checklist-card';
 import { InsightsPanel } from '@/components/dashboard/insights-panel';
 import { PerfilGuard } from '@/components/perfil-guard';
-import { PERFIS, PERFIL_IDS, isPerfilId, type PerfilId } from '@/lib/mock/perfis';
+import { PERFIS, PERFIL_IDS, isPerfilId } from '@/lib/mock/perfis';
 import { statusDoIndicador, valorMock, tendencia, iconeTendencia, ultimosMeses, dicaIndicador } from '@/lib/mock/indicadores';
 
 export function generateStaticParams() {
@@ -81,7 +81,7 @@ export default async function DashboardPerfilPage({ params }: { params: Promise<
             return (
               <div key={ind.id} className="relative group">
                 <IndicadorCard indicador={ind} valor={valor} status={status} />
-                <span className="absolute top-2 right-2 text-xs cursor-help" title={dicaIndicador(ind.id, valor, ind.meta, status, trend, ind.invertido)}>{iconeTendencia(trend, ind.invertido)}</span>
+                <span className="absolute top-2 right-2 text-xs cursor-help" title={dicaIndicador(ind.id, valor, ind.meta, status, trend)}>{iconeTendencia(trend, ind.invertido)}</span>
               </div>
             );
           })}
@@ -112,7 +112,7 @@ export default async function DashboardPerfilPage({ params }: { params: Promise<
                         const opacity = v / 100;
                         return <td key={m} className="p-1 text-center"><span className={`inline-block w-5 h-5 rounded-sm ${bg} cursor-help`} style={{opacity: 0.3 + opacity * 0.7}} title={`${m}: ${Math.round(v)}% — ${s === 'otimo' ? '✅ Acima da meta' : s === 'regular' ? '⚠️ Próximo da meta' : '🔴 Abaixo da meta'}\n${ind.nome}`} /></td>;
                       })}
-                      <td className="p-1 text-center"><span className="cursor-help" title={dicaIndicador(ind.id, valorMock(perfil, ind, mesAtual), ind.meta, statusDoIndicador(valorMock(perfil, ind, mesAtual), ind), trend, ind.invertido)}>{iconeTendencia(trend, ind.invertido)}</span></td>
+                      <td className="p-1 text-center"><span className="cursor-help" title={dicaIndicador(ind.id, valorMock(perfil, ind, mesAtual), ind.meta, statusDoIndicador(valorMock(perfil, ind, mesAtual), ind), trend)}>{iconeTendencia(trend, ind.invertido)}</span></td>
                     </tr>
                   );
                 })}

@@ -7,15 +7,18 @@ const supabase = createClient(
   { auth: { persistSession: false } }
 );
 
+interface MunicipioRow { id: string; nome: string; uf: string; codigo_ibge: string; populacao: number; unidades_saude?: UnidadeRow[] }
+interface UnidadeRow { id: string; municipio_id: string; nome: string; tipo: string; ativa: boolean }
+
 export async function GET() {
   const { data: municipios, error } = await supabase
     .from('municipios').select('*, unidades_saude(*)').order('nome');
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
-  const result = municipios.map((m: any) => ({
+  const result = municipios.map((m: MunicipioRow) => ({
     id: m.id, nome: m.nome, uf: m.uf, codigo_ibge: m.codigo_ibge, populacao: m.populacao,
     unidades_count: m.unidades_saude?.length || 0,
-    unidades: (m.unidades_saude || []).map((u: any) => ({
+    unidades: (m.unidades_saude || []).map((u: UnidadeRow) => ({
       id: u.id, municipio_id: u.municipio_id, nome: u.nome, tipo: u.tipo, ativa: u.ativa, equipes_count: 0,
     })),
   }));

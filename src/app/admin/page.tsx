@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { DashboardHeader } from '@/components/dashboard/dashboard-header';
 import { useEffect, useState, useCallback } from 'react';
 
@@ -483,11 +484,11 @@ export default function AdminPage() {
                 <h3 className="font-semibold">{mun.nome} — {mun.uf}</h3>
                 <p className="text-xs text-gray-500 mb-3">{mun.unidades_count} UBS · {equipes.filter(e=>e.municipio_id===mun.id).length} equipes</p>
                 <div className="flex flex-wrap gap-1.5">
-                  <a href="/gerencial" className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200">📊 Gerencial</a>
-                  <a href="/paineis/esf" className="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded hover:bg-emerald-200">🏥 eSF</a>
-                  <a href="/paineis/esb" className="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded hover:bg-amber-200">🦷 eSB</a>
-                  <a href="/paineis/emulti" className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">🤝 eMulti</a>
-                  <a href="/guias/esf" className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded hover:bg-gray-200">📖 Guia</a>
+                  <Link href="/gerencial" className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200">📊 Gerencial</Link>
+                  <Link href="/paineis/esf" className="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded hover:bg-emerald-200">🏥 eSF</Link>
+                  <Link href="/paineis/esb" className="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded hover:bg-amber-200">🦷 eSB</Link>
+                  <Link href="/paineis/emulti" className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200">🤝 eMulti</Link>
+                  <Link href="/guias/esf" className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded hover:bg-gray-200">📖 Guia</Link>
                 </div>
               </div>
             ))}

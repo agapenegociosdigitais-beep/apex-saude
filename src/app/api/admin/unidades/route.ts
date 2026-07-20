@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
   if (municipioId) q = q.eq('municipio_id', municipioId);
   const { data, error } = await q;
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json({ data: (data || []).map((u: any) => ({ ...u, equipes_count: 0 })) });
+  return NextResponse.json({ data: (data || []).map((u: { id: string; municipio_id: string; nome: string; tipo: string; ativa: boolean }) => ({ ...u, equipes_count: 0 })) });
 }
 
 export async function POST(req: NextRequest) {

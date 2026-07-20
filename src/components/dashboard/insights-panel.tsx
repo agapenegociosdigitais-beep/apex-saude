@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { useUser } from '@/lib/hooks/useUser';
 
 interface Insight {
@@ -9,11 +8,26 @@ interface Insight {
   indicador?: string;
 }
 
-// Gera insights contextualizados por role
-function gerarInsights(role: string, perfil: string, indicadores: { codigo: string; nome: string; valor: number; meta: number; invertido: boolean }[], equipe?: string, equipes?: any[]): Insight[] {
+interface EquipeResumo {
+  nome: string;
+  nota: number;
+  classificacao?: string;
+}
+
+// Gera insights contextualizados por role (admin ve como profissional)
+function gerarInsights(
+  role: string,
+  _perfil: string,
+  indicadores: { codigo: string; nome: string; valor: number; meta: number; invertido: boolean }[],
+  _equipe?: string,
+  equipes?: EquipeResumo[],
+): Insight[] {
   const insights: Insight[] = [];
 
-  if (role === 'profissional') {
+  // Admin vendo dashboard de profissional — gera insights como se fosse o profissional
+  const roleEfetiva = role === 'admin' ? 'profissional' : role;
+
+  if (roleEfetiva === 'profissional') {
     for (const ind of indicadores) {
       const pct = ind.invertido ? (ind.meta / Math.max(ind.valor, 1)) * 100 : (ind.valor / ind.meta) * 100;
       if (pct >= 100) {
@@ -26,18 +40,18 @@ function gerarInsights(role: string, perfil: string, indicadores: { codigo: stri
     }
   }
 
-  if (role === 'coordenador' || role === 'gestor') {
+  if (roleEfetiva === 'coordenador' || roleEfetiva === 'gestor') {
     if (equipes && equipes.length > 0) {
-      const boas = equipes.filter((e: any) => (e.nota || 0) >= 7.5);
-      const ruins = equipes.filter((e: any) => (e.nota || 0) < 6);
+      const boas = equipes.filter((e) => e.nota >= 7.5);
+      const ruins = equipes.filter((e) => e.nota < 6);
 
       if (boas.length > 0) {
-        insights.push({ tipo: 'elogio', texto: `${boas.length} equipe(s) com classificação Ótimo: ${boas.map((e: any) => e.nome).join(', ')}. Parabéns pelo trabalho! 🏆` });
+        insights.push({ tipo: 'elogio', texto: `${boas.length} equipe(s) com classificação Ótimo: ${boas.map((e) => e.nome).join(', ')}. Parabéns pelo trabalho! 🏆` });
       }
       if (ruins.length > 0) {
-        insights.push({ tipo: 'alerta', texto: `${ruins.length} equipe(s) em Regular: ${ruins.map((e: any) => e.nome).join(', ')}. Risco de perda de repasse. Intervenha!` });
+        insights.push({ tipo: 'alerta', texto: `${ruins.length} equipe(s) em Regular: ${ruins.map((e) => e.nome).join(', ')}. Risco de perda de repasse. Intervenha!` });
       }
-      insights.push({ tipo: 'conselho', texto: role === 'gestor' ? 'Agende reunião com coordenadores das UBS com equipes abaixo da meta. Foco em indicadores de peso 2.' : 'Faça reunião de equipe dia 8. Priorize os indicadores com peso maior.' });
+      insights.push({ tipo: 'conselho', texto: roleEfetiva === 'gestor' ? 'Agende reunião com coordenadores das UBS com equipes abaixo da meta. Foco em indicadores de peso 2.' : 'Faça reunião de equipe dia 8. Priorize os indicadores com peso maior.' });
     }
   }
 
@@ -48,13 +62,10 @@ function gerarInsights(role: string, perfil: string, indicadores: { codigo: stri
   return insights;
 }
 
-export function InsightsPanel({ indicadores, equipes }: { indicadores: { codigo: string; nome: string; valor: number; meta: number; invertido: boolean }[], equipes?: any[] }) {
+export function InsightsPanel({ indicadores, equipes }: { indicadores: { codigo: string; nome: string; valor: number; meta: number; invertido: boolean }[]; equipes?: EquipeResumo[] }) {
   const user = useUser();
-  const [insights, setInsights] = useState<Insight[]>([]);
 
-  useEffect(() => {
-    setInsights(gerarInsights(user.role, user.perfil_id, indicadores, user.nome, equipes));
-  }, [user.role, user.perfil_id, indicadores, equipes]);
+  const insights = gerarInsights(user.role, user.perfil_id, indicadores, user.nome, equipes);
 
   if (insights.length === 0) return null;
 
