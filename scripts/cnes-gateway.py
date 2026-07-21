@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""CNES API Gateway - VPS server para consultar dados do DATASUS"""
+"""CNES API Gateway v2 - retorna nome, CNES, endereco, bairro, cep"""
 import json, sys
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.request import Request, urlopen
@@ -16,7 +16,7 @@ class Handler(BaseHTTPRequestHandler):
 
         ibge = m.group(1)
         ubs = []
-        for tipo in [1, 2, 70]:  # Posto, Centro/UBS, NASF
+        for tipo in [1, 2, 70]:
             try:
                 url = f"{API}/estabelecimentos?codigo_municipio={ibge}&codigo_tipo_unidade={tipo}&limit=50"
                 req = Request(url, headers={"Accept": "application/json"})
@@ -24,11 +24,18 @@ class Handler(BaseHTTPRequestHandler):
                     data = json.loads(resp.read().decode("utf-8"))
                     for e in data.get("estabelecimentos", []):
                         if isinstance(e, dict) and "codigo_cnes" in e:
-                            nome = e.get("nome_fantasia") or e.get("nome_razao_social") or "?"
+                            nome = (e.get("nome_fantasia") or e.get("nome_razao_social") or "?").strip().upper()
+                            endereco = e.get("endereco_estabelecimento", "")
+                            numero = e.get("numero_estabelecimento", "")
+                            bairro = e.get("bairro_estabelecimento", "")
+                            cep = e.get("codigo_cep_estabelecimento", "")
                             ubs.append({
                                 "cnes": str(e["codigo_cnes"]),
-                                "nome": nome.strip().upper(),
+                                "nome": nome,
                                 "tipo": "ubs",
+                                "endereco": f"{endereco}, {numero}".strip(", ").upper() if endereco else "",
+                                "bairro": bairro.strip().upper() if bairro else "",
+                                "cep": str(cep).strip() if cep else "",
                             })
             except Exception:
                 pass
@@ -46,5 +53,5 @@ class Handler(BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 3597
-    print(f"CNES Gateway rodando na porta {port}")
+    print(f"CNES Gateway v2 rodando na porta {port}")
     HTTPServer(("0.0.0.0", port), Handler).serve_forever()

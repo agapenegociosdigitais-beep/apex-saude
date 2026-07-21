@@ -50,9 +50,9 @@
     "semantic_hash": ""
   },
   "src/app/api/admin/unidades/route.ts": {
-    "mtime": 1784557733.8559535,
-    "ast_hash": "b75b4c90f7f520bd8bb0e63554ec6ebb",
-    "semantic_hash": "b75b4c90f7f520bd8bb0e63554ec6ebb"
+    "mtime": 1784655377.5529032,
+    "ast_hash": "ce234fd40195999a17b230cc286bd438",
+    "semantic_hash": ""
   },
   "src/app/api/admin/usuarios/route.ts": {
     "mtime": 1784495926.9295955,
@@ -752,6 +752,11 @@
   "scripts/update-cnes.js": {
     "mtime": 1784655201.7591617,
     "ast_hash": "795232e9f1a108354661ffae503317c6",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/002_unidades_endereco.sql": {
+    "mtime": 1784655364.4138646,
+    "ast_hash": "4fd6defce224e17fdeefc6d87f17d17b",
     "semantic_hash": ""
   }
 }

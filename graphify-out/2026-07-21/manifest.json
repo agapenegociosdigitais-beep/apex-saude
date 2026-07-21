@@ -748,5 +748,10 @@
     "mtime": 1784654055.8849092,
     "ast_hash": "8dec6579fa71941bba6a453371cc460d",
     "semantic_hash": ""
+  },
+  "scripts/update-cnes.js": {
+    "mtime": 1784655201.7591617,
+    "ast_hash": "795232e9f1a108354661ffae503317c6",
+    "semantic_hash": ""
   }
 }

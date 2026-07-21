@@ -1,7 +1,7 @@
 # Graph Report - apex-saude-next  (2026-07-21)
 
 ## Corpus Check
-- 88 files · ~469,326 words
+- 89 files · ~469,412 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `8309d88a`
+- Built from commit: `1ff51d6a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -148,7 +148,7 @@ Cohesion: 0.29
 Nodes (5): E, ESTADOS, Ind, M, U
 
 ## Knowledge Gaps
-- **131 isolated node(s):** `fs`, `env`, `lines`, `vars`, `{createClient}` (+126 more)
+- **131 isolated node(s):** `supabase`, `fs`, `env`, `lines`, `vars` (+126 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **12 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -159,7 +159,7 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.010) - this node is a cross-community bridge._
 - **Why does `DashboardHeader()` connect `Community 4` to `Community 0`, `Community 2`, `page.tsx`?**
   _High betweenness centrality (0.007) - this node is a cross-community bridge._
-- **What connects `fs`, `env`, `lines` to the rest of the system?**
+- **What connects `supabase`, `fs`, `env` to the rest of the system?**
   _131 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.12660028449502134 - nodes in this community are weakly interconnected._
