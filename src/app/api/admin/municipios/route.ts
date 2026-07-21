@@ -47,8 +47,22 @@ export async function DELETE(req: NextRequest) {
   const id = req.nextUrl.searchParams.get('id');
   if (!id) return NextResponse.json({ error: 'ID obrigatório' }, { status: 400 });
   
-  // Deletar dependencias primeiro (evita FK violation)
+  // Desvincular usuarios
+  await supabase.from('usuarios').update({ municipio_id: null }).eq('municipio_id', id);
+  
+  // Deletar integracoes PEC e auditoria
   await supabase.from('integracoes_pec').delete().eq('municipio_id', id);
+  await supabase.from('auditoria_log').delete().eq('municipio_id', id);
+  
+  // Achar equipes do municipio e deletar dependencias
+  const { data: equipes } = await supabase.from('equipes').select('id').eq('municipio_id', id);
+  if (equipes?.length) {
+    const eqIds = equipes.map(e => e.id);
+    await supabase.from('valores_indicadores').delete().in('equipe_id', eqIds);
+    await supabase.from('checklists_equipe').delete().in('equipe_id', eqIds);
+  }
+  
+  // Deletar equipes, UBS, e municipio
   await supabase.from('equipes').delete().eq('municipio_id', id);
   await supabase.from('unidades_saude').delete().eq('municipio_id', id);
   
