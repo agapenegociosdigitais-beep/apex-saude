@@ -55,8 +55,8 @@
     "semantic_hash": ""
   },
   "src/app/api/admin/usuarios/route.ts": {
-    "mtime": 1784659280.921942,
-    "ast_hash": "928eda415cc6ebe58b064c3693665ad8",
+    "mtime": 1784659628.3244524,
+    "ast_hash": "c7e4ac7190a5bff65eb3e8b3002c4968",
     "semantic_hash": ""
   },
   "src/app/api/integracao/pec/config/route.ts": {
@@ -450,8 +450,8 @@
     "semantic_hash": ""
   },
   "src/app/admin/admin-profissionais.tsx": {
-    "mtime": 1784591586.02206,
-    "ast_hash": "2dadd78b13c86404be1edb5d87a28ffb",
+    "mtime": 1784659665.9368637,
+    "ast_hash": "52aeb2eecd64fb95b5e8ce7d29654b74",
     "semantic_hash": ""
   },
   "src/app/lab/ui/page.tsx": {
@@ -775,8 +775,8 @@
     "semantic_hash": ""
   },
   "src/app/profissionais/page.tsx": {
-    "mtime": 1784658147.7256002,
-    "ast_hash": "f4f5dc4d045a2980c6daad0b388f4d2a",
+    "mtime": 1784659689.8233995,
+    "ast_hash": "acc92f368ae41f838635a123181a0d55",
     "semantic_hash": ""
   }
 }
