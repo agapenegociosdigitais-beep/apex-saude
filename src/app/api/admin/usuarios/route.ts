@@ -11,18 +11,22 @@ export async function GET(req: NextRequest) {
   const municipioId = req.nextUrl.searchParams.get('municipio_id')
   const unidadeId = req.nextUrl.searchParams.get('unidade_id')
 
-  if (!municipioId) return NextResponse.json({ error: 'municipio_id required' }, { status: 400 })
-
-  let q = supabase.from('usuarios').select('*').eq('municipio_id', municipioId).order('nome')
+  let q = supabase.from('usuarios').select('*').order('nome')
+  if (municipioId) q = q.eq('municipio_id', municipioId)
   if (unidadeId) q = q.eq('unidade_id', unidadeId)
 
   const { data, error } = await q
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
   // Enrich with unidade nome
-  const { data: unidades } = await supabase.from('unidades_saude').select('id,nome').eq('municipio_id', municipioId)
   const unidadeMap: Record<string, string> = {}
-  unidades?.forEach(u => { unidadeMap[u.id] = u.nome })
+  if (municipioId) {
+    const { data: unidades } = await supabase.from('unidades_saude').select('id,nome').eq('municipio_id', municipioId)
+    unidades?.forEach(u => { unidadeMap[u.id] = u.nome })
+  } else {
+    const { data: unidades } = await supabase.from('unidades_saude').select('id,nome')
+    unidades?.forEach(u => { unidadeMap[u.id] = u.nome })
+  }
 
   const result = (data || []).map(u => ({
     id: u.id, nome: u.nome, email: u.email, role: u.role, perfil_id: u.perfil_id,
@@ -31,4 +35,52 @@ export async function GET(req: NextRequest) {
   }))
 
   return NextResponse.json({ data: result })
+}
+
+export async function POST(req: NextRequest) {
+  const body = await req.json()
+  const { email, nome, role, municipio_id, unidade_id, equipe_id, perfil_id, password } = body
+
+  if (!email || !nome || !municipio_id) {
+    return NextResponse.json({ error: 'Email, nome e município obrigatórios' }, { status: 400 })
+  }
+
+  // Criar no auth.users
+  const { data: authUser, error: authErr } = await supabase.auth.admin.createUser({
+    email,
+    password: password || 'mudar123',
+    email_confirm: true,
+    user_metadata: { nome, role: role || 'profissional', perfil: perfil_id || 'medico' },
+  })
+
+  if (authErr) return NextResponse.json({ error: authErr.message }, { status: 500 })
+
+  // Criar na tabela usuarios
+  const { error: dbErr } = await supabase.from('usuarios').insert({
+    id: authUser.user.id,
+    email,
+    nome,
+    role: role || 'profissional',
+    perfil_id: perfil_id || 'medico',
+    municipio_id,
+    unidade_id: unidade_id || null,
+    equipe_id: equipe_id || null,
+  })
+
+  if (dbErr) return NextResponse.json({ error: dbErr.message }, { status: 500 })
+
+  return NextResponse.json({ ok: true, senha: password || 'mudar123' }, { status: 201 })
+}
+
+export async function DELETE(req: NextRequest) {
+  const id = req.nextUrl.searchParams.get('id')
+  if (!id) return NextResponse.json({ error: 'ID obrigatório' }, { status: 400 })
+
+  // Deletar do auth.users
+  await supabase.auth.admin.deleteUser(id)
+
+  // Deletar da tabela usuarios
+  const { error } = await supabase.from('usuarios').delete().eq('id', id)
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  return NextResponse.json({ ok: true })
 }

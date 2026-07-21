@@ -4,15 +4,81 @@
   "graph": {},
   "nodes": [
     {
+      "label": "app-shell.tsx",
+      "file_type": "code",
+      "source_file": "src/components/app-shell.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_components_app_shell",
+      "community": 31,
+      "community_name": "page.tsx",
+      "norm_label": "app-shell.tsx"
+    },
+    {
+      "label": "ShellNavId",
+      "file_type": "code",
+      "source_file": "src/components/app-shell.tsx",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "src_components_app_shell_shellnavid",
+      "community": 31,
+      "community_name": "page.tsx",
+      "norm_label": "shellnavid"
+    },
+    {
+      "label": "NAV_MAIN",
+      "file_type": "code",
+      "source_file": "src/components/app-shell.tsx",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "src_components_app_shell_nav_main",
+      "community": 31,
+      "community_name": "page.tsx",
+      "norm_label": "nav_main"
+    },
+    {
+      "label": "AppShellProps",
+      "file_type": "code",
+      "source_file": "src/components/app-shell.tsx",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "src_components_app_shell_appshellprops",
+      "community": 31,
+      "community_name": "page.tsx",
+      "norm_label": "appshellprops"
+    },
+    {
+      "label": "resolveActive()",
+      "file_type": "code",
+      "source_file": "src/components/app-shell.tsx",
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "src_components_app_shell_resolveactive",
+      "community": 31,
+      "community_name": "page.tsx",
+      "norm_label": "resolveactive()"
+    },
+    {
+      "label": "AppShell()",
+      "file_type": "code",
+      "source_file": "src/components/app-shell.tsx",
+      "source_location": "L51",
+      "_origin": "ast",
+      "id": "src_components_app_shell_appshell",
+      "community": 31,
+      "community_name": "page.tsx",
+      "norm_label": "appshell()"
+    },
+    {
       "label": "cnes-gateway.py",
       "file_type": "code",
       "source_file": "scripts/cnes-gateway.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_cnes_gateway",
       "community": 28,
       "community_name": "cnes-gateway.py",
-      "norm_label": "cnes-gateway.py"
+      "norm_label": "cnes-gateway.py",
+      "id": "scripts_cnes_gateway"
     },
     {
       "label": "Handler",
@@ -20,10 +86,10 @@
       "source_file": "scripts/cnes-gateway.py",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "scripts_cnes_gateway_handler",
       "community": 28,
       "community_name": "cnes-gateway.py",
-      "norm_label": "handler"
+      "norm_label": "handler",
+      "id": "scripts_cnes_gateway_handler"
     },
     {
       "label": "BaseHTTPRequestHandler",
@@ -31,10 +97,10 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "id": "basehttprequesthandler",
       "community": 28,
       "community_name": "cnes-gateway.py",
-      "norm_label": "basehttprequesthandler"
+      "norm_label": "basehttprequesthandler",
+      "id": "basehttprequesthandler"
     },
     {
       "label": ".do_GET()",
@@ -42,10 +108,10 @@
       "source_file": "scripts/cnes-gateway.py",
       "source_location": "L11",
       "_origin": "ast",
-      "id": "scripts_cnes_gateway_handler_do_get",
       "community": 28,
       "community_name": "cnes-gateway.py",
-      "norm_label": ".do_get()"
+      "norm_label": ".do_get()",
+      "id": "scripts_cnes_gateway_handler_do_get"
     },
     {
       "label": ".log_message()",
@@ -53,10 +119,10 @@
       "source_file": "scripts/cnes-gateway.py",
       "source_location": "L50",
       "_origin": "ast",
-      "id": "scripts_cnes_gateway_handler_log_message",
       "community": 28,
       "community_name": "cnes-gateway.py",
-      "norm_label": ".log_message()"
+      "norm_label": ".log_message()",
+      "id": "scripts_cnes_gateway_handler_log_message"
     },
     {
       "label": "update-enderecos.js",
@@ -64,10 +130,10 @@
       "source_file": "scripts/update-enderecos.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_update_enderecos",
       "community": 32,
       "community_name": "update-enderecos.js",
-      "norm_label": "update-enderecos.js"
+      "norm_label": "update-enderecos.js",
+      "id": "scripts_update_enderecos"
     },
     {
       "label": "fs",
@@ -75,10 +141,10 @@
       "source_file": "scripts/update-enderecos.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_update_enderecos_fs",
       "community": 32,
       "community_name": "update-enderecos.js",
-      "norm_label": "fs"
+      "norm_label": "fs",
+      "id": "scripts_update_enderecos_fs"
     },
     {
       "label": "env",
@@ -86,10 +152,10 @@
       "source_file": "scripts/update-enderecos.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_update_enderecos_env",
       "community": 32,
       "community_name": "update-enderecos.js",
-      "norm_label": "env"
+      "norm_label": "env",
+      "id": "scripts_update_enderecos_env"
     },
     {
       "label": "lines",
@@ -97,10 +163,10 @@
       "source_file": "scripts/update-enderecos.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_update_enderecos_lines",
       "community": 32,
       "community_name": "update-enderecos.js",
-      "norm_label": "lines"
+      "norm_label": "lines",
+      "id": "scripts_update_enderecos_lines"
     },
     {
       "label": "vars",
@@ -108,10 +174,10 @@
       "source_file": "scripts/update-enderecos.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_update_enderecos_vars",
       "community": 32,
       "community_name": "update-enderecos.js",
-      "norm_label": "vars"
+      "norm_label": "vars",
+      "id": "scripts_update_enderecos_vars"
     },
     {
       "label": "{createClient}",
@@ -119,10 +185,10 @@
       "source_file": "scripts/update-enderecos.js",
       "source_location": "L3",
       "_origin": "ast",
-      "id": "scripts_update_enderecos_createclient",
       "community": 32,
       "community_name": "update-enderecos.js",
-      "norm_label": "{createclient}"
+      "norm_label": "{createclient}",
+      "id": "scripts_update_enderecos_createclient"
     },
     {
       "label": "s",
@@ -130,10 +196,10 @@
       "source_file": "scripts/update-enderecos.js",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "scripts_update_enderecos_s",
       "community": 32,
       "community_name": "update-enderecos.js",
-      "norm_label": "s"
+      "norm_label": "s",
+      "id": "scripts_update_enderecos_s"
     },
     {
       "label": "go()",
@@ -141,10 +207,10 @@
       "source_file": "scripts/update-enderecos.js",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "scripts_update_enderecos_go",
       "community": 32,
       "community_name": "update-enderecos.js",
-      "norm_label": "go()"
+      "norm_label": "go()",
+      "id": "scripts_update_enderecos_go"
     },
     {
       "label": "route.ts",
@@ -1832,8 +1898,8 @@
       "source_file": "src/app/guias/[equipe]/checklist-interativa.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "checklist-interativa.tsx",
       "id": "src_app_guias_equipe_checklist_interativa"
     },
@@ -1843,8 +1909,8 @@
       "source_file": "src/app/guias/[equipe]/checklist-interativa.tsx",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "props",
       "id": "src_app_guias_equipe_checklist_interativa_props"
     },
@@ -1854,8 +1920,8 @@
       "source_file": "src/app/guias/[equipe]/checklist-interativa.tsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "checklistinterativa()",
       "id": "src_app_guias_equipe_checklist_interativa_checklistinterativa"
     },
@@ -1865,8 +1931,8 @@
       "source_file": "src/app/guias/[equipe]/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "page.tsx",
       "id": "src_app_guias_equipe_page"
     },
@@ -1876,8 +1942,8 @@
       "source_file": "src/app/guias/[equipe]/page.tsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "generatestaticparams()",
       "id": "src_app_guias_equipe_page_generatestaticparams"
     },
@@ -1887,8 +1953,8 @@
       "source_file": "src/app/guias/[equipe]/page.tsx",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "guiaequipepage()",
       "id": "src_app_guias_equipe_page_guiaequipepage"
     },
@@ -2008,8 +2074,8 @@
       "source_file": "src/app/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "page.tsx",
       "id": "src_app_page"
     },
@@ -2019,8 +2085,8 @@
       "source_file": "src/app/page.tsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "homepage()",
       "id": "src_app_page_homepage"
     },
@@ -2030,8 +2096,8 @@
       "source_file": "src/app/paineis/[equipe]/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "page.tsx",
       "id": "src_app_paineis_equipe_page"
     },
@@ -2041,8 +2107,8 @@
       "source_file": "src/app/paineis/[equipe]/page.tsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "generatestaticparams()",
       "id": "src_app_paineis_equipe_page_generatestaticparams"
     },
@@ -2052,8 +2118,8 @@
       "source_file": "src/app/paineis/[equipe]/page.tsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "painelequipepage()",
       "id": "src_app_paineis_equipe_page_painelequipepage"
     },
@@ -2305,8 +2371,8 @@
       "source_file": "src/components/dashboard/insights-panel.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "insights-panel.tsx",
       "id": "src_components_dashboard_insights_panel"
     },
@@ -2316,8 +2382,8 @@
       "source_file": "src/components/dashboard/insights-panel.tsx",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "insight",
       "id": "src_components_dashboard_insights_panel_insight"
     },
@@ -2327,8 +2393,8 @@
       "source_file": "src/components/dashboard/insights-panel.tsx",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "equiperesumo",
       "id": "src_components_dashboard_insights_panel_equiperesumo"
     },
@@ -2338,8 +2404,8 @@
       "source_file": "src/components/dashboard/insights-panel.tsx",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "gerarinsights()",
       "id": "src_components_dashboard_insights_panel_gerarinsights"
     },
@@ -2349,8 +2415,8 @@
       "source_file": "src/components/dashboard/insights-panel.tsx",
       "source_location": "L65",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "insightspanel()",
       "id": "src_components_dashboard_insights_panel_insightspanel"
     },
@@ -2481,8 +2547,8 @@
       "source_file": "src/lib/mock/__tests__/nota.test.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "nota.test.ts",
       "id": "src_lib_mock_tests_nota_test"
     },
@@ -2503,8 +2569,8 @@
       "source_file": "src/lib/mock/equipes.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "equipes.ts",
       "id": "src_lib_mock_equipes"
     },
@@ -2536,8 +2602,8 @@
       "source_file": "src/lib/mock/equipes.ts",
       "source_location": "L64",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "equipe_ids",
       "id": "src_lib_mock_equipes_equipe_ids"
     },
@@ -2547,8 +2613,8 @@
       "source_file": "src/lib/mock/equipes.ts",
       "source_location": "L67",
       "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "isequipeid()",
       "id": "src_lib_mock_equipes_isequipeid"
     },
@@ -2558,8 +2624,8 @@
       "source_file": "src/lib/mock/equipes.ts",
       "source_location": "L72",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "nomedomembro()",
       "id": "src_lib_mock_equipes_nomedomembro"
     },
@@ -2569,8 +2635,8 @@
       "source_file": "src/lib/mock/guias-content.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "guias-content.ts",
       "id": "src_lib_mock_guias_content"
     },
@@ -2580,8 +2646,8 @@
       "source_file": "src/lib/mock/guias-content.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "guiaindicador",
       "id": "src_lib_mock_guias_content_guiaindicador"
     },
@@ -2591,8 +2657,8 @@
       "source_file": "src/lib/mock/guias-content.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "guias",
       "id": "src_lib_mock_guias_content_guias"
     },
@@ -2811,8 +2877,8 @@
       "source_file": "src/lib/mock/nota.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "nota.ts",
       "id": "src_lib_mock_nota"
     },
@@ -2822,8 +2888,8 @@
       "source_file": "src/lib/mock/nota.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "calcularnotaequipe()",
       "id": "src_lib_mock_nota_calcularnotaequipe"
     },
@@ -4130,13 +4196,80 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/components/app-shell.tsx",
+      "source_location": "L51",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_components_app_shell",
+      "target": "src_components_app_shell_appshell",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/app-shell.tsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_components_app_shell",
+      "target": "src_components_app_shell_appshellprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/app-shell.tsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_components_app_shell",
+      "target": "src_components_app_shell_nav_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/app-shell.tsx",
+      "source_location": "L40",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_components_app_shell",
+      "target": "src_components_app_shell_resolveactive",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/app-shell.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_components_app_shell",
+      "target": "src_components_app_shell_shellnavid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/app-shell.tsx",
+      "source_location": "L56",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_components_app_shell_appshell",
+      "target": "src_components_app_shell_resolveactive",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "scripts/cnes-gateway.py",
       "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_cnes_gateway",
-      "target": "scripts_cnes_gateway_handler",
-      "confidence_score": 1.0
+      "target": "scripts_cnes_gateway_handler"
     },
     {
       "relation": "inherits",
@@ -4145,9 +4278,9 @@
       "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_cnes_gateway_handler",
-      "target": "basehttprequesthandler",
-      "confidence_score": 1.0
+      "target": "basehttprequesthandler"
     },
     {
       "relation": "method",
@@ -4156,9 +4289,9 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_cnes_gateway_handler",
-      "target": "scripts_cnes_gateway_handler_do_get",
-      "confidence_score": 1.0
+      "target": "scripts_cnes_gateway_handler_do_get"
     },
     {
       "relation": "method",
@@ -4167,9 +4300,9 @@
       "source_location": "L50",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_cnes_gateway_handler",
-      "target": "scripts_cnes_gateway_handler_log_message",
-      "confidence_score": 1.0
+      "target": "scripts_cnes_gateway_handler_log_message"
     },
     {
       "relation": "contains",
@@ -4178,9 +4311,9 @@
       "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_update_enderecos",
-      "target": "scripts_update_enderecos_createclient",
-      "confidence_score": 1.0
+      "target": "scripts_update_enderecos_createclient"
     },
     {
       "relation": "contains",
@@ -4189,9 +4322,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_update_enderecos",
-      "target": "scripts_update_enderecos_env",
-      "confidence_score": 1.0
+      "target": "scripts_update_enderecos_env"
     },
     {
       "relation": "contains",
@@ -4200,9 +4333,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_update_enderecos",
-      "target": "scripts_update_enderecos_fs",
-      "confidence_score": 1.0
+      "target": "scripts_update_enderecos_fs"
     },
     {
       "relation": "contains",
@@ -4211,9 +4344,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_update_enderecos",
-      "target": "scripts_update_enderecos_go",
-      "confidence_score": 1.0
+      "target": "scripts_update_enderecos_go"
     },
     {
       "relation": "contains",
@@ -4222,9 +4355,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_update_enderecos",
-      "target": "scripts_update_enderecos_lines",
-      "confidence_score": 1.0
+      "target": "scripts_update_enderecos_lines"
     },
     {
       "relation": "contains",
@@ -4233,9 +4366,9 @@
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_update_enderecos",
-      "target": "scripts_update_enderecos_s",
-      "confidence_score": 1.0
+      "target": "scripts_update_enderecos_s"
     },
     {
       "relation": "contains",
@@ -4244,9 +4377,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_update_enderecos",
-      "target": "scripts_update_enderecos_vars",
-      "confidence_score": 1.0
+      "target": "scripts_update_enderecos_vars"
     },
     {
       "relation": "contains",
@@ -10782,5 +10915,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "c185183fba583b386664a4258e9b27169ee6baad"
+  "built_at_commit": "4c7929b937ebfc1957eefa5c754b64aa39448c29"
 }
