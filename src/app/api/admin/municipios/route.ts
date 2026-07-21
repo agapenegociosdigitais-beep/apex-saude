@@ -47,22 +47,29 @@ export async function DELETE(req: NextRequest) {
   const id = req.nextUrl.searchParams.get('id');
   if (!id) return NextResponse.json({ error: 'ID obrigatório' }, { status: 400 });
   
-  // Desvincular usuarios
-  await supabase.from('usuarios').update({ municipio_id: null }).eq('municipio_id', id);
+  // 1. Desvincular usuarios do municipio
+  await supabase.from('usuarios').update({ 
+    municipio_id: null, unidade_id: null, equipe_id: null 
+  }).eq('municipio_id', id);
   
-  // Deletar integracoes PEC e auditoria
-  await supabase.from('integracoes_pec').delete().eq('municipio_id', id);
-  await supabase.from('auditoria_log').delete().eq('municipio_id', id);
-  
-  // Achar equipes do municipio e deletar dependencias
+  // 2. Buscar UBS e equipes do municipio (reuso)
+  const { data: ubsIds } = await supabase.from('unidades_saude').select('id').eq('municipio_id', id);
   const { data: equipes } = await supabase.from('equipes').select('id').eq('municipio_id', id);
+  
+  // 3. Nullificar FK de usuarios de outros municipios
+  if (ubsIds?.length) {
+    await supabase.from('usuarios').update({ unidade_id: null }).in('unidade_id', ubsIds.map(u => u.id));
+  }
   if (equipes?.length) {
     const eqIds = equipes.map(e => e.id);
+    await supabase.from('usuarios').update({ equipe_id: null }).in('equipe_id', eqIds);
     await supabase.from('valores_indicadores').delete().in('equipe_id', eqIds);
     await supabase.from('checklists_equipe').delete().in('equipe_id', eqIds);
   }
   
-  // Deletar equipes, UBS, e municipio
+  // 4. Deletar tudo em ordem
+  await supabase.from('integracoes_pec').delete().eq('municipio_id', id);
+  await supabase.from('auditoria_log').delete().eq('municipio_id', id);
   await supabase.from('equipes').delete().eq('municipio_id', id);
   await supabase.from('unidades_saude').delete().eq('municipio_id', id);
   

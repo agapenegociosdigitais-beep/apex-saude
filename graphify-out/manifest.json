@@ -45,8 +45,8 @@
     "semantic_hash": "fefba9b2def56c6fe8521a481b5bc85f"
   },
   "src/app/api/admin/municipios/route.ts": {
-    "mtime": 1784644834.2807984,
-    "ast_hash": "8419bb7a025b61419cf9802c28140f54",
+    "mtime": 1784645170.3461106,
+    "ast_hash": "e8f71d931c79a7971383c905e9965f88",
     "semantic_hash": ""
   },
   "src/app/api/admin/unidades/route.ts": {
