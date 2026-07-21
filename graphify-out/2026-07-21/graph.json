@@ -15,32 +15,21 @@
       "norm_label": "route.ts"
     },
     {
-      "label": "CnesEstabelecimento",
+      "label": "supabase",
       "file_type": "code",
       "source_file": "src/app/api/integracao/pec/preparar/route.ts",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "src_app_api_integracao_pec_preparar_route_cnesestabelecimento",
+      "id": "src_app_api_integracao_pec_preparar_route_supabase",
       "community": 27,
       "community_name": "route.ts",
-      "norm_label": "cnesestabelecimento"
-    },
-    {
-      "label": "fetchUbs()",
-      "file_type": "code",
-      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
-      "source_location": "L15",
-      "_origin": "ast",
-      "id": "src_app_api_integracao_pec_preparar_route_fetchubs",
-      "community": 27,
-      "community_name": "route.ts",
-      "norm_label": "fetchubs()"
+      "norm_label": "supabase"
     },
     {
       "label": "POST()",
       "file_type": "code",
       "source_file": "src/app/api/integracao/pec/preparar/route.ts",
-      "source_location": "L45",
+      "source_location": "L19",
       "_origin": "ast",
       "id": "src_app_api_integracao_pec_preparar_route_post",
       "community": 27,
@@ -1634,8 +1623,8 @@
       "source_file": "src/app/guias/[equipe]/checklist-interativa.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 29,
+      "community_name": "page.tsx",
       "norm_label": "checklist-interativa.tsx",
       "id": "src_app_guias_equipe_checklist_interativa"
     },
@@ -1645,8 +1634,8 @@
       "source_file": "src/app/guias/[equipe]/checklist-interativa.tsx",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 29,
+      "community_name": "page.tsx",
       "norm_label": "props",
       "id": "src_app_guias_equipe_checklist_interativa_props"
     },
@@ -1656,8 +1645,8 @@
       "source_file": "src/app/guias/[equipe]/checklist-interativa.tsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 29,
+      "community_name": "page.tsx",
       "norm_label": "checklistinterativa()",
       "id": "src_app_guias_equipe_checklist_interativa_checklistinterativa"
     },
@@ -1667,8 +1656,8 @@
       "source_file": "src/app/guias/[equipe]/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 29,
+      "community_name": "page.tsx",
       "norm_label": "page.tsx",
       "id": "src_app_guias_equipe_page"
     },
@@ -1678,8 +1667,8 @@
       "source_file": "src/app/guias/[equipe]/page.tsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 29,
+      "community_name": "page.tsx",
       "norm_label": "generatestaticparams()",
       "id": "src_app_guias_equipe_page_generatestaticparams"
     },
@@ -1689,8 +1678,8 @@
       "source_file": "src/app/guias/[equipe]/page.tsx",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 29,
+      "community_name": "page.tsx",
       "norm_label": "guiaequipepage()",
       "id": "src_app_guias_equipe_page_guiaequipepage"
     },
@@ -1832,8 +1821,8 @@
       "source_file": "src/app/paineis/[equipe]/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 0,
+      "community_name": "Community 0",
       "norm_label": "page.tsx",
       "id": "src_app_paineis_equipe_page"
     },
@@ -1843,8 +1832,8 @@
       "source_file": "src/app/paineis/[equipe]/page.tsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 0,
+      "community_name": "Community 0",
       "norm_label": "generatestaticparams()",
       "id": "src_app_paineis_equipe_page_generatestaticparams"
     },
@@ -1854,8 +1843,8 @@
       "source_file": "src/app/paineis/[equipe]/page.tsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 0,
+      "community_name": "Community 0",
       "norm_label": "painelequipepage()",
       "id": "src_app_paineis_equipe_page_painelequipepage"
     },
@@ -2052,8 +2041,8 @@
       "source_file": "src/components/dashboard/dashboard-header.tsx",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "dashboardheader()",
       "id": "src_components_dashboard_dashboard_header_dashboardheader"
     },
@@ -2338,8 +2327,8 @@
       "source_file": "src/lib/mock/equipes.ts",
       "source_location": "L64",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "equipe_ids",
       "id": "src_lib_mock_equipes_equipe_ids"
     },
@@ -2349,8 +2338,8 @@
       "source_file": "src/lib/mock/equipes.ts",
       "source_location": "L67",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 29,
+      "community_name": "page.tsx",
       "norm_label": "isequipeid()",
       "id": "src_lib_mock_equipes_isequipeid"
     },
@@ -2360,8 +2349,8 @@
       "source_file": "src/lib/mock/equipes.ts",
       "source_location": "L72",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 0,
+      "community_name": "Community 0",
       "norm_label": "nomedomembro()",
       "id": "src_lib_mock_equipes_nomedomembro"
     },
@@ -2371,8 +2360,8 @@
       "source_file": "src/lib/mock/guias-content.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 29,
+      "community_name": "page.tsx",
       "norm_label": "guias-content.ts",
       "id": "src_lib_mock_guias_content"
     },
@@ -2382,8 +2371,8 @@
       "source_file": "src/lib/mock/guias-content.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 29,
+      "community_name": "page.tsx",
       "norm_label": "guiaindicador",
       "id": "src_lib_mock_guias_content_guiaindicador"
     },
@@ -2393,8 +2382,8 @@
       "source_file": "src/lib/mock/guias-content.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 29,
+      "community_name": "page.tsx",
       "norm_label": "guias",
       "id": "src_lib_mock_guias_content_guias"
     },
@@ -3933,29 +3922,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/api/integracao/pec/preparar/route.ts",
-      "source_location": "L6",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_app_api_integracao_pec_preparar_route",
-      "target": "src_app_api_integracao_pec_preparar_route_cnesestabelecimento",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
-      "source_location": "L15",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_app_api_integracao_pec_preparar_route",
-      "target": "src_app_api_integracao_pec_preparar_route_fetchubs",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
-      "source_location": "L45",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_app_api_integracao_pec_preparar_route",
@@ -3963,15 +3930,14 @@
       "confidence_score": 1.0
     },
     {
-      "relation": "calls",
-      "context": "call",
+      "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/api/integracao/pec/preparar/route.ts",
-      "source_location": "L105",
+      "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "src_app_api_integracao_pec_preparar_route_post",
-      "target": "src_app_api_integracao_pec_preparar_route_fetchubs",
+      "source": "src_app_api_integracao_pec_preparar_route",
+      "target": "src_app_api_integracao_pec_preparar_route_supabase",
       "confidence_score": 1.0
     },
     {
@@ -10431,5 +10397,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "46186ee20ad40398a954d1458fae28c4489c3c89"
+  "built_at_commit": "60f49571e976cff890fb11fd505c6824923cf75c"
 }

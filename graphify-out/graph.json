@@ -4,92 +4,59 @@
   "graph": {},
   "nodes": [
     {
-      "label": "route.ts",
-      "file_type": "code",
-      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "src_app_api_integracao_pec_preparar_route",
-      "community": 27,
-      "community_name": "route.ts",
-      "norm_label": "route.ts"
-    },
-    {
-      "label": "supabase",
-      "file_type": "code",
-      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
-      "source_location": "L6",
-      "_origin": "ast",
-      "id": "src_app_api_integracao_pec_preparar_route_supabase",
-      "community": 27,
-      "community_name": "route.ts",
-      "norm_label": "supabase"
-    },
-    {
-      "label": "POST()",
-      "file_type": "code",
-      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
-      "source_location": "L19",
-      "_origin": "ast",
-      "id": "src_app_api_integracao_pec_preparar_route_post",
-      "community": 27,
-      "community_name": "route.ts",
-      "norm_label": "post()"
-    },
-    {
       "label": "cnes-gateway.py",
       "file_type": "code",
       "source_file": "scripts/cnes-gateway.py",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "scripts_cnes_gateway",
       "community": 28,
       "community_name": "cnes-gateway.py",
-      "norm_label": "cnes-gateway.py",
-      "id": "scripts_cnes_gateway"
+      "norm_label": "cnes-gateway.py"
     },
     {
-      "label": "fetch_cnes()",
+      "label": "Handler",
       "file_type": "code",
       "source_file": "scripts/cnes-gateway.py",
-      "source_location": "L17",
+      "source_location": "L10",
       "_origin": "ast",
+      "id": "scripts_cnes_gateway_handler",
       "community": 28,
       "community_name": "cnes-gateway.py",
-      "norm_label": "fetch_cnes()",
-      "id": "scripts_cnes_gateway_fetch_cnes"
+      "norm_label": "handler"
     },
     {
-      "label": "list_to_ubs()",
+      "label": "BaseHTTPRequestHandler",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "basehttprequesthandler",
+      "community": 28,
+      "community_name": "cnes-gateway.py",
+      "norm_label": "basehttprequesthandler"
+    },
+    {
+      "label": ".do_GET()",
       "file_type": "code",
       "source_file": "scripts/cnes-gateway.py",
-      "source_location": "L36",
+      "source_location": "L11",
       "_origin": "ast",
+      "id": "scripts_cnes_gateway_handler_do_get",
       "community": 28,
       "community_name": "cnes-gateway.py",
-      "norm_label": "list_to_ubs()",
-      "id": "scripts_cnes_gateway_list_to_ubs"
+      "norm_label": ".do_get()"
     },
     {
-      "label": "Busca estabelecimentos de um municipio na API do DATASUS",
-      "file_type": "rationale",
+      "label": ".log_message()",
+      "file_type": "code",
       "source_file": "scripts/cnes-gateway.py",
-      "source_location": "L18",
+      "source_location": "L43",
       "_origin": "ast",
+      "id": "scripts_cnes_gateway_handler_log_message",
       "community": 28,
       "community_name": "cnes-gateway.py",
-      "norm_label": "busca estabelecimentos de um municipio na api do datasus",
-      "id": "scripts_cnes_gateway_rationale_18"
-    },
-    {
-      "label": "Converte resposta da API pro formato padrao de UBS",
-      "file_type": "rationale",
-      "source_file": "scripts/cnes-gateway.py",
-      "source_location": "L37",
-      "_origin": "ast",
-      "community": 28,
-      "community_name": "cnes-gateway.py",
-      "norm_label": "converte resposta da api pro formato padrao de ubs",
-      "id": "scripts_cnes_gateway_rationale_37"
+      "norm_label": ".log_message()"
     },
     {
       "label": "admin-pec.tsx",
@@ -97,10 +64,10 @@
       "source_file": "src/app/admin/admin-pec.tsx",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "src_app_admin_admin_pec",
       "community": 26,
       "community_name": "page.tsx",
-      "norm_label": "admin-pec.tsx",
-      "id": "src_app_admin_admin_pec"
+      "norm_label": "admin-pec.tsx"
     },
     {
       "label": "M",
@@ -108,10 +75,10 @@
       "source_file": "src/app/admin/admin-pec.tsx",
       "source_location": "L5",
       "_origin": "ast",
+      "id": "src_app_admin_admin_pec_m",
       "community": 26,
       "community_name": "page.tsx",
-      "norm_label": "m",
-      "id": "src_app_admin_admin_pec_m"
+      "norm_label": "m"
     },
     {
       "label": "Cidade",
@@ -119,10 +86,10 @@
       "source_file": "src/app/admin/admin-pec.tsx",
       "source_location": "L6",
       "_origin": "ast",
+      "id": "src_app_admin_admin_pec_cidade",
       "community": 26,
       "community_name": "page.tsx",
-      "norm_label": "cidade",
-      "id": "src_app_admin_admin_pec_cidade"
+      "norm_label": "cidade"
     },
     {
       "label": "ESTADOS",
@@ -130,10 +97,10 @@
       "source_file": "src/app/admin/admin-pec.tsx",
       "source_location": "L8",
       "_origin": "ast",
+      "id": "src_app_admin_admin_pec_estados",
       "community": 26,
       "community_name": "page.tsx",
-      "norm_label": "estados",
-      "id": "src_app_admin_admin_pec_estados"
+      "norm_label": "estados"
     },
     {
       "label": "AdminPec()",
@@ -141,10 +108,76 @@
       "source_file": "src/app/admin/admin-pec.tsx",
       "source_location": "L18",
       "_origin": "ast",
+      "id": "src_app_admin_admin_pec_adminpec",
       "community": 26,
       "community_name": "page.tsx",
-      "norm_label": "adminpec()",
-      "id": "src_app_admin_admin_pec_adminpec"
+      "norm_label": "adminpec()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/integracao/pec/cnes/route.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_api_integracao_pec_cnes_route",
+      "community": 29,
+      "community_name": "page.tsx",
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "supabase",
+      "file_type": "code",
+      "source_file": "src/app/api/integracao/pec/cnes/route.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_app_api_integracao_pec_cnes_route_supabase",
+      "community": 29,
+      "community_name": "page.tsx",
+      "norm_label": "supabase"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "src/app/api/integracao/pec/cnes/route.ts",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "src_app_api_integracao_pec_cnes_route_post",
+      "community": 29,
+      "community_name": "page.tsx",
+      "norm_label": "post()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "route.ts",
+      "norm_label": "route.ts",
+      "id": "src_app_api_integracao_pec_preparar_route"
+    },
+    {
+      "label": "supabase",
+      "file_type": "code",
+      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "route.ts",
+      "norm_label": "supabase",
+      "id": "src_app_api_integracao_pec_preparar_route_supabase"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
+      "source_location": "L19",
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "route.ts",
+      "norm_label": "post()",
+      "id": "src_app_api_integracao_pec_preparar_route_post"
     },
     {
       "label": "pec-sync.py",
@@ -1623,8 +1656,8 @@
       "source_file": "src/app/guias/[equipe]/checklist-interativa.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 29,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "checklist-interativa.tsx",
       "id": "src_app_guias_equipe_checklist_interativa"
     },
@@ -1634,8 +1667,8 @@
       "source_file": "src/app/guias/[equipe]/checklist-interativa.tsx",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 29,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "props",
       "id": "src_app_guias_equipe_checklist_interativa_props"
     },
@@ -1645,8 +1678,8 @@
       "source_file": "src/app/guias/[equipe]/checklist-interativa.tsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 29,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "checklistinterativa()",
       "id": "src_app_guias_equipe_checklist_interativa_checklistinterativa"
     },
@@ -1656,8 +1689,8 @@
       "source_file": "src/app/guias/[equipe]/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 29,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "page.tsx",
       "id": "src_app_guias_equipe_page"
     },
@@ -1667,8 +1700,8 @@
       "source_file": "src/app/guias/[equipe]/page.tsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 29,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "generatestaticparams()",
       "id": "src_app_guias_equipe_page_generatestaticparams"
     },
@@ -1678,8 +1711,8 @@
       "source_file": "src/app/guias/[equipe]/page.tsx",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 29,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "guiaequipepage()",
       "id": "src_app_guias_equipe_page_guiaequipepage"
     },
@@ -1821,8 +1854,8 @@
       "source_file": "src/app/paineis/[equipe]/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "page.tsx",
       "id": "src_app_paineis_equipe_page"
     },
@@ -1832,8 +1865,8 @@
       "source_file": "src/app/paineis/[equipe]/page.tsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "generatestaticparams()",
       "id": "src_app_paineis_equipe_page_generatestaticparams"
     },
@@ -1843,8 +1876,8 @@
       "source_file": "src/app/paineis/[equipe]/page.tsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "painelequipepage()",
       "id": "src_app_paineis_equipe_page_painelequipepage"
     },
@@ -2041,8 +2074,8 @@
       "source_file": "src/components/dashboard/dashboard-header.tsx",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 2,
-      "community_name": "Community 2",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "dashboardheader()",
       "id": "src_components_dashboard_dashboard_header_dashboardheader"
     },
@@ -2327,8 +2360,8 @@
       "source_file": "src/lib/mock/equipes.ts",
       "source_location": "L64",
       "_origin": "ast",
-      "community": 2,
-      "community_name": "Community 2",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "equipe_ids",
       "id": "src_lib_mock_equipes_equipe_ids"
     },
@@ -2338,8 +2371,8 @@
       "source_file": "src/lib/mock/equipes.ts",
       "source_location": "L67",
       "_origin": "ast",
-      "community": 29,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "isequipeid()",
       "id": "src_lib_mock_equipes_isequipeid"
     },
@@ -2349,8 +2382,8 @@
       "source_file": "src/lib/mock/equipes.ts",
       "source_location": "L72",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "nomedomembro()",
       "id": "src_lib_mock_equipes_nomedomembro"
     },
@@ -2360,8 +2393,8 @@
       "source_file": "src/lib/mock/guias-content.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 29,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "guias-content.ts",
       "id": "src_lib_mock_guias_content"
     },
@@ -2371,8 +2404,8 @@
       "source_file": "src/lib/mock/guias-content.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 29,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "guiaindicador",
       "id": "src_lib_mock_guias_content_guiaindicador"
     },
@@ -2382,8 +2415,8 @@
       "source_file": "src/lib/mock/guias-content.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 29,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "guias",
       "id": "src_lib_mock_guias_content_guias"
     },
@@ -3921,68 +3954,46 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
-      "source_location": "L19",
+      "source_file": "scripts/cnes-gateway.py",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "src_app_api_integracao_pec_preparar_route",
-      "target": "src_app_api_integracao_pec_preparar_route_post",
+      "source": "scripts_cnes_gateway",
+      "target": "scripts_cnes_gateway_handler",
       "confidence_score": 1.0
     },
     {
-      "relation": "contains",
+      "relation": "inherits",
       "confidence": "EXTRACTED",
-      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
-      "source_location": "L6",
+      "source_file": "scripts/cnes-gateway.py",
+      "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "src_app_api_integracao_pec_preparar_route",
-      "target": "src_app_api_integracao_pec_preparar_route_supabase",
+      "source": "scripts_cnes_gateway_handler",
+      "target": "basehttprequesthandler",
       "confidence_score": 1.0
     },
     {
-      "relation": "contains",
+      "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "scripts/cnes-gateway.py",
-      "source_location": "L17",
+      "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "scripts_cnes_gateway",
-      "target": "scripts_cnes_gateway_fetch_cnes"
+      "source": "scripts_cnes_gateway_handler",
+      "target": "scripts_cnes_gateway_handler_do_get",
+      "confidence_score": 1.0
     },
     {
-      "relation": "contains",
+      "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "scripts/cnes-gateway.py",
-      "source_location": "L36",
+      "source_location": "L43",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "scripts_cnes_gateway",
-      "target": "scripts_cnes_gateway_list_to_ubs"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/cnes-gateway.py",
-      "source_location": "L18",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "scripts_cnes_gateway_rationale_18",
-      "target": "scripts_cnes_gateway_fetch_cnes"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/cnes-gateway.py",
-      "source_location": "L37",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "scripts_cnes_gateway_rationale_37",
-      "target": "scripts_cnes_gateway_list_to_ubs"
+      "source": "scripts_cnes_gateway_handler",
+      "target": "scripts_cnes_gateway_handler_log_message",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -3991,9 +4002,9 @@
       "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "src_app_admin_admin_pec",
-      "target": "src_app_admin_admin_pec_adminpec"
+      "target": "src_app_admin_admin_pec_adminpec",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -4002,9 +4013,9 @@
       "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "src_app_admin_admin_pec",
-      "target": "src_app_admin_admin_pec_cidade"
+      "target": "src_app_admin_admin_pec_cidade",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -4013,9 +4024,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "src_app_admin_admin_pec",
-      "target": "src_app_admin_admin_pec_estados"
+      "target": "src_app_admin_admin_pec_estados",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -4024,9 +4035,53 @@
       "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
-      "confidence_score": 1.0,
       "source": "src_app_admin_admin_pec",
-      "target": "src_app_admin_admin_pec_m"
+      "target": "src_app_admin_admin_pec_m",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/integracao/pec/cnes/route.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_api_integracao_pec_cnes_route",
+      "target": "src_app_api_integracao_pec_cnes_route_post",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/integracao/pec/cnes/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_api_integracao_pec_cnes_route",
+      "target": "src_app_api_integracao_pec_cnes_route_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_origin": "ast",
+      "confidence_score": 1.0,
+      "source": "src_app_api_integracao_pec_preparar_route",
+      "target": "src_app_api_integracao_pec_preparar_route_post"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "confidence_score": 1.0,
+      "source": "src_app_api_integracao_pec_preparar_route",
+      "target": "src_app_api_integracao_pec_preparar_route_supabase"
     },
     {
       "relation": "contains",
@@ -10397,5 +10452,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "60f49571e976cff890fb11fd505c6824923cf75c"
+  "built_at_commit": "adb554688a4974768ea75e42fcfa53700f181260"
 }
