@@ -45,10 +45,10 @@ async function fetchUbs(ibge6: string) {
 export async function POST(req: NextRequest) {
   const supabase = await criarClienteSupabase()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
+  if (!user?.email) return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
 
   const { data: usuario } = await supabase
-    .from('usuarios').select('role').eq('id', user.id).single()
+    .from('usuarios').select('role').eq('email', user.email).single()
   if (!usuario || !['admin','gestor'].includes(usuario.role))
     return NextResponse.json({ erro: 'Permissão negada' }, { status: 403 })
 
