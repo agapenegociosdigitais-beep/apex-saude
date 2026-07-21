@@ -133,35 +133,25 @@ export default function AdminPec() {
               {ESTADOS.map(e => <option key={e.sigla} value={e.sigla}>{e.sigla} — {e.nome}</option>)}
             </select>
           </label>
-          <label className="flex flex-col gap-1 text-sm flex-1 relative">
+          <label className="flex flex-col gap-1 text-sm flex-1">
             Cidade
-            <input
-              value={buscaCidade || cidadeSelecionada?.nome || ''}
-              onChange={e => { setBuscaCidade(e.target.value); setCidadeSelecionada(null) }}
+            <select
+              value={cidadeSelecionada?.ibge || ''}
+              onChange={e => {
+                const ibge = parseInt(e.target.value)
+                const cid = cidades.find(c => c.ibge === ibge)
+                setCidadeSelecionada(cid || null)
+              }}
               className="rounded-md border px-3 py-2 w-full"
-              placeholder={novoUf ? 'Digite para buscar...' : 'Selecione o estado primeiro'}
-              disabled={!novoUf}
-            />
-            {buscaCidade && !cidadeSelecionada && (
-              <div className="absolute z-10 top-full mt-1 w-full bg-white border rounded-md shadow-lg max-h-48 overflow-y-auto">
-                {cidades
-                  .filter(c => c.nome.toLowerCase().includes(buscaCidade.toLowerCase()))
-                  .slice(0, 10)
-                  .map(c => (
-                    <button
-                      key={c.ibge}
-                      type="button"
-                      onClick={() => { setCidadeSelecionada(c); setBuscaCidade('') }}
-                      className="block w-full text-left px-3 py-2 text-sm hover:bg-apex-gold hover:text-white transition-colors"
-                    >
-                      {c.nome}
-                    </button>
-                  ))}
-                {cidades.filter(c => c.nome.toLowerCase().includes(buscaCidade.toLowerCase())).length === 0 && (
-                  <div className="px-3 py-2 text-sm text-gray-400">Nenhuma cidade encontrada</div>
-                )}
-              </div>
-            )}
+              disabled={!novoUf || cidades.length === 0}
+            >
+              <option value="">
+                {!novoUf ? 'Selecione o estado primeiro' : cidades.length === 0 ? 'Carregando...' : 'Selecione a cidade...'}
+              </option>
+              {cidades.map(c => (
+                <option key={c.ibge} value={c.ibge}>{c.nome}</option>
+              ))}
+            </select>
           </label>
           <button
             onClick={prepararCidade}

@@ -5,14 +5,14 @@
     "semantic_hash": "dfa1f5f6a7037bf39dc510f30b180002"
   },
   "next.config.ts": {
-    "mtime": 1784413564.511146,
-    "ast_hash": "136e058e17acf10f6a483019d97e0b34",
-    "semantic_hash": "136e058e17acf10f6a483019d97e0b34"
+    "mtime": 1784594200.248665,
+    "ast_hash": "998abdbdb3f847be85af73f784e1ed01",
+    "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1784419904.2624872,
-    "ast_hash": "6f7722405c109fd88394dc5691daf08a",
-    "semantic_hash": "6f7722405c109fd88394dc5691daf08a"
+    "mtime": 1784608853.8992643,
+    "ast_hash": "29e33c5848df100d9e3c158b45fc5b5e",
+    "semantic_hash": ""
   },
   "postcss.config.mjs": {
     "mtime": 1784313817.3671072,
@@ -20,19 +20,19 @@
     "semantic_hash": "239f3ebf717465dc636818a1a619398d"
   },
   "scripts/pec-sync.py": {
-    "mtime": 1784412988.551875,
-    "ast_hash": "77099ffbd1ff8e20e39145423a4097fd",
-    "semantic_hash": "77099ffbd1ff8e20e39145423a4097fd"
+    "mtime": 1784640495.835144,
+    "ast_hash": "64bc15698b03677dfa8cffef65b4a674",
+    "semantic_hash": ""
   },
   "scripts/setup-vps.sh": {
-    "mtime": 1784412988.5528193,
-    "ast_hash": "28bdefcd4dd7770a4fde5cb86bfb16a2",
-    "semantic_hash": "28bdefcd4dd7770a4fde5cb86bfb16a2"
+    "mtime": 1784640514.5641756,
+    "ast_hash": "6d5d61387416429acc0fd71003250c8e",
+    "semantic_hash": ""
   },
   "src/app/admin/page.tsx": {
-    "mtime": 1784557592.1106315,
-    "ast_hash": "876d678c7596d98222baf6f40e3af3b2",
-    "semantic_hash": "876d678c7596d98222baf6f40e3af3b2"
+    "mtime": 1784595980.5370748,
+    "ast_hash": "62264b0d9597bf098d33695653425e90",
+    "semantic_hash": ""
   },
   "src/app/api/admin/equipes/route.ts": {
     "mtime": 1784493917.5803723,
@@ -75,14 +75,14 @@
     "semantic_hash": "97ed1c1b9f3f3a8cd9e7a6b8871d5253"
   },
   "src/app/dashboard/[perfil]/page.tsx": {
-    "mtime": 1784557690.2657359,
-    "ast_hash": "7ed2d3a65c11f1312fd7d4ac26219557",
-    "semantic_hash": "7ed2d3a65c11f1312fd7d4ac26219557"
+    "mtime": 1784595907.8732803,
+    "ast_hash": "6d95262f7608175ee9812d9a7e330676",
+    "semantic_hash": ""
   },
   "src/app/gerencial/page.tsx": {
-    "mtime": 1784502355.5885782,
-    "ast_hash": "61ad6dc79d9b64839a0a6c2b6af1acc3",
-    "semantic_hash": "61ad6dc79d9b64839a0a6c2b6af1acc3"
+    "mtime": 1784595907.8608675,
+    "ast_hash": "0d0750b997ae46f6c089e5e4aa97a2b4",
+    "semantic_hash": ""
   },
   "src/app/guias/[equipe]/checklist-interativa.tsx": {
     "mtime": 1784502465.1158454,
@@ -90,54 +90,54 @@
     "semantic_hash": "754c709747f878daa011807315ffd540"
   },
   "src/app/guias/[equipe]/page.tsx": {
-    "mtime": 1784502454.0844338,
-    "ast_hash": "1b480c8d9db8fc3d14ece55ed15a6812",
-    "semantic_hash": "1b480c8d9db8fc3d14ece55ed15a6812"
+    "mtime": 1784595980.5370748,
+    "ast_hash": "1a04c5e6293f5ba0ef7114be6fdc49b5",
+    "semantic_hash": ""
   },
   "src/app/ia/page.tsx": {
-    "mtime": 1784419795.6330605,
-    "ast_hash": "58a8c2292c4e5a3bac934537418e2122",
-    "semantic_hash": "58a8c2292c4e5a3bac934537418e2122"
+    "mtime": 1784595980.5370748,
+    "ast_hash": "1fa2daf35531e440122dcb748adcdce1",
+    "semantic_hash": ""
   },
   "src/app/layout.tsx": {
-    "mtime": 1784413453.5394254,
-    "ast_hash": "e4bb9047724b767e2b11d46d580e5eec",
-    "semantic_hash": "e4bb9047724b767e2b11d46d580e5eec"
+    "mtime": 1784594200.248665,
+    "ast_hash": "b62bc028dcb500f21554f7e67e473276",
+    "semantic_hash": ""
   },
   "src/app/login/page.tsx": {
-    "mtime": 1784501104.4173756,
-    "ast_hash": "73b39fa06250b21fe2056d1b67f851ff",
-    "semantic_hash": "73b39fa06250b21fe2056d1b67f851ff"
+    "mtime": 1784595859.3801877,
+    "ast_hash": "ae043237d91d9b75648cd4e998e9c319",
+    "semantic_hash": ""
   },
   "src/app/page.tsx": {
-    "mtime": 1784506606.0228462,
-    "ast_hash": "bcddf2951e96a0c82e2de42519e0702f",
-    "semantic_hash": "bcddf2951e96a0c82e2de42519e0702f"
+    "mtime": 1784609479.1084304,
+    "ast_hash": "259fe59b0393a176132e97de6c87ee65",
+    "semantic_hash": ""
   },
   "src/app/paineis/[equipe]/page.tsx": {
-    "mtime": 1784496750.9584854,
-    "ast_hash": "f6448261ac27a7264a9cf226eb996ec3",
-    "semantic_hash": "f6448261ac27a7264a9cf226eb996ec3"
+    "mtime": 1784595980.5370748,
+    "ast_hash": "ee37763b682a0d7c07a5471ebe2d2402",
+    "semantic_hash": ""
   },
   "src/app/privacidade/page.tsx": {
-    "mtime": 1784419729.104884,
-    "ast_hash": "e96c9762f30174e93229533f708e0138",
-    "semantic_hash": "e96c9762f30174e93229533f708e0138"
+    "mtime": 1784596027.1953661,
+    "ast_hash": "f2427294aa57998188436ef2c921c525",
+    "semantic_hash": ""
   },
   "src/app/proposta/page.tsx": {
-    "mtime": 1784419795.6330605,
-    "ast_hash": "6576df89d13dc9474247a0c3270771e6",
-    "semantic_hash": "6576df89d13dc9474247a0c3270771e6"
+    "mtime": 1784596034.4467437,
+    "ast_hash": "84ff2bd46711765d82e664bfc924f66e",
+    "semantic_hash": ""
   },
   "src/app/simulador/page.tsx": {
-    "mtime": 1784419964.00605,
-    "ast_hash": "31daa0ddb76e45bebbde96b5456e0a31",
-    "semantic_hash": "31daa0ddb76e45bebbde96b5456e0a31"
+    "mtime": 1784595907.8608675,
+    "ast_hash": "812c9bb47264e3501d2f1ac8978c8d3f",
+    "semantic_hash": ""
   },
   "src/components/dashboard/checklist-card.tsx": {
-    "mtime": 1784413453.8907862,
-    "ast_hash": "efa8972c3ce50b24577a47c1f6d16014",
-    "semantic_hash": "efa8972c3ce50b24577a47c1f6d16014"
+    "mtime": 1784594707.9564943,
+    "ast_hash": "3d3ea7ac2139e407f2d2e84c1bd771db",
+    "semantic_hash": ""
   },
   "src/components/dashboard/dashboard-header.tsx": {
     "mtime": 1784509138.693616,
@@ -145,9 +145,9 @@
     "semantic_hash": "79ced57591ed592f104cf5a3decb6d44"
   },
   "src/components/dashboard/indicador-card.tsx": {
-    "mtime": 1784413453.8375933,
-    "ast_hash": "87b434c26c01a1216aa98f64f7b74dc5",
-    "semantic_hash": "87b434c26c01a1216aa98f64f7b74dc5"
+    "mtime": 1784594606.8490288,
+    "ast_hash": "9c69ee1d875dea84b210e2b436442220",
+    "semantic_hash": ""
   },
   "src/components/dashboard/insights-panel.tsx": {
     "mtime": 1784557775.261182,
@@ -260,9 +260,9 @@
     "semantic_hash": "80b00f7e5d421a182cec22dc98b0d9a9"
   },
   "src/middleware.ts": {
-    "mtime": 1784414595.1213706,
-    "ast_hash": "5269b843cba9666bf007cae900fe5e4e",
-    "semantic_hash": "5269b843cba9666bf007cae900fe5e4e"
+    "mtime": 1784591835.3535504,
+    "ast_hash": "0451cfcd251d0dfc0f85fd151e20db1c",
+    "semantic_hash": ""
   },
   "supabase/migrations/001_integracoes_pec.sql": {
     "mtime": 1784412988.5893333,
@@ -330,13 +330,13 @@
     "semantic_hash": ""
   },
   "public/brand/favicon.png": {
-    "mtime": 1784412988.6929436,
-    "ast_hash": "2e9d3007ca42ac70ea57797344c47e18",
+    "mtime": 1784576242.2476385,
+    "ast_hash": "5000a9cbec63f473846ea671c7aedfea",
     "semantic_hash": ""
   },
   "public/brand/logo-full.png": {
-    "mtime": 1784412988.6868937,
-    "ast_hash": "82e7b9a60770926113d4c50421e8d49f",
+    "mtime": 1784576242.2476385,
+    "ast_hash": "5000a9cbec63f473846ea671c7aedfea",
     "semantic_hash": ""
   },
   "public/brand/logo-icon.png": {
@@ -345,8 +345,8 @@
     "semantic_hash": ""
   },
   "public/brand/logo-nav.png": {
-    "mtime": 1784412988.691956,
-    "ast_hash": "7fdd7140cff19d45defbfd8a1a3db2d0",
+    "mtime": 1784576242.2476385,
+    "ast_hash": "5000a9cbec63f473846ea671c7aedfea",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -409,11 +409,6 @@
     "ast_hash": "c02345bd92b720de3c6650f0b68338f8",
     "semantic_hash": ""
   },
-  "screenshots/2026-07-20/08-dashboard-medico-esf.png": {
-    "mtime": 1784556738.9431183,
-    "ast_hash": "1a5c52afe214fe7a2cac3c10e156d6a4",
-    "semantic_hash": ""
-  },
   "screenshots/2026-07-20/09-gerencial.png": {
     "mtime": 1784556739.0065765,
     "ast_hash": "5047cdc1567ee96ffcb336257b39a1e7",
@@ -422,6 +417,321 @@
   "src/app/icon.png": {
     "mtime": 1784413574.6506772,
     "ast_hash": "2e9d3007ca42ac70ea57797344c47e18",
+    "semantic_hash": ""
+  },
+  "src/app/admin/admin-comercial.tsx": {
+    "mtime": 1784591621.6893148,
+    "ast_hash": "8883d87c155037631a9417b8c9588466",
+    "semantic_hash": ""
+  },
+  "src/app/admin/admin-equipes.tsx": {
+    "mtime": 1784591727.662575,
+    "ast_hash": "ea278e18b893314a15b7b545aa0f8211",
+    "semantic_hash": ""
+  },
+  "src/app/admin/admin-gestao.tsx": {
+    "mtime": 1784591603.9625452,
+    "ast_hash": "2ff640f527f1c86692c12777747bfa0b",
+    "semantic_hash": ""
+  },
+  "src/app/admin/admin-indicadores.tsx": {
+    "mtime": 1784591541.0257158,
+    "ast_hash": "15c036bd9a77857feece9cc3b794f3b9",
+    "semantic_hash": ""
+  },
+  "src/app/admin/admin-municipios.tsx": {
+    "mtime": 1784595980.5380816,
+    "ast_hash": "084fe15d7c6a7a10a125838c07914456",
+    "semantic_hash": ""
+  },
+  "src/app/admin/admin-pec.tsx": {
+    "mtime": 1784591558.8065045,
+    "ast_hash": "1ebc2f242226abb02d2c224e31a3d727",
+    "semantic_hash": ""
+  },
+  "src/app/admin/admin-profissionais.tsx": {
+    "mtime": 1784591586.02206,
+    "ast_hash": "2dadd78b13c86404be1edb5d87a28ffb",
+    "semantic_hash": ""
+  },
+  "src/app/lab/ui/page.tsx": {
+    "mtime": 1784609386.3669631,
+    "ast_hash": "a8d00a66ab2f7a284f37cfa156663b8e",
+    "semantic_hash": ""
+  },
+  "src/app/painel/page.tsx": {
+    "mtime": 1784595907.8608675,
+    "ast_hash": "98d3cb8d29e5372c08f8146d9b64a5cf",
+    "semantic_hash": ""
+  },
+  "src/components/app-shell.tsx": {
+    "mtime": 1784595859.3801877,
+    "ast_hash": "4867d7a4990a4ae1b466e46c7dfc30d2",
+    "semantic_hash": ""
+  },
+  "src/components/brand-logo.tsx": {
+    "mtime": 1784595859.3801877,
+    "ast_hash": "4cdbb7dcbd8982390ab408a2cc291a3f",
+    "semantic_hash": ""
+  },
+  "src/components/landing/telas-gallery.tsx": {
+    "mtime": 1784609479.1084304,
+    "ast_hash": "1f6ad2930d6fe34a324bf45fe249a05c",
+    "semantic_hash": ""
+  },
+  "src/components/ui/circular-gallery.tsx": {
+    "mtime": 1784608879.9116898,
+    "ast_hash": "b9cc3c152ec684d683693a726c3fe4e7",
+    "semantic_hash": ""
+  },
+  "src/components/ui/index.ts": {
+    "mtime": 1784609386.3669631,
+    "ast_hash": "fc728048388ce36f33cf830d285fce86",
+    "semantic_hash": ""
+  },
+  "src/components/ui/registry.ts": {
+    "mtime": 1784609479.1084304,
+    "ast_hash": "697e82d673bb556d808139dbc7f9ed45",
+    "semantic_hash": ""
+  },
+  "src/components/ui/thumbnail-carousel.tsx": {
+    "mtime": 1784609386.3669631,
+    "ast_hash": "5955cfb2f1971727ac117a8a93d63b40",
+    "semantic_hash": ""
+  },
+  "screenshots/INDEX.md": {
+    "mtime": 1784594779.0368016,
+    "ast_hash": "dcc3e485bfec61d845f6d2a7f5315c15",
+    "semantic_hash": ""
+  },
+  "src/components/ui/README.md": {
+    "mtime": 1784609386.3669631,
+    "ast_hash": "f2d3ddf089e8551612b637117443a558",
+    "semantic_hash": ""
+  },
+  "public/brand/logo-oficial.png": {
+    "mtime": 1784576242.2476385,
+    "ast_hash": "5000a9cbec63f473846ea671c7aedfea",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/01-admin-municipios.png": {
+    "mtime": 1784556738.4927218,
+    "ast_hash": "0d79e4a31fb791219905118d7c54f3e8",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/02-admin-equipes.png": {
+    "mtime": 1784556738.557375,
+    "ast_hash": "bc2a97e26c719562c862715284029759",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/03-admin-indicadores.png": {
+    "mtime": 1784556738.6220646,
+    "ast_hash": "7029c3189627d6c815f1b8352ea486f3",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/04-admin-pec.png": {
+    "mtime": 1784556738.6869695,
+    "ast_hash": "8c104783291c534aab9ffb5418524c9b",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/05-admin-profissionais.png": {
+    "mtime": 1784556738.7488503,
+    "ast_hash": "e23234d3609cf127129b244b5a0f0d16",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/06-admin-gestao.png": {
+    "mtime": 1784556738.8136313,
+    "ast_hash": "365c0cec47e834c157e2cd3e17cc1477",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/07-home-dashboards.png": {
+    "mtime": 1784556738.8784287,
+    "ast_hash": "c02345bd92b720de3c6650f0b68338f8",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/08-medico.png": {
+    "mtime": 1784556738.9431183,
+    "ast_hash": "1a5c52afe214fe7a2cac3c10e156d6a4",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/09-gerencial.png": {
+    "mtime": 1784556739.0065765,
+    "ast_hash": "5047cdc1567ee96ffcb336257b39a1e7",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/10-acs.png": {
+    "mtime": 1784580268.4293747,
+    "ast_hash": "83f322f0ccf7302f82b7e9e523dcf649",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/11-assistente.png": {
+    "mtime": 1784580645.6131628,
+    "ast_hash": "e3acce916b54cf131eea32255f619ffb",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/12-coordenador.png": {
+    "mtime": 1784580763.4315565,
+    "ast_hash": "1a2b5f4f06a27b39a89d76c95702c2ab",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/13-dentista.png": {
+    "mtime": 1784580364.7004128,
+    "ast_hash": "c050043b6a1ebb17b7637bb6988ee3bb",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/14-enfermeiro.png": {
+    "mtime": 1784580136.4491966,
+    "ast_hash": "374e3566d1306f4e78e51d263951289a",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/15-farmaceutico.png": {
+    "mtime": 1784580705.3496432,
+    "ast_hash": "1b7cb20e0e985a6a1c56c2808ea36c77",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/16-fisio.png": {
+    "mtime": 1784580487.9636767,
+    "ast_hash": "4036510e71f09fa9a358e5776da3c817",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/17-gestor.png": {
+    "mtime": 1784580818.143195,
+    "ast_hash": "4c3a95f8fe7a69510ad54d1b136ace2a",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/18-nutricionista.png": {
+    "mtime": 1784580564.520872,
+    "ast_hash": "38ef45cdf6a29afeab223fca8b4dacf3",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/19-psicologo.png": {
+    "mtime": 1784580428.172836,
+    "ast_hash": "e98cff69a7b1492f72bda6dae154f84a",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-20/20-tecnico.png": {
+    "mtime": 1784580212.963868,
+    "ast_hash": "8de30e07321af9c094a94e87dc30766e",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-21/01-login.png": {
+    "mtime": 1784609022.4162474,
+    "ast_hash": "aa7bf71d985d1120899383b131a35b76",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-21/02-landing.png": {
+    "mtime": 1784608916.8078258,
+    "ast_hash": "81505a7de002aa724fdafdabbdb2ad39",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-21/03-painel.png": {
+    "mtime": 1784556738.8784287,
+    "ast_hash": "c02345bd92b720de3c6650f0b68338f8",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-21/04-medico.png": {
+    "mtime": 1784556738.9431183,
+    "ast_hash": "1a5c52afe214fe7a2cac3c10e156d6a4",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-21/05-enfermeiro.png": {
+    "mtime": 1784580136.4491966,
+    "ast_hash": "374e3566d1306f4e78e51d263951289a",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-21/06-gerencial.png": {
+    "mtime": 1784556739.0065765,
+    "ast_hash": "5047cdc1567ee96ffcb336257b39a1e7",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-21/07-admin.png": {
+    "mtime": 1784556738.6220646,
+    "ast_hash": "7029c3189627d6c815f1b8352ea486f3",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-21/08-dentista.png": {
+    "mtime": 1784580364.7004128,
+    "ast_hash": "c050043b6a1ebb17b7637bb6988ee3bb",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-21/09-acs.png": {
+    "mtime": 1784580268.4293747,
+    "ast_hash": "83f322f0ccf7302f82b7e9e523dcf649",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-21/10-gestor.png": {
+    "mtime": 1784580818.143195,
+    "ast_hash": "4c3a95f8fe7a69510ad54d1b136ace2a",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-21/11-simulador.png": {
+    "mtime": 1784556738.7488503,
+    "ast_hash": "e23234d3609cf127129b244b5a0f0d16",
+    "semantic_hash": ""
+  },
+  "public/screenshots/2026-07-21/12-ia.png": {
+    "mtime": 1784556738.6869695,
+    "ast_hash": "8c104783291c534aab9ffb5418524c9b",
+    "semantic_hash": ""
+  },
+  "screenshots/2026-07-20/08-medico.png": {
+    "mtime": 1784556738.9431183,
+    "ast_hash": "1a5c52afe214fe7a2cac3c10e156d6a4",
+    "semantic_hash": ""
+  },
+  "screenshots/2026-07-20/10-acs.png": {
+    "mtime": 1784580268.4293747,
+    "ast_hash": "83f322f0ccf7302f82b7e9e523dcf649",
+    "semantic_hash": ""
+  },
+  "screenshots/2026-07-20/11-assistente.png": {
+    "mtime": 1784580645.6131628,
+    "ast_hash": "e3acce916b54cf131eea32255f619ffb",
+    "semantic_hash": ""
+  },
+  "screenshots/2026-07-20/12-coordenador.png": {
+    "mtime": 1784580763.4315565,
+    "ast_hash": "1a2b5f4f06a27b39a89d76c95702c2ab",
+    "semantic_hash": ""
+  },
+  "screenshots/2026-07-20/13-dentista.png": {
+    "mtime": 1784580364.7004128,
+    "ast_hash": "c050043b6a1ebb17b7637bb6988ee3bb",
+    "semantic_hash": ""
+  },
+  "screenshots/2026-07-20/14-enfermeiro.png": {
+    "mtime": 1784580136.4491966,
+    "ast_hash": "374e3566d1306f4e78e51d263951289a",
+    "semantic_hash": ""
+  },
+  "screenshots/2026-07-20/15-farmaceutico.png": {
+    "mtime": 1784580705.3496432,
+    "ast_hash": "1b7cb20e0e985a6a1c56c2808ea36c77",
+    "semantic_hash": ""
+  },
+  "screenshots/2026-07-20/16-fisio.png": {
+    "mtime": 1784580487.9636767,
+    "ast_hash": "4036510e71f09fa9a358e5776da3c817",
+    "semantic_hash": ""
+  },
+  "screenshots/2026-07-20/17-gestor.png": {
+    "mtime": 1784580818.143195,
+    "ast_hash": "4c3a95f8fe7a69510ad54d1b136ace2a",
+    "semantic_hash": ""
+  },
+  "screenshots/2026-07-20/18-nutricionista.png": {
+    "mtime": 1784580564.520872,
+    "ast_hash": "38ef45cdf6a29afeab223fca8b4dacf3",
+    "semantic_hash": ""
+  },
+  "screenshots/2026-07-20/19-psicologo.png": {
+    "mtime": 1784580428.172836,
+    "ast_hash": "e98cff69a7b1492f72bda6dae154f84a",
+    "semantic_hash": ""
+  },
+  "screenshots/2026-07-20/20-tecnico.png": {
+    "mtime": 1784580212.963868,
+    "ast_hash": "8de30e07321af9c094a94e87dc30766e",
     "semantic_hash": ""
   }
 }
