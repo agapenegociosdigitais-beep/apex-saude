@@ -11,7 +11,7 @@ const cormorant = Cormorant_Garamond({
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const dmMono = DM_Mono({
@@ -21,9 +21,9 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ÁPEX Saúde — Gestão de Indicadores APS",
+  title: "ÁPEX Saúde - Gestão de Indicadores da APS",
   description:
-    "Plataforma de gestão dos 15 indicadores oficiais da Atenção Primária à Saúde (NT 6/2025 - DEAPS/SAPS/MS).",
+    "A plataforma de gestão definitiva para os 15 indicadores da APS (NT 6/2025).",
 };
 
 export default function RootLayout({
@@ -36,7 +36,15 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${cormorant.variable} ${dmSans.variable} ${dmMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="min-h-full flex flex-col bg-background text-on-background font-body-md">
+        {children}
+      </body>
     </html>
   );
 }

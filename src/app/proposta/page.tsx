@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import Link from 'next/link';
+import { BrandLogo } from '@/components/brand-logo';
 
 const PLANOS = [
   {
@@ -39,20 +39,22 @@ const INCLUSO = [
 
 export default function PropostaPage() {
   return (
-    <main className="mx-auto w-full max-w-6xl px-6 py-12">
+    <main className="min-h-screen bg-background">
+      <header className="border-b border-outline-variant/40 bg-surface">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+          <BrandLogo size="md" href="/" priority />
+          <Link href="/login" className="text-sm font-semibold text-primary hover:underline">
+            Entrar
+          </Link>
+        </div>
+      </header>
+      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 py-12">
       <div className="flex flex-col items-center text-center">
-        <Image
-          src="/brand/logo-full.png"
-          alt="ÁPEX Saúde"
-          width={200}
-          height={73}
-          className="h-auto w-48"
-          priority
-        />
-        <h1 className="mt-6 max-w-2xl font-display text-4xl font-semibold text-apex-ink">
+        <BrandLogo size="xl" href={null} priority />
+        <h1 className="mt-6 max-w-2xl text-3xl sm:text-4xl font-bold text-on-surface">
           Gestão de indicadores que protege o repasse do seu município
         </h1>
-        <p className="mt-4 max-w-xl text-apex-muted">
+        <p className="mt-4 max-w-xl text-on-surface-variant">
           O único sistema focado exclusivamente nos 15 indicadores oficiais da APS
           (NT 6/2025), com IA para planos de ação e integração automática com o PEC.
         </p>
@@ -115,10 +117,11 @@ export default function PropostaPage() {
         </p>
       </section>
 
-      <p className="mt-8 text-center text-sm text-apex-muted">
+      <p className="mt-8 text-center text-sm text-on-surface-variant">
         Prefeitura de Belterra-PA: piloto com condições especiais ·{' '}
-        <Link href="/" className="text-apex-gold underline">ver demonstração do sistema</Link>
+        <Link href="/painel" className="text-primary underline">ver demonstração do sistema</Link>
       </p>
+      </div>
     </main>
   );
 }

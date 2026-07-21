@@ -49,6 +49,13 @@ public/brand/                       # Logos oficiais
 - `perfis.ts` é a fonte de verdade dos 12 perfis (portado de perfis-config.js)
 - Build gate: `npm run build` deve estar verde antes de commitar
 - Legado pré-migração preservado em `C:\Users\benja\apex-saude-next-legacy`
+- Diff mínimo; Stitch/UI colado = fidelidade 1:1 se pedido exact
+
+## Graphify
+- Grafo: `graphify-out/` (code-only AST)
+- Feature multi-arquivo: `graphify query "<tema>"` se o grafo existir
+- Atualizar: `graphify update .` (PATH: `%USERPROFILE%\.local\bin`)
+- Hermes: skill `graphify` / `graphify-context`
 
 ## Próximos passos (Fase 2)
 1. Criar projeto Supabase + rodar schema SQL (supabase/*.sql)

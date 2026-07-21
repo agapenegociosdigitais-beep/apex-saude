@@ -7,7 +7,15 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Protege app inteiro exceto assets e api publica
-    '/((?!_next/static|_next/image|brand|icon.png|favicon.ico).*)',
+    // Rotas protegidas (exige login)
+    '/painel/:path*',
+    '/dashboard/:path*',
+    '/gerencial/:path*',
+    '/simulador/:path*',
+    '/ia/:path*',
+    '/admin/:path*',
+    '/paineis/:path*',
+    '/guias/:path*',
+    '/api/admin/:path*',
   ],
 }
