@@ -111,6 +111,26 @@ export default function AdminPec() {
     setPecStatus(s => ({...s, [municipio_id]: j.sucesso ? `✅ ${j.resultados?.length || 0} equipes` : '❌ '+j.erro}))
   }
 
+  const puxarCnes = async (mun: M) => {
+    if (!mun.codigo_ibge) {
+      alert('Município sem código IBGE. Cadastre com IBGE para puxar dados do CNES.')
+      return
+    }
+    setPecStatus(s => ({...s, [mun.id]: '🔄 Buscando UBS do CNES...'}))
+    try {
+      const res = await fetch('/api/integracao/pec/cnes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ municipio_id: mun.id, ibge_code: String(mun.codigo_ibge) }),
+      })
+      const j = await res.json()
+      setPecStatus(s => ({...s, [mun.id]: j.ok ? j.mensagem : '❌ ' + j.erro}))
+      if (j.ok) carregar()
+    } catch {
+      setPecStatus(s => ({...s, [mun.id]: '❌ Falha de rede'}))
+    }
+  }
+
   const excluirCidade = async (mun: M) => {
     setExcluindo(true)
     try {
@@ -241,6 +261,10 @@ export default function AdminPec() {
                   <button onClick={() => sincronizar(mun.id)}
                     className="rounded-lg bg-amber-600 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-700 shadow-sm">
                     🔄 Sincronizar
+                  </button>
+                  <button onClick={() => puxarCnes(mun)}
+                    className="rounded-lg bg-purple-600 px-4 py-2 text-sm font-semibold text-white hover:bg-purple-700 shadow-sm">
+                    🏥 Puxar UBS
                   </button>
                   {st && <span className="text-sm font-medium text-apex-ink">{st}</span>}
                   <div className="flex-1" />
