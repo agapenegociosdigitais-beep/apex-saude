@@ -1,16 +1,16 @@
-# Graph Report - apex-saude-next  (2026-07-21)
+# Graph Report - apex-saude-next  (2026-07-20)
 
 ## Corpus Check
-- 84 files · ~467,423 words
+- 66 files · ~79,015 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 342 nodes · 552 edges · 27 communities (18 shown, 9 thin omitted)
+- 315 nodes · 509 edges · 26 communities (17 shown, 9 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b85525b0`
+- Built from commit: `3f82ebb6`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -39,7 +39,6 @@
 - ÁPEX Saúde Next — Instruções para Agentes
 - ÁPEX Saúde Next — Scaffold + Dashboard Parametrizado
 - README.md
-- page.tsx
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 16 edges
@@ -47,32 +46,32 @@
 3. `criarClienteSupabase()` - 10 edges
 4. `ÁPEX Saúde — Setup Supabase` - 10 edges
 5. `useUser()` - 9 edges
-6. `main()` - 8 edges
-7. `DashboardPerfilPage()` - 8 edges
-8. `statusDoIndicador()` - 8 edges
-9. `classificacaoDaNota()` - 8 edges
-10. `IndicadorConfig` - 8 edges
+6. `DashboardPerfilPage()` - 8 edges
+7. `statusDoIndicador()` - 8 edges
+8. `classificacaoDaNota()` - 8 edges
+9. `IndicadorConfig` - 8 edges
+10. `ÁPEX Saúde Next — Instruções para Agentes` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `GET()` --calls--> `criarClienteSupabase()`  [EXTRACTED]
   src/app/api/integracao/pec/config/route.ts → src/lib/supabase/server.ts
 - `GET()` --calls--> `criarClienteSupabase()`  [EXTRACTED]
   src/app/api/integracao/pec/status/route.ts → src/lib/supabase/server.ts
-- `GerencialPage()` --calls--> `classificacaoDaNota()`  [EXTRACTED]
-  src/app/gerencial/page.tsx → src/lib/mock/nota.ts
 - `GuiaEquipePage()` --calls--> `isEquipeId()`  [EXTRACTED]
   src/app/guias/[equipe]/page.tsx → src/lib/mock/equipes.ts
-- `PainelEquipePage()` --calls--> `isEquipeId()`  [EXTRACTED]
-  src/app/paineis/[equipe]/page.tsx → src/lib/mock/equipes.ts
+- `PainelEquipePage()` --calls--> `statusDoIndicador()`  [EXTRACTED]
+  src/app/paineis/[equipe]/page.tsx → src/lib/mock/indicadores.ts
+- `PainelEquipePage()` --calls--> `valorMock()`  [EXTRACTED]
+  src/app/paineis/[equipe]/page.tsx → src/lib/mock/indicadores.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (27 total, 9 thin omitted)
+## Communities (26 total, 9 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.11
-Nodes (35): DashboardPerfilPage(), IaPage(), PainelEquipePage(), ChecklistCard(), ChecklistCardProps, IndicadorCard(), IndicadorCardProps, STATUS_STYLES (+27 more)
+Cohesion: 0.12
+Nodes (30): DashboardPerfilPage(), IaPage(), ChecklistCard(), ChecklistCardProps, IndicadorCard(), IndicadorCardProps, STATUS_STYLES, EquipeConfig (+22 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.13
@@ -87,8 +86,8 @@ Cohesion: 0.07
 Nodes (28): dom, dom.iterable, esnext, **/*.mts, .next/dev/types/**/*.ts, next-env.d.ts, .next/types/**/*.ts, node_modules (+20 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.22
-Nodes (16): GerencialPage(), CLASSIFICACOES, repasseCenario(), SimuladorPage(), TIPOS, EquipeId, EquipeInstancia, indicadoresDoTipo() (+8 more)
+Cohesion: 0.12
+Nodes (27): GerencialPage(), CheckListInterativa(), Props, GuiaEquipePage(), PainelEquipePage(), CLASSIFICACOES, repasseCenario(), SimuladorPage() (+19 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 0.09
@@ -115,8 +114,8 @@ Cohesion: 0.33
 Nodes (4): cormorant, dmMono, dmSans, metadata
 
 ### Community 14 - "Community 14"
-Cohesion: 0.10
-Nodes (31): auto_cadastrar(), conectar_pec(), descobrir_equipes(), descobrir_tabelas(), descobrir_ubs(), enviar_indicador_supabase(), enviar_para_supabase(), executar_query_indicador() (+23 more)
+Cohesion: 0.70
+Nodes (4): conectar_pec(), enviar_supabase(), executar_queries(), main()
 
 ### Community 22 - "ÁPEX Saúde Next — Instruções para Agentes"
 Cohesion: 0.22
@@ -130,12 +129,8 @@ Nodes (7): Task 1: Preservar legado, Task 2: Scaffold Next.js, Task 3: Migrar c�
 Cohesion: 0.50
 Nodes (3): Deploy on Vercel, Getting Started, Learn More
 
-### Community 26 - "page.tsx"
-Cohesion: 0.27
-Nodes (6): CheckListInterativa(), Props, GuiaEquipePage(), isEquipeId(), GuiaIndicador, GUIAS
-
 ## Knowledge Gaps
-- **120 isolated node(s):** `setup-vps.sh script`, `eslintConfig`, `nextConfig`, `name`, `version` (+115 more)
+- **120 isolated node(s):** `eslintConfig`, `nextConfig`, `name`, `version`, `private` (+115 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -143,13 +138,13 @@ Nodes (6): CheckListInterativa(), Props, GuiaEquipePage(), isEquipeId(), GuiaInd
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `devDependencies` connect `Community 6` to `Community 5`?**
-  _High betweenness centrality (0.011) - this node is a cross-community bridge._
-- **Why does `DashboardHeader()` connect `Community 2` to `Community 0`, `page.tsx`, `Community 4`?**
-  _High betweenness centrality (0.008) - this node is a cross-community bridge._
-- **What connects `setup-vps.sh script`, `eslintConfig`, `nextConfig` to the rest of the system?**
+  _High betweenness centrality (0.013) - this node is a cross-community bridge._
+- **Why does `DashboardHeader()` connect `Community 2` to `Community 0`, `Community 4`?**
+  _High betweenness centrality (0.010) - this node is a cross-community bridge._
+- **What connects `eslintConfig`, `nextConfig`, `name` to the rest of the system?**
   _120 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.10612244897959183 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.11794871794871795 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.12912912912912913 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
