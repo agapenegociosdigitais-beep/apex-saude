@@ -35,6 +35,8 @@ export default function LoginPage() {
         password: senha,
       })
       if (error) throw error
+      // Auditoria de login
+      fetch('/api/admin/auditoria', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ acao:'LOGIN', tabela:'auth.users', dados:{email} }) }).catch(()=>{})
       const role = data.user?.user_metadata?.role || 'profissional'
       const destino =
         role === 'admin' ? '/admin' : role === 'gestor' ? '/gerencial' : '/painel'

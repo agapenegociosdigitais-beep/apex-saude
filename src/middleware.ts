@@ -16,6 +16,9 @@ export const config = {
     '/admin/:path*',
     '/paineis/:path*',
     '/guias/:path*',
+    '/profissionais/:path*',
+    '/equipes/:path*',
+    '/gestao/:path*',
     '/api/admin/:path*',
   ],
 }
