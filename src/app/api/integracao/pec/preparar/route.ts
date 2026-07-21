@@ -47,10 +47,11 @@ export async function POST(req: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user?.email) return NextResponse.json({ erro: 'Não autorizado' }, { status: 401 })
 
-  const { data: usuario } = await supabase
-    .from('usuarios').select('role').eq('email', user.email).single()
-  if (!usuario || !['admin','gestor'].includes(usuario.role))
-    return NextResponse.json({ erro: 'Permissão negada' }, { status: 403 })
+  // Admin check via auth metadata (mais rapido, nao depende da tabela usuarios)
+  const role = user.user_metadata?.role
+  if (role !== 'admin' && role !== 'gestor') {
+    return NextResponse.json({ erro: 'Permissão negada - role: ' + (role || 'none') }, { status: 403 })
+  }
 
   try {
     const { nome, uf, codigo_ibge } = await req.json()
