@@ -778,5 +778,10 @@
     "mtime": 1784659899.8816097,
     "ast_hash": "d752eccd164ca3939378614e5e6c4279",
     "semantic_hash": ""
+  },
+  "supabase/migrations/003_turbo_fix.sql": {
+    "mtime": 1784660617.1072617,
+    "ast_hash": "b8b565296b771df48681688df7c5d4b8",
+    "semantic_hash": ""
   }
 }
