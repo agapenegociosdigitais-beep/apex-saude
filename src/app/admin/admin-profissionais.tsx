@@ -13,6 +13,7 @@ export default function AdminProfissionais() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [showUserForm, setShowUserForm] = useState(false)
+  const [editando, setEditando] = useState<string | null>(null)
   const [userForm, setUserForm] = useState({ email:'', nome:'', role:'profissional', municipio_id:'', unidade_id:'', equipe_id:'', perfil_id:'medico', password:'mudar123' })
   const [filtroUbs, setFiltroUbs] = useState('')
 
@@ -30,12 +31,22 @@ export default function AdminProfissionais() {
 
   const salvar = async (e: React.FormEvent) => {
     e.preventDefault(); setSaving(true)
-    const res = await fetch('/api/admin/usuarios', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(userForm) })
+    const method = editando ? 'PUT' : 'POST'
+    const body = editando ? { id: editando, ...userForm } : userForm
+    delete (body as Record<string,unknown>).password
+    const res = await fetch('/api/admin/usuarios', { method, headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) })
     const j = await res.json()
-    if (!res.ok) { alert(j.error); setSaving(false); return }
-    alert(`✅ Criado! Senha: ${j.senha}`)
-    setShowUserForm(false); setUserForm({ email:'', nome:'', role:'profissional', municipio_id:'', unidade_id:'', equipe_id:'', perfil_id:'medico', password:'mudar123' })
+    if (!res.ok) { alert(j.error || j.erro); setSaving(false); return }
+    if (!editando) alert(`✅ Criado! Senha: ${j.senha}`)
+    setShowUserForm(false); setEditando(null)
+    setUserForm({ email:'', nome:'', role:'profissional', municipio_id:'', unidade_id:'', equipe_id:'', perfil_id:'medico', password:'mudar123' })
     carregar(); setSaving(false)
+  }
+
+  const editar = (u: Record<string, string>) => {
+    setUserForm({ email:u.email, nome:u.nome, role:u.role, municipio_id:u.municipio_id, unidade_id:u.unidade_id||'', equipe_id:u.equipe_id||'', perfil_id:u.perfil_id, password:'' })
+    setEditando(u.id)
+    setShowUserForm(true)
   }
 
   const excluir = async (id: string) => { if(!confirm('Excluir profissional?')) return; await fetch(`/api/admin/usuarios?id=${id}`,{method:'DELETE'}); carregar() }
@@ -55,7 +66,7 @@ export default function AdminProfissionais() {
             <option value="">Todas as UBS</option>
             {municipios.flatMap(m => m.unidades).map(u => <option key={u.id} value={u.id}>{u.nome}</option>)}
           </select>
-          <button onClick={() => setShowUserForm(true)}
+          <button onClick={() => { setEditando(null); setShowUserForm(true) }}
             className="bg-apex-gold text-white font-semibold text-sm px-6 py-2.5 rounded-lg hover:bg-amber-600 transition-colors shadow-sm flex items-center gap-2">
             <span>+</span> Novo
           </button>
@@ -64,7 +75,7 @@ export default function AdminProfissionais() {
 
       {showUserForm && (
         <form onSubmit={salvar} className="mb-6 rounded-xl border bg-white p-6 shadow-sm">
-          <h3 className="text-lg font-semibold mb-4">Novo Profissional</h3>
+          <h3 className="text-lg font-semibold mb-4">{editando ? 'Editar Profissional' : 'Novo Profissional'}</h3>
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="flex flex-col gap-1 text-sm">Nome *<input value={userForm.nome} onChange={e => setUserForm({...userForm, nome:e.target.value})} className="rounded-md border px-3 py-2" required /></label>
             <label className="flex flex-col gap-1 text-sm">Email *<input type="email" value={userForm.email} onChange={e => setUserForm({...userForm, email:e.target.value})} className="rounded-md border px-3 py-2" required /></label>
@@ -95,11 +106,11 @@ export default function AdminProfissionais() {
                 {equipes.filter(e => e.unidade_id === userForm.unidade_id).map(e => <option key={e.id} value={e.id}>{e.nome} ({e.tipo})</option>)}
               </select>
             </label>
-            <label className="flex flex-col gap-1 text-sm">Senha inicial<input value={userForm.password} onChange={e => setUserForm({...userForm, password:e.target.value})} className="rounded-md border px-3 py-2" /></label>
+            {!editando && <label className="flex flex-col gap-1 text-sm">Senha inicial<input value={userForm.password} onChange={e => setUserForm({...userForm, password:e.target.value})} className="rounded-md border px-3 py-2" /></label>}
           </div>
           <div className="mt-4 flex gap-3">
-            <button type="submit" disabled={saving} className="rounded-lg bg-emerald-600 px-5 py-2 text-sm font-semibold text-white disabled:opacity-50">Salvar</button>
-            <button type="button" onClick={() => setShowUserForm(false)} className="rounded-lg border px-5 py-2 text-sm text-gray-500">Cancelar</button>
+            <button type="submit" disabled={saving} className="rounded-lg bg-emerald-600 px-5 py-2 text-sm font-semibold text-white disabled:opacity-50">{editando ? 'Atualizar' : 'Salvar'}</button>
+            <button type="button" onClick={() => { setShowUserForm(false); setEditando(null) }} className="rounded-lg border px-5 py-2 text-sm text-gray-500">Cancelar</button>
           </div>
         </form>
       )}
@@ -129,7 +140,10 @@ export default function AdminProfissionais() {
                   <td className="p-4"><span className="text-xs rounded bg-gray-100 px-2 py-0.5 font-semibold">{u.role}</span></td>
                   <td className="p-4 text-xs text-apex-muted">{ubs?.nome||'—'}</td>
                   <td className="p-4 text-xs text-apex-muted">{eq?.nome||'—'}</td>
-                  <td className="p-4"><button onClick={() => excluir(u.id)} className="text-xs text-red-400 hover:text-red-600">🗑️</button></td>
+                  <td className="p-4 flex gap-1">
+                    <button onClick={() => editar(u)} className="text-xs text-blue-500 hover:text-blue-700">✏️</button>
+                    <button onClick={() => excluir(u.id)} className="text-xs text-red-400 hover:text-red-600">🗑️</button>
+                  </td>
                 </tr>
               )
             })}

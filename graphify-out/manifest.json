@@ -55,8 +55,8 @@
     "semantic_hash": ""
   },
   "src/app/api/admin/usuarios/route.ts": {
-    "mtime": 1784658178.6374686,
-    "ast_hash": "d2affdebb93d8e2621d73912c2e262a3",
+    "mtime": 1784659280.921942,
+    "ast_hash": "928eda415cc6ebe58b064c3693665ad8",
     "semantic_hash": ""
   },
   "src/app/api/integracao/pec/config/route.ts": {

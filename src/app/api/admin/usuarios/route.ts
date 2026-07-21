@@ -72,6 +72,26 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ ok: true, senha: password || 'mudar123' }, { status: 201 })
 }
 
+export async function PUT(req: NextRequest) {
+  const body = await req.json()
+  const { id, nome, email, role, perfil_id, municipio_id, unidade_id, equipe_id } = body
+  if (!id) return NextResponse.json({ error: 'ID obrigatório' }, { status: 400 })
+
+  const update: Record<string, unknown> = {}
+  if (nome !== undefined) update.nome = nome
+  if (email !== undefined) update.email = email
+  if (role !== undefined) update.role = role
+  if (perfil_id !== undefined) update.perfil_id = perfil_id
+  if (municipio_id !== undefined) update.municipio_id = municipio_id
+  if (unidade_id !== undefined) update.unidade_id = unidade_id
+  if (equipe_id !== undefined) update.equipe_id = equipe_id
+
+  const { error } = await supabase.from('usuarios').update(update).eq('id', id)
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+  return NextResponse.json({ ok: true })
+}
+
 export async function DELETE(req: NextRequest) {
   const id = req.nextUrl.searchParams.get('id')
   if (!id) return NextResponse.json({ error: 'ID obrigatório' }, { status: 400 })

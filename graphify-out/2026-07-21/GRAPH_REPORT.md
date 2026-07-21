@@ -1,16 +1,16 @@
 # Graph Report - apex-saude-next  (2026-07-21)
 
 ## Corpus Check
-- 90 files · ~469,571 words
+- 93 files · ~470,048 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 380 nodes · 584 edges · 33 communities (21 shown, 12 thin omitted)
+- 385 nodes · 592 edges · 33 communities (21 shown, 12 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `4c7929b9`
+- Built from commit: `54cf54c8`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -145,15 +145,15 @@ Cohesion: 0.25
 Nodes (6): {createClient}, env, fs, lines, s, vars
 
 ### Community 31 - "page.tsx"
-Cohesion: 0.40
-Nodes (5): AppShell(), AppShellProps, NAV_MAIN, resolveActive(), ShellNavId
+Cohesion: 0.19
+Nodes (7): Equipe, Prof, AppShell(), AppShellProps, NAV_MAIN, resolveActive(), ShellNavId
 
 ### Community 32 - "update-enderecos.js"
 Cohesion: 0.25
 Nodes (6): {createClient}, env, fs, lines, s, vars
 
 ## Knowledge Gaps
-- **140 isolated node(s):** `ShellNavId`, `NAV_MAIN`, `AppShellProps`, `fs`, `env` (+135 more)
+- **142 isolated node(s):** `supabase`, `Equipe`, `Prof`, `ShellNavId`, `NAV_MAIN` (+137 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **12 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -164,8 +164,8 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.009) - this node is a cross-community bridge._
 - **Why does `DashboardHeader()` connect `Community 2` to `Community 0`, `Community 4`?**
   _High betweenness centrality (0.007) - this node is a cross-community bridge._
-- **What connects `ShellNavId`, `NAV_MAIN`, `AppShellProps` to the rest of the system?**
-  _140 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `supabase`, `Equipe`, `Prof` to the rest of the system?**
+  _142 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.12660028449502134 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**

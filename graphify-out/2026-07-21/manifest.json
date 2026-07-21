@@ -55,9 +55,9 @@
     "semantic_hash": ""
   },
   "src/app/api/admin/usuarios/route.ts": {
-    "mtime": 1784495926.9295955,
-    "ast_hash": "af64db46b2aa32a4840f100eb829e647",
-    "semantic_hash": "af64db46b2aa32a4840f100eb829e647"
+    "mtime": 1784658178.6374686,
+    "ast_hash": "d2affdebb93d8e2621d73912c2e262a3",
+    "semantic_hash": ""
   },
   "src/app/api/integracao/pec/config/route.ts": {
     "mtime": 1784414138.3832207,
@@ -465,8 +465,8 @@
     "semantic_hash": ""
   },
   "src/components/app-shell.tsx": {
-    "mtime": 1784657333.670532,
-    "ast_hash": "bac9ae3d412fb05ab85461087abf6677",
+    "mtime": 1784658264.0385416,
+    "ast_hash": "9d00385f7915f3f1c934cbb89fcfcb0a",
     "semantic_hash": ""
   },
   "src/components/brand-logo.tsx": {
@@ -762,6 +762,21 @@
   "scripts/update-enderecos.js": {
     "mtime": 1784655886.2382274,
     "ast_hash": "ba081ab06857fe26c053562d963c1c30",
+    "semantic_hash": ""
+  },
+  "src/app/equipes/page.tsx": {
+    "mtime": 1784658284.2249744,
+    "ast_hash": "0c231c4374907d257433e551cec6843f",
+    "semantic_hash": ""
+  },
+  "src/app/gestao/page.tsx": {
+    "mtime": 1784658284.2229722,
+    "ast_hash": "c8b41c4e8a6e7c5d83bf53b2ed48cd85",
+    "semantic_hash": ""
+  },
+  "src/app/profissionais/page.tsx": {
+    "mtime": 1784658147.7256002,
+    "ast_hash": "f4f5dc4d045a2980c6daad0b388f4d2a",
     "semantic_hash": ""
   }
 }
