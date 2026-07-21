@@ -4,15 +4,158 @@
   "graph": {},
   "nodes": [
     {
+      "label": "cnes-gateway.py",
+      "file_type": "code",
+      "source_file": "scripts/cnes-gateway.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_cnes_gateway",
+      "community": 28,
+      "community_name": "cnes-gateway.py",
+      "norm_label": "cnes-gateway.py"
+    },
+    {
+      "label": "Handler",
+      "file_type": "code",
+      "source_file": "scripts/cnes-gateway.py",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "scripts_cnes_gateway_handler",
+      "community": 28,
+      "community_name": "cnes-gateway.py",
+      "norm_label": "handler"
+    },
+    {
+      "label": "BaseHTTPRequestHandler",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "basehttprequesthandler",
+      "community": 28,
+      "community_name": "cnes-gateway.py",
+      "norm_label": "basehttprequesthandler"
+    },
+    {
+      "label": ".do_GET()",
+      "file_type": "code",
+      "source_file": "scripts/cnes-gateway.py",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "scripts_cnes_gateway_handler_do_get",
+      "community": 28,
+      "community_name": "cnes-gateway.py",
+      "norm_label": ".do_get()"
+    },
+    {
+      "label": ".log_message()",
+      "file_type": "code",
+      "source_file": "scripts/cnes-gateway.py",
+      "source_location": "L50",
+      "_origin": "ast",
+      "id": "scripts_cnes_gateway_handler_log_message",
+      "community": 28,
+      "community_name": "cnes-gateway.py",
+      "norm_label": ".log_message()"
+    },
+    {
+      "label": "update-enderecos.js",
+      "file_type": "code",
+      "source_file": "scripts/update-enderecos.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_update_enderecos",
+      "community": 32,
+      "community_name": "update-enderecos.js",
+      "norm_label": "update-enderecos.js"
+    },
+    {
+      "label": "fs",
+      "file_type": "code",
+      "source_file": "scripts/update-enderecos.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_update_enderecos_fs",
+      "community": 32,
+      "community_name": "update-enderecos.js",
+      "norm_label": "fs"
+    },
+    {
+      "label": "env",
+      "file_type": "code",
+      "source_file": "scripts/update-enderecos.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_update_enderecos_env",
+      "community": 32,
+      "community_name": "update-enderecos.js",
+      "norm_label": "env"
+    },
+    {
+      "label": "lines",
+      "file_type": "code",
+      "source_file": "scripts/update-enderecos.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_update_enderecos_lines",
+      "community": 32,
+      "community_name": "update-enderecos.js",
+      "norm_label": "lines"
+    },
+    {
+      "label": "vars",
+      "file_type": "code",
+      "source_file": "scripts/update-enderecos.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_update_enderecos_vars",
+      "community": 32,
+      "community_name": "update-enderecos.js",
+      "norm_label": "vars"
+    },
+    {
+      "label": "{createClient}",
+      "file_type": "code",
+      "source_file": "scripts/update-enderecos.js",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "scripts_update_enderecos_createclient",
+      "community": 32,
+      "community_name": "update-enderecos.js",
+      "norm_label": "{createclient}"
+    },
+    {
+      "label": "s",
+      "file_type": "code",
+      "source_file": "scripts/update-enderecos.js",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "scripts_update_enderecos_s",
+      "community": 32,
+      "community_name": "update-enderecos.js",
+      "norm_label": "s"
+    },
+    {
+      "label": "go()",
+      "file_type": "code",
+      "source_file": "scripts/update-enderecos.js",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "scripts_update_enderecos_go",
+      "community": 32,
+      "community_name": "update-enderecos.js",
+      "norm_label": "go()"
+    },
+    {
       "label": "route.ts",
       "file_type": "code",
       "source_file": "src/app/api/admin/unidades/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_app_api_admin_unidades_route",
       "community": 11,
       "community_name": "Community 11",
-      "norm_label": "route.ts"
+      "norm_label": "route.ts",
+      "id": "src_app_api_admin_unidades_route"
     },
     {
       "label": "supabase",
@@ -20,10 +163,10 @@
       "source_file": "src/app/api/admin/unidades/route.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "src_app_api_admin_unidades_route_supabase",
       "community": 11,
       "community_name": "Community 11",
-      "norm_label": "supabase"
+      "norm_label": "supabase",
+      "id": "src_app_api_admin_unidades_route_supabase"
     },
     {
       "label": "GET()",
@@ -31,10 +174,10 @@
       "source_file": "src/app/api/admin/unidades/route.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "src_app_api_admin_unidades_route_get",
       "community": 11,
       "community_name": "Community 11",
-      "norm_label": "get()"
+      "norm_label": "get()",
+      "id": "src_app_api_admin_unidades_route_get"
     },
     {
       "label": "POST()",
@@ -42,10 +185,10 @@
       "source_file": "src/app/api/admin/unidades/route.ts",
       "source_location": "L19",
       "_origin": "ast",
-      "id": "src_app_api_admin_unidades_route_post",
       "community": 11,
       "community_name": "Community 11",
-      "norm_label": "post()"
+      "norm_label": "post()",
+      "id": "src_app_api_admin_unidades_route_post"
     },
     {
       "label": "PUT()",
@@ -53,10 +196,10 @@
       "source_file": "src/app/api/admin/unidades/route.ts",
       "source_location": "L32",
       "_origin": "ast",
-      "id": "src_app_api_admin_unidades_route_put",
       "community": 11,
       "community_name": "Community 11",
-      "norm_label": "put()"
+      "norm_label": "put()",
+      "id": "src_app_api_admin_unidades_route_put"
     },
     {
       "label": "DELETE()",
@@ -64,10 +207,10 @@
       "source_file": "src/app/api/admin/unidades/route.ts",
       "source_location": "L44",
       "_origin": "ast",
-      "id": "src_app_api_admin_unidades_route_delete",
       "community": 11,
       "community_name": "Community 11",
-      "norm_label": "delete()"
+      "norm_label": "delete()",
+      "id": "src_app_api_admin_unidades_route_delete"
     },
     {
       "label": "update-cnes.js",
@@ -156,61 +299,6 @@
       "community_name": "update-cnes.js",
       "norm_label": "go()",
       "id": "scripts_update_cnes_go"
-    },
-    {
-      "label": "cnes-gateway.py",
-      "file_type": "code",
-      "source_file": "scripts/cnes-gateway.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 28,
-      "community_name": "cnes-gateway.py",
-      "norm_label": "cnes-gateway.py",
-      "id": "scripts_cnes_gateway"
-    },
-    {
-      "label": "Handler",
-      "file_type": "code",
-      "source_file": "scripts/cnes-gateway.py",
-      "source_location": "L10",
-      "_origin": "ast",
-      "community": 28,
-      "community_name": "cnes-gateway.py",
-      "norm_label": "handler",
-      "id": "scripts_cnes_gateway_handler"
-    },
-    {
-      "label": "BaseHTTPRequestHandler",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "community": 28,
-      "community_name": "cnes-gateway.py",
-      "norm_label": "basehttprequesthandler",
-      "id": "basehttprequesthandler"
-    },
-    {
-      "label": ".do_GET()",
-      "file_type": "code",
-      "source_file": "scripts/cnes-gateway.py",
-      "source_location": "L11",
-      "_origin": "ast",
-      "community": 28,
-      "community_name": "cnes-gateway.py",
-      "norm_label": ".do_get()",
-      "id": "scripts_cnes_gateway_handler_do_get"
-    },
-    {
-      "label": ".log_message()",
-      "file_type": "code",
-      "source_file": "scripts/cnes-gateway.py",
-      "source_location": "L43",
-      "_origin": "ast",
-      "community": 28,
-      "community_name": "cnes-gateway.py",
-      "norm_label": ".log_message()",
-      "id": "scripts_cnes_gateway_handler_log_message"
     },
     {
       "label": "admin-pec.tsx",
@@ -1271,8 +1359,8 @@
       "source_file": "src/app/admin/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "page.tsx",
       "id": "src_app_admin_page"
     },
@@ -1282,8 +1370,8 @@
       "source_file": "src/app/admin/page.tsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "m",
       "id": "src_app_admin_page_m"
     },
@@ -1293,8 +1381,8 @@
       "source_file": "src/app/admin/page.tsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "u",
       "id": "src_app_admin_page_u"
     },
@@ -1304,8 +1392,8 @@
       "source_file": "src/app/admin/page.tsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "e",
       "id": "src_app_admin_page_e"
     },
@@ -1315,8 +1403,8 @@
       "source_file": "src/app/admin/page.tsx",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "ind",
       "id": "src_app_admin_page_ind"
     },
@@ -1326,8 +1414,8 @@
       "source_file": "src/app/admin/page.tsx",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "estados",
       "id": "src_app_admin_page_estados"
     },
@@ -1337,8 +1425,8 @@
       "source_file": "src/app/admin/page.tsx",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "adminpage()",
       "id": "src_app_admin_page_adminpage"
     },
@@ -1744,8 +1832,8 @@
       "source_file": "src/app/guias/[equipe]/checklist-interativa.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 31,
+      "community_name": "page.tsx",
       "norm_label": "checklist-interativa.tsx",
       "id": "src_app_guias_equipe_checklist_interativa"
     },
@@ -1755,8 +1843,8 @@
       "source_file": "src/app/guias/[equipe]/checklist-interativa.tsx",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 31,
+      "community_name": "page.tsx",
       "norm_label": "props",
       "id": "src_app_guias_equipe_checklist_interativa_props"
     },
@@ -1766,8 +1854,8 @@
       "source_file": "src/app/guias/[equipe]/checklist-interativa.tsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 31,
+      "community_name": "page.tsx",
       "norm_label": "checklistinterativa()",
       "id": "src_app_guias_equipe_checklist_interativa_checklistinterativa"
     },
@@ -1777,8 +1865,8 @@
       "source_file": "src/app/guias/[equipe]/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 31,
+      "community_name": "page.tsx",
       "norm_label": "page.tsx",
       "id": "src_app_guias_equipe_page"
     },
@@ -1788,8 +1876,8 @@
       "source_file": "src/app/guias/[equipe]/page.tsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 31,
+      "community_name": "page.tsx",
       "norm_label": "generatestaticparams()",
       "id": "src_app_guias_equipe_page_generatestaticparams"
     },
@@ -1799,8 +1887,8 @@
       "source_file": "src/app/guias/[equipe]/page.tsx",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 31,
+      "community_name": "page.tsx",
       "norm_label": "guiaequipepage()",
       "id": "src_app_guias_equipe_page_guiaequipepage"
     },
@@ -1920,8 +2008,8 @@
       "source_file": "src/app/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
-      "community_name": "Community 2",
+      "community": 0,
+      "community_name": "Community 0",
       "norm_label": "page.tsx",
       "id": "src_app_page"
     },
@@ -1931,8 +2019,8 @@
       "source_file": "src/app/page.tsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 2,
-      "community_name": "Community 2",
+      "community": 0,
+      "community_name": "Community 0",
       "norm_label": "homepage()",
       "id": "src_app_page_homepage"
     },
@@ -1942,8 +2030,8 @@
       "source_file": "src/app/paineis/[equipe]/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 0,
+      "community_name": "Community 0",
       "norm_label": "page.tsx",
       "id": "src_app_paineis_equipe_page"
     },
@@ -1953,8 +2041,8 @@
       "source_file": "src/app/paineis/[equipe]/page.tsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 0,
+      "community_name": "Community 0",
       "norm_label": "generatestaticparams()",
       "id": "src_app_paineis_equipe_page_generatestaticparams"
     },
@@ -1964,8 +2052,8 @@
       "source_file": "src/app/paineis/[equipe]/page.tsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 0,
+      "community_name": "Community 0",
       "norm_label": "painelequipepage()",
       "id": "src_app_paineis_equipe_page_painelequipepage"
     },
@@ -2129,8 +2217,8 @@
       "source_file": "src/components/dashboard/dashboard-header.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "dashboard-header.tsx",
       "id": "src_components_dashboard_dashboard_header"
     },
@@ -2140,8 +2228,8 @@
       "source_file": "src/components/dashboard/dashboard-header.tsx",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "role_label",
       "id": "src_components_dashboard_dashboard_header_role_label"
     },
@@ -2151,8 +2239,8 @@
       "source_file": "src/components/dashboard/dashboard-header.tsx",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "perfil_icon",
       "id": "src_components_dashboard_dashboard_header_perfil_icon"
     },
@@ -2162,8 +2250,8 @@
       "source_file": "src/components/dashboard/dashboard-header.tsx",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "dashboardheader()",
       "id": "src_components_dashboard_dashboard_header_dashboardheader"
     },
@@ -2217,8 +2305,8 @@
       "source_file": "src/components/dashboard/insights-panel.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
-      "community_name": "Community 2",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "insights-panel.tsx",
       "id": "src_components_dashboard_insights_panel"
     },
@@ -2228,8 +2316,8 @@
       "source_file": "src/components/dashboard/insights-panel.tsx",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 2,
-      "community_name": "Community 2",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "insight",
       "id": "src_components_dashboard_insights_panel_insight"
     },
@@ -2239,8 +2327,8 @@
       "source_file": "src/components/dashboard/insights-panel.tsx",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 2,
-      "community_name": "Community 2",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "equiperesumo",
       "id": "src_components_dashboard_insights_panel_equiperesumo"
     },
@@ -2250,8 +2338,8 @@
       "source_file": "src/components/dashboard/insights-panel.tsx",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 2,
-      "community_name": "Community 2",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "gerarinsights()",
       "id": "src_components_dashboard_insights_panel_gerarinsights"
     },
@@ -2261,8 +2349,8 @@
       "source_file": "src/components/dashboard/insights-panel.tsx",
       "source_location": "L65",
       "_origin": "ast",
-      "community": 2,
-      "community_name": "Community 2",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "insightspanel()",
       "id": "src_components_dashboard_insights_panel_insightspanel"
     },
@@ -2393,8 +2481,8 @@
       "source_file": "src/lib/mock/__tests__/nota.test.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 0,
+      "community_name": "Community 0",
       "norm_label": "nota.test.ts",
       "id": "src_lib_mock_tests_nota_test"
     },
@@ -2415,8 +2503,8 @@
       "source_file": "src/lib/mock/equipes.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 0,
+      "community_name": "Community 0",
       "norm_label": "equipes.ts",
       "id": "src_lib_mock_equipes"
     },
@@ -2448,8 +2536,8 @@
       "source_file": "src/lib/mock/equipes.ts",
       "source_location": "L64",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 0,
+      "community_name": "Community 0",
       "norm_label": "equipe_ids",
       "id": "src_lib_mock_equipes_equipe_ids"
     },
@@ -2459,8 +2547,8 @@
       "source_file": "src/lib/mock/equipes.ts",
       "source_location": "L67",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 31,
+      "community_name": "page.tsx",
       "norm_label": "isequipeid()",
       "id": "src_lib_mock_equipes_isequipeid"
     },
@@ -2470,8 +2558,8 @@
       "source_file": "src/lib/mock/equipes.ts",
       "source_location": "L72",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 0,
+      "community_name": "Community 0",
       "norm_label": "nomedomembro()",
       "id": "src_lib_mock_equipes_nomedomembro"
     },
@@ -2481,8 +2569,8 @@
       "source_file": "src/lib/mock/guias-content.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 31,
+      "community_name": "page.tsx",
       "norm_label": "guias-content.ts",
       "id": "src_lib_mock_guias_content"
     },
@@ -2492,8 +2580,8 @@
       "source_file": "src/lib/mock/guias-content.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 31,
+      "community_name": "page.tsx",
       "norm_label": "guiaindicador",
       "id": "src_lib_mock_guias_content_guiaindicador"
     },
@@ -2503,8 +2591,8 @@
       "source_file": "src/lib/mock/guias-content.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 31,
+      "community_name": "page.tsx",
       "norm_label": "guias",
       "id": "src_lib_mock_guias_content_guias"
     },
@@ -2723,8 +2811,8 @@
       "source_file": "src/lib/mock/nota.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 0,
+      "community_name": "Community 0",
       "norm_label": "nota.ts",
       "id": "src_lib_mock_nota"
     },
@@ -2734,8 +2822,8 @@
       "source_file": "src/lib/mock/nota.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 0,
+      "community_name": "Community 0",
       "norm_label": "calcularnotaequipe()",
       "id": "src_lib_mock_nota_calcularnotaequipe"
     },
@@ -4042,13 +4130,134 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "scripts/cnes-gateway.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_cnes_gateway",
+      "target": "scripts_cnes_gateway_handler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/cnes-gateway.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_cnes_gateway_handler",
+      "target": "basehttprequesthandler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/cnes-gateway.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_cnes_gateway_handler",
+      "target": "scripts_cnes_gateway_handler_do_get",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/cnes-gateway.py",
+      "source_location": "L50",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_cnes_gateway_handler",
+      "target": "scripts_cnes_gateway_handler_log_message",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/update-enderecos.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_update_enderecos",
+      "target": "scripts_update_enderecos_createclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/update-enderecos.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_update_enderecos",
+      "target": "scripts_update_enderecos_env",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/update-enderecos.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_update_enderecos",
+      "target": "scripts_update_enderecos_fs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/update-enderecos.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_update_enderecos",
+      "target": "scripts_update_enderecos_go",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/update-enderecos.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_update_enderecos",
+      "target": "scripts_update_enderecos_lines",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/update-enderecos.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_update_enderecos",
+      "target": "scripts_update_enderecos_s",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/update-enderecos.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_update_enderecos",
+      "target": "scripts_update_enderecos_vars",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/app/api/admin/unidades/route.ts",
       "source_location": "L44",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_api_admin_unidades_route",
-      "target": "src_app_api_admin_unidades_route_delete",
-      "confidence_score": 1.0
+      "target": "src_app_api_admin_unidades_route_delete"
     },
     {
       "relation": "contains",
@@ -4057,9 +4266,9 @@
       "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_api_admin_unidades_route",
-      "target": "src_app_api_admin_unidades_route_get",
-      "confidence_score": 1.0
+      "target": "src_app_api_admin_unidades_route_get"
     },
     {
       "relation": "contains",
@@ -4068,9 +4277,9 @@
       "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_api_admin_unidades_route",
-      "target": "src_app_api_admin_unidades_route_post",
-      "confidence_score": 1.0
+      "target": "src_app_api_admin_unidades_route_post"
     },
     {
       "relation": "contains",
@@ -4079,9 +4288,9 @@
       "source_location": "L32",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_api_admin_unidades_route",
-      "target": "src_app_api_admin_unidades_route_put",
-      "confidence_score": 1.0
+      "target": "src_app_api_admin_unidades_route_put"
     },
     {
       "relation": "contains",
@@ -4090,9 +4299,9 @@
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_api_admin_unidades_route",
-      "target": "src_app_api_admin_unidades_route_supabase",
-      "confidence_score": 1.0
+      "target": "src_app_api_admin_unidades_route_supabase"
     },
     {
       "relation": "contains",
@@ -4170,50 +4379,6 @@
       "confidence_score": 1.0,
       "source": "scripts_update_cnes",
       "target": "scripts_update_cnes_vars"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/cnes-gateway.py",
-      "source_location": "L10",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "scripts_cnes_gateway",
-      "target": "scripts_cnes_gateway_handler"
-    },
-    {
-      "relation": "inherits",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/cnes-gateway.py",
-      "source_location": "L10",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "scripts_cnes_gateway_handler",
-      "target": "basehttprequesthandler"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/cnes-gateway.py",
-      "source_location": "L11",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "scripts_cnes_gateway_handler",
-      "target": "scripts_cnes_gateway_handler_do_get"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/cnes-gateway.py",
-      "source_location": "L43",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "scripts_cnes_gateway_handler",
-      "target": "scripts_cnes_gateway_handler_log_message"
     },
     {
       "relation": "contains",
@@ -10617,5 +10782,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "1ff51d6a62b6d246ce52e86e20afd052758a0174"
+  "built_at_commit": "c185183fba583b386664a4258e9b27169ee6baad"
 }

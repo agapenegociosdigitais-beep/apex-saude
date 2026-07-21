@@ -21,12 +21,12 @@ export type ShellNavId =
 
 const NAV_MAIN: { id: ShellNavId; href: string; icon: string; label: string; roles: string[] }[] = [
   { id: 'painel', href: '/painel', icon: 'monitoring', label: 'Indicadores', roles: ['admin','gestor','coordenador','profissional'] },
-  { id: 'municipios', href: '/admin?tab=municipios', icon: 'location_city', label: 'Municípios', roles: ['admin','gestor'] },
-  { id: 'equipes', href: '/admin?tab=equipes', icon: 'groups', label: 'Equipes', roles: ['admin','gestor'] },
-  { id: 'indicadores', href: '/admin?tab=indicadores', icon: 'analytics', label: 'Admin Indicadores', roles: ['admin','gestor'] },
-  { id: 'pec', href: '/admin?tab=integracao', icon: 'clinical_notes', label: 'PEC', roles: ['admin','gestor'] },
-  { id: 'profissionais', href: '/admin?tab=usuarios', icon: 'badge', label: 'Profissionais', roles: ['admin','gestor'] },
-  { id: 'gestao', href: '/admin?tab=gestao', icon: 'settings', label: 'Gestão', roles: ['admin','gestor'] },
+  { id: 'municipios', href: '/admin?tab=municipios', icon: 'location_city', label: 'Municípios', roles: ['admin'] },
+  { id: 'equipes', href: '/admin?tab=equipes', icon: 'groups', label: 'Equipes', roles: ['admin'] },
+  { id: 'indicadores', href: '/admin?tab=indicadores', icon: 'analytics', label: 'Admin Indicadores', roles: ['admin'] },
+  { id: 'pec', href: '/admin?tab=integracao', icon: 'clinical_notes', label: 'PEC', roles: ['admin'] },
+  { id: 'profissionais', href: '/admin?tab=usuarios', icon: 'badge', label: 'Profissionais', roles: ['admin'] },
+  { id: 'gestao', href: '/admin?tab=gestao', icon: 'settings', label: 'Gestão', roles: ['admin'] },
   { id: 'gerencial', href: '/gerencial', icon: 'bar_chart', label: 'Gerencial', roles: ['admin','gestor','coordenador'] },
   { id: 'simulador', href: '/simulador', icon: 'payments', label: 'Simulador', roles: ['admin','gestor','coordenador'] },
   { id: 'ia', href: '/ia', icon: 'psychology', label: 'Plano PDCA', roles: ['admin','gestor','coordenador','profissional'] },
