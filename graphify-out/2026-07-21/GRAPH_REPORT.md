@@ -1,16 +1,16 @@
 # Graph Report - apex-saude-next  (2026-07-21)
 
 ## Corpus Check
-- 84 files · ~467,423 words
+- 85 files · ~468,371 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 342 nodes · 552 edges · 27 communities (18 shown, 9 thin omitted)
+- 349 nodes · 557 edges · 28 communities (19 shown, 9 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b85525b0`
+- Built from commit: `eb603b39`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -58,21 +58,21 @@
   src/app/api/integracao/pec/config/route.ts → src/lib/supabase/server.ts
 - `GET()` --calls--> `criarClienteSupabase()`  [EXTRACTED]
   src/app/api/integracao/pec/status/route.ts → src/lib/supabase/server.ts
-- `GerencialPage()` --calls--> `classificacaoDaNota()`  [EXTRACTED]
-  src/app/gerencial/page.tsx → src/lib/mock/nota.ts
+- `DashboardPerfilPage()` --calls--> `valorMock()`  [EXTRACTED]
+  src/app/dashboard/[perfil]/page.tsx → src/lib/mock/indicadores.ts
 - `GuiaEquipePage()` --calls--> `isEquipeId()`  [EXTRACTED]
   src/app/guias/[equipe]/page.tsx → src/lib/mock/equipes.ts
-- `PainelEquipePage()` --calls--> `isEquipeId()`  [EXTRACTED]
-  src/app/paineis/[equipe]/page.tsx → src/lib/mock/equipes.ts
+- `IaPage()` --calls--> `valorMock()`  [EXTRACTED]
+  src/app/ia/page.tsx → src/lib/mock/indicadores.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (27 total, 9 thin omitted)
+## Communities (28 total, 9 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.11
-Nodes (35): DashboardPerfilPage(), IaPage(), PainelEquipePage(), ChecklistCard(), ChecklistCardProps, IndicadorCard(), IndicadorCardProps, STATUS_STYLES (+27 more)
+Cohesion: 0.12
+Nodes (29): DashboardPerfilPage(), IaPage(), ChecklistCard(), ChecklistCardProps, IndicadorCard(), IndicadorCardProps, STATUS_STYLES, EquipeConfig (+21 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.13
@@ -80,15 +80,15 @@ Nodes (26): GET(), POST(), POST(), GET(), executarQuery(), getPool(), pools, tes
 
 ### Community 2 - "Community 2"
 Cohesion: 0.11
-Nodes (19): E, ESTADOS, Ind, M, U, LoginPage(), DashboardHeader(), PERFIL_ICON (+11 more)
+Nodes (18): E, ESTADOS, Ind, M, U, LoginPage(), PERFIL_ICON, ROLE_LABEL (+10 more)
 
 ### Community 3 - "Community 3"
 Cohesion: 0.07
 Nodes (28): dom, dom.iterable, esnext, **/*.mts, .next/dev/types/**/*.ts, next-env.d.ts, .next/types/**/*.ts, node_modules (+20 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.22
-Nodes (16): GerencialPage(), CLASSIFICACOES, repasseCenario(), SimuladorPage(), TIPOS, EquipeId, EquipeInstancia, indicadoresDoTipo() (+8 more)
+Cohesion: 0.12
+Nodes (29): GerencialPage(), CheckListInterativa(), Props, GuiaEquipePage(), PainelEquipePage(), CLASSIFICACOES, repasseCenario(), SimuladorPage() (+21 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 0.09
@@ -131,11 +131,11 @@ Cohesion: 0.50
 Nodes (3): Deploy on Vercel, Getting Started, Learn More
 
 ### Community 26 - "page.tsx"
-Cohesion: 0.27
-Nodes (6): CheckListInterativa(), Props, GuiaEquipePage(), isEquipeId(), GuiaIndicador, GUIAS
+Cohesion: 0.40
+Nodes (3): Cidade, ESTADOS, M
 
 ## Knowledge Gaps
-- **120 isolated node(s):** `setup-vps.sh script`, `eslintConfig`, `nextConfig`, `name`, `version` (+115 more)
+- **123 isolated node(s):** `M`, `Cidade`, `ESTADOS`, `setup-vps.sh script`, `eslintConfig` (+118 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -144,15 +144,15 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `devDependencies` connect `Community 6` to `Community 5`?**
   _High betweenness centrality (0.011) - this node is a cross-community bridge._
-- **Why does `DashboardHeader()` connect `Community 2` to `Community 0`, `page.tsx`, `Community 4`?**
+- **Why does `DashboardHeader()` connect `Community 4` to `Community 0`, `Community 2`?**
   _High betweenness centrality (0.008) - this node is a cross-community bridge._
-- **What connects `setup-vps.sh script`, `eslintConfig`, `nextConfig` to the rest of the system?**
-  _120 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `M`, `Cidade`, `ESTADOS` to the rest of the system?**
+  _123 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.10612244897959183 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.12162162162162163 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.12912912912912913 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.11375661375661375 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.10591133004926108 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**
   _Cohesion score 0.06896551724137931 - nodes in this community are weakly interconnected._

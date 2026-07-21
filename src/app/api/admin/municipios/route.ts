@@ -46,6 +46,12 @@ export async function PUT(req: NextRequest) {
 export async function DELETE(req: NextRequest) {
   const id = req.nextUrl.searchParams.get('id');
   if (!id) return NextResponse.json({ error: 'ID obrigatório' }, { status: 400 });
+  
+  // Deletar dependencias primeiro (evita FK violation)
+  await supabase.from('integracoes_pec').delete().eq('municipio_id', id);
+  await supabase.from('equipes').delete().eq('municipio_id', id);
+  await supabase.from('unidades_saude').delete().eq('municipio_id', id);
+  
   const { error } = await supabase.from('municipios').delete().eq('id', id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ ok: true });

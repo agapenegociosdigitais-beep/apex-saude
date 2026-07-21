@@ -4,6 +4,61 @@
   "graph": {},
   "nodes": [
     {
+      "label": "cnes-gateway.py",
+      "file_type": "code",
+      "source_file": "scripts/cnes-gateway.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_cnes_gateway",
+      "community": 28,
+      "community_name": "cnes-gateway.py",
+      "norm_label": "cnes-gateway.py"
+    },
+    {
+      "label": "fetch_cnes()",
+      "file_type": "code",
+      "source_file": "scripts/cnes-gateway.py",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "scripts_cnes_gateway_fetch_cnes",
+      "community": 28,
+      "community_name": "cnes-gateway.py",
+      "norm_label": "fetch_cnes()"
+    },
+    {
+      "label": "list_to_ubs()",
+      "file_type": "code",
+      "source_file": "scripts/cnes-gateway.py",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "scripts_cnes_gateway_list_to_ubs",
+      "community": 28,
+      "community_name": "cnes-gateway.py",
+      "norm_label": "list_to_ubs()"
+    },
+    {
+      "label": "Busca estabelecimentos de um municipio na API do DATASUS",
+      "file_type": "rationale",
+      "source_file": "scripts/cnes-gateway.py",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "scripts_cnes_gateway_rationale_18",
+      "community": 28,
+      "community_name": "cnes-gateway.py",
+      "norm_label": "busca estabelecimentos de um municipio na api do datasus"
+    },
+    {
+      "label": "Converte resposta da API pro formato padrao de UBS",
+      "file_type": "rationale",
+      "source_file": "scripts/cnes-gateway.py",
+      "source_location": "L37",
+      "_origin": "ast",
+      "id": "scripts_cnes_gateway_rationale_37",
+      "community": 28,
+      "community_name": "cnes-gateway.py",
+      "norm_label": "converte resposta da api pro formato padrao de ubs"
+    },
+    {
       "label": "admin-pec.tsx",
       "file_type": "code",
       "source_file": "src/app/admin/admin-pec.tsx",
@@ -70,10 +125,32 @@
       "norm_label": "route.ts"
     },
     {
+      "label": "CnesEstabelecimento",
+      "file_type": "code",
+      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "src_app_api_integracao_pec_preparar_route_cnesestabelecimento",
+      "community": 27,
+      "community_name": "route.ts",
+      "norm_label": "cnesestabelecimento"
+    },
+    {
+      "label": "fetchUbs()",
+      "file_type": "code",
+      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "src_app_api_integracao_pec_preparar_route_fetchubs",
+      "community": 27,
+      "community_name": "route.ts",
+      "norm_label": "fetchubs()"
+    },
+    {
       "label": "POST()",
       "file_type": "code",
       "source_file": "src/app/api/integracao/pec/preparar/route.ts",
-      "source_location": "L11",
+      "source_location": "L45",
       "_origin": "ast",
       "id": "src_app_api_integracao_pec_preparar_route_post",
       "community": 27,
@@ -2371,8 +2448,8 @@
       "source_file": "src/lib/mock/indicadores.ts",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 0,
+      "community_name": "Community 0",
       "norm_label": "valormock()",
       "id": "src_lib_mock_indicadores_valormock"
     },
@@ -3855,6 +3932,50 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "scripts/cnes-gateway.py",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_cnes_gateway",
+      "target": "scripts_cnes_gateway_fetch_cnes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/cnes-gateway.py",
+      "source_location": "L36",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_cnes_gateway",
+      "target": "scripts_cnes_gateway_list_to_ubs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/cnes-gateway.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_cnes_gateway_rationale_18",
+      "target": "scripts_cnes_gateway_fetch_cnes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/cnes-gateway.py",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "scripts_cnes_gateway_rationale_37",
+      "target": "scripts_cnes_gateway_list_to_ubs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/app/admin/admin-pec.tsx",
       "source_location": "L18",
       "weight": 1.0,
@@ -3900,11 +4021,45 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/api/integracao/pec/preparar/route.ts",
-      "source_location": "L11",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_api_integracao_pec_preparar_route",
+      "target": "src_app_api_integracao_pec_preparar_route_cnesestabelecimento",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_api_integracao_pec_preparar_route",
+      "target": "src_app_api_integracao_pec_preparar_route_fetchubs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
+      "source_location": "L45",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_app_api_integracao_pec_preparar_route",
       "target": "src_app_api_integracao_pec_preparar_route_post",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
+      "source_location": "L104",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_api_integracao_pec_preparar_route_post",
+      "target": "src_app_api_integracao_pec_preparar_route_fetchubs",
       "confidence_score": 1.0
     },
     {
@@ -10276,5 +10431,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "eb603b39734d72a870264c25fc03c93228477367"
+  "built_at_commit": "8ac88854af93cc595bfea0525a83d5e1d74b951e"
 }

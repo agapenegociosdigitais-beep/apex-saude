@@ -29,6 +29,10 @@ export default function AdminPec() {
   const [preparando, setPreparando] = useState(false)
   const [prepararMsg, setPrepararMsg] = useState('')
 
+  // Exclusao
+  const [confirmarExclusao, setConfirmarExclusao] = useState<M | null>(null)
+  const [excluindo, setExcluindo] = useState(false)
+
   useEffect(() => {
     if (!novoUf || novoUf.length !== 2) { setCidades([]); return }
     fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${novoUf}/municipios`)
@@ -105,6 +109,24 @@ export default function AdminPec() {
     })
     const j = await res.json()
     setPecStatus(s => ({...s, [municipio_id]: j.sucesso ? `✅ ${j.resultados?.length || 0} equipes` : '❌ '+j.erro}))
+  }
+
+  const excluirCidade = async (mun: M) => {
+    setExcluindo(true)
+    try {
+      const res = await fetch(`/api/admin/municipios?id=${mun.id}`, { method: 'DELETE' })
+      if (res.ok) {
+        setMunicipios(prev => prev.filter(m => m.id !== mun.id))
+      } else {
+        const j = await res.json()
+        alert('Erro ao excluir: ' + (j.error || 'desconhecido'))
+      }
+    } catch {
+      alert('Falha de rede ao excluir cidade')
+    } finally {
+      setExcluindo(false)
+      setConfirmarExclusao(null)
+    }
   }
 
   return (
@@ -221,10 +243,48 @@ export default function AdminPec() {
                     🔄 Sincronizar
                   </button>
                   {st && <span className="text-sm font-medium text-apex-ink">{st}</span>}
+                  <div className="flex-1" />
+                  <button
+                    onClick={() => setConfirmarExclusao(mun)}
+                    className="rounded-lg bg-red-500 px-4 py-2 text-sm font-semibold text-white hover:bg-red-600 shadow-sm"
+                  >
+                    🗑 Excluir Cidade
+                  </button>
                 </div>
               </div>
             )
           })}
+        </div>
+      )}
+      
+      {/* ─── MODAL DE CONFIRMAÇÃO ─── */}
+      {confirmarExclusao && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
+            <h3 className="text-xl font-bold text-red-600 mb-2">⚠️ Excluir Cidade</h3>
+            <p className="text-apex-ink mb-1">
+              Tem certeza que deseja excluir <strong>{confirmarExclusao.nome} — {confirmarExclusao.uf}</strong>?
+            </p>
+            <p className="text-sm text-red-500 mb-6">
+              Esta ação removerá todas as UBS, equipes e configurações PEC vinculadas. Não pode ser desfeita.
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setConfirmarExclusao(null)}
+                disabled={excluindo}
+                className="rounded-lg bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-300"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={() => excluirCidade(confirmarExclusao)}
+                disabled={excluindo}
+                className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-50"
+              >
+                {excluindo ? 'Excluindo...' : 'Sim, excluir'}
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </section>

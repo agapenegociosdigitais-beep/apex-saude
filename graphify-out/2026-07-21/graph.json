@@ -4,15 +4,92 @@
   "graph": {},
   "nodes": [
     {
+      "label": "admin-pec.tsx",
+      "file_type": "code",
+      "source_file": "src/app/admin/admin-pec.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_admin_admin_pec",
+      "community": 26,
+      "community_name": "page.tsx",
+      "norm_label": "admin-pec.tsx"
+    },
+    {
+      "label": "M",
+      "file_type": "code",
+      "source_file": "src/app/admin/admin-pec.tsx",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "src_app_admin_admin_pec_m",
+      "community": 26,
+      "community_name": "page.tsx",
+      "norm_label": "m"
+    },
+    {
+      "label": "Cidade",
+      "file_type": "code",
+      "source_file": "src/app/admin/admin-pec.tsx",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "src_app_admin_admin_pec_cidade",
+      "community": 26,
+      "community_name": "page.tsx",
+      "norm_label": "cidade"
+    },
+    {
+      "label": "ESTADOS",
+      "file_type": "code",
+      "source_file": "src/app/admin/admin-pec.tsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "src_app_admin_admin_pec_estados",
+      "community": 26,
+      "community_name": "page.tsx",
+      "norm_label": "estados"
+    },
+    {
+      "label": "AdminPec()",
+      "file_type": "code",
+      "source_file": "src/app/admin/admin-pec.tsx",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "src_app_admin_admin_pec_adminpec",
+      "community": 26,
+      "community_name": "page.tsx",
+      "norm_label": "adminpec()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_api_integracao_pec_preparar_route",
+      "community": 27,
+      "community_name": "route.ts",
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "src_app_api_integracao_pec_preparar_route_post",
+      "community": 27,
+      "community_name": "route.ts",
+      "norm_label": "post()"
+    },
+    {
       "label": "pec-sync.py",
       "file_type": "code",
       "source_file": "scripts/pec-sync.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_pec_sync",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "pec-sync.py"
+      "norm_label": "pec-sync.py",
+      "id": "scripts_pec_sync"
     },
     {
       "label": "gerar_queries_descoberta()",
@@ -20,10 +97,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L161",
       "_origin": "ast",
-      "id": "scripts_pec_sync_gerar_queries_descoberta",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "gerar_queries_descoberta()"
+      "norm_label": "gerar_queries_descoberta()",
+      "id": "scripts_pec_sync_gerar_queries_descoberta"
     },
     {
       "label": "conectar_pec()",
@@ -31,10 +108,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L236",
       "_origin": "ast",
-      "id": "scripts_pec_sync_conectar_pec",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "conectar_pec()"
+      "norm_label": "conectar_pec()",
+      "id": "scripts_pec_sync_conectar_pec"
     },
     {
       "label": "descobrir_tabelas()",
@@ -42,10 +119,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L251",
       "_origin": "ast",
-      "id": "scripts_pec_sync_descobrir_tabelas",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "descobrir_tabelas()"
+      "norm_label": "descobrir_tabelas()",
+      "id": "scripts_pec_sync_descobrir_tabelas"
     },
     {
       "label": "descobrir_ubs()",
@@ -53,10 +130,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L258",
       "_origin": "ast",
-      "id": "scripts_pec_sync_descobrir_ubs",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "descobrir_ubs()"
+      "norm_label": "descobrir_ubs()",
+      "id": "scripts_pec_sync_descobrir_ubs"
     },
     {
       "label": "descobrir_equipes()",
@@ -64,10 +141,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L294",
       "_origin": "ast",
-      "id": "scripts_pec_sync_descobrir_equipes",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "descobrir_equipes()"
+      "norm_label": "descobrir_equipes()",
+      "id": "scripts_pec_sync_descobrir_equipes"
     },
     {
       "label": "mapear_tipo_equipe()",
@@ -75,10 +152,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L356",
       "_origin": "ast",
-      "id": "scripts_pec_sync_mapear_tipo_equipe",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "mapear_tipo_equipe()"
+      "norm_label": "mapear_tipo_equipe()",
+      "id": "scripts_pec_sync_mapear_tipo_equipe"
     },
     {
       "label": "enviar_para_supabase()",
@@ -86,10 +163,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L375",
       "_origin": "ast",
-      "id": "scripts_pec_sync_enviar_para_supabase",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "enviar_para_supabase()"
+      "norm_label": "enviar_para_supabase()",
+      "id": "scripts_pec_sync_enviar_para_supabase"
     },
     {
       "label": "upsert_unidade_saude()",
@@ -97,10 +174,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L399",
       "_origin": "ast",
-      "id": "scripts_pec_sync_upsert_unidade_saude",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "upsert_unidade_saude()"
+      "norm_label": "upsert_unidade_saude()",
+      "id": "scripts_pec_sync_upsert_unidade_saude"
     },
     {
       "label": "upsert_equipe()",
@@ -108,10 +185,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L411",
       "_origin": "ast",
-      "id": "scripts_pec_sync_upsert_equipe",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "upsert_equipe()"
+      "norm_label": "upsert_equipe()",
+      "id": "scripts_pec_sync_upsert_equipe"
     },
     {
       "label": "auto_cadastrar()",
@@ -119,10 +196,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L449",
       "_origin": "ast",
-      "id": "scripts_pec_sync_auto_cadastrar",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "auto_cadastrar()"
+      "norm_label": "auto_cadastrar()",
+      "id": "scripts_pec_sync_auto_cadastrar"
     },
     {
       "label": "get_query_params()",
@@ -130,10 +207,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L490",
       "_origin": "ast",
-      "id": "scripts_pec_sync_get_query_params",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "get_query_params()"
+      "norm_label": "get_query_params()",
+      "id": "scripts_pec_sync_get_query_params"
     },
     {
       "label": "executar_query_indicador()",
@@ -141,10 +218,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L505",
       "_origin": "ast",
-      "id": "scripts_pec_sync_executar_query_indicador",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "executar_query_indicador()"
+      "norm_label": "executar_query_indicador()",
+      "id": "scripts_pec_sync_executar_query_indicador"
     },
     {
       "label": "executar_todas_queries()",
@@ -152,10 +229,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L543",
       "_origin": "ast",
-      "id": "scripts_pec_sync_executar_todas_queries",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "executar_todas_queries()"
+      "norm_label": "executar_todas_queries()",
+      "id": "scripts_pec_sync_executar_todas_queries"
     },
     {
       "label": "enviar_indicador_supabase()",
@@ -163,10 +240,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L562",
       "_origin": "ast",
-      "id": "scripts_pec_sync_enviar_indicador_supabase",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "enviar_indicador_supabase()"
+      "norm_label": "enviar_indicador_supabase()",
+      "id": "scripts_pec_sync_enviar_indicador_supabase"
     },
     {
       "label": "sincronizar_municipio()",
@@ -174,10 +251,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L599",
       "_origin": "ast",
-      "id": "scripts_pec_sync_sincronizar_municipio",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "sincronizar_municipio()"
+      "norm_label": "sincronizar_municipio()",
+      "id": "scripts_pec_sync_sincronizar_municipio"
     },
     {
       "label": "validar_schema_pec()",
@@ -185,10 +262,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L641",
       "_origin": "ast",
-      "id": "scripts_pec_sync_validar_schema_pec",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "validar_schema_pec()"
+      "norm_label": "validar_schema_pec()",
+      "id": "scripts_pec_sync_validar_schema_pec"
     },
     {
       "label": "main()",
@@ -196,10 +273,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L660",
       "_origin": "ast",
-      "id": "scripts_pec_sync_main",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "main()"
+      "norm_label": "main()",
+      "id": "scripts_pec_sync_main"
     },
     {
       "label": "Gera queries de descoberta com fallback para diferentes     schemas do PEC (e-S",
@@ -207,10 +284,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L162",
       "_origin": "ast",
-      "id": "scripts_pec_sync_rationale_162",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "gera queries de descoberta com fallback para diferentes     schemas do pec (e-s"
+      "norm_label": "gera queries de descoberta com fallback para diferentes     schemas do pec (e-s",
+      "id": "scripts_pec_sync_rationale_162"
     },
     {
       "label": "Descobre quais tabelas existem no schema public do PEC.",
@@ -218,10 +295,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L252",
       "_origin": "ast",
-      "id": "scripts_pec_sync_rationale_252",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "descobre quais tabelas existem no schema public do pec."
+      "norm_label": "descobre quais tabelas existem no schema public do pec.",
+      "id": "scripts_pec_sync_rationale_252"
     },
     {
       "label": "Tenta descobrir UBS/estabelecimentos no PEC.     Retorna lista de dicts: [{cnes",
@@ -229,10 +306,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L259",
       "_origin": "ast",
-      "id": "scripts_pec_sync_rationale_259",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "tenta descobrir ubs/estabelecimentos no pec.     retorna lista de dicts: [{cnes"
+      "norm_label": "tenta descobrir ubs/estabelecimentos no pec.     retorna lista de dicts: [{cnes",
+      "id": "scripts_pec_sync_rationale_259"
     },
     {
       "label": "Tenta descobrir equipes no PEC.     Se UBS foram encontradas, filtra por CNES.",
@@ -240,10 +317,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L295",
       "_origin": "ast",
-      "id": "scripts_pec_sync_rationale_295",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "tenta descobrir equipes no pec.     se ubs foram encontradas, filtra por cnes."
+      "norm_label": "tenta descobrir equipes no pec.     se ubs foram encontradas, filtra por cnes.",
+      "id": "scripts_pec_sync_rationale_295"
     },
     {
       "label": "Mapeia tipo do PEC para o padrao APEX (esf/esb/emulti).",
@@ -251,10 +328,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L357",
       "_origin": "ast",
-      "id": "scripts_pec_sync_rationale_357",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "mapeia tipo do pec para o padrao apex (esf/esb/emulti)."
+      "norm_label": "mapeia tipo do pec para o padrao apex (esf/esb/emulti).",
+      "id": "scripts_pec_sync_rationale_357"
     },
     {
       "label": "Envia dados para uma API do Supabase.",
@@ -262,10 +339,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L376",
       "_origin": "ast",
-      "id": "scripts_pec_sync_rationale_376",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "envia dados para uma api do supabase."
+      "norm_label": "envia dados para uma api do supabase.",
+      "id": "scripts_pec_sync_rationale_376"
     },
     {
       "label": "Cria ou atualiza uma UBS no Supabase.",
@@ -273,10 +350,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L400",
       "_origin": "ast",
-      "id": "scripts_pec_sync_rationale_400",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "cria ou atualiza uma ubs no supabase."
+      "norm_label": "cria ou atualiza uma ubs no supabase.",
+      "id": "scripts_pec_sync_rationale_400"
     },
     {
       "label": "Cria ou atualiza uma equipe no Supabase.     Primeiro encontra a UBS pelo CNES,",
@@ -284,10 +361,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L412",
       "_origin": "ast",
-      "id": "scripts_pec_sync_rationale_412",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "cria ou atualiza uma equipe no supabase.     primeiro encontra a ubs pelo cnes,"
+      "norm_label": "cria ou atualiza uma equipe no supabase.     primeiro encontra a ubs pelo cnes,",
+      "id": "scripts_pec_sync_rationale_412"
     },
     {
       "label": "Auto-cadastra UBS e equipes no Supabase.     1. Cria/atualiza UBS     2. Cria/",
@@ -295,10 +372,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L450",
       "_origin": "ast",
-      "id": "scripts_pec_sync_rationale_450",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "auto-cadastra ubs e equipes no supabase.     1. cria/atualiza ubs     2. cria/"
+      "norm_label": "auto-cadastra ubs e equipes no supabase.     1. cria/atualiza ubs     2. cria/",
+      "id": "scripts_pec_sync_rationale_450"
     },
     {
       "label": "Executa uma query de indicador para uma equipe.",
@@ -306,10 +383,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L506",
       "_origin": "ast",
-      "id": "scripts_pec_sync_rationale_506",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "executa uma query de indicador para uma equipe."
+      "norm_label": "executa uma query de indicador para uma equipe.",
+      "id": "scripts_pec_sync_rationale_506"
     },
     {
       "label": "Executa todas as 15 queries para uma equipe.",
@@ -317,10 +394,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L544",
       "_origin": "ast",
-      "id": "scripts_pec_sync_rationale_544",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "executa todas as 15 queries para uma equipe."
+      "norm_label": "executa todas as 15 queries para uma equipe.",
+      "id": "scripts_pec_sync_rationale_544"
     },
     {
       "label": "Envia resultado de um indicador para o Supabase via RPC.",
@@ -328,10 +405,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L563",
       "_origin": "ast",
-      "id": "scripts_pec_sync_rationale_563",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "envia resultado de um indicador para o supabase via rpc."
+      "norm_label": "envia resultado de um indicador para o supabase via rpc.",
+      "id": "scripts_pec_sync_rationale_563"
     },
     {
       "label": "Sincroniza todos os indicadores para todas as equipes de um municipio.",
@@ -339,10 +416,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L600",
       "_origin": "ast",
-      "id": "scripts_pec_sync_rationale_600",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "sincroniza todos os indicadores para todas as equipes de um municipio."
+      "norm_label": "sincroniza todos os indicadores para todas as equipes de um municipio.",
+      "id": "scripts_pec_sync_rationale_600"
     },
     {
       "label": "Valida se as tabelas essenciais existem no PEC.",
@@ -350,10 +427,10 @@
       "source_file": "scripts/pec-sync.py",
       "source_location": "L642",
       "_origin": "ast",
-      "id": "scripts_pec_sync_rationale_642",
       "community": 14,
       "community_name": "Community 14",
-      "norm_label": "valida se as tabelas essenciais existem no pec."
+      "norm_label": "valida se as tabelas essenciais existem no pec.",
+      "id": "scripts_pec_sync_rationale_642"
     },
     {
       "label": "setup-vps.sh",
@@ -365,10 +442,10 @@
         "kind": "file"
       },
       "_origin": "ast",
-      "id": "scripts_setup_vps",
       "community": 20,
       "community_name": "Community 20",
-      "norm_label": "setup-vps.sh"
+      "norm_label": "setup-vps.sh",
+      "id": "scripts_setup_vps"
     },
     {
       "label": "setup-vps.sh script",
@@ -380,10 +457,10 @@
         "kind": "bash_entrypoint"
       },
       "_origin": "ast",
-      "id": "scripts_setup_vps_sh__entry",
       "community": 20,
       "community_name": "Community 20",
-      "norm_label": "setup-vps.sh script"
+      "norm_label": "setup-vps.sh script",
+      "id": "scripts_setup_vps_sh__entry"
     },
     {
       "label": "eslint.config.mjs",
@@ -1480,8 +1557,8 @@
       "source_file": "src/app/guias/[equipe]/checklist-interativa.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 26,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "checklist-interativa.tsx",
       "id": "src_app_guias_equipe_checklist_interativa"
     },
@@ -1491,8 +1568,8 @@
       "source_file": "src/app/guias/[equipe]/checklist-interativa.tsx",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 26,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "props",
       "id": "src_app_guias_equipe_checklist_interativa_props"
     },
@@ -1502,8 +1579,8 @@
       "source_file": "src/app/guias/[equipe]/checklist-interativa.tsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 26,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "checklistinterativa()",
       "id": "src_app_guias_equipe_checklist_interativa_checklistinterativa"
     },
@@ -1513,8 +1590,8 @@
       "source_file": "src/app/guias/[equipe]/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 26,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "page.tsx",
       "id": "src_app_guias_equipe_page"
     },
@@ -1524,8 +1601,8 @@
       "source_file": "src/app/guias/[equipe]/page.tsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 26,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "generatestaticparams()",
       "id": "src_app_guias_equipe_page_generatestaticparams"
     },
@@ -1535,8 +1612,8 @@
       "source_file": "src/app/guias/[equipe]/page.tsx",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 26,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "guiaequipepage()",
       "id": "src_app_guias_equipe_page_guiaequipepage"
     },
@@ -1656,8 +1733,8 @@
       "source_file": "src/app/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "page.tsx",
       "id": "src_app_page"
     },
@@ -1667,8 +1744,8 @@
       "source_file": "src/app/page.tsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 2,
+      "community_name": "Community 2",
       "norm_label": "homepage()",
       "id": "src_app_page_homepage"
     },
@@ -1678,8 +1755,8 @@
       "source_file": "src/app/paineis/[equipe]/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "page.tsx",
       "id": "src_app_paineis_equipe_page"
     },
@@ -1689,8 +1766,8 @@
       "source_file": "src/app/paineis/[equipe]/page.tsx",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "generatestaticparams()",
       "id": "src_app_paineis_equipe_page_generatestaticparams"
     },
@@ -1700,8 +1777,8 @@
       "source_file": "src/app/paineis/[equipe]/page.tsx",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "painelequipepage()",
       "id": "src_app_paineis_equipe_page_painelequipepage"
     },
@@ -1898,8 +1975,8 @@
       "source_file": "src/components/dashboard/dashboard-header.tsx",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 2,
-      "community_name": "Community 2",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "dashboardheader()",
       "id": "src_components_dashboard_dashboard_header_dashboardheader"
     },
@@ -2129,8 +2206,8 @@
       "source_file": "src/lib/mock/__tests__/nota.test.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "nota.test.ts",
       "id": "src_lib_mock_tests_nota_test"
     },
@@ -2151,8 +2228,8 @@
       "source_file": "src/lib/mock/equipes.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "equipes.ts",
       "id": "src_lib_mock_equipes"
     },
@@ -2184,8 +2261,8 @@
       "source_file": "src/lib/mock/equipes.ts",
       "source_location": "L64",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "equipe_ids",
       "id": "src_lib_mock_equipes_equipe_ids"
     },
@@ -2195,8 +2272,8 @@
       "source_file": "src/lib/mock/equipes.ts",
       "source_location": "L67",
       "_origin": "ast",
-      "community": 26,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "isequipeid()",
       "id": "src_lib_mock_equipes_isequipeid"
     },
@@ -2206,8 +2283,8 @@
       "source_file": "src/lib/mock/equipes.ts",
       "source_location": "L72",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "nomedomembro()",
       "id": "src_lib_mock_equipes_nomedomembro"
     },
@@ -2217,8 +2294,8 @@
       "source_file": "src/lib/mock/guias-content.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 26,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "guias-content.ts",
       "id": "src_lib_mock_guias_content"
     },
@@ -2228,8 +2305,8 @@
       "source_file": "src/lib/mock/guias-content.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 26,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "guiaindicador",
       "id": "src_lib_mock_guias_content_guiaindicador"
     },
@@ -2239,8 +2316,8 @@
       "source_file": "src/lib/mock/guias-content.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 26,
-      "community_name": "page.tsx",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "guias",
       "id": "src_lib_mock_guias_content_guias"
     },
@@ -2294,8 +2371,8 @@
       "source_file": "src/lib/mock/indicadores.ts",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "valormock()",
       "id": "src_lib_mock_indicadores_valormock"
     },
@@ -2459,8 +2536,8 @@
       "source_file": "src/lib/mock/nota.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "nota.ts",
       "id": "src_lib_mock_nota"
     },
@@ -2470,8 +2547,8 @@
       "source_file": "src/lib/mock/nota.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "calcularnotaequipe()",
       "id": "src_lib_mock_nota_calcularnotaequipe"
     },
@@ -2481,8 +2558,8 @@
       "source_file": "src/lib/mock/nota.ts",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 0,
-      "community_name": "Community 0",
+      "community": 4,
+      "community_name": "Community 4",
       "norm_label": "classificacaodanota()",
       "id": "src_lib_mock_nota_classificacaodanota"
     },
@@ -3778,13 +3855,68 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/app/admin/admin-pec.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_admin_admin_pec",
+      "target": "src_app_admin_admin_pec_adminpec",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/admin/admin-pec.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_admin_admin_pec",
+      "target": "src_app_admin_admin_pec_cidade",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/admin/admin-pec.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_admin_admin_pec",
+      "target": "src_app_admin_admin_pec_estados",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/admin/admin-pec.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_admin_admin_pec",
+      "target": "src_app_admin_admin_pec_m",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/integracao/pec/preparar/route.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_api_integracao_pec_preparar_route",
+      "target": "src_app_api_integracao_pec_preparar_route_post",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "scripts/pec-sync.py",
       "source_location": "L449",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync",
-      "target": "scripts_pec_sync_auto_cadastrar",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_auto_cadastrar"
     },
     {
       "relation": "contains",
@@ -3793,9 +3925,9 @@
       "source_location": "L236",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync",
-      "target": "scripts_pec_sync_conectar_pec",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_conectar_pec"
     },
     {
       "relation": "contains",
@@ -3804,9 +3936,9 @@
       "source_location": "L294",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync",
-      "target": "scripts_pec_sync_descobrir_equipes",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_descobrir_equipes"
     },
     {
       "relation": "contains",
@@ -3815,9 +3947,9 @@
       "source_location": "L251",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync",
-      "target": "scripts_pec_sync_descobrir_tabelas",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_descobrir_tabelas"
     },
     {
       "relation": "contains",
@@ -3826,9 +3958,9 @@
       "source_location": "L258",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync",
-      "target": "scripts_pec_sync_descobrir_ubs",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_descobrir_ubs"
     },
     {
       "relation": "contains",
@@ -3837,9 +3969,9 @@
       "source_location": "L562",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync",
-      "target": "scripts_pec_sync_enviar_indicador_supabase",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_enviar_indicador_supabase"
     },
     {
       "relation": "contains",
@@ -3848,9 +3980,9 @@
       "source_location": "L375",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync",
-      "target": "scripts_pec_sync_enviar_para_supabase",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_enviar_para_supabase"
     },
     {
       "relation": "contains",
@@ -3859,9 +3991,9 @@
       "source_location": "L505",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync",
-      "target": "scripts_pec_sync_executar_query_indicador",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_executar_query_indicador"
     },
     {
       "relation": "contains",
@@ -3870,9 +4002,9 @@
       "source_location": "L543",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync",
-      "target": "scripts_pec_sync_executar_todas_queries",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_executar_todas_queries"
     },
     {
       "relation": "contains",
@@ -3881,9 +4013,9 @@
       "source_location": "L161",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync",
-      "target": "scripts_pec_sync_gerar_queries_descoberta",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_gerar_queries_descoberta"
     },
     {
       "relation": "contains",
@@ -3892,9 +4024,9 @@
       "source_location": "L490",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync",
-      "target": "scripts_pec_sync_get_query_params",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_get_query_params"
     },
     {
       "relation": "contains",
@@ -3903,9 +4035,9 @@
       "source_location": "L660",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync",
-      "target": "scripts_pec_sync_main",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_main"
     },
     {
       "relation": "contains",
@@ -3914,9 +4046,9 @@
       "source_location": "L356",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync",
-      "target": "scripts_pec_sync_mapear_tipo_equipe",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_mapear_tipo_equipe"
     },
     {
       "relation": "contains",
@@ -3925,9 +4057,9 @@
       "source_location": "L599",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync",
-      "target": "scripts_pec_sync_sincronizar_municipio",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_sincronizar_municipio"
     },
     {
       "relation": "contains",
@@ -3936,9 +4068,9 @@
       "source_location": "L411",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync",
-      "target": "scripts_pec_sync_upsert_equipe",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_upsert_equipe"
     },
     {
       "relation": "contains",
@@ -3947,9 +4079,9 @@
       "source_location": "L399",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync",
-      "target": "scripts_pec_sync_upsert_unidade_saude",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_upsert_unidade_saude"
     },
     {
       "relation": "contains",
@@ -3958,9 +4090,9 @@
       "source_location": "L641",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync",
-      "target": "scripts_pec_sync_validar_schema_pec",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_validar_schema_pec"
     },
     {
       "relation": "calls",
@@ -3970,9 +4102,9 @@
       "source_location": "L300",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_descobrir_equipes",
-      "target": "scripts_pec_sync_gerar_queries_descoberta",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_gerar_queries_descoberta"
     },
     {
       "relation": "calls",
@@ -3982,9 +4114,9 @@
       "source_location": "L263",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_descobrir_ubs",
-      "target": "scripts_pec_sync_gerar_queries_descoberta",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_gerar_queries_descoberta"
     },
     {
       "relation": "rationale_for",
@@ -3993,9 +4125,9 @@
       "source_location": "L162",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_rationale_162",
-      "target": "scripts_pec_sync_gerar_queries_descoberta",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_gerar_queries_descoberta"
     },
     {
       "relation": "calls",
@@ -4005,9 +4137,9 @@
       "source_location": "L678",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_main",
-      "target": "scripts_pec_sync_conectar_pec",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_conectar_pec"
     },
     {
       "relation": "calls",
@@ -4017,9 +4149,9 @@
       "source_location": "L695",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_main",
-      "target": "scripts_pec_sync_descobrir_tabelas",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_descobrir_tabelas"
     },
     {
       "relation": "rationale_for",
@@ -4028,9 +4160,9 @@
       "source_location": "L252",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_rationale_252",
-      "target": "scripts_pec_sync_descobrir_tabelas",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_descobrir_tabelas"
     },
     {
       "relation": "calls",
@@ -4040,9 +4172,9 @@
       "source_location": "L643",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_validar_schema_pec",
-      "target": "scripts_pec_sync_descobrir_tabelas",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_descobrir_tabelas"
     },
     {
       "relation": "calls",
@@ -4052,9 +4184,9 @@
       "source_location": "L698",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_main",
-      "target": "scripts_pec_sync_descobrir_ubs",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_descobrir_ubs"
     },
     {
       "relation": "rationale_for",
@@ -4063,9 +4195,9 @@
       "source_location": "L259",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_rationale_259",
-      "target": "scripts_pec_sync_descobrir_ubs",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_descobrir_ubs"
     },
     {
       "relation": "calls",
@@ -4075,9 +4207,9 @@
       "source_location": "L337",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_descobrir_equipes",
-      "target": "scripts_pec_sync_mapear_tipo_equipe",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_mapear_tipo_equipe"
     },
     {
       "relation": "calls",
@@ -4087,9 +4219,9 @@
       "source_location": "L699",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_main",
-      "target": "scripts_pec_sync_descobrir_equipes",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_descobrir_equipes"
     },
     {
       "relation": "rationale_for",
@@ -4098,9 +4230,9 @@
       "source_location": "L295",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_rationale_295",
-      "target": "scripts_pec_sync_descobrir_equipes",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_descobrir_equipes"
     },
     {
       "relation": "rationale_for",
@@ -4109,9 +4241,9 @@
       "source_location": "L357",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_rationale_357",
-      "target": "scripts_pec_sync_mapear_tipo_equipe",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_mapear_tipo_equipe"
     },
     {
       "relation": "rationale_for",
@@ -4120,9 +4252,9 @@
       "source_location": "L376",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_rationale_376",
-      "target": "scripts_pec_sync_enviar_para_supabase",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_enviar_para_supabase"
     },
     {
       "relation": "calls",
@@ -4132,9 +4264,9 @@
       "source_location": "L446",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_upsert_equipe",
-      "target": "scripts_pec_sync_enviar_para_supabase",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_enviar_para_supabase"
     },
     {
       "relation": "calls",
@@ -4144,9 +4276,9 @@
       "source_location": "L408",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_upsert_unidade_saude",
-      "target": "scripts_pec_sync_enviar_para_supabase",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_enviar_para_supabase"
     },
     {
       "relation": "calls",
@@ -4156,9 +4288,9 @@
       "source_location": "L468",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_auto_cadastrar",
-      "target": "scripts_pec_sync_upsert_unidade_saude",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_upsert_unidade_saude"
     },
     {
       "relation": "rationale_for",
@@ -4167,9 +4299,9 @@
       "source_location": "L400",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_rationale_400",
-      "target": "scripts_pec_sync_upsert_unidade_saude",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_upsert_unidade_saude"
     },
     {
       "relation": "calls",
@@ -4179,9 +4311,9 @@
       "source_location": "L476",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_auto_cadastrar",
-      "target": "scripts_pec_sync_upsert_equipe",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_upsert_equipe"
     },
     {
       "relation": "rationale_for",
@@ -4190,9 +4322,9 @@
       "source_location": "L412",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_rationale_412",
-      "target": "scripts_pec_sync_upsert_equipe",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_upsert_equipe"
     },
     {
       "relation": "calls",
@@ -4202,9 +4334,9 @@
       "source_location": "L706",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_main",
-      "target": "scripts_pec_sync_auto_cadastrar",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_auto_cadastrar"
     },
     {
       "relation": "rationale_for",
@@ -4213,9 +4345,9 @@
       "source_location": "L450",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_rationale_450",
-      "target": "scripts_pec_sync_auto_cadastrar",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_auto_cadastrar"
     },
     {
       "relation": "calls",
@@ -4225,9 +4357,9 @@
       "source_location": "L507",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_executar_query_indicador",
-      "target": "scripts_pec_sync_get_query_params",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_get_query_params"
     },
     {
       "relation": "calls",
@@ -4237,9 +4369,9 @@
       "source_location": "L547",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_executar_todas_queries",
-      "target": "scripts_pec_sync_executar_query_indicador",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_executar_query_indicador"
     },
     {
       "relation": "rationale_for",
@@ -4248,9 +4380,9 @@
       "source_location": "L506",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_rationale_506",
-      "target": "scripts_pec_sync_executar_query_indicador",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_executar_query_indicador"
     },
     {
       "relation": "rationale_for",
@@ -4259,9 +4391,9 @@
       "source_location": "L544",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_rationale_544",
-      "target": "scripts_pec_sync_executar_todas_queries",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_executar_todas_queries"
     },
     {
       "relation": "calls",
@@ -4271,9 +4403,9 @@
       "source_location": "L619",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_sincronizar_municipio",
-      "target": "scripts_pec_sync_executar_todas_queries",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_executar_todas_queries"
     },
     {
       "relation": "rationale_for",
@@ -4282,9 +4414,9 @@
       "source_location": "L563",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_rationale_563",
-      "target": "scripts_pec_sync_enviar_indicador_supabase",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_enviar_indicador_supabase"
     },
     {
       "relation": "calls",
@@ -4294,9 +4426,9 @@
       "source_location": "L627",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_sincronizar_municipio",
-      "target": "scripts_pec_sync_enviar_indicador_supabase",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_enviar_indicador_supabase"
     },
     {
       "relation": "calls",
@@ -4306,9 +4438,9 @@
       "source_location": "L721",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_main",
-      "target": "scripts_pec_sync_sincronizar_municipio",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_sincronizar_municipio"
     },
     {
       "relation": "rationale_for",
@@ -4317,9 +4449,9 @@
       "source_location": "L600",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_rationale_600",
-      "target": "scripts_pec_sync_sincronizar_municipio",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_sincronizar_municipio"
     },
     {
       "relation": "calls",
@@ -4329,9 +4461,9 @@
       "source_location": "L682",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_main",
-      "target": "scripts_pec_sync_validar_schema_pec",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_validar_schema_pec"
     },
     {
       "relation": "rationale_for",
@@ -4340,9 +4472,9 @@
       "source_location": "L642",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_pec_sync_rationale_642",
-      "target": "scripts_pec_sync_validar_schema_pec",
-      "confidence_score": 1.0
+      "target": "scripts_pec_sync_validar_schema_pec"
     },
     {
       "relation": "contains",
@@ -4351,9 +4483,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_setup_vps",
-      "target": "scripts_setup_vps_sh__entry",
-      "confidence_score": 1.0
+      "target": "scripts_setup_vps_sh__entry"
     },
     {
       "relation": "contains",
@@ -10144,5 +10276,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "b85525b0f1b1dcf41ae6ad45845d4d01ae11df44"
+  "built_at_commit": "eb603b39734d72a870264c25fc03c93228477367"
 }
