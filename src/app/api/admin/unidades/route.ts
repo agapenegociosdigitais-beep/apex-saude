@@ -13,20 +13,30 @@ export async function GET(req: NextRequest) {
   if (municipioId) q = q.eq('municipio_id', municipioId);
   const { data, error } = await q;
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json({ data: (data || []).map((u: { id: string; municipio_id: string; nome: string; tipo: string; ativa: boolean }) => ({ ...u, equipes_count: 0 })) });
+  return NextResponse.json({ data: (data || []).map(u => ({ ...u, equipes_count: 0 })) });
 }
 
 export async function POST(req: NextRequest) {
-  const { municipio_id, nome, tipo } = await req.json();
+  const { municipio_id, nome, tipo, cnes, endereco, bairro, cep } = await req.json();
+  const insert: Record<string, unknown> = { municipio_id, nome, tipo: tipo || 'ubs' };
+  if (cnes) insert.cnes = cnes;
+  if (endereco) insert.endereco = endereco;
+  if (bairro) insert.bairro = bairro;
+  if (cep) insert.cep = cep;
   const { data, error } = await supabase.from('unidades_saude')
-    .insert({ municipio_id, nome, tipo: tipo || 'ubs' }).select('*').single();
+    .insert(insert).select('*').single();
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ data: { ...data, equipes_count: 0 } }, { status: 201 });
 }
 
 export async function PUT(req: NextRequest) {
-  const { id, nome, tipo, ativa } = await req.json();
-  const { error } = await supabase.from('unidades_saude').update({ nome, tipo, ativa }).eq('id', id);
+  const { id, nome, tipo, ativa, cnes, endereco, bairro, cep } = await req.json();
+  const update: Record<string, unknown> = { nome, tipo, ativa };
+  if (cnes !== undefined) update.cnes = cnes;
+  if (endereco !== undefined) update.endereco = endereco;
+  if (bairro !== undefined) update.bairro = bairro;
+  if (cep !== undefined) update.cep = cep;
+  const { error } = await supabase.from('unidades_saude').update(update).eq('id', id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ ok: true });
 }

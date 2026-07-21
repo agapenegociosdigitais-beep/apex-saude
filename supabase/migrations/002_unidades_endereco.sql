@@ -1,0 +1,3 @@
+ALTER TABLE unidades_saude ADD COLUMN IF NOT EXISTS endereco TEXT;
+ALTER TABLE unidades_saude ADD COLUMN IF NOT EXISTS bairro TEXT;
+ALTER TABLE unidades_saude ADD COLUMN IF NOT EXISTS cep TEXT;
