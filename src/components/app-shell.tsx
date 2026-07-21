@@ -30,6 +30,9 @@ const NAV_MAIN: { id: ShellNavId; href: string; icon: string; label: string; rol
   { id: 'gerencial', href: '/gerencial', icon: 'bar_chart', label: 'Gerencial', roles: ['admin','gestor','coordenador'] },
   { id: 'simulador', href: '/simulador', icon: 'payments', label: 'Simulador', roles: ['admin','gestor','coordenador'] },
   { id: 'ia', href: '/ia', icon: 'psychology', label: 'Plano PDCA', roles: ['admin','gestor','coordenador','profissional'] },
+  { id: 'profissionais', href: '/profissionais', icon: 'badge', label: 'Profissionais', roles: ['gestor','coordenador'] },
+  { id: 'equipes', href: '/equipes', icon: 'groups', label: 'Equipes', roles: ['gestor','coordenador'] },
+  { id: 'gestao', href: '/gestao', icon: 'settings', label: 'Gestão', roles: ['gestor','coordenador'] },
 ]
 
 interface AppShellProps {
