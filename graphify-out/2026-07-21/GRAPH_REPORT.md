@@ -1,16 +1,16 @@
 # Graph Report - apex-saude-next  (2026-07-21)
 
 ## Corpus Check
-- 93 files · ~470,271 words
+- 93 files · ~470,675 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 387 nodes · 594 edges · 33 communities (21 shown, 12 thin omitted)
+- 395 nodes · 599 edges · 35 communities (23 shown, 12 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f3e0adcd`
+- Built from commit: `24dbf867`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -46,6 +46,8 @@
 - update-cnes.js
 - page.tsx
 - update-enderecos.js
+- admin-profissionais.tsx
+- page.tsx
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 16 edges
@@ -74,11 +76,11 @@
 ## Import Cycles
 - None detected.
 
-## Communities (33 total, 12 thin omitted)
+## Communities (35 total, 12 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.13
-Nodes (30): DashboardPerfilPage(), IaPage(), ChecklistCard(), ChecklistCardProps, IndicadorCard(), IndicadorCardProps, STATUS_STYLES, EquipeConfig (+22 more)
+Cohesion: 0.11
+Nodes (31): DashboardPerfilPage(), IaPage(), ChecklistCard(), ChecklistCardProps, IndicadorCard(), IndicadorCardProps, STATUS_STYLES, EQUIPE_IDS (+23 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.13
@@ -94,7 +96,7 @@ Nodes (28): dom, dom.iterable, esnext, **/*.mts, .next/dev/types/**/*.ts, next-e
 
 ### Community 4 - "Community 4"
 Cohesion: 0.12
-Nodes (27): GerencialPage(), CheckListInterativa(), Props, GuiaEquipePage(), PainelEquipePage(), CLASSIFICACOES, repasseCenario(), SimuladorPage() (+19 more)
+Nodes (26): GerencialPage(), CheckListInterativa(), Props, GuiaEquipePage(), PainelEquipePage(), CLASSIFICACOES, repasseCenario(), SimuladorPage() (+18 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 0.09
@@ -145,15 +147,23 @@ Cohesion: 0.25
 Nodes (6): {createClient}, env, fs, lines, s, vars
 
 ### Community 31 - "page.tsx"
-Cohesion: 0.19
-Nodes (7): Equipe, Prof, AppShell(), AppShellProps, NAV_MAIN, resolveActive(), ShellNavId
+Cohesion: 0.24
+Nodes (6): Equipe, AppShell(), AppShellProps, NAV_MAIN, resolveActive(), ShellNavId
 
 ### Community 32 - "update-enderecos.js"
 Cohesion: 0.25
 Nodes (6): {createClient}, env, fs, lines, s, vars
 
+### Community 33 - "admin-profissionais.tsx"
+Cohesion: 0.40
+Nodes (3): E, M, U
+
+### Community 34 - "page.tsx"
+Cohesion: 0.40
+Nodes (3): Equipe, Prof, Ubs
+
 ## Knowledge Gaps
-- **142 isolated node(s):** `supabase`, `Equipe`, `Prof`, `ShellNavId`, `NAV_MAIN` (+137 more)
+- **147 isolated node(s):** `M`, `U`, `E`, `supabase`, `Prof` (+142 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **12 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -161,16 +171,16 @@ Nodes (6): {createClient}, env, fs, lines, s, vars
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `devDependencies` connect `Community 6` to `Community 5`?**
-  _High betweenness centrality (0.009) - this node is a cross-community bridge._
+  _High betweenness centrality (0.008) - this node is a cross-community bridge._
 - **Why does `DashboardHeader()` connect `Community 2` to `Community 0`, `Community 4`?**
   _High betweenness centrality (0.006) - this node is a cross-community bridge._
-- **What connects `supabase`, `Equipe`, `Prof` to the rest of the system?**
-  _142 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `M`, `U`, `E` to the rest of the system?**
+  _147 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.12660028449502134 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.11341463414634147 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.12912912912912913 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.10574712643678161 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.11375661375661375 - nodes in this community are weakly interconnected._
 - **Should `Community 3` be split into smaller, more focused modules?**
   _Cohesion score 0.06896551724137931 - nodes in this community are weakly interconnected._

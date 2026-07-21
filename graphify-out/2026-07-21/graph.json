@@ -4,6 +4,61 @@
   "graph": {},
   "nodes": [
     {
+      "label": "admin-profissionais.tsx",
+      "file_type": "code",
+      "source_file": "src/app/admin/admin-profissionais.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_admin_admin_profissionais",
+      "community": 33,
+      "community_name": "admin-profissionais.tsx",
+      "norm_label": "admin-profissionais.tsx"
+    },
+    {
+      "label": "M",
+      "file_type": "code",
+      "source_file": "src/app/admin/admin-profissionais.tsx",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "src_app_admin_admin_profissionais_m",
+      "community": 33,
+      "community_name": "admin-profissionais.tsx",
+      "norm_label": "m"
+    },
+    {
+      "label": "U",
+      "file_type": "code",
+      "source_file": "src/app/admin/admin-profissionais.tsx",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "src_app_admin_admin_profissionais_u",
+      "community": 33,
+      "community_name": "admin-profissionais.tsx",
+      "norm_label": "u"
+    },
+    {
+      "label": "E",
+      "file_type": "code",
+      "source_file": "src/app/admin/admin-profissionais.tsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "src_app_admin_admin_profissionais_e",
+      "community": 33,
+      "community_name": "admin-profissionais.tsx",
+      "norm_label": "e"
+    },
+    {
+      "label": "AdminProfissionais()",
+      "file_type": "code",
+      "source_file": "src/app/admin/admin-profissionais.tsx",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "src_app_admin_admin_profissionais_adminprofissionais",
+      "community": 33,
+      "community_name": "admin-profissionais.tsx",
+      "norm_label": "adminprofissionais()"
+    },
+    {
       "label": "route.ts",
       "file_type": "code",
       "source_file": "src/app/api/admin/usuarios/route.ts",
@@ -48,15 +103,81 @@
       "norm_label": "post()"
     },
     {
-      "label": "DELETE()",
+      "label": "PUT()",
       "file_type": "code",
       "source_file": "src/app/api/admin/usuarios/route.ts",
       "source_location": "L75",
+      "_origin": "ast",
+      "id": "src_app_api_admin_usuarios_route_put",
+      "community": 12,
+      "community_name": "Community 12",
+      "norm_label": "put()"
+    },
+    {
+      "label": "DELETE()",
+      "file_type": "code",
+      "source_file": "src/app/api/admin/usuarios/route.ts",
+      "source_location": "L95",
       "_origin": "ast",
       "id": "src_app_api_admin_usuarios_route_delete",
       "community": 12,
       "community_name": "Community 12",
       "norm_label": "delete()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/profissionais/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_profissionais_page",
+      "community": 34,
+      "community_name": "page.tsx",
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "Prof",
+      "file_type": "code",
+      "source_file": "src/app/profissionais/page.tsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "src_app_profissionais_page_prof",
+      "community": 34,
+      "community_name": "page.tsx",
+      "norm_label": "prof"
+    },
+    {
+      "label": "Ubs",
+      "file_type": "code",
+      "source_file": "src/app/profissionais/page.tsx",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "src_app_profissionais_page_ubs",
+      "community": 34,
+      "community_name": "page.tsx",
+      "norm_label": "ubs"
+    },
+    {
+      "label": "Equipe",
+      "file_type": "code",
+      "source_file": "src/app/profissionais/page.tsx",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "src_app_profissionais_page_equipe",
+      "community": 34,
+      "community_name": "page.tsx",
+      "norm_label": "equipe"
+    },
+    {
+      "label": "ProfissionaisPage()",
+      "file_type": "code",
+      "source_file": "src/app/profissionais/page.tsx",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "src_app_profissionais_page_profissionaispage",
+      "community": 34,
+      "community_name": "page.tsx",
+      "norm_label": "profissionaispage()"
     },
     {
       "label": "page.tsx",
@@ -112,39 +233,6 @@
       "community_name": "page.tsx",
       "norm_label": "gestaopage()",
       "id": "src_app_gestao_page_gestaopage"
-    },
-    {
-      "label": "page.tsx",
-      "file_type": "code",
-      "source_file": "src/app/profissionais/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
-      "norm_label": "page.tsx",
-      "id": "src_app_profissionais_page"
-    },
-    {
-      "label": "Prof",
-      "file_type": "code",
-      "source_file": "src/app/profissionais/page.tsx",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
-      "norm_label": "prof",
-      "id": "src_app_profissionais_page_prof"
-    },
-    {
-      "label": "ProfissionaisPage()",
-      "file_type": "code",
-      "source_file": "src/app/profissionais/page.tsx",
-      "source_location": "L17",
-      "_origin": "ast",
-      "community": 31,
-      "community_name": "page.tsx",
-      "norm_label": "profissionaispage()",
-      "id": "src_app_profissionais_page_profissionaispage"
     },
     {
       "label": "app-shell.tsx",
@@ -2151,8 +2239,8 @@
       "source_file": "src/app/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
-      "community_name": "Community 2",
+      "community": 0,
+      "community_name": "Community 0",
       "norm_label": "page.tsx",
       "id": "src_app_page"
     },
@@ -2162,8 +2250,8 @@
       "source_file": "src/app/page.tsx",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 2,
-      "community_name": "Community 2",
+      "community": 0,
+      "community_name": "Community 0",
       "norm_label": "homepage()",
       "id": "src_app_page_homepage"
     },
@@ -2679,8 +2767,8 @@
       "source_file": "src/lib/mock/equipes.ts",
       "source_location": "L64",
       "_origin": "ast",
-      "community": 4,
-      "community_name": "Community 4",
+      "community": 0,
+      "community_name": "Community 0",
       "norm_label": "equipe_ids",
       "id": "src_lib_mock_equipes_equipe_ids"
     },
@@ -4273,8 +4361,52 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/app/admin/admin-profissionais.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_admin_admin_profissionais",
+      "target": "src_app_admin_admin_profissionais_adminprofissionais",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/admin/admin-profissionais.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_admin_admin_profissionais",
+      "target": "src_app_admin_admin_profissionais_e",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/admin/admin-profissionais.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_admin_admin_profissionais",
+      "target": "src_app_admin_admin_profissionais_m",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/admin/admin-profissionais.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_admin_admin_profissionais",
+      "target": "src_app_admin_admin_profissionais_u",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/app/api/admin/usuarios/route.ts",
-      "source_location": "L75",
+      "source_location": "L95",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_app_api_admin_usuarios_route",
@@ -4307,11 +4439,66 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/api/admin/usuarios/route.ts",
+      "source_location": "L75",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_api_admin_usuarios_route",
+      "target": "src_app_api_admin_usuarios_route_put",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/admin/usuarios/route.ts",
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_app_api_admin_usuarios_route",
       "target": "src_app_api_admin_usuarios_route_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/profissionais/page.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_profissionais_page",
+      "target": "src_app_profissionais_page_equipe",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/profissionais/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_profissionais_page",
+      "target": "src_app_profissionais_page_prof",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/profissionais/page.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_profissionais_page",
+      "target": "src_app_profissionais_page_profissionaispage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/profissionais/page.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_profissionais_page",
+      "target": "src_app_profissionais_page_ubs",
       "confidence_score": 1.0
     },
     {
@@ -4393,52 +4580,6 @@
       "_origin": "ast",
       "confidence_score": 1.0,
       "source": "src_app_gestao_page",
-      "target": "src_components_app_shell_appshell"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/profissionais/page.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_profissionais_page",
-      "target": "src_app_profissionais_page_prof"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/profissionais/page.tsx",
-      "source_location": "L17",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_profissionais_page",
-      "target": "src_app_profissionais_page_profissionaispage"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/profissionais/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_profissionais_page",
-      "target": "src_components_app_shell"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/profissionais/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_profissionais_page",
       "target": "src_components_app_shell_appshell"
     },
     {
@@ -11108,5 +11249,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "f3e0adcd2a5db3f3737422ffbf71f4ba579268b9"
+  "built_at_commit": "24dbf867d77de70a7c5f76164cb635c16e6cc378"
 }
