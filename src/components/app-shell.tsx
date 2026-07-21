@@ -19,17 +19,17 @@ export type ShellNavId =
   | 'simulador'
   | 'ia'
 
-const NAV_MAIN: { id: ShellNavId; href: string; icon: string; label: string }[] = [
-  { id: 'painel', href: '/painel', icon: 'monitoring', label: 'Indicadores' },
-  { id: 'municipios', href: '/admin?tab=municipios', icon: 'location_city', label: 'Municípios' },
-  { id: 'equipes', href: '/admin?tab=equipes', icon: 'groups', label: 'Equipes' },
-  { id: 'indicadores', href: '/admin?tab=indicadores', icon: 'analytics', label: 'Admin Indicadores' },
-  { id: 'pec', href: '/admin?tab=integracao', icon: 'clinical_notes', label: 'PEC' },
-  { id: 'profissionais', href: '/admin?tab=usuarios', icon: 'badge', label: 'Profissionais' },
-  { id: 'gestao', href: '/admin?tab=gestao', icon: 'settings', label: 'Gestão' },
-  { id: 'gerencial', href: '/gerencial', icon: 'bar_chart', label: 'Gerencial' },
-  { id: 'simulador', href: '/simulador', icon: 'payments', label: 'Simulador' },
-  { id: 'ia', href: '/ia', icon: 'psychology', label: 'Plano PDCA' },
+const NAV_MAIN: { id: ShellNavId; href: string; icon: string; label: string; roles: string[] }[] = [
+  { id: 'painel', href: '/painel', icon: 'monitoring', label: 'Indicadores', roles: ['admin','gestor','coordenador','profissional'] },
+  { id: 'municipios', href: '/admin?tab=municipios', icon: 'location_city', label: 'Municípios', roles: ['admin','gestor'] },
+  { id: 'equipes', href: '/admin?tab=equipes', icon: 'groups', label: 'Equipes', roles: ['admin','gestor'] },
+  { id: 'indicadores', href: '/admin?tab=indicadores', icon: 'analytics', label: 'Admin Indicadores', roles: ['admin','gestor'] },
+  { id: 'pec', href: '/admin?tab=integracao', icon: 'clinical_notes', label: 'PEC', roles: ['admin','gestor'] },
+  { id: 'profissionais', href: '/admin?tab=usuarios', icon: 'badge', label: 'Profissionais', roles: ['admin','gestor'] },
+  { id: 'gestao', href: '/admin?tab=gestao', icon: 'settings', label: 'Gestão', roles: ['admin','gestor'] },
+  { id: 'gerencial', href: '/gerencial', icon: 'bar_chart', label: 'Gerencial', roles: ['admin','gestor','coordenador'] },
+  { id: 'simulador', href: '/simulador', icon: 'payments', label: 'Simulador', roles: ['admin','gestor','coordenador'] },
+  { id: 'ia', href: '/ia', icon: 'psychology', label: 'Plano PDCA', roles: ['admin','gestor','coordenador','profissional'] },
 ]
 
 interface AppShellProps {
@@ -119,7 +119,7 @@ export function AppShell({ children, active }: AppShellProps) {
 
       <nav className="flex-1 overflow-y-auto py-4" aria-label="Menu principal">
         <ul className="flex flex-col gap-0.5">
-          {NAV_MAIN.map((item) => (
+          {NAV_MAIN.filter(item => item.roles.includes(user.role || 'profissional')).map((item) => (
             <NavItem key={item.id} {...item} />
           ))}
         </ul>

@@ -4,15 +4,81 @@
   "graph": {},
   "nodes": [
     {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/admin/unidades/route.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_api_admin_unidades_route",
+      "community": 11,
+      "community_name": "Community 11",
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "supabase",
+      "file_type": "code",
+      "source_file": "src/app/api/admin/unidades/route.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_app_api_admin_unidades_route_supabase",
+      "community": 11,
+      "community_name": "Community 11",
+      "norm_label": "supabase"
+    },
+    {
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "src/app/api/admin/unidades/route.ts",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "src_app_api_admin_unidades_route_get",
+      "community": 11,
+      "community_name": "Community 11",
+      "norm_label": "get()"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "src/app/api/admin/unidades/route.ts",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "src_app_api_admin_unidades_route_post",
+      "community": 11,
+      "community_name": "Community 11",
+      "norm_label": "post()"
+    },
+    {
+      "label": "PUT()",
+      "file_type": "code",
+      "source_file": "src/app/api/admin/unidades/route.ts",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "src_app_api_admin_unidades_route_put",
+      "community": 11,
+      "community_name": "Community 11",
+      "norm_label": "put()"
+    },
+    {
+      "label": "DELETE()",
+      "file_type": "code",
+      "source_file": "src/app/api/admin/unidades/route.ts",
+      "source_location": "L44",
+      "_origin": "ast",
+      "id": "src_app_api_admin_unidades_route_delete",
+      "community": 11,
+      "community_name": "Community 11",
+      "norm_label": "delete()"
+    },
+    {
       "label": "update-cnes.js",
       "file_type": "code",
       "source_file": "scripts/update-cnes.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_update_cnes",
       "community": 30,
       "community_name": "update-cnes.js",
-      "norm_label": "update-cnes.js"
+      "norm_label": "update-cnes.js",
+      "id": "scripts_update_cnes"
     },
     {
       "label": "fs",
@@ -20,10 +86,10 @@
       "source_file": "scripts/update-cnes.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_update_cnes_fs",
       "community": 30,
       "community_name": "update-cnes.js",
-      "norm_label": "fs"
+      "norm_label": "fs",
+      "id": "scripts_update_cnes_fs"
     },
     {
       "label": "env",
@@ -31,10 +97,10 @@
       "source_file": "scripts/update-cnes.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_update_cnes_env",
       "community": 30,
       "community_name": "update-cnes.js",
-      "norm_label": "env"
+      "norm_label": "env",
+      "id": "scripts_update_cnes_env"
     },
     {
       "label": "lines",
@@ -42,10 +108,10 @@
       "source_file": "scripts/update-cnes.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_update_cnes_lines",
       "community": 30,
       "community_name": "update-cnes.js",
-      "norm_label": "lines"
+      "norm_label": "lines",
+      "id": "scripts_update_cnes_lines"
     },
     {
       "label": "vars",
@@ -53,10 +119,10 @@
       "source_file": "scripts/update-cnes.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_update_cnes_vars",
       "community": 30,
       "community_name": "update-cnes.js",
-      "norm_label": "vars"
+      "norm_label": "vars",
+      "id": "scripts_update_cnes_vars"
     },
     {
       "label": "{createClient}",
@@ -64,10 +130,10 @@
       "source_file": "scripts/update-cnes.js",
       "source_location": "L3",
       "_origin": "ast",
-      "id": "scripts_update_cnes_createclient",
       "community": 30,
       "community_name": "update-cnes.js",
-      "norm_label": "{createclient}"
+      "norm_label": "{createclient}",
+      "id": "scripts_update_cnes_createclient"
     },
     {
       "label": "s",
@@ -75,10 +141,10 @@
       "source_file": "scripts/update-cnes.js",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "scripts_update_cnes_s",
       "community": 30,
       "community_name": "update-cnes.js",
-      "norm_label": "s"
+      "norm_label": "s",
+      "id": "scripts_update_cnes_s"
     },
     {
       "label": "go()",
@@ -86,10 +152,10 @@
       "source_file": "scripts/update-cnes.js",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "scripts_update_cnes_go",
       "community": 30,
       "community_name": "update-cnes.js",
-      "norm_label": "go()"
+      "norm_label": "go()",
+      "id": "scripts_update_cnes_go"
     },
     {
       "label": "cnes-gateway.py",
@@ -1473,72 +1539,6 @@
       "community_name": "Community 8",
       "norm_label": "delete()",
       "id": "src_app_api_admin_municipios_route_delete"
-    },
-    {
-      "label": "route.ts",
-      "file_type": "code",
-      "source_file": "src/app/api/admin/unidades/route.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "Community 11",
-      "norm_label": "route.ts",
-      "id": "src_app_api_admin_unidades_route"
-    },
-    {
-      "label": "supabase",
-      "file_type": "code",
-      "source_file": "src/app/api/admin/unidades/route.ts",
-      "source_location": "L4",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "Community 11",
-      "norm_label": "supabase",
-      "id": "src_app_api_admin_unidades_route_supabase"
-    },
-    {
-      "label": "GET()",
-      "file_type": "code",
-      "source_file": "src/app/api/admin/unidades/route.ts",
-      "source_location": "L10",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "Community 11",
-      "norm_label": "get()",
-      "id": "src_app_api_admin_unidades_route_get"
-    },
-    {
-      "label": "POST()",
-      "file_type": "code",
-      "source_file": "src/app/api/admin/unidades/route.ts",
-      "source_location": "L19",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "Community 11",
-      "norm_label": "post()",
-      "id": "src_app_api_admin_unidades_route_post"
-    },
-    {
-      "label": "PUT()",
-      "file_type": "code",
-      "source_file": "src/app/api/admin/unidades/route.ts",
-      "source_location": "L27",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "Community 11",
-      "norm_label": "put()",
-      "id": "src_app_api_admin_unidades_route_put"
-    },
-    {
-      "label": "DELETE()",
-      "file_type": "code",
-      "source_file": "src/app/api/admin/unidades/route.ts",
-      "source_location": "L34",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "Community 11",
-      "norm_label": "delete()",
-      "id": "src_app_api_admin_unidades_route_delete"
     },
     {
       "label": "route.ts",
@@ -4042,13 +4042,68 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/app/api/admin/unidades/route.ts",
+      "source_location": "L44",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_api_admin_unidades_route",
+      "target": "src_app_api_admin_unidades_route_delete",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/admin/unidades/route.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_api_admin_unidades_route",
+      "target": "src_app_api_admin_unidades_route_get",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/admin/unidades/route.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_api_admin_unidades_route",
+      "target": "src_app_api_admin_unidades_route_post",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/admin/unidades/route.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_api_admin_unidades_route",
+      "target": "src_app_api_admin_unidades_route_put",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/admin/unidades/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_api_admin_unidades_route",
+      "target": "src_app_api_admin_unidades_route_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "scripts/update-cnes.js",
       "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_update_cnes",
-      "target": "scripts_update_cnes_createclient",
-      "confidence_score": 1.0
+      "target": "scripts_update_cnes_createclient"
     },
     {
       "relation": "contains",
@@ -4057,9 +4112,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_update_cnes",
-      "target": "scripts_update_cnes_env",
-      "confidence_score": 1.0
+      "target": "scripts_update_cnes_env"
     },
     {
       "relation": "contains",
@@ -4068,9 +4123,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_update_cnes",
-      "target": "scripts_update_cnes_fs",
-      "confidence_score": 1.0
+      "target": "scripts_update_cnes_fs"
     },
     {
       "relation": "contains",
@@ -4079,9 +4134,9 @@
       "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_update_cnes",
-      "target": "scripts_update_cnes_go",
-      "confidence_score": 1.0
+      "target": "scripts_update_cnes_go"
     },
     {
       "relation": "contains",
@@ -4090,9 +4145,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_update_cnes",
-      "target": "scripts_update_cnes_lines",
-      "confidence_score": 1.0
+      "target": "scripts_update_cnes_lines"
     },
     {
       "relation": "contains",
@@ -4101,9 +4156,9 @@
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_update_cnes",
-      "target": "scripts_update_cnes_s",
-      "confidence_score": 1.0
+      "target": "scripts_update_cnes_s"
     },
     {
       "relation": "contains",
@@ -4112,9 +4167,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "scripts_update_cnes",
-      "target": "scripts_update_cnes_vars",
-      "confidence_score": 1.0
+      "target": "scripts_update_cnes_vars"
     },
     {
       "relation": "contains",
@@ -5604,61 +5659,6 @@
       "confidence_score": 1.0,
       "source": "src_app_api_admin_municipios_route",
       "target": "src_app_api_admin_municipios_route_unidaderow"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/admin/unidades/route.ts",
-      "source_location": "L34",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_api_admin_unidades_route",
-      "target": "src_app_api_admin_unidades_route_delete"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/admin/unidades/route.ts",
-      "source_location": "L10",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_api_admin_unidades_route",
-      "target": "src_app_api_admin_unidades_route_get"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/admin/unidades/route.ts",
-      "source_location": "L19",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_api_admin_unidades_route",
-      "target": "src_app_api_admin_unidades_route_post"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/admin/unidades/route.ts",
-      "source_location": "L27",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_api_admin_unidades_route",
-      "target": "src_app_api_admin_unidades_route_put"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/admin/unidades/route.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_api_admin_unidades_route",
-      "target": "src_app_api_admin_unidades_route_supabase"
     },
     {
       "relation": "contains",
@@ -10617,5 +10617,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "8309d88a3cbe5c6b7746755bdb3edebcaaeb722f"
+  "built_at_commit": "1ff51d6a62b6d246ce52e86e20afd052758a0174"
 }

@@ -740,8 +740,8 @@
     "semantic_hash": ""
   },
   "scripts/cnes-gateway.py": {
-    "mtime": 1784653941.582462,
-    "ast_hash": "d974ff72ca85667ee8e569bbb8e4bbe6",
+    "mtime": 1784655765.9559302,
+    "ast_hash": "e327f97bc776179d569679e037a590a1",
     "semantic_hash": ""
   },
   "src/app/api/integracao/pec/cnes/route.ts": {
@@ -757,6 +757,11 @@
   "supabase/migrations/002_unidades_endereco.sql": {
     "mtime": 1784655364.4138646,
     "ast_hash": "4fd6defce224e17fdeefc6d87f17d17b",
+    "semantic_hash": ""
+  },
+  "scripts/update-enderecos.js": {
+    "mtime": 1784655886.2382274,
+    "ast_hash": "ba081ab06857fe26c053562d963c1c30",
     "semantic_hash": ""
   }
 }
