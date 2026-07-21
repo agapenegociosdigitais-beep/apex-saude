@@ -1,7 +1,7 @@
 # Graph Report - apex-saude-next  (2026-07-21)
 
 ## Corpus Check
-- 86 files · ~468,798 words
+- 86 files · ~469,131 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `8ac88854`
+- Built from commit: `46186ee2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -145,7 +145,7 @@ Cohesion: 0.40
 Nodes (4): fetch_cnes(), list_to_ubs(), Busca estabelecimentos de um municipio na API do DATASUS, Converte resposta da API pro formato padrao de UBS
 
 ## Knowledge Gaps
-- **124 isolated node(s):** `M`, `Cidade`, `ESTADOS`, `CnesEstabelecimento`, `setup-vps.sh script` (+119 more)
+- **124 isolated node(s):** `CnesEstabelecimento`, `M`, `Cidade`, `ESTADOS`, `setup-vps.sh script` (+119 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -156,7 +156,7 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.010) - this node is a cross-community bridge._
 - **Why does `DashboardHeader()` connect `Community 4` to `Community 0`, `Community 2`?**
   _High betweenness centrality (0.008) - this node is a cross-community bridge._
-- **What connects `M`, `Cidade`, `ESTADOS` to the rest of the system?**
+- **What connects `CnesEstabelecimento`, `M`, `Cidade` to the rest of the system?**
   _124 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.12660028449502134 - nodes in this community are weakly interconnected._

@@ -107,17 +107,14 @@ export async function POST(req: NextRequest) {
         for (const est of estabelecimentos) {
           const nome = (est.nome_fantasia || est.nome_razao_social || `UBS ${est.codigo_cnes}`)
             .trim().toUpperCase()
-          const cnes = String(est.codigo_cnes)
 
-          // Tentar upsert com CNES
-          const { error } = await supabase.from('unidades_saude').upsert({
+          await supabase.from('unidades_saude').insert({
             municipio_id: municipioId,
             nome,
             tipo: 'ubs',
             ativa: true,
-          }, { onConflict: 'id', ignoreDuplicates: true })
-
-          if (!error) ubsCriadas++
+          }).select('id')
+          ubsCriadas++
         }
       } catch (e: unknown) {
         ubsErro = e instanceof Error ? e.message : 'Erro CNES'
@@ -125,15 +122,16 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    if (ubsCriadas === 0 && !ubsErro) {
+    if (ubsCriadas === 0) {
       // Fallback: cria pelo menos uma UBS
-      await supabase.from('unidades_saude').insert({
+      const { error: ubsErr } = await supabase.from('unidades_saude').insert({
         municipio_id: municipioId,
         nome: `UBS ${nome} Central`,
         tipo: 'ubs',
         ativa: true,
-      })
-      ubsCriadas = 1
+      }).select('id')
+      if (!ubsErr) ubsCriadas = 1
+      else console.warn('[PEC] UBS fallback fail:', ubsErr.message)
     }
 
     return NextResponse.json({
