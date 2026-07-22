@@ -4,21 +4,21 @@ const s=createClient(env.NEXT_PUBLIC_SUPABASE_URL,env.SUPABASE_SERVICE_ROLE_KEY,
 const B='ffb6e259-050b-4199-828e-8177d462846c';
 
 async function go(){
-  // DROP triggers via RPC or ignore errors
-  // Just do the inserts - if trigger fires and fails, it rolls back the INSERT too
+  // Deletar as equipes com nome feio (INE prefix)
+  const{data:feias}=await s.from('equipes').select('id,nome').eq('municipio_id',B).like('nome','INE%');
+  if(feias?.length){
+    console.log('Deletando',feias.length,'equipes com nome feio...');
+    for(const f of feias){
+      await s.from('equipes').delete().eq('id',f.id);
+    }
+  }
   
-  // Try a raw insert ignoring triggers (Supabase doesn't allow disabling per-session)
-  // Alternative: use the REST API directly with Prefer header
-  
-  console.log('Usando REST API para bypass triggers...');
-  
+  // Agora criar com nomes bonitos
   const{data:ubs}=await s.from('unidades_saude').select('id,nome').eq('municipio_id',B).order('nome');
   const{data:eqs}=await s.from('equipes').select('unidade_id').eq('municipio_id',B);
   const comEq=new Set(eqs?.map(e=>e.unidade_id)||[]);
   const sem=ubs?.filter(u=>!comEq.has(u.id))||[];
 
-  console.log('Criando',sem.length,'equipes via REST...');
-  
   let ok=0;
   for(const u of sem){
     const nome='eSF '+u.nome.replace(/UNIDADE (DE )?SAUDE DA FAMILIA /i,'').replace(/^USF /i,'').slice(0,40);
@@ -32,15 +32,14 @@ async function go(){
         'Authorization':'Bearer '+env.SUPABASE_SERVICE_ROLE_KEY,
         'Prefer':'return=minimal',
       },
-      body:JSON.stringify({municipio_id:B,unidade_id:u.id,nome:ine,codigo_ine:ine,tipo:'esf',ativa:true})
+      body:JSON.stringify({municipio_id:B,unidade_id:u.id,nome,codigo_ine:ine,tipo:'esf',ativa:true})
     });
-    const t=await res.text();
-    console.log(res.status,(t||'OK').slice(0,80),u.nome.slice(0,50));
+    console.log(res.ok?'OK':'ERR',nome.slice(0,50),'→',u.nome.slice(0,50));
     if(res.ok)ok++;
   }
-  console.log('\nCriadas:',ok,'equipes');
+  console.log('\nCriadas:',ok);
   
-  // Mostrar resultado
+  // Final
   const{data:final}=await s.from('equipes').select('nome,tipo,codigo_ine').eq('municipio_id',B).order('nome');
   console.log('Total equipes Belterra:',final?.length);
   final?.forEach(e=>console.log('  '+e.nome+' | '+e.tipo+' | '+e.codigo_ine));

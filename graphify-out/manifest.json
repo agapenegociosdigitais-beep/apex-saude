@@ -795,13 +795,18 @@
     "semantic_hash": ""
   },
   "scripts/vincular-usf.js": {
-    "mtime": 1784678844.5388668,
-    "ast_hash": "db04c6c3297c9d4f131fb196757856ce",
+    "mtime": 1784679742.3356974,
+    "ast_hash": "aaa8cd4df2c9d017c9a5e80b39484dc0",
     "semantic_hash": ""
   },
   "supabase/migrations/005_fix_audit.sql": {
     "mtime": 1784678921.0853953,
     "ast_hash": "16269da483514a8b148a0e09497ef555",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/006_drop_audit_triggers.sql": {
+    "mtime": 1784679780.500046,
+    "ast_hash": "9b17e2a5fac19cd7dcd25f14ce7809f4",
     "semantic_hash": ""
   }
 }
