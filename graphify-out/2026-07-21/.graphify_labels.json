@@ -34,5 +34,7 @@
   "32": "update-enderecos.js",
   "33": "admin-profissionais.tsx",
   "34": "page.tsx",
-  "35": "page.tsx"
+  "35": "page.tsx",
+  "36": "middleware.ts",
+  "37": "page.tsx"
 }

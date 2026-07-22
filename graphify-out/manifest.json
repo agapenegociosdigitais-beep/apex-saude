@@ -440,8 +440,8 @@
     "semantic_hash": ""
   },
   "src/app/admin/admin-municipios.tsx": {
-    "mtime": 1784595980.5380816,
-    "ast_hash": "084fe15d7c6a7a10a125838c07914456",
+    "mtime": 1784678991.0220077,
+    "ast_hash": "a934bc76831c170d04d1b43b9c8422da",
     "semantic_hash": ""
   },
   "src/app/admin/admin-pec.tsx": {
@@ -465,8 +465,8 @@
     "semantic_hash": ""
   },
   "src/components/app-shell.tsx": {
-    "mtime": 1784658264.0385416,
-    "ast_hash": "9d00385f7915f3f1c934cbb89fcfcb0a",
+    "mtime": 1784679040.908345,
+    "ast_hash": "a807cdf84ffee116024c1a93ea45aa16",
     "semantic_hash": ""
   },
   "src/components/brand-logo.tsx": {
@@ -792,6 +792,16 @@
   "supabase/migrations/004_security_fix.sql": {
     "mtime": 1784663605.4673817,
     "ast_hash": "2dddb03781019ddff3ed113dd85deea2",
+    "semantic_hash": ""
+  },
+  "scripts/vincular-usf.js": {
+    "mtime": 1784678844.5388668,
+    "ast_hash": "db04c6c3297c9d4f131fb196757856ce",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/005_fix_audit.sql": {
+    "mtime": 1784678921.0853953,
+    "ast_hash": "16269da483514a8b148a0e09497ef555",
     "semantic_hash": ""
   }
 }

@@ -105,8 +105,8 @@
     "semantic_hash": ""
   },
   "src/app/login/page.tsx": {
-    "mtime": 1784595859.3801877,
-    "ast_hash": "ae043237d91d9b75648cd4e998e9c319",
+    "mtime": 1784663662.4159658,
+    "ast_hash": "1a4d9d43f8e7cbda80af0e4ef85ef2e6",
     "semantic_hash": ""
   },
   "src/app/page.tsx": {
@@ -260,8 +260,8 @@
     "semantic_hash": "80b00f7e5d421a182cec22dc98b0d9a9"
   },
   "src/middleware.ts": {
-    "mtime": 1784591835.3535504,
-    "ast_hash": "0451cfcd251d0dfc0f85fd151e20db1c",
+    "mtime": 1784663584.6054575,
+    "ast_hash": "a0f61b95f492376961c4b08864975858",
     "semantic_hash": ""
   },
   "supabase/migrations/001_integracoes_pec.sql": {
@@ -782,6 +782,16 @@
   "supabase/migrations/003_turbo_fix.sql": {
     "mtime": 1784660617.1072617,
     "ast_hash": "b8b565296b771df48681688df7c5d4b8",
+    "semantic_hash": ""
+  },
+  "src/app/api/admin/auditoria/route.ts": {
+    "mtime": 1784663616.0683937,
+    "ast_hash": "ed051ee83e3e23fa5b52137b815083cf",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/004_security_fix.sql": {
+    "mtime": 1784663605.4673817,
+    "ast_hash": "2dddb03781019ddff3ed113dd85deea2",
     "semantic_hash": ""
   }
 }
