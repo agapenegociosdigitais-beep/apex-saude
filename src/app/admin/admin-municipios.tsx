@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from 'react'
 
 interface M { id: string; nome: string; uf: string; codigo_ibge: number | null; populacao: number | null; unidades_count: number; unidades: U[] }
-interface U { id: string; municipio_id: string; nome: string; tipo: string; ativa: boolean; equipes_count: number }
+interface U { id: string; municipio_id: string; nome: string; tipo: string; ativa: boolean; equipes_count: number; cnes?: string; endereco?: string; bairro?: string }
 interface E { id: string; municipio_id: string; unidade_id: string; codigo_ine: string; nome: string; tipo: string; ativa: boolean; unidades_saude?: { nome: string } | null }
 
 const ESTADOS = [
@@ -25,7 +25,7 @@ export default function AdminMunicipios() {
   const [form, setForm] = useState({ nome:'', uf:'', codigo_ibge:'', populacao:'' })
   const [cidades, setCidades] = useState<{ nome:string; ibge:number }[]>([])
   const [buscaCidade, setBuscaCidade] = useState('')
-  const [ubsForm, setUbsForm] = useState({ nome:'', tipo:'ubs' })
+  const [ubsForm, setUbsForm] = useState({ nome:'', tipo:'ubs', cnes:'' })
   const [expandedMun, setExpandedMun] = useState<string | null>(null)
 
   const carregar = useCallback(async () => {
@@ -61,8 +61,8 @@ export default function AdminMunicipios() {
   const deleteMun = async (id: string) => { if(!confirm('Excluir município e todos os dados?')) return; await fetch(`/api/admin/municipios?id=${id}`, { method:'DELETE' }); carregar() }
 
   const saveUbs = async (mid: string, e: React.FormEvent) => { e.preventDefault(); setSaving(true)
-    await fetch('/api/admin/unidades', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ municipio_id:mid, nome:ubsForm.nome, tipo:ubsForm.tipo }) })
-    setUbsForm({ nome:'', tipo:'ubs' }); carregar(); setSaving(false)
+    await fetch('/api/admin/unidades', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ municipio_id:mid, nome:ubsForm.nome, tipo:ubsForm.tipo, cnes:ubsForm.cnes||null }) })
+    setUbsForm({ nome:'', tipo:'ubs', cnes:'' }); carregar(); setSaving(false)
   }
   const deleteUbs = async (id: string) => { if(!confirm('Excluir UBS?')) return; await fetch(`/api/admin/unidades?id=${id}`, { method:'DELETE' }); carregar() }
 
@@ -138,7 +138,7 @@ export default function AdminMunicipios() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
-                  <button type="button" onClick={() => { setExpandedMun(expandedMun===mun.id?null:mun.id); if(expandedMun!==mun.id) setUbsForm({ nome:`UBS ${mun.nome}`, tipo:'ubs' }) }}
+                  <button type="button" onClick={() => { setExpandedMun(expandedMun===mun.id?null:mun.id); if(expandedMun!==mun.id) setUbsForm({ nome:`UBS ${mun.nome}`, tipo:'ubs', cnes:'' }) }}
                     className="bg-[#2563eb] text-white text-xs font-semibold px-3 py-2 rounded-lg hover:bg-[#1d4ed8] flex items-center gap-1">
                     <span className="material-symbols-outlined text-[16px]">add</span>UBS
                   </button>
@@ -157,6 +157,9 @@ export default function AdminMunicipios() {
                     <label className="text-sm flex flex-col gap-1 flex-1 min-w-[200px]">Nome
                       <input value={ubsForm.nome} onChange={e => setUbsForm({...ubsForm, nome:e.target.value})} className="rounded-md border border-outline-variant px-3 py-2 w-full" required />
                     </label>
+                    <label className="text-sm flex flex-col gap-1 min-w-[100px]">CNES
+                      <input value={ubsForm.cnes||''} onChange={e => setUbsForm({...ubsForm, cnes:e.target.value})} className="rounded-md border border-outline-variant px-3 py-2" placeholder="7 dígitos" />
+                    </label>
                     <label className="text-sm flex flex-col gap-1">Tipo
                       <select value={ubsForm.tipo} onChange={e => setUbsForm({...ubsForm, tipo:e.target.value})} className="rounded-md border border-outline-variant px-3 py-2">
                         <option value="ubs">UBS</option>
@@ -173,7 +176,11 @@ export default function AdminMunicipios() {
                         <div key={u.id} className="flex items-center justify-between rounded-lg border border-outline-variant/40 bg-surface-container-low px-3 py-2">
                           <div className="min-w-0">
                             <p className="text-sm font-medium truncate">{u.nome}</p>
-                            <p className="text-xs text-on-surface-variant">{equipes.filter(e=>e.unidade_id===u.id).length} equipes</p>
+                            <p className="text-xs text-on-surface-variant">
+                              {equipes.filter(e=>e.unidade_id===u.id).length} equipes
+                              {u.cnes && <span className="ml-2">CNES: {u.cnes}</span>}
+                              {u.endereco && <span className="block truncate">{u.endereco}{u.bairro ? ', '+u.bairro : ''}</span>}
+                            </p>
                           </div>
                           <button type="button" onClick={() => deleteUbs(u.id)} className="text-error p-1 shrink-0" aria-label="Excluir UBS">
                             <span className="material-symbols-outlined text-[18px]">delete</span>

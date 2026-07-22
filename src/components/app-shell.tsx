@@ -72,9 +72,11 @@ export function AppShell({ children, active }: AppShellProps) {
   }
 
   const nome = user.nome || user.email || 'Usuário'
-  const sub = user.perfil_id
-    ? `${user.perfil_id}${user.role ? ` · ${user.role}` : ''}`
-    : user.role || 'Acesso'
+  const subParts: string[] = []
+  if (user.municipio_nome) subParts.push(user.municipio_nome)
+  if (user.unidade_nome) subParts.push(user.unidade_nome)
+  if (user.perfil_id) subParts.push(user.perfil_id)
+  const sub = subParts.join(' · ') || user.role || 'Acesso'
 
   function NavItem({
     id,
