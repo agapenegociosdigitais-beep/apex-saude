@@ -7,12 +7,17 @@
 
 import { Pool, PoolClient } from 'pg'
 import { IntegracaoPecConfig } from './types'
+import { decryptSecret, isEncrypted } from './crypto'
 
 // ──── Pool de Conexões (um pool por município) ────
 const pools = new Map<string, Pool>()
 
 /**
- * Criar ou reutilizar pool de conexão para um município
+ * Criar ou reutilizar pool de conexão para um município.
+ *
+ * config.senha vem criptografada do banco (ver crypto.ts) — descriptografa
+ * aqui, no único ponto onde a senha em texto plano existe em memória, para
+ * repassar ao driver `pg`. Nunca persistir/logar o valor descriptografado.
  */
 export function getPool(config: IntegracaoPecConfig): Pool {
   const key = config.municipio_id
@@ -23,13 +28,17 @@ export function getPool(config: IntegracaoPecConfig): Pool {
     if (!existing.ended) return existing
     pools.delete(key)
   }
-  
+
+  const senhaPlana = config.senha && isEncrypted(config.senha)
+    ? decryptSecret(config.senha)
+    : config.senha // fallback: valores antigos ainda não migrados (texto puro)
+
   const pool = new Pool({
     host: config.host || 'localhost',
     port: config.porta || 5432,
     database: config.database || 'esus',
     user: config.usuario,
-    password: config.senha,
+    password: senhaPlana,
     ssl: config.ssl ? { rejectUnauthorized: false } : false,
     max: 2,              // máximo 2 conexões simultâneas por município
     idleTimeoutMillis: 30000,  // fecha conexão ociosa após 30s

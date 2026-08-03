@@ -24,7 +24,7 @@ export interface IntegracaoPecConfig {
   porta?: number        // default 5432
   database?: string     // default 'esus'
   usuario?: string      // usuário read-only
-  senha?: string        // encrypted at rest
+  senha?: string        // AES-256-GCM em repouso (ver lib/pec-connector/crypto.ts); nunca em texto puro no banco
   ssl?: boolean         // default false (rede local)
   
   // Sync
