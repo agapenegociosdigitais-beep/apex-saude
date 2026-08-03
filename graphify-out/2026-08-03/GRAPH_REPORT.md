@@ -1,16 +1,16 @@
 # Graph Report - apex-saude-next  (2026-08-03)
 
 ## Corpus Check
-- 113 files · ~479,650 words
+- 114 files · ~480,241 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 493 nodes · 622 edges · 49 communities (31 shown, 18 thin omitted)
+- 496 nodes · 621 edges · 51 communities (31 shown, 20 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c1266550`
+- Built from commit: `352a088f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -61,6 +61,8 @@
 - page.tsx
 - checklist-interativa.tsx
 - perfil.ts
+- page.tsx
+- page.tsx
 
 ## God Nodes (most connected - your core abstractions)
 1. `Relatório das páginas — ÁPEX Saúde Next` - 18 edges
@@ -89,7 +91,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (49 total, 18 thin omitted)
+## Communities (51 total, 20 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.07
@@ -184,8 +186,8 @@ Cohesion: 0.33
 Nodes (6): Equipe, PERFIS, Prof, ProfissionaisPage(), ROLES_GESTOR, Ubs
 
 ### Community 35 - "simulador-client.tsx"
-Cohesion: 0.14
-Nodes (20): formatarReais(), GerencialPage(), classificacaoLabel(), SimuladorPage(), CLASSIFICACOES, Props, repasseCenario(), SimuladorClient() (+12 more)
+Cohesion: 0.15
+Nodes (18): classificacaoLabel(), SimuladorPage(), CLASSIFICACOES, Props, repasseCenario(), SimuladorClient(), TIPOS, classificacao() (+10 more)
 
 ### Community 38 - "vincular-usf.js"
 Cohesion: 0.33
@@ -204,17 +206,17 @@ Cohesion: 0.36
 Nodes (5): DashboardPerfilPage(), heatCell(), supabase, valoresReaisDoUsuario(), ValorIndicador
 
 ## Knowledge Gaps
-- **209 isolated node(s):** `Props`, `supabase`, `ValorIndicador`, `Onde estamos`, `O que os concorrentes entregam que a gente não entrega` (+204 more)
+- **210 isolated node(s):** `supabase`, `Props`, `supabase`, `ValorIndicador`, `Onde estamos` (+205 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **18 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **20 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `devDependencies` connect `Community 6` to `Community 5`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **What connects `Props`, `supabase`, `ValorIndicador` to the rest of the system?**
-  _209 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `supabase`, `Props`, `supabase` to the rest of the system?**
+  _210 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.07482993197278912 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**

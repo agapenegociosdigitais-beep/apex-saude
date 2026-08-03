@@ -1,16 +1,16 @@
 # Graph Report - apex-saude-next  (2026-08-03)
 
 ## Corpus Check
-- 114 files · ~480,241 words
+- 118 files · ~481,335 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 496 nodes · 621 edges · 51 communities (31 shown, 20 thin omitted)
+- 508 nodes · 630 edges · 54 communities (31 shown, 23 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `352a088f`
+- Built from commit: `b22c03b6`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -63,6 +63,9 @@
 - perfil.ts
 - page.tsx
 - page.tsx
+- route.ts
+- page.tsx
+- page.tsx
 
 ## God Nodes (most connected - your core abstractions)
 1. `Relatório das páginas — ÁPEX Saúde Next` - 18 edges
@@ -91,7 +94,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (51 total, 20 thin omitted)
+## Communities (54 total, 23 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.07
@@ -206,17 +209,17 @@ Cohesion: 0.36
 Nodes (5): DashboardPerfilPage(), heatCell(), supabase, valoresReaisDoUsuario(), ValorIndicador
 
 ## Knowledge Gaps
-- **210 isolated node(s):** `supabase`, `Props`, `supabase`, `ValorIndicador`, `Onde estamos` (+205 more)
+- **216 isolated node(s):** `supabase`, `COLS`, `supabase`, `INDICADORES`, `supabase` (+211 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **20 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **23 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `devDependencies` connect `Community 6` to `Community 5`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **What connects `supabase`, `Props`, `supabase` to the rest of the system?**
-  _210 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `supabase`, `COLS`, `supabase` to the rest of the system?**
+  _216 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.07482993197278912 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**

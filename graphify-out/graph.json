@@ -4,15 +4,147 @@
   "graph": {},
   "nodes": [
     {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/busca-ativa/csv/route.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_api_busca_ativa_csv_route",
+      "community": 51,
+      "community_name": "route.ts",
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "supabase",
+      "file_type": "code",
+      "source_file": "src/app/api/busca-ativa/csv/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "src_app_api_busca_ativa_csv_route_supabase",
+      "community": 51,
+      "community_name": "route.ts",
+      "norm_label": "supabase"
+    },
+    {
+      "label": "COLS",
+      "file_type": "code",
+      "source_file": "src/app/api/busca-ativa/csv/route.ts",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "src_app_api_busca_ativa_csv_route_cols",
+      "community": 51,
+      "community_name": "route.ts",
+      "norm_label": "cols"
+    },
+    {
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "src/app/api/busca-ativa/csv/route.ts",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "src_app_api_busca_ativa_csv_route_get",
+      "community": 51,
+      "community_name": "route.ts",
+      "norm_label": "get()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/busca-ativa/[indicador]/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_busca_ativa_indicador_page",
+      "community": 52,
+      "community_name": "page.tsx",
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "supabase",
+      "file_type": "code",
+      "source_file": "src/app/busca-ativa/[indicador]/page.tsx",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "src_app_busca_ativa_indicador_page_supabase",
+      "community": 52,
+      "community_name": "page.tsx",
+      "norm_label": "supabase"
+    },
+    {
+      "label": "INDICADORES",
+      "file_type": "code",
+      "source_file": "src/app/busca-ativa/[indicador]/page.tsx",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "src_app_busca_ativa_indicador_page_indicadores",
+      "community": 52,
+      "community_name": "page.tsx",
+      "norm_label": "indicadores"
+    },
+    {
+      "label": "BuscaAtivaIndicadorPage()",
+      "file_type": "code",
+      "source_file": "src/app/busca-ativa/[indicador]/page.tsx",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "src_app_busca_ativa_indicador_page_buscaativaindicadorpage",
+      "community": 52,
+      "community_name": "page.tsx",
+      "norm_label": "buscaativaindicadorpage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/busca-ativa/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_busca_ativa_page",
+      "community": 53,
+      "community_name": "page.tsx",
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "supabase",
+      "file_type": "code",
+      "source_file": "src/app/busca-ativa/page.tsx",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "src_app_busca_ativa_page_supabase",
+      "community": 53,
+      "community_name": "page.tsx",
+      "norm_label": "supabase"
+    },
+    {
+      "label": "INDICADORES_BUSCA",
+      "file_type": "code",
+      "source_file": "src/app/busca-ativa/page.tsx",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "src_app_busca_ativa_page_indicadores_busca",
+      "community": 53,
+      "community_name": "page.tsx",
+      "norm_label": "indicadores_busca"
+    },
+    {
+      "label": "BuscaAtivaPage()",
+      "file_type": "code",
+      "source_file": "src/app/busca-ativa/page.tsx",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "src_app_busca_ativa_page_buscaativapage",
+      "community": 53,
+      "community_name": "page.tsx",
+      "norm_label": "buscaativapage()"
+    },
+    {
       "label": "page.tsx",
       "file_type": "code",
       "source_file": "src/app/equipes/[id]/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_app_equipes_id_page",
       "community": 49,
       "community_name": "page.tsx",
-      "norm_label": "page.tsx"
+      "norm_label": "page.tsx",
+      "id": "src_app_equipes_id_page"
     },
     {
       "label": "supabase",
@@ -20,10 +152,10 @@
       "source_file": "src/app/equipes/[id]/page.tsx",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "src_app_equipes_id_page_supabase",
       "community": 49,
       "community_name": "page.tsx",
-      "norm_label": "supabase"
+      "norm_label": "supabase",
+      "id": "src_app_equipes_id_page_supabase"
     },
     {
       "label": "EquipePage()",
@@ -31,10 +163,10 @@
       "source_file": "src/app/equipes/[id]/page.tsx",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "src_app_equipes_id_page_equipepage",
       "community": 49,
       "community_name": "page.tsx",
-      "norm_label": "equipepage()"
+      "norm_label": "equipepage()",
+      "id": "src_app_equipes_id_page_equipepage"
     },
     {
       "label": "page.tsx",
@@ -42,10 +174,10 @@
       "source_file": "src/app/gerencial/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_app_gerencial_page",
       "community": 50,
       "community_name": "page.tsx",
-      "norm_label": "page.tsx"
+      "norm_label": "page.tsx",
+      "id": "src_app_gerencial_page"
     },
     {
       "label": "formatarReais()",
@@ -53,10 +185,10 @@
       "source_file": "src/app/gerencial/page.tsx",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "src_app_gerencial_page_formatarreais",
       "community": 50,
       "community_name": "page.tsx",
-      "norm_label": "formatarreais()"
+      "norm_label": "formatarreais()",
+      "id": "src_app_gerencial_page_formatarreais"
     },
     {
       "label": "GerencialPage()",
@@ -64,10 +196,10 @@
       "source_file": "src/app/gerencial/page.tsx",
       "source_location": "L12",
       "_origin": "ast",
-      "id": "src_app_gerencial_page_gerencialpage",
       "community": 50,
       "community_name": "page.tsx",
-      "norm_label": "gerencialpage()"
+      "norm_label": "gerencialpage()",
+      "id": "src_app_gerencial_page_gerencialpage"
     },
     {
       "label": "ia-client.tsx",
@@ -5472,13 +5604,112 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/app/api/busca-ativa/csv/route.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_api_busca_ativa_csv_route",
+      "target": "src_app_api_busca_ativa_csv_route_cols",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/busca-ativa/csv/route.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_api_busca_ativa_csv_route",
+      "target": "src_app_api_busca_ativa_csv_route_get",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/busca-ativa/csv/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_api_busca_ativa_csv_route",
+      "target": "src_app_api_busca_ativa_csv_route_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/busca-ativa/[indicador]/page.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_busca_ativa_indicador_page",
+      "target": "src_app_busca_ativa_indicador_page_buscaativaindicadorpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/busca-ativa/[indicador]/page.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_busca_ativa_indicador_page",
+      "target": "src_app_busca_ativa_indicador_page_indicadores",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/busca-ativa/[indicador]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_busca_ativa_indicador_page",
+      "target": "src_app_busca_ativa_indicador_page_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/busca-ativa/page.tsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_busca_ativa_page",
+      "target": "src_app_busca_ativa_page_buscaativapage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/busca-ativa/page.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_busca_ativa_page",
+      "target": "src_app_busca_ativa_page_indicadores_busca",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/busca-ativa/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_busca_ativa_page",
+      "target": "src_app_busca_ativa_page_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/app/equipes/[id]/page.tsx",
       "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_equipes_id_page",
-      "target": "src_app_equipes_id_page_equipepage",
-      "confidence_score": 1.0
+      "target": "src_app_equipes_id_page_equipepage"
     },
     {
       "relation": "contains",
@@ -5487,9 +5718,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_equipes_id_page",
-      "target": "src_app_equipes_id_page_supabase",
-      "confidence_score": 1.0
+      "target": "src_app_equipes_id_page_supabase"
     },
     {
       "relation": "contains",
@@ -5498,9 +5729,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_gerencial_page",
-      "target": "src_app_gerencial_page_formatarreais",
-      "confidence_score": 1.0
+      "target": "src_app_gerencial_page_formatarreais"
     },
     {
       "relation": "contains",
@@ -5509,9 +5740,9 @@
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_gerencial_page",
-      "target": "src_app_gerencial_page_gerencialpage",
-      "confidence_score": 1.0
+      "target": "src_app_gerencial_page_gerencialpage"
     },
     {
       "relation": "calls",
@@ -5521,9 +5752,9 @@
       "source_location": "L38",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_gerencial_page_gerencialpage",
-      "target": "src_app_gerencial_page_formatarreais",
-      "confidence_score": 1.0
+      "target": "src_app_gerencial_page_formatarreais"
     },
     {
       "relation": "contains",
@@ -12540,5 +12771,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "352a088f775ff6d880070819ffb2711cfaf50a6b"
+  "built_at_commit": "b22c03b698c4ce534ab40c69836a1ea82cb7a5f7"
 }

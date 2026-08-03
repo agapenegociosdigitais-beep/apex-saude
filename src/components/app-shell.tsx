@@ -18,6 +18,7 @@ export type ShellNavId =
   | 'gerencial'
   | 'simulador'
   | 'ia'
+  | 'busca-ativa'
 
 const NAV_MAIN: { id: ShellNavId; href: string; icon: string; label: string; roles: string[] }[] = [
   { id: 'painel', href: '/painel', icon: 'monitoring', label: 'Indicadores', roles: ['admin','gestor','coordenador','profissional'] },
@@ -30,6 +31,7 @@ const NAV_MAIN: { id: ShellNavId; href: string; icon: string; label: string; rol
   { id: 'gerencial', href: '/gerencial', icon: 'bar_chart', label: 'Gerencial', roles: ['admin','gestor','coordenador'] },
   { id: 'simulador', href: '/simulador', icon: 'payments', label: 'Simulador', roles: ['admin','gestor','coordenador'] },
   { id: 'ia', href: '/ia', icon: 'psychology', label: 'Plano PDCA', roles: ['admin','gestor','coordenador','profissional'] },
+  { id: 'busca-ativa', href: '/busca-ativa', icon: 'search_check', label: 'Busca Ativa', roles: ['admin','gestor','coordenador','profissional'] },
   { id: 'profissionais', href: '/profissionais', icon: 'badge', label: 'Profissionais', roles: ['gestor','coordenador'] },
   { id: 'equipes', href: '/equipes', icon: 'groups', label: 'Equipes', roles: ['gestor','coordenador'] },
   { id: 'gestao', href: '/gestao', icon: 'settings', label: 'Gestão', roles: ['gestor','coordenador'] },
@@ -47,6 +49,7 @@ function resolveActive(pathname: string, active?: ShellNavId): ShellNavId {
   if (pathname.startsWith('/gerencial')) return 'gerencial'
   if (pathname.startsWith('/simulador')) return 'simulador'
   if (pathname.startsWith('/ia')) return 'ia'
+  if (pathname.startsWith('/busca-ativa')) return 'busca-ativa'
   if (pathname.startsWith('/paineis') || pathname.startsWith('/guias')) return 'painel'
   return 'painel'
 }

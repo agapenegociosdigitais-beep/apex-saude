@@ -888,5 +888,25 @@
     "mtime": 1785787102.1731484,
     "ast_hash": "facd7ac1e27e880e661b7e3bd999a8b1",
     "semantic_hash": ""
+  },
+  "src/app/api/busca-ativa/csv/route.ts": {
+    "mtime": 1785787426.4916973,
+    "ast_hash": "35739f630298da9673a4fd54921bd24f",
+    "semantic_hash": ""
+  },
+  "src/app/busca-ativa/[indicador]/page.tsx": {
+    "mtime": 1785787498.7454815,
+    "ast_hash": "162905b28fb7a85ddefda46b28723b4c",
+    "semantic_hash": ""
+  },
+  "src/app/busca-ativa/page.tsx": {
+    "mtime": 1785787390.1839802,
+    "ast_hash": "e95f9ca17dcb90a243e062fc62655e39",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/009_pacientes.sql": {
+    "mtime": 1785787369.2908466,
+    "ast_hash": "96762595ee24f26b975d1206bb55f793",
+    "semantic_hash": ""
   }
 }
