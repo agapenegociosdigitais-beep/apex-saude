@@ -80,8 +80,8 @@
     "semantic_hash": ""
   },
   "src/app/gerencial/page.tsx": {
-    "mtime": 1785786484.1221614,
-    "ast_hash": "6265b4a0844e6ed24a4edef3177d6489",
+    "mtime": 1785787110.2754304,
+    "ast_hash": "0919022e7ad2d462d50818962a442918",
     "semantic_hash": ""
   },
   "src/app/guias/[equipe]/checklist-interativa.tsx": {
@@ -882,6 +882,11 @@
   "src/lib/data/dashboard.ts": {
     "mtime": 1785786799.5500968,
     "ast_hash": "11f750db514d3888a4468c556d81750b",
+    "semantic_hash": ""
+  },
+  "src/app/equipes/[id]/page.tsx": {
+    "mtime": 1785787102.1731484,
+    "ast_hash": "facd7ac1e27e880e661b7e3bd999a8b1",
     "semantic_hash": ""
   }
 }
