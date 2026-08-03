@@ -34,21 +34,25 @@ export async function updateSession(request: NextRequest): Promise<NextResponse>
     return NextResponse.redirect(redirect)
   }
 
-  // Bloquear /admin para quem não é admin/gestor
-  if (user && pathname.startsWith('/admin')) {
-    const role = user.user_metadata?.role || 'profissional'
+  // Bloquear /admin e /api/admin para quem não é admin/gestor.
+  // IMPORTANTE: nunca usar user.user_metadata.role aqui — esse campo é editável
+  // pelo próprio usuário via PUT /auth/v1/user (auth.updateUser no cliente),
+  // permitindo auto-escalonamento de privilégio. A fonte de verdade é a
+  // tabela `usuarios`, protegida por RLS via public.current_user_role().
+  if (user && (pathname.startsWith('/admin') || pathname.startsWith('/api/admin'))) {
+    const { data: perfil } = await supabase
+      .from('usuarios')
+      .select('role')
+      .eq('id', user.id)
+      .maybeSingle()
+    const role = perfil?.role || 'profissional'
     if (role !== 'admin' && role !== 'gestor') {
+      if (pathname.startsWith('/api/admin')) {
+        return NextResponse.json({ error: 'Acesso negado' }, { status: 403 })
+      }
       const redirect = request.nextUrl.clone()
       redirect.pathname = '/'
       return NextResponse.redirect(redirect)
-    }
-  }
-
-  // Bloquear /api/admin para quem não é admin/gestor
-  if (user && pathname.startsWith('/api/admin')) {
-    const role = user.user_metadata?.role || 'profissional'
-    if (role !== 'admin' && role !== 'gestor') {
-      return NextResponse.json({ error: 'Acesso negado' }, { status: 403 })
     }
   }
 

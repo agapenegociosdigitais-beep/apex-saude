@@ -5,15 +5,23 @@ import { AppShell } from '@/components/app-shell'
 import { BrandLogo } from '@/components/brand-logo'
 import { PERFIS, PERFIL_IDS } from '@/lib/mock/perfis'
 import { EQUIPES, EQUIPE_IDS } from '@/lib/mock/equipes'
+import { useUser } from '@/lib/hooks/useUser'
 
-const FERRAMENTAS = [
+const FERRAMENTAS_BASE = [
   { href: '/gerencial', icon: 'bar_chart', nome: 'Visão gerencial', desc: 'Notas e repasse do município' },
   { href: '/simulador', icon: 'payments', nome: 'Simulador financeiro', desc: 'Projeção do repasse anual' },
   { href: '/ia', icon: 'psychology', nome: 'Plano PDCA', desc: 'Ação por indicador' },
-  { href: '/admin', icon: 'admin_panel_settings', nome: 'Painel Admin', desc: 'Municípios, equipes e PEC' },
 ]
 
+const FERRAMENTA_ADMIN = { href: '/admin', icon: 'admin_panel_settings', nome: 'Painel Admin', desc: 'Municípios, equipes e PEC' }
+
 export default function PainelPage() {
+  // O acesso real é garantido pelo middleware (consulta a tabela `usuarios`).
+  // Este filtro é só de UX: evita mostrar um link que vai redirecionar de volta.
+  const user = useUser()
+  const podeVerAdmin = user.role === 'admin' || user.role === 'gestor'
+  const FERRAMENTAS = podeVerAdmin ? [...FERRAMENTAS_BASE, FERRAMENTA_ADMIN] : FERRAMENTAS_BASE
+
   return (
     <AppShell active="painel">
       <div className="text-center mb-10 max-w-2xl mx-auto">
