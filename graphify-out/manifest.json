@@ -80,8 +80,8 @@
     "semantic_hash": ""
   },
   "src/app/gerencial/page.tsx": {
-    "mtime": 1785770111.868201,
-    "ast_hash": "48b6735be4bdd86127ce9badbc6d8d44",
+    "mtime": 1785786484.1221614,
+    "ast_hash": "6265b4a0844e6ed24a4edef3177d6489",
     "semantic_hash": ""
   },
   "src/app/guias/[equipe]/checklist-interativa.tsx": {
@@ -180,9 +180,9 @@
     "semantic_hash": "90004a95aaaad4c0cf829f952dc08d0b"
   },
   "src/lib/mock/__tests__/repasse.test.ts": {
-    "mtime": 1784419964.0048735,
-    "ast_hash": "749730ec21c5bb6b78b70ed4bf0b9213",
-    "semantic_hash": "749730ec21c5bb6b78b70ed4bf0b9213"
+    "mtime": 1785786658.5401285,
+    "ast_hash": "82ddaebd0c65b2f39d3394e2fd3cae1e",
+    "semantic_hash": ""
   },
   "src/lib/mock/equipes.ts": {
     "mtime": 1784414664.227556,
@@ -215,9 +215,9 @@
     "semantic_hash": "dc792fcf7d5f252dd116c75bb1cd4374"
   },
   "src/lib/mock/repasse.ts": {
-    "mtime": 1784419964.0035646,
-    "ast_hash": "fe55d85fff1b35b45c87fffce8dc18f5",
-    "semantic_hash": "fe55d85fff1b35b45c87fffce8dc18f5"
+    "mtime": 1785786383.3751857,
+    "ast_hash": "4a5812e69a4b68781992656b753dd4aa",
+    "semantic_hash": ""
   },
   "src/lib/pec-connector/connection.ts": {
     "mtime": 1785767116.5616434,
@@ -840,8 +840,8 @@
     "semantic_hash": ""
   },
   "src/lib/data/gerencial.ts": {
-    "mtime": 1785770088.707648,
-    "ast_hash": "75cf5e183043fc129e48a452b976e0c1",
+    "mtime": 1785786697.7785988,
+    "ast_hash": "49d7b099590a178b4c15a544d03674ba",
     "semantic_hash": ""
   },
   "src/lib/data/equipes.ts": {
@@ -850,8 +850,8 @@
     "semantic_hash": ""
   },
   "src/app/simulador/simulador-client.tsx": {
-    "mtime": 1785772644.597852,
-    "ast_hash": "cfdcc912e2cc728a846d5d25eb83f871",
+    "mtime": 1785786636.5160704,
+    "ast_hash": "9ac65c8a957cad276c049a583415c578",
     "semantic_hash": ""
   },
   "supabase/migrations/008_unidades_saude_schema.sql": {
@@ -872,6 +872,11 @@
   "src/app/ia/ia-client.tsx": {
     "mtime": 1785778133.9748197,
     "ast_hash": "2206922ad307eeb4a0bb90fc3f609b47",
+    "semantic_hash": ""
+  },
+  ".hermes/plans/plano-evolucao-v2.md": {
+    "mtime": 1785786100.9589157,
+    "ast_hash": "96efeed63fb1824954f770d9ab519c19",
     "semantic_hash": ""
   }
 }

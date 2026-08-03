@@ -55,8 +55,8 @@
     "semantic_hash": ""
   },
   "src/app/api/admin/usuarios/route.ts": {
-    "mtime": 1785768293.195123,
-    "ast_hash": "3796da3e1bed9c82585d272cec3a7322",
+    "mtime": 1785778219.7419705,
+    "ast_hash": "9dc7a88648f76dd71b419c11c181dea3",
     "semantic_hash": ""
   },
   "src/app/api/integracao/pec/config/route.ts": {
@@ -90,13 +90,13 @@
     "semantic_hash": "754c709747f878daa011807315ffd540"
   },
   "src/app/guias/[equipe]/page.tsx": {
-    "mtime": 1784595980.5370748,
-    "ast_hash": "1a04c5e6293f5ba0ef7114be6fdc49b5",
+    "mtime": 1785778187.1382737,
+    "ast_hash": "21a29e6aff2aedb48f6f9e774b55bc91",
     "semantic_hash": ""
   },
   "src/app/ia/page.tsx": {
-    "mtime": 1784595980.5370748,
-    "ast_hash": "1fa2daf35531e440122dcb748adcdce1",
+    "mtime": 1785778103.8212986,
+    "ast_hash": "9dcfc1322fc981b53dcd01f973e70cb1",
     "semantic_hash": ""
   },
   "src/app/layout.tsx": {
@@ -867,6 +867,11 @@
   "src/lib/data/perfil.ts": {
     "mtime": 1785777999.6214073,
     "ast_hash": "4bf302485a2d86478fc15adad13a4317",
+    "semantic_hash": ""
+  },
+  "src/app/ia/ia-client.tsx": {
+    "mtime": 1785778133.9748197,
+    "ast_hash": "2206922ad307eeb4a0bb90fc3f609b47",
     "semantic_hash": ""
   }
 }

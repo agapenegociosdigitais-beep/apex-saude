@@ -14,7 +14,7 @@ import {
   ultimosMeses,
   dicaIndicador,
 } from '@/lib/mock/indicadores';
-import { equipeDoUsuario } from '@/lib/data/perfil';
+import { valoresReaisDoUsuario } from '@/lib/data/dashboard';
 
 export function generateStaticParams() {
   return PERFIL_IDS.map((perfil) => ({ perfil }));
@@ -36,13 +36,15 @@ export default async function DashboardPerfilPage({
   const config = PERFIS[perfil];
   const mesAtual = ultimosMeses(1)[0];
 
-  // Dados reais da equipe do usuario (Fase 2)
-  const minhaEquipe = await equipeDoUsuario();
+  // Dados reais da equipe do usuario (Fase 2.1)
+  const dadosReais = await valoresReaisDoUsuario();
+  const valorRealPorCodigo: Record<string, number> = {};
+  dadosReais?.valores.forEach(v => { valorRealPorCodigo[v.codigo] = v.valor; });
 
   let nota = 0;
   let peso = 0;
   for (const ind of config.indicadores) {
-    const val = valorMock(perfil, ind, mesAtual);
+    const val = valorRealPorCodigo[ind.id] ?? valorMock(perfil, ind, mesAtual);
     const pct = ind.invertido
       ? (ind.meta / Math.max(val, 1)) * 100
       : (val / ind.meta) * 100;
@@ -81,21 +83,19 @@ export default async function DashboardPerfilPage({
     <AppShell active="painel">
       <PerfilGuard>
         <div className="flex flex-col gap-6">
-          {/* Equipe real (Fase 2) */}
-          {minhaEquipe && (
+          {/* Equipe real (Fase 2.1) */}
+          {dadosReais && (
             <div className="bg-green-50 border border-green-300 rounded-lg p-4 flex gap-4 items-start">
               <span className="material-symbols-outlined text-green-700 mt-0.5">groups</span>
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded">FASE 2</span>
-                  <h3 className="font-title-lg text-title-lg text-on-surface">Sua equipe: {minhaEquipe.equipeNome}</h3>
+                  <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded">DADOS REAIS</span>
+                  <h3 className="font-title-lg text-title-lg text-on-surface">{dadosReais.equipeNome}</h3>
                 </div>
                 <p className="font-body-md text-body-md text-on-surface-variant">
-                  {minhaEquipe.municipioNome} · {minhaEquipe.equipeTipo.toUpperCase()} · nota{' '}
-                  <strong className="text-on-surface">{minhaEquipe.nota.toFixed(1).replace('.', ',')}</strong>
-                  {minhaEquipe.indicadores.length > 0 && (
-                    <span> · {minhaEquipe.indicadores.length} indicadores com dados reais</span>
-                  )}
+                  {dadosReais.municipioNome} · {dadosReais.equipeTipo.toUpperCase()} · nota real{' '}
+                  <strong className="text-on-surface">{dadosReais.nota.toFixed(1).replace('.', ',')}</strong>
+                  · {dadosReais.valores.length} indicadores do Supabase
                 </p>
               </div>
             </div>
