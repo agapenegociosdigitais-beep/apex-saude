@@ -41,6 +41,11 @@ export async function PUT(req: NextRequest) {
 export async function DELETE(req: NextRequest) {
   const guard = await requireAdmin(); if (guard) return guard;
   const id = req.nextUrl.searchParams.get('id');
+  if (!id) return NextResponse.json({ error: 'ID obrigatório' }, { status: 400 });
+  // FK cascade manual: limpar dependentes antes de deletar
+  await supabase.from('valores_indicadores').delete().eq('equipe_id', id);
+  await supabase.from('notas_equipes').delete().eq('equipe_id', id);
+  await supabase.from('checklists_equipe').delete().eq('equipe_id', id);
   const { error } = await supabase.from('equipes').delete().eq('id', id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ ok: true });
