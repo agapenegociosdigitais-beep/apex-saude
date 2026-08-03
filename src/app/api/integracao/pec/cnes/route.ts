@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { criarClienteSupabase } from '@/lib/supabase/server'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -12,10 +13,27 @@ const VPS_GATEWAY = 'http://23.106.45.137:3597/cnes'
 /**
  * POST /api/integracao/pec/cnes
  * Body: { municipio_id, ibge_code }
- * Puxa UBS reais do CNES via VPS e salva no Supabase
+ * Puxa UBS reais do CNES via VPS e salva no Supabase.
+ *
+ * Chamada exclusivamente pela aba PEC de /admin, onde o admin
+ * gerencia municipios arbitrarios da plataforma (nao so o proprio) —
+ * por isso municipio_id continua vindo do body. Auth + role dentro
+ * do handler (nao confia so no middleware): o middleware garante
+ * login, mas nao checa role nesta familia de rota, e sem essa checagem
+ * qualquer usuario logado (mesmo profissional comum) podia apagar e
+ * recriar as UBS de qualquer municipio.
  */
 export async function POST(req: NextRequest) {
   try {
+    const authClient = await criarClienteSupabase()
+    const { data: { user } } = await authClient.auth.getUser()
+    if (!user) return NextResponse.json({ erro: 'Nao autorizado' }, { status: 401 })
+
+    const { data: usuario } = await authClient.from('usuarios').select('role').eq('id', user.id).single()
+    if (!usuario || usuario.role !== 'admin') {
+      return NextResponse.json({ erro: 'Permissao negada' }, { status: 403 })
+    }
+
     const { municipio_id, ibge_code } = await req.json()
     if (!municipio_id || !ibge_code) {
       return NextResponse.json({ erro: 'municipio_id e ibge_code obrigatórios' }, { status: 400 })

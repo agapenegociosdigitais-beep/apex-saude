@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { criarClienteSupabase } from '@/lib/supabase/server'
 
 // Usa service_role key pra evitar problemas de RLS/cookie no Vercel
-// A rota so é acessivel pela pagina admin (protegida pelo middleware)
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!,
@@ -15,9 +15,26 @@ const supabase = createClient(
  * 1. Cria/verifica no Supabase
  * 2. Cria integracoes_pec
  * 3. Cria UBS default
+ *
+ * Chamada exclusivamente pela aba PEC de /admin (onboarding de
+ * municipios novos na plataforma). Auth + role dentro do handler
+ * (nao confia so no middleware): o comentario original dizia "so
+ * acessivel pela pagina admin, protegida pelo middleware", mas o
+ * middleware nao checa role para /api/integracao/* — so exige login.
+ * Sem essa checagem, qualquer usuario logado (mesmo profissional
+ * comum) podia criar municipios/integracoes PEC arbitrarios.
  */
 export async function POST(req: NextRequest) {
   try {
+    const authClient = await criarClienteSupabase()
+    const { data: { user } } = await authClient.auth.getUser()
+    if (!user) return NextResponse.json({ erro: 'Nao autorizado' }, { status: 401 })
+
+    const { data: usuario } = await authClient.from('usuarios').select('role').eq('id', user.id).single()
+    if (!usuario || usuario.role !== 'admin') {
+      return NextResponse.json({ erro: 'Permissao negada' }, { status: 403 })
+    }
+
     const { nome, uf, codigo_ibge } = await req.json()
     if (!nome || !uf) {
       return NextResponse.json({ erro: 'Nome e UF obrigatórios' }, { status: 400 })
