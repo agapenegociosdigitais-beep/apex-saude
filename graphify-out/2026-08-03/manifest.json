@@ -75,8 +75,8 @@
     "semantic_hash": "97ed1c1b9f3f3a8cd9e7a6b8871d5253"
   },
   "src/app/dashboard/[perfil]/page.tsx": {
-    "mtime": 1785778035.6952167,
-    "ast_hash": "f3729ea3fc123017dee41d2cf15052bc",
+    "mtime": 1785786840.512213,
+    "ast_hash": "ee611e51de469e9c4ef9306047813a53",
     "semantic_hash": ""
   },
   "src/app/gerencial/page.tsx": {
@@ -877,6 +877,11 @@
   ".hermes/plans/plano-evolucao-v2.md": {
     "mtime": 1785786100.9589157,
     "ast_hash": "96efeed63fb1824954f770d9ab519c19",
+    "semantic_hash": ""
+  },
+  "src/lib/data/dashboard.ts": {
+    "mtime": 1785786799.5500968,
+    "ast_hash": "11f750db514d3888a4468c556d81750b",
     "semantic_hash": ""
   }
 }

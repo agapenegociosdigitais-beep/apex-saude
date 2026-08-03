@@ -4,15 +4,103 @@
   "graph": {},
   "nodes": [
     {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/dashboard/[perfil]/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_dashboard_perfil_page",
+      "community": 42,
+      "community_name": "page.tsx",
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "generateStaticParams()",
+      "file_type": "code",
+      "source_file": "src/app/dashboard/[perfil]/page.tsx",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "src_app_dashboard_perfil_page_generatestaticparams",
+      "community": 42,
+      "community_name": "page.tsx",
+      "norm_label": "generatestaticparams()"
+    },
+    {
+      "label": "heatCell()",
+      "file_type": "code",
+      "source_file": "src/app/dashboard/[perfil]/page.tsx",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "src_app_dashboard_perfil_page_heatcell",
+      "community": 42,
+      "community_name": "page.tsx",
+      "norm_label": "heatcell()"
+    },
+    {
+      "label": "DashboardPerfilPage()",
+      "file_type": "code",
+      "source_file": "src/app/dashboard/[perfil]/page.tsx",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "src_app_dashboard_perfil_page_dashboardperfilpage",
+      "community": 42,
+      "community_name": "page.tsx",
+      "norm_label": "dashboardperfilpage()"
+    },
+    {
+      "label": "dashboard.ts",
+      "file_type": "code",
+      "source_file": "src/lib/data/dashboard.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_data_dashboard",
+      "community": 42,
+      "community_name": "page.tsx",
+      "norm_label": "dashboard.ts"
+    },
+    {
+      "label": "supabase",
+      "file_type": "code",
+      "source_file": "src/lib/data/dashboard.ts",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "src_lib_data_dashboard_supabase",
+      "community": 42,
+      "community_name": "page.tsx",
+      "norm_label": "supabase"
+    },
+    {
+      "label": "ValorIndicador",
+      "file_type": "code",
+      "source_file": "src/lib/data/dashboard.ts",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "src_lib_data_dashboard_valorindicador",
+      "community": 42,
+      "community_name": "page.tsx",
+      "norm_label": "valorindicador"
+    },
+    {
+      "label": "valoresReaisDoUsuario()",
+      "file_type": "code",
+      "source_file": "src/lib/data/dashboard.ts",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "src_lib_data_dashboard_valoresreaisdousuario",
+      "community": 42,
+      "community_name": "page.tsx",
+      "norm_label": "valoresreaisdousuario()"
+    },
+    {
       "label": "plano-evolucao-v2.md",
       "file_type": "document",
       "source_file": ".hermes/plans/plano-evolucao-v2.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "hermes_plans_plano_evolucao_v2",
       "community": 10,
       "community_name": "gerencial.ts",
-      "norm_label": "plano-evolucao-v2.md"
+      "norm_label": "plano-evolucao-v2.md",
+      "id": "hermes_plans_plano_evolucao_v2"
     },
     {
       "label": "Apex Sa\u00fade Next \u2014 Plano de Evolu\u00e7\u00e3o v2",
@@ -20,10 +108,10 @@
       "source_file": ".hermes/plans/plano-evolucao-v2.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "hermes_plans_plano_evolucao_v2_apex_sa\u00fade_next_plano_de_evolu\u00e7\u00e3o_v2",
       "community": 10,
       "community_name": "gerencial.ts",
-      "norm_label": "apex saude next \u2014 plano de evolucao v2"
+      "norm_label": "apex saude next \u2014 plano de evolucao v2",
+      "id": "hermes_plans_plano_evolucao_v2_apex_sa\u00fade_next_plano_de_evolu\u00e7\u00e3o_v2"
     },
     {
       "label": "Onde estamos",
@@ -31,10 +119,10 @@
       "source_file": ".hermes/plans/plano-evolucao-v2.md",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "hermes_plans_plano_evolucao_v2_onde_estamos",
       "community": 10,
       "community_name": "gerencial.ts",
-      "norm_label": "onde estamos"
+      "norm_label": "onde estamos",
+      "id": "hermes_plans_plano_evolucao_v2_onde_estamos"
     },
     {
       "label": "O que os concorrentes entregam que a gente n\u00e3o entrega",
@@ -42,10 +130,10 @@
       "source_file": ".hermes/plans/plano-evolucao-v2.md",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "hermes_plans_plano_evolucao_v2_o_que_os_concorrentes_entregam_que_a_gente_n\u00e3o_entrega",
       "community": 10,
       "community_name": "gerencial.ts",
-      "norm_label": "o que os concorrentes entregam que a gente nao entrega"
+      "norm_label": "o que os concorrentes entregam que a gente nao entrega",
+      "id": "hermes_plans_plano_evolucao_v2_o_que_os_concorrentes_entregam_que_a_gente_n\u00e3o_entrega"
     },
     {
       "label": "Diferencial competitivo poss\u00edvel",
@@ -53,10 +141,10 @@
       "source_file": ".hermes/plans/plano-evolucao-v2.md",
       "source_location": "L23",
       "_origin": "ast",
-      "id": "hermes_plans_plano_evolucao_v2_diferencial_competitivo_poss\u00edvel",
       "community": 10,
       "community_name": "gerencial.ts",
-      "norm_label": "diferencial competitivo possivel"
+      "norm_label": "diferencial competitivo possivel",
+      "id": "hermes_plans_plano_evolucao_v2_diferencial_competitivo_poss\u00edvel"
     },
     {
       "label": "Fase 2.1 \u2014 Funda\u00e7\u00e3o (aqui \u2192 2 semanas)",
@@ -64,10 +152,10 @@
       "source_file": ".hermes/plans/plano-evolucao-v2.md",
       "source_location": "L32",
       "_origin": "ast",
-      "id": "hermes_plans_plano_evolucao_v2_fase_2_1_funda\u00e7\u00e3o_aqui_2_semanas",
       "community": 10,
       "community_name": "gerencial.ts",
-      "norm_label": "fase 2.1 \u2014 fundacao (aqui \u2192 2 semanas)"
+      "norm_label": "fase 2.1 \u2014 fundacao (aqui \u2192 2 semanas)",
+      "id": "hermes_plans_plano_evolucao_v2_fase_2_1_funda\u00e7\u00e3o_aqui_2_semanas"
     },
     {
       "label": "Fase 2.2 \u2014 Listas Nominais (2-3 semanas)",
@@ -75,10 +163,10 @@
       "source_file": ".hermes/plans/plano-evolucao-v2.md",
       "source_location": "L51",
       "_origin": "ast",
-      "id": "hermes_plans_plano_evolucao_v2_fase_2_2_listas_nominais_2_3_semanas",
       "community": 10,
       "community_name": "gerencial.ts",
-      "norm_label": "fase 2.2 \u2014 listas nominais (2-3 semanas)"
+      "norm_label": "fase 2.2 \u2014 listas nominais (2-3 semanas)",
+      "id": "hermes_plans_plano_evolucao_v2_fase_2_2_listas_nominais_2_3_semanas"
     },
     {
       "label": "Fase 2.3 \u2014 Intelig\u00eancia e Alertas (2 semanas)",
@@ -86,10 +174,10 @@
       "source_file": ".hermes/plans/plano-evolucao-v2.md",
       "source_location": "L72",
       "_origin": "ast",
-      "id": "hermes_plans_plano_evolucao_v2_fase_2_3_intelig\u00eancia_e_alertas_2_semanas",
       "community": 10,
       "community_name": "gerencial.ts",
-      "norm_label": "fase 2.3 \u2014 inteligencia e alertas (2 semanas)"
+      "norm_label": "fase 2.3 \u2014 inteligencia e alertas (2 semanas)",
+      "id": "hermes_plans_plano_evolucao_v2_fase_2_3_intelig\u00eancia_e_alertas_2_semanas"
     },
     {
       "label": "Fase 3 \u2014 Diferenciais pesados (3-4 semanas)",
@@ -97,10 +185,10 @@
       "source_file": ".hermes/plans/plano-evolucao-v2.md",
       "source_location": "L91",
       "_origin": "ast",
-      "id": "hermes_plans_plano_evolucao_v2_fase_3_diferenciais_pesados_3_4_semanas",
       "community": 10,
       "community_name": "gerencial.ts",
-      "norm_label": "fase 3 \u2014 diferenciais pesados (3-4 semanas)"
+      "norm_label": "fase 3 \u2014 diferenciais pesados (3-4 semanas)",
+      "id": "hermes_plans_plano_evolucao_v2_fase_3_diferenciais_pesados_3_4_semanas"
     },
     {
       "label": "Prioridade de execu\u00e7\u00e3o",
@@ -108,10 +196,10 @@
       "source_file": ".hermes/plans/plano-evolucao-v2.md",
       "source_location": "L105",
       "_origin": "ast",
-      "id": "hermes_plans_plano_evolucao_v2_prioridade_de_execu\u00e7\u00e3o",
       "community": 10,
       "community_name": "gerencial.ts",
-      "norm_label": "prioridade de execucao"
+      "norm_label": "prioridade de execucao",
+      "id": "hermes_plans_plano_evolucao_v2_prioridade_de_execu\u00e7\u00e3o"
     },
     {
       "label": "O que N\u00c3O fazer",
@@ -119,10 +207,10 @@
       "source_file": ".hermes/plans/plano-evolucao-v2.md",
       "source_location": "L117",
       "_origin": "ast",
-      "id": "hermes_plans_plano_evolucao_v2_o_que_n\u00e3o_fazer",
       "community": 10,
       "community_name": "gerencial.ts",
-      "norm_label": "o que nao fazer"
+      "norm_label": "o que nao fazer",
+      "id": "hermes_plans_plano_evolucao_v2_o_que_n\u00e3o_fazer"
     },
     {
       "label": "RELATORIO_PAGINAS.md",
@@ -130,10 +218,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "relatorio_paginas",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "relatorio_paginas.md"
+      "norm_label": "relatorio_paginas.md",
+      "id": "relatorio_paginas"
     },
     {
       "label": "Relat\u00f3rio das p\u00e1ginas \u2014 \u00c1PEX Sa\u00fade Next",
@@ -141,10 +229,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "relatorio das paginas \u2014 apex saude next"
+      "norm_label": "relatorio das paginas \u2014 apex saude next",
+      "id": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next"
     },
     {
       "label": "1. `/` \u2014 Landing p\u00fablica",
@@ -152,10 +240,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "relatorio_paginas_1_landing_p\u00fablica",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "1. `/` \u2014 landing publica"
+      "norm_label": "1. `/` \u2014 landing publica",
+      "id": "relatorio_paginas_1_landing_p\u00fablica"
     },
     {
       "label": "2. `/painel` \u2014 Hub / seletor de perfis",
@@ -163,10 +251,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L24",
       "_origin": "ast",
-      "id": "relatorio_paginas_2_painel_hub_seletor_de_perfis",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "2. `/painel` \u2014 hub / seletor de perfis"
+      "norm_label": "2. `/painel` \u2014 hub / seletor de perfis",
+      "id": "relatorio_paginas_2_painel_hub_seletor_de_perfis"
     },
     {
       "label": "3. `/login` \u2014 Autentica\u00e7\u00e3o",
@@ -174,10 +262,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L34",
       "_origin": "ast",
-      "id": "relatorio_paginas_3_login_autentica\u00e7\u00e3o",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "3. `/login` \u2014 autenticacao"
+      "norm_label": "3. `/login` \u2014 autenticacao",
+      "id": "relatorio_paginas_3_login_autentica\u00e7\u00e3o"
     },
     {
       "label": "4. `/profissionais` \u2014 Gest\u00e3o de profissionais (self-service por munic\u00edpio)",
@@ -185,10 +273,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L44",
       "_origin": "ast",
-      "id": "relatorio_paginas_4_profissionais_gest\u00e3o_de_profissionais_self_service_por_munic\u00edpio",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "4. `/profissionais` \u2014 gestao de profissionais (self-service por municipio)"
+      "norm_label": "4. `/profissionais` \u2014 gestao de profissionais (self-service por municipio)",
+      "id": "relatorio_paginas_4_profissionais_gest\u00e3o_de_profissionais_self_service_por_munic\u00edpio"
     },
     {
       "label": "5. `/equipes` \u2014 Listagem de equipes do munic\u00edpio",
@@ -196,10 +284,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L54",
       "_origin": "ast",
-      "id": "relatorio_paginas_5_equipes_listagem_de_equipes_do_munic\u00edpio",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "5. `/equipes` \u2014 listagem de equipes do municipio"
+      "norm_label": "5. `/equipes` \u2014 listagem de equipes do municipio",
+      "id": "relatorio_paginas_5_equipes_listagem_de_equipes_do_munic\u00edpio"
     },
     {
       "label": "6. `/gestao` \u2014 Painel resumo de gest\u00e3o do munic\u00edpio",
@@ -207,10 +295,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L64",
       "_origin": "ast",
-      "id": "relatorio_paginas_6_gestao_painel_resumo_de_gest\u00e3o_do_munic\u00edpio",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "6. `/gestao` \u2014 painel resumo de gestao do municipio"
+      "norm_label": "6. `/gestao` \u2014 painel resumo de gestao do municipio",
+      "id": "relatorio_paginas_6_gestao_painel_resumo_de_gest\u00e3o_do_munic\u00edpio"
     },
     {
       "label": "7. `/lab/ui` \u2014 Laborat\u00f3rio de componentes de UI",
@@ -218,10 +306,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L74",
       "_origin": "ast",
-      "id": "relatorio_paginas_7_lab_ui_laborat\u00f3rio_de_componentes_de_ui",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "7. `/lab/ui` \u2014 laboratorio de componentes de ui"
+      "norm_label": "7. `/lab/ui` \u2014 laboratorio de componentes de ui",
+      "id": "relatorio_paginas_7_lab_ui_laborat\u00f3rio_de_componentes_de_ui"
     },
     {
       "label": "8. `/proposta` \u2014 P\u00e1gina de vendas/comercial (planos e inexigibilidade)",
@@ -229,10 +317,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L84",
       "_origin": "ast",
-      "id": "relatorio_paginas_8_proposta_p\u00e1gina_de_vendas_comercial_planos_e_inexigibilidade",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "8. `/proposta` \u2014 pagina de vendas/comercial (planos e inexigibilidade)"
+      "norm_label": "8. `/proposta` \u2014 pagina de vendas/comercial (planos e inexigibilidade)",
+      "id": "relatorio_paginas_8_proposta_p\u00e1gina_de_vendas_comercial_planos_e_inexigibilidade"
     },
     {
       "label": "9. `/privacidade` \u2014 Pol\u00edtica de Privacidade / LGPD",
@@ -240,10 +328,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L94",
       "_origin": "ast",
-      "id": "relatorio_paginas_9_privacidade_pol\u00edtica_de_privacidade_lgpd",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "9. `/privacidade` \u2014 politica de privacidade / lgpd"
+      "norm_label": "9. `/privacidade` \u2014 politica de privacidade / lgpd",
+      "id": "relatorio_paginas_9_privacidade_pol\u00edtica_de_privacidade_lgpd"
     },
     {
       "label": "10. `/paineis/[equipe]` \u2014 Painel de equipe (eSF/eSB/eMulti)",
@@ -251,10 +339,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L104",
       "_origin": "ast",
-      "id": "relatorio_paginas_10_paineis_equipe_painel_de_equipe_esf_esb_emulti",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "10. `/paineis/[equipe]` \u2014 painel de equipe (esf/esb/emulti)"
+      "norm_label": "10. `/paineis/[equipe]` \u2014 painel de equipe (esf/esb/emulti)",
+      "id": "relatorio_paginas_10_paineis_equipe_painel_de_equipe_esf_esb_emulti"
     },
     {
       "label": "11. `/ia` \u2014 Plano de a\u00e7\u00e3o PDCA",
@@ -262,10 +350,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L114",
       "_origin": "ast",
-      "id": "relatorio_paginas_11_ia_plano_de_a\u00e7\u00e3o_pdca",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "11. `/ia` \u2014 plano de acao pdca"
+      "norm_label": "11. `/ia` \u2014 plano de acao pdca",
+      "id": "relatorio_paginas_11_ia_plano_de_a\u00e7\u00e3o_pdca"
     },
     {
       "label": "12. `/guias/[equipe]` \u2014 Conte\u00fado educativo por equipe",
@@ -273,10 +361,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L124",
       "_origin": "ast",
-      "id": "relatorio_paginas_12_guias_equipe_conte\u00fado_educativo_por_equipe",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "12. `/guias/[equipe]` \u2014 conteudo educativo por equipe"
+      "norm_label": "12. `/guias/[equipe]` \u2014 conteudo educativo por equipe",
+      "id": "relatorio_paginas_12_guias_equipe_conte\u00fado_educativo_por_equipe"
     },
     {
       "label": "13. `/admin` \u2014 Painel administrativo (com 7 abas/sub-m\u00f3dulos)",
@@ -284,10 +372,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L134",
       "_origin": "ast",
-      "id": "relatorio_paginas_13_admin_painel_administrativo_com_7_abas_sub_m\u00f3dulos",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "13. `/admin` \u2014 painel administrativo (com 7 abas/sub-modulos)"
+      "norm_label": "13. `/admin` \u2014 painel administrativo (com 7 abas/sub-modulos)",
+      "id": "relatorio_paginas_13_admin_painel_administrativo_com_7_abas_sub_m\u00f3dulos"
     },
     {
       "label": "13.1 `admin-municipios.tsx` \u2014 Aba Munic\u00edpios",
@@ -295,10 +383,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L142",
       "_origin": "ast",
-      "id": "relatorio_paginas_13_1_admin_municipios_tsx_aba_munic\u00edpios",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "13.1 `admin-municipios.tsx` \u2014 aba municipios"
+      "norm_label": "13.1 `admin-municipios.tsx` \u2014 aba municipios",
+      "id": "relatorio_paginas_13_1_admin_municipios_tsx_aba_munic\u00edpios"
     },
     {
       "label": "13.2 `admin-equipes.tsx` \u2014 Aba Equipes",
@@ -306,10 +394,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L147",
       "_origin": "ast",
-      "id": "relatorio_paginas_13_2_admin_equipes_tsx_aba_equipes",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "13.2 `admin-equipes.tsx` \u2014 aba equipes"
+      "norm_label": "13.2 `admin-equipes.tsx` \u2014 aba equipes",
+      "id": "relatorio_paginas_13_2_admin_equipes_tsx_aba_equipes"
     },
     {
       "label": "13.3 `admin-indicadores.tsx` \u2014 Aba Indicadores",
@@ -317,10 +405,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L152",
       "_origin": "ast",
-      "id": "relatorio_paginas_13_3_admin_indicadores_tsx_aba_indicadores",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "13.3 `admin-indicadores.tsx` \u2014 aba indicadores"
+      "norm_label": "13.3 `admin-indicadores.tsx` \u2014 aba indicadores",
+      "id": "relatorio_paginas_13_3_admin_indicadores_tsx_aba_indicadores"
     },
     {
       "label": "13.4 `admin-pec.tsx` \u2014 Aba Integra\u00e7\u00e3o PEC",
@@ -328,10 +416,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L157",
       "_origin": "ast",
-      "id": "relatorio_paginas_13_4_admin_pec_tsx_aba_integra\u00e7\u00e3o_pec",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "13.4 `admin-pec.tsx` \u2014 aba integracao pec"
+      "norm_label": "13.4 `admin-pec.tsx` \u2014 aba integracao pec",
+      "id": "relatorio_paginas_13_4_admin_pec_tsx_aba_integra\u00e7\u00e3o_pec"
     },
     {
       "label": "13.5 `admin-profissionais.tsx` \u2014 Aba Profissionais (vis\u00e3o global, todos munic\u00edpios)",
@@ -339,10 +427,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L162",
       "_origin": "ast",
-      "id": "relatorio_paginas_13_5_admin_profissionais_tsx_aba_profissionais_vis\u00e3o_global_todos_munic\u00edpios",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "13.5 `admin-profissionais.tsx` \u2014 aba profissionais (visao global, todos municipios)"
+      "norm_label": "13.5 `admin-profissionais.tsx` \u2014 aba profissionais (visao global, todos municipios)",
+      "id": "relatorio_paginas_13_5_admin_profissionais_tsx_aba_profissionais_vis\u00e3o_global_todos_munic\u00edpios"
     },
     {
       "label": "13.6 `admin-gestao.tsx` \u2014 Aba Gest\u00e3o (vis\u00e3o geral de indicadores)",
@@ -350,10 +438,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L167",
       "_origin": "ast",
-      "id": "relatorio_paginas_13_6_admin_gestao_tsx_aba_gest\u00e3o_vis\u00e3o_geral_de_indicadores",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "13.6 `admin-gestao.tsx` \u2014 aba gestao (visao geral de indicadores)"
+      "norm_label": "13.6 `admin-gestao.tsx` \u2014 aba gestao (visao geral de indicadores)",
+      "id": "relatorio_paginas_13_6_admin_gestao_tsx_aba_gest\u00e3o_vis\u00e3o_geral_de_indicadores"
     },
     {
       "label": "`admin-comercial.tsx` (mencionado como aba, n\u00e3o lido a pedido \u2014 fora da lista dos 6 arquivos solicitados)",
@@ -361,10 +449,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L172",
       "_origin": "ast",
-      "id": "relatorio_paginas_admin_comercial_tsx_mencionado_como_aba_n\u00e3o_lido_a_pedido_fora_da_lista_dos_6_arquivos_solicitados",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "`admin-comercial.tsx` (mencionado como aba, nao lido a pedido \u2014 fora da lista dos 6 arquivos solicitados)"
+      "norm_label": "`admin-comercial.tsx` (mencionado como aba, nao lido a pedido \u2014 fora da lista dos 6 arquivos solicitados)",
+      "id": "relatorio_paginas_admin_comercial_tsx_mencionado_como_aba_n\u00e3o_lido_a_pedido_fora_da_lista_dos_6_arquivos_solicitados"
     },
     {
       "label": "14. `/dashboard/[perfil]` \u2014 Dashboard individual por perfil profissional (12 perfis)",
@@ -372,10 +460,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L176",
       "_origin": "ast",
-      "id": "relatorio_paginas_14_dashboard_perfil_dashboard_individual_por_perfil_profissional_12_perfis",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "14. `/dashboard/[perfil]` \u2014 dashboard individual por perfil profissional (12 perfis)"
+      "norm_label": "14. `/dashboard/[perfil]` \u2014 dashboard individual por perfil profissional (12 perfis)",
+      "id": "relatorio_paginas_14_dashboard_perfil_dashboard_individual_por_perfil_profissional_12_perfis"
     },
     {
       "label": "15. `/simulador` \u2014 Simulador financeiro de repasse",
@@ -383,10 +471,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L186",
       "_origin": "ast",
-      "id": "relatorio_paginas_15_simulador_simulador_financeiro_de_repasse",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "15. `/simulador` \u2014 simulador financeiro de repasse"
+      "norm_label": "15. `/simulador` \u2014 simulador financeiro de repasse",
+      "id": "relatorio_paginas_15_simulador_simulador_financeiro_de_repasse"
     },
     {
       "label": "16. `/gerencial` \u2014 Vis\u00e3o gerencial do munic\u00edpio",
@@ -394,10 +482,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L196",
       "_origin": "ast",
-      "id": "relatorio_paginas_16_gerencial_vis\u00e3o_gerencial_do_munic\u00edpio",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "16. `/gerencial` \u2014 visao gerencial do municipio"
+      "norm_label": "16. `/gerencial` \u2014 visao gerencial do municipio",
+      "id": "relatorio_paginas_16_gerencial_vis\u00e3o_gerencial_do_munic\u00edpio"
     },
     {
       "label": "Resumo de padr\u00f5es observados",
@@ -405,10 +493,10 @@
       "source_file": "RELATORIO_PAGINAS.md",
       "source_location": "L206",
       "_origin": "ast",
-      "id": "relatorio_paginas_resumo_de_padr\u00f5es_observados",
       "community": 4,
       "community_name": "Community 4",
-      "norm_label": "resumo de padroes observados"
+      "norm_label": "resumo de padroes observados",
+      "id": "relatorio_paginas_resumo_de_padr\u00f5es_observados"
     },
     {
       "label": "page.tsx",
@@ -416,10 +504,10 @@
       "source_file": "src/app/gerencial/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_app_gerencial_page",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "page.tsx"
+      "norm_label": "page.tsx",
+      "id": "src_app_gerencial_page"
     },
     {
       "label": "formatarReais()",
@@ -427,10 +515,10 @@
       "source_file": "src/app/gerencial/page.tsx",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "src_app_gerencial_page_formatarreais",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "formatarreais()"
+      "norm_label": "formatarreais()",
+      "id": "src_app_gerencial_page_formatarreais"
     },
     {
       "label": "GerencialPage()",
@@ -438,10 +526,10 @@
       "source_file": "src/app/gerencial/page.tsx",
       "source_location": "L12",
       "_origin": "ast",
-      "id": "src_app_gerencial_page_gerencialpage",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "gerencialpage()"
+      "norm_label": "gerencialpage()",
+      "id": "src_app_gerencial_page_gerencialpage"
     },
     {
       "label": "simulador-client.tsx",
@@ -449,10 +537,10 @@
       "source_file": "src/app/simulador/simulador-client.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_app_simulador_simulador_client",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "simulador-client.tsx"
+      "norm_label": "simulador-client.tsx",
+      "id": "src_app_simulador_simulador_client"
     },
     {
       "label": "CLASSIFICACOES",
@@ -460,10 +548,10 @@
       "source_file": "src/app/simulador/simulador-client.tsx",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "src_app_simulador_simulador_client_classificacoes",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "classificacoes"
+      "norm_label": "classificacoes",
+      "id": "src_app_simulador_simulador_client_classificacoes"
     },
     {
       "label": "TIPOS",
@@ -471,10 +559,10 @@
       "source_file": "src/app/simulador/simulador-client.tsx",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "src_app_simulador_simulador_client_tipos",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "tipos"
+      "norm_label": "tipos",
+      "id": "src_app_simulador_simulador_client_tipos"
     },
     {
       "label": "repasseCenario()",
@@ -482,10 +570,10 @@
       "source_file": "src/app/simulador/simulador-client.tsx",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "src_app_simulador_simulador_client_repassecenario",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "repassecenario()"
+      "norm_label": "repassecenario()",
+      "id": "src_app_simulador_simulador_client_repassecenario"
     },
     {
       "label": "Props",
@@ -493,10 +581,10 @@
       "source_file": "src/app/simulador/simulador-client.tsx",
       "source_location": "L22",
       "_origin": "ast",
-      "id": "src_app_simulador_simulador_client_props",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "props"
+      "norm_label": "props",
+      "id": "src_app_simulador_simulador_client_props"
     },
     {
       "label": "SimuladorClient()",
@@ -504,10 +592,10 @@
       "source_file": "src/app/simulador/simulador-client.tsx",
       "source_location": "L28",
       "_origin": "ast",
-      "id": "src_app_simulador_simulador_client_simuladorclient",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "simuladorclient()"
+      "norm_label": "simuladorclient()",
+      "id": "src_app_simulador_simulador_client_simuladorclient"
     },
     {
       "label": "gerencial.ts",
@@ -515,10 +603,10 @@
       "source_file": "src/lib/data/gerencial.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_lib_data_gerencial",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "gerencial.ts"
+      "norm_label": "gerencial.ts",
+      "id": "src_lib_data_gerencial"
     },
     {
       "label": "supabase",
@@ -526,10 +614,10 @@
       "source_file": "src/lib/data/gerencial.ts",
       "source_location": "L11",
       "_origin": "ast",
-      "id": "src_lib_data_gerencial_supabase",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "supabase"
+      "norm_label": "supabase",
+      "id": "src_lib_data_gerencial_supabase"
     },
     {
       "label": "RepasseEquipe",
@@ -537,10 +625,10 @@
       "source_file": "src/lib/data/gerencial.ts",
       "source_location": "L17",
       "_origin": "ast",
-      "id": "src_lib_data_gerencial_repasseequipe",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "repasseequipe"
+      "norm_label": "repasseequipe",
+      "id": "src_lib_data_gerencial_repasseequipe"
     },
     {
       "label": "classificacao()",
@@ -548,10 +636,10 @@
       "source_file": "src/lib/data/gerencial.ts",
       "source_location": "L30",
       "_origin": "ast",
-      "id": "src_lib_data_gerencial_classificacao",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "classificacao()"
+      "norm_label": "classificacao()",
+      "id": "src_lib_data_gerencial_classificacao"
     },
     {
       "label": "dadosGerencial()",
@@ -559,10 +647,10 @@
       "source_file": "src/lib/data/gerencial.ts",
       "source_location": "L37",
       "_origin": "ast",
-      "id": "src_lib_data_gerencial_dadosgerencial",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "dadosgerencial()"
+      "norm_label": "dadosgerencial()",
+      "id": "src_lib_data_gerencial_dadosgerencial"
     },
     {
       "label": "repasse.test.ts",
@@ -570,10 +658,10 @@
       "source_file": "src/lib/mock/__tests__/repasse.test.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_lib_mock_tests_repasse_test",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "repasse.test.ts"
+      "norm_label": "repasse.test.ts",
+      "id": "src_lib_mock_tests_repasse_test"
     },
     {
       "label": "repasse.ts",
@@ -581,10 +669,10 @@
       "source_file": "src/lib/mock/repasse.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_lib_mock_repasse",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "repasse.ts"
+      "norm_label": "repasse.ts",
+      "id": "src_lib_mock_repasse"
     },
     {
       "label": "FIXO_MENSAL",
@@ -592,10 +680,10 @@
       "source_file": "src/lib/mock/repasse.ts",
       "source_location": "L19",
       "_origin": "ast",
-      "id": "src_lib_mock_repasse_fixo_mensal",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "fixo_mensal"
+      "norm_label": "fixo_mensal",
+      "id": "src_lib_mock_repasse_fixo_mensal"
     },
     {
       "label": "QUALIDADE_MENSAL",
@@ -603,10 +691,10 @@
       "source_file": "src/lib/mock/repasse.ts",
       "source_location": "L26",
       "_origin": "ast",
-      "id": "src_lib_mock_repasse_qualidade_mensal",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "qualidade_mensal"
+      "norm_label": "qualidade_mensal",
+      "id": "src_lib_mock_repasse_qualidade_mensal"
     },
     {
       "label": "FATOR_CLASSIFICACAO",
@@ -614,10 +702,10 @@
       "source_file": "src/lib/mock/repasse.ts",
       "source_location": "L37",
       "_origin": "ast",
-      "id": "src_lib_mock_repasse_fator_classificacao",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "fator_classificacao"
+      "norm_label": "fator_classificacao",
+      "id": "src_lib_mock_repasse_fator_classificacao"
     },
     {
       "label": "RepasseEquipe",
@@ -625,10 +713,10 @@
       "source_file": "src/lib/mock/repasse.ts",
       "source_location": "L44",
       "_origin": "ast",
-      "id": "src_lib_mock_repasse_repasseequipe",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "repasseequipe"
+      "norm_label": "repasseequipe",
+      "id": "src_lib_mock_repasse_repasseequipe"
     },
     {
       "label": "repasseDaEquipe()",
@@ -636,10 +724,10 @@
       "source_file": "src/lib/mock/repasse.ts",
       "source_location": "L55",
       "_origin": "ast",
-      "id": "src_lib_mock_repasse_repassedaequipe",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "repassedaequipe()"
+      "norm_label": "repassedaequipe()",
+      "id": "src_lib_mock_repasse_repassedaequipe"
     },
     {
       "label": "repasseDoMunicipio()",
@@ -647,10 +735,10 @@
       "source_file": "src/lib/mock/repasse.ts",
       "source_location": "L74",
       "_origin": "ast",
-      "id": "src_lib_mock_repasse_repassedomunicipio",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "repassedomunicipio()"
+      "norm_label": "repassedomunicipio()",
+      "id": "src_lib_mock_repasse_repassedomunicipio"
     },
     {
       "label": "formatarReais()",
@@ -658,10 +746,10 @@
       "source_file": "src/lib/mock/repasse.ts",
       "source_location": "L87",
       "_origin": "ast",
-      "id": "src_lib_mock_repasse_formatarreais",
       "community": 35,
       "community_name": "simulador-client.tsx",
-      "norm_label": "formatarreais()"
+      "norm_label": "formatarreais()",
+      "id": "src_lib_mock_repasse_formatarreais"
     },
     {
       "label": "route.ts",
@@ -829,57 +917,13 @@
       "id": "src_app_ia_page_iapage"
     },
     {
-      "label": "page.tsx",
-      "file_type": "code",
-      "source_file": "src/app/dashboard/[perfil]/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 42,
-      "community_name": "page.tsx",
-      "norm_label": "page.tsx",
-      "id": "src_app_dashboard_perfil_page"
-    },
-    {
-      "label": "generateStaticParams()",
-      "file_type": "code",
-      "source_file": "src/app/dashboard/[perfil]/page.tsx",
-      "source_location": "L19",
-      "_origin": "ast",
-      "community": 42,
-      "community_name": "page.tsx",
-      "norm_label": "generatestaticparams()",
-      "id": "src_app_dashboard_perfil_page_generatestaticparams"
-    },
-    {
-      "label": "heatCell()",
-      "file_type": "code",
-      "source_file": "src/app/dashboard/[perfil]/page.tsx",
-      "source_location": "L23",
-      "_origin": "ast",
-      "community": 42,
-      "community_name": "page.tsx",
-      "norm_label": "heatcell()",
-      "id": "src_app_dashboard_perfil_page_heatcell"
-    },
-    {
-      "label": "DashboardPerfilPage()",
-      "file_type": "code",
-      "source_file": "src/app/dashboard/[perfil]/page.tsx",
-      "source_location": "L29",
-      "_origin": "ast",
-      "community": 42,
-      "community_name": "page.tsx",
-      "norm_label": "dashboardperfilpage()",
-      "id": "src_app_dashboard_perfil_page_dashboardperfilpage"
-    },
-    {
       "label": "perfil.ts",
       "file_type": "code",
       "source_file": "src/lib/data/perfil.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 42,
-      "community_name": "page.tsx",
+      "community": 48,
+      "community_name": "perfil.ts",
       "norm_label": "perfil.ts",
       "id": "src_lib_data_perfil"
     },
@@ -889,8 +933,8 @@
       "source_file": "src/lib/data/perfil.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 42,
-      "community_name": "page.tsx",
+      "community": 48,
+      "community_name": "perfil.ts",
       "norm_label": "supabase",
       "id": "src_lib_data_perfil_supabase"
     },
@@ -900,8 +944,8 @@
       "source_file": "src/lib/data/perfil.ts",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 42,
-      "community_name": "page.tsx",
+      "community": 48,
+      "community_name": "perfil.ts",
       "norm_label": "equipedousuario",
       "id": "src_lib_data_perfil_equipedousuario"
     },
@@ -5395,13 +5439,127 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/app/dashboard/[perfil]/page.tsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_dashboard_perfil_page",
+      "target": "src_app_dashboard_perfil_page_dashboardperfilpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/dashboard/[perfil]/page.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_dashboard_perfil_page",
+      "target": "src_app_dashboard_perfil_page_generatestaticparams",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/dashboard/[perfil]/page.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_dashboard_perfil_page",
+      "target": "src_app_dashboard_perfil_page_heatcell",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/dashboard/[perfil]/page.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_dashboard_perfil_page",
+      "target": "src_lib_data_dashboard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/dashboard/[perfil]/page.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_dashboard_perfil_page",
+      "target": "src_lib_data_dashboard_valoresreaisdousuario",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/dashboard/[perfil]/page.tsx",
+      "source_location": "L223",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_dashboard_perfil_page_dashboardperfilpage",
+      "target": "src_app_dashboard_perfil_page_heatcell",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/dashboard/[perfil]/page.tsx",
+      "source_location": "L40",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_dashboard_perfil_page_dashboardperfilpage",
+      "target": "src_lib_data_dashboard_valoresreaisdousuario"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/data/dashboard.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_lib_data_dashboard",
+      "target": "src_lib_data_dashboard_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/data/dashboard.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_lib_data_dashboard",
+      "target": "src_lib_data_dashboard_valoresreaisdousuario",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/data/dashboard.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_lib_data_dashboard",
+      "target": "src_lib_data_dashboard_valorindicador",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": ".hermes/plans/plano-evolucao-v2.md",
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "hermes_plans_plano_evolucao_v2",
-      "target": "hermes_plans_plano_evolucao_v2_apex_sa\u00fade_next_plano_de_evolu\u00e7\u00e3o_v2",
-      "confidence_score": 1.0
+      "target": "hermes_plans_plano_evolucao_v2_apex_sa\u00fade_next_plano_de_evolu\u00e7\u00e3o_v2"
     },
     {
       "relation": "contains",
@@ -5410,9 +5568,9 @@
       "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "hermes_plans_plano_evolucao_v2_apex_sa\u00fade_next_plano_de_evolu\u00e7\u00e3o_v2",
-      "target": "hermes_plans_plano_evolucao_v2_diferencial_competitivo_poss\u00edvel",
-      "confidence_score": 1.0
+      "target": "hermes_plans_plano_evolucao_v2_diferencial_competitivo_poss\u00edvel"
     },
     {
       "relation": "contains",
@@ -5421,9 +5579,9 @@
       "source_location": "L32",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "hermes_plans_plano_evolucao_v2_apex_sa\u00fade_next_plano_de_evolu\u00e7\u00e3o_v2",
-      "target": "hermes_plans_plano_evolucao_v2_fase_2_1_funda\u00e7\u00e3o_aqui_2_semanas",
-      "confidence_score": 1.0
+      "target": "hermes_plans_plano_evolucao_v2_fase_2_1_funda\u00e7\u00e3o_aqui_2_semanas"
     },
     {
       "relation": "contains",
@@ -5432,9 +5590,9 @@
       "source_location": "L51",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "hermes_plans_plano_evolucao_v2_apex_sa\u00fade_next_plano_de_evolu\u00e7\u00e3o_v2",
-      "target": "hermes_plans_plano_evolucao_v2_fase_2_2_listas_nominais_2_3_semanas",
-      "confidence_score": 1.0
+      "target": "hermes_plans_plano_evolucao_v2_fase_2_2_listas_nominais_2_3_semanas"
     },
     {
       "relation": "contains",
@@ -5443,9 +5601,9 @@
       "source_location": "L72",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "hermes_plans_plano_evolucao_v2_apex_sa\u00fade_next_plano_de_evolu\u00e7\u00e3o_v2",
-      "target": "hermes_plans_plano_evolucao_v2_fase_2_3_intelig\u00eancia_e_alertas_2_semanas",
-      "confidence_score": 1.0
+      "target": "hermes_plans_plano_evolucao_v2_fase_2_3_intelig\u00eancia_e_alertas_2_semanas"
     },
     {
       "relation": "contains",
@@ -5454,9 +5612,9 @@
       "source_location": "L91",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "hermes_plans_plano_evolucao_v2_apex_sa\u00fade_next_plano_de_evolu\u00e7\u00e3o_v2",
-      "target": "hermes_plans_plano_evolucao_v2_fase_3_diferenciais_pesados_3_4_semanas",
-      "confidence_score": 1.0
+      "target": "hermes_plans_plano_evolucao_v2_fase_3_diferenciais_pesados_3_4_semanas"
     },
     {
       "relation": "contains",
@@ -5465,9 +5623,9 @@
       "source_location": "L117",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "hermes_plans_plano_evolucao_v2_apex_sa\u00fade_next_plano_de_evolu\u00e7\u00e3o_v2",
-      "target": "hermes_plans_plano_evolucao_v2_o_que_n\u00e3o_fazer",
-      "confidence_score": 1.0
+      "target": "hermes_plans_plano_evolucao_v2_o_que_n\u00e3o_fazer"
     },
     {
       "relation": "contains",
@@ -5476,9 +5634,9 @@
       "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "hermes_plans_plano_evolucao_v2_apex_sa\u00fade_next_plano_de_evolu\u00e7\u00e3o_v2",
-      "target": "hermes_plans_plano_evolucao_v2_o_que_os_concorrentes_entregam_que_a_gente_n\u00e3o_entrega",
-      "confidence_score": 1.0
+      "target": "hermes_plans_plano_evolucao_v2_o_que_os_concorrentes_entregam_que_a_gente_n\u00e3o_entrega"
     },
     {
       "relation": "contains",
@@ -5487,9 +5645,9 @@
       "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "hermes_plans_plano_evolucao_v2_apex_sa\u00fade_next_plano_de_evolu\u00e7\u00e3o_v2",
-      "target": "hermes_plans_plano_evolucao_v2_onde_estamos",
-      "confidence_score": 1.0
+      "target": "hermes_plans_plano_evolucao_v2_onde_estamos"
     },
     {
       "relation": "contains",
@@ -5498,9 +5656,9 @@
       "source_location": "L105",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "hermes_plans_plano_evolucao_v2_apex_sa\u00fade_next_plano_de_evolu\u00e7\u00e3o_v2",
-      "target": "hermes_plans_plano_evolucao_v2_prioridade_de_execu\u00e7\u00e3o",
-      "confidence_score": 1.0
+      "target": "hermes_plans_plano_evolucao_v2_prioridade_de_execu\u00e7\u00e3o"
     },
     {
       "relation": "contains",
@@ -5509,9 +5667,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas",
-      "target": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next"
     },
     {
       "relation": "contains",
@@ -5520,9 +5678,9 @@
       "source_location": "L104",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next",
-      "target": "relatorio_paginas_10_paineis_equipe_painel_de_equipe_esf_esb_emulti",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_10_paineis_equipe_painel_de_equipe_esf_esb_emulti"
     },
     {
       "relation": "contains",
@@ -5531,9 +5689,9 @@
       "source_location": "L114",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next",
-      "target": "relatorio_paginas_11_ia_plano_de_a\u00e7\u00e3o_pdca",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_11_ia_plano_de_a\u00e7\u00e3o_pdca"
     },
     {
       "relation": "contains",
@@ -5542,9 +5700,9 @@
       "source_location": "L124",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next",
-      "target": "relatorio_paginas_12_guias_equipe_conte\u00fado_educativo_por_equipe",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_12_guias_equipe_conte\u00fado_educativo_por_equipe"
     },
     {
       "relation": "contains",
@@ -5553,9 +5711,9 @@
       "source_location": "L134",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next",
-      "target": "relatorio_paginas_13_admin_painel_administrativo_com_7_abas_sub_m\u00f3dulos",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_13_admin_painel_administrativo_com_7_abas_sub_m\u00f3dulos"
     },
     {
       "relation": "contains",
@@ -5564,9 +5722,9 @@
       "source_location": "L176",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next",
-      "target": "relatorio_paginas_14_dashboard_perfil_dashboard_individual_por_perfil_profissional_12_perfis",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_14_dashboard_perfil_dashboard_individual_por_perfil_profissional_12_perfis"
     },
     {
       "relation": "contains",
@@ -5575,9 +5733,9 @@
       "source_location": "L186",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next",
-      "target": "relatorio_paginas_15_simulador_simulador_financeiro_de_repasse",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_15_simulador_simulador_financeiro_de_repasse"
     },
     {
       "relation": "contains",
@@ -5586,9 +5744,9 @@
       "source_location": "L196",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next",
-      "target": "relatorio_paginas_16_gerencial_vis\u00e3o_gerencial_do_munic\u00edpio",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_16_gerencial_vis\u00e3o_gerencial_do_munic\u00edpio"
     },
     {
       "relation": "contains",
@@ -5597,9 +5755,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next",
-      "target": "relatorio_paginas_1_landing_p\u00fablica",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_1_landing_p\u00fablica"
     },
     {
       "relation": "contains",
@@ -5608,9 +5766,9 @@
       "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next",
-      "target": "relatorio_paginas_2_painel_hub_seletor_de_perfis",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_2_painel_hub_seletor_de_perfis"
     },
     {
       "relation": "contains",
@@ -5619,9 +5777,9 @@
       "source_location": "L34",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next",
-      "target": "relatorio_paginas_3_login_autentica\u00e7\u00e3o",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_3_login_autentica\u00e7\u00e3o"
     },
     {
       "relation": "contains",
@@ -5630,9 +5788,9 @@
       "source_location": "L44",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next",
-      "target": "relatorio_paginas_4_profissionais_gest\u00e3o_de_profissionais_self_service_por_munic\u00edpio",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_4_profissionais_gest\u00e3o_de_profissionais_self_service_por_munic\u00edpio"
     },
     {
       "relation": "contains",
@@ -5641,9 +5799,9 @@
       "source_location": "L54",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next",
-      "target": "relatorio_paginas_5_equipes_listagem_de_equipes_do_munic\u00edpio",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_5_equipes_listagem_de_equipes_do_munic\u00edpio"
     },
     {
       "relation": "contains",
@@ -5652,9 +5810,9 @@
       "source_location": "L64",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next",
-      "target": "relatorio_paginas_6_gestao_painel_resumo_de_gest\u00e3o_do_munic\u00edpio",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_6_gestao_painel_resumo_de_gest\u00e3o_do_munic\u00edpio"
     },
     {
       "relation": "contains",
@@ -5663,9 +5821,9 @@
       "source_location": "L74",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next",
-      "target": "relatorio_paginas_7_lab_ui_laborat\u00f3rio_de_componentes_de_ui",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_7_lab_ui_laborat\u00f3rio_de_componentes_de_ui"
     },
     {
       "relation": "contains",
@@ -5674,9 +5832,9 @@
       "source_location": "L84",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next",
-      "target": "relatorio_paginas_8_proposta_p\u00e1gina_de_vendas_comercial_planos_e_inexigibilidade",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_8_proposta_p\u00e1gina_de_vendas_comercial_planos_e_inexigibilidade"
     },
     {
       "relation": "contains",
@@ -5685,9 +5843,9 @@
       "source_location": "L94",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next",
-      "target": "relatorio_paginas_9_privacidade_pol\u00edtica_de_privacidade_lgpd",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_9_privacidade_pol\u00edtica_de_privacidade_lgpd"
     },
     {
       "relation": "contains",
@@ -5696,9 +5854,9 @@
       "source_location": "L206",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_relat\u00f3rio_das_p\u00e1ginas_\u00e1pex_sa\u00fade_next",
-      "target": "relatorio_paginas_resumo_de_padr\u00f5es_observados",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_resumo_de_padr\u00f5es_observados"
     },
     {
       "relation": "contains",
@@ -5707,9 +5865,9 @@
       "source_location": "L142",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_13_admin_painel_administrativo_com_7_abas_sub_m\u00f3dulos",
-      "target": "relatorio_paginas_13_1_admin_municipios_tsx_aba_munic\u00edpios",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_13_1_admin_municipios_tsx_aba_munic\u00edpios"
     },
     {
       "relation": "contains",
@@ -5718,9 +5876,9 @@
       "source_location": "L147",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_13_admin_painel_administrativo_com_7_abas_sub_m\u00f3dulos",
-      "target": "relatorio_paginas_13_2_admin_equipes_tsx_aba_equipes",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_13_2_admin_equipes_tsx_aba_equipes"
     },
     {
       "relation": "contains",
@@ -5729,9 +5887,9 @@
       "source_location": "L152",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_13_admin_painel_administrativo_com_7_abas_sub_m\u00f3dulos",
-      "target": "relatorio_paginas_13_3_admin_indicadores_tsx_aba_indicadores",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_13_3_admin_indicadores_tsx_aba_indicadores"
     },
     {
       "relation": "contains",
@@ -5740,9 +5898,9 @@
       "source_location": "L157",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_13_admin_painel_administrativo_com_7_abas_sub_m\u00f3dulos",
-      "target": "relatorio_paginas_13_4_admin_pec_tsx_aba_integra\u00e7\u00e3o_pec",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_13_4_admin_pec_tsx_aba_integra\u00e7\u00e3o_pec"
     },
     {
       "relation": "contains",
@@ -5751,9 +5909,9 @@
       "source_location": "L162",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_13_admin_painel_administrativo_com_7_abas_sub_m\u00f3dulos",
-      "target": "relatorio_paginas_13_5_admin_profissionais_tsx_aba_profissionais_vis\u00e3o_global_todos_munic\u00edpios",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_13_5_admin_profissionais_tsx_aba_profissionais_vis\u00e3o_global_todos_munic\u00edpios"
     },
     {
       "relation": "contains",
@@ -5762,9 +5920,9 @@
       "source_location": "L167",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_13_admin_painel_administrativo_com_7_abas_sub_m\u00f3dulos",
-      "target": "relatorio_paginas_13_6_admin_gestao_tsx_aba_gest\u00e3o_vis\u00e3o_geral_de_indicadores",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_13_6_admin_gestao_tsx_aba_gest\u00e3o_vis\u00e3o_geral_de_indicadores"
     },
     {
       "relation": "contains",
@@ -5773,9 +5931,9 @@
       "source_location": "L172",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "relatorio_paginas_13_admin_painel_administrativo_com_7_abas_sub_m\u00f3dulos",
-      "target": "relatorio_paginas_admin_comercial_tsx_mencionado_como_aba_n\u00e3o_lido_a_pedido_fora_da_lista_dos_6_arquivos_solicitados",
-      "confidence_score": 1.0
+      "target": "relatorio_paginas_admin_comercial_tsx_mencionado_como_aba_n\u00e3o_lido_a_pedido_fora_da_lista_dos_6_arquivos_solicitados"
     },
     {
       "relation": "contains",
@@ -5784,9 +5942,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_gerencial_page",
-      "target": "src_app_gerencial_page_formatarreais",
-      "confidence_score": 1.0
+      "target": "src_app_gerencial_page_formatarreais"
     },
     {
       "relation": "contains",
@@ -5795,9 +5953,9 @@
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_gerencial_page",
-      "target": "src_app_gerencial_page_gerencialpage",
-      "confidence_score": 1.0
+      "target": "src_app_gerencial_page_gerencialpage"
     },
     {
       "relation": "imports_from",
@@ -5807,9 +5965,9 @@
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_gerencial_page",
-      "target": "src_lib_data_gerencial",
-      "confidence_score": 1.0
+      "target": "src_lib_data_gerencial"
     },
     {
       "relation": "imports",
@@ -5819,9 +5977,9 @@
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_gerencial_page",
-      "target": "src_lib_data_gerencial_dadosgerencial",
-      "confidence_score": 1.0
+      "target": "src_lib_data_gerencial_dadosgerencial"
     },
     {
       "relation": "calls",
@@ -5831,9 +5989,9 @@
       "source_location": "L38",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_gerencial_page_gerencialpage",
-      "target": "src_app_gerencial_page_formatarreais",
-      "confidence_score": 1.0
+      "target": "src_app_gerencial_page_formatarreais"
     },
     {
       "relation": "calls",
@@ -5866,9 +6024,9 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_simulador_simulador_client",
-      "target": "src_app_simulador_simulador_client_classificacoes",
-      "confidence_score": 1.0
+      "target": "src_app_simulador_simulador_client_classificacoes"
     },
     {
       "relation": "contains",
@@ -5877,9 +6035,9 @@
       "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_simulador_simulador_client",
-      "target": "src_app_simulador_simulador_client_props",
-      "confidence_score": 1.0
+      "target": "src_app_simulador_simulador_client_props"
     },
     {
       "relation": "contains",
@@ -5888,9 +6046,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_simulador_simulador_client",
-      "target": "src_app_simulador_simulador_client_repassecenario",
-      "confidence_score": 1.0
+      "target": "src_app_simulador_simulador_client_repassecenario"
     },
     {
       "relation": "contains",
@@ -5899,9 +6057,9 @@
       "source_location": "L28",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_simulador_simulador_client",
-      "target": "src_app_simulador_simulador_client_simuladorclient",
-      "confidence_score": 1.0
+      "target": "src_app_simulador_simulador_client_simuladorclient"
     },
     {
       "relation": "contains",
@@ -5910,9 +6068,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_simulador_simulador_client",
-      "target": "src_app_simulador_simulador_client_tipos",
-      "confidence_score": 1.0
+      "target": "src_app_simulador_simulador_client_tipos"
     },
     {
       "relation": "imports_from",
@@ -5922,9 +6080,9 @@
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_simulador_simulador_client",
-      "target": "src_lib_mock_repasse",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse"
     },
     {
       "relation": "imports",
@@ -5934,9 +6092,9 @@
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_simulador_simulador_client",
-      "target": "src_lib_mock_repasse_fixo_mensal",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse_fixo_mensal"
     },
     {
       "relation": "imports",
@@ -5946,9 +6104,9 @@
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_simulador_simulador_client",
-      "target": "src_lib_mock_repasse_formatarreais",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse_formatarreais"
     },
     {
       "relation": "imports",
@@ -5958,9 +6116,9 @@
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_simulador_simulador_client",
-      "target": "src_lib_mock_repasse_qualidade_mensal",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse_qualidade_mensal"
     },
     {
       "relation": "references",
@@ -5982,9 +6140,9 @@
       "source_location": "L33",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_simulador_simulador_client_simuladorclient",
-      "target": "src_app_simulador_simulador_client_repassecenario",
-      "confidence_score": 1.0
+      "target": "src_app_simulador_simulador_client_repassecenario"
     },
     {
       "relation": "imports",
@@ -6017,9 +6175,9 @@
       "source_location": "L30",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_data_gerencial",
-      "target": "src_lib_data_gerencial_classificacao",
-      "confidence_score": 1.0
+      "target": "src_lib_data_gerencial_classificacao"
     },
     {
       "relation": "contains",
@@ -6028,9 +6186,9 @@
       "source_location": "L37",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_data_gerencial",
-      "target": "src_lib_data_gerencial_dadosgerencial",
-      "confidence_score": 1.0
+      "target": "src_lib_data_gerencial_dadosgerencial"
     },
     {
       "relation": "contains",
@@ -6039,9 +6197,9 @@
       "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_data_gerencial",
-      "target": "src_lib_data_gerencial_repasseequipe",
-      "confidence_score": 1.0
+      "target": "src_lib_data_gerencial_repasseequipe"
     },
     {
       "relation": "contains",
@@ -6050,9 +6208,9 @@
       "source_location": "L11",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_data_gerencial",
-      "target": "src_lib_data_gerencial_supabase",
-      "confidence_score": 1.0
+      "target": "src_lib_data_gerencial_supabase"
     },
     {
       "relation": "imports_from",
@@ -6062,9 +6220,9 @@
       "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_data_gerencial",
-      "target": "src_lib_mock_repasse",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse"
     },
     {
       "relation": "imports",
@@ -6074,9 +6232,9 @@
       "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_data_gerencial",
-      "target": "src_lib_mock_repasse_fixo_mensal",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse_fixo_mensal"
     },
     {
       "relation": "imports",
@@ -6086,9 +6244,9 @@
       "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_data_gerencial",
-      "target": "src_lib_mock_repasse_qualidade_mensal",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse_qualidade_mensal"
     },
     {
       "relation": "calls",
@@ -6098,9 +6256,9 @@
       "source_location": "L72",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_data_gerencial_dadosgerencial",
-      "target": "src_lib_data_gerencial_classificacao",
-      "confidence_score": 1.0
+      "target": "src_lib_data_gerencial_classificacao"
     },
     {
       "relation": "imports_from",
@@ -6110,9 +6268,9 @@
       "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_mock_tests_repasse_test",
-      "target": "src_lib_mock_repasse",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse"
     },
     {
       "relation": "imports",
@@ -6122,9 +6280,9 @@
       "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_mock_tests_repasse_test",
-      "target": "src_lib_mock_repasse_fixo_mensal",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse_fixo_mensal"
     },
     {
       "relation": "imports",
@@ -6134,9 +6292,9 @@
       "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_mock_tests_repasse_test",
-      "target": "src_lib_mock_repasse_formatarreais",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse_formatarreais"
     },
     {
       "relation": "imports",
@@ -6146,9 +6304,9 @@
       "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_mock_tests_repasse_test",
-      "target": "src_lib_mock_repasse_qualidade_mensal",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse_qualidade_mensal"
     },
     {
       "relation": "imports",
@@ -6158,9 +6316,9 @@
       "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_mock_tests_repasse_test",
-      "target": "src_lib_mock_repasse_repassedaequipe",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse_repassedaequipe"
     },
     {
       "relation": "imports",
@@ -6170,9 +6328,9 @@
       "source_location": "L2",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_mock_tests_repasse_test",
-      "target": "src_lib_mock_repasse_repassedomunicipio",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse_repassedomunicipio"
     },
     {
       "relation": "contains",
@@ -6181,9 +6339,9 @@
       "source_location": "L37",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_mock_repasse",
-      "target": "src_lib_mock_repasse_fator_classificacao",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse_fator_classificacao"
     },
     {
       "relation": "contains",
@@ -6192,9 +6350,9 @@
       "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_mock_repasse",
-      "target": "src_lib_mock_repasse_fixo_mensal",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse_fixo_mensal"
     },
     {
       "relation": "contains",
@@ -6203,9 +6361,9 @@
       "source_location": "L87",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_mock_repasse",
-      "target": "src_lib_mock_repasse_formatarreais",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse_formatarreais"
     },
     {
       "relation": "contains",
@@ -6214,9 +6372,9 @@
       "source_location": "L26",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_mock_repasse",
-      "target": "src_lib_mock_repasse_qualidade_mensal",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse_qualidade_mensal"
     },
     {
       "relation": "contains",
@@ -6225,9 +6383,9 @@
       "source_location": "L55",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_mock_repasse",
-      "target": "src_lib_mock_repasse_repassedaequipe",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse_repassedaequipe"
     },
     {
       "relation": "contains",
@@ -6236,9 +6394,9 @@
       "source_location": "L74",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_mock_repasse",
-      "target": "src_lib_mock_repasse_repassedomunicipio",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse_repassedomunicipio"
     },
     {
       "relation": "contains",
@@ -6247,9 +6405,9 @@
       "source_location": "L44",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_mock_repasse",
-      "target": "src_lib_mock_repasse_repasseequipe",
-      "confidence_score": 1.0
+      "target": "src_lib_mock_repasse_repasseequipe"
     },
     {
       "relation": "indirect_call",
@@ -6259,9 +6417,9 @@
       "source_location": "L80",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 0.5,
       "source": "src_lib_mock_repasse_repassedomunicipio",
-      "target": "src_lib_mock_repasse_repassedaequipe",
-      "confidence_score": 0.5
+      "target": "src_lib_mock_repasse_repassedaequipe"
     },
     {
       "relation": "contains",
@@ -6407,87 +6565,6 @@
       "confidence_score": 1.0,
       "source": "src_app_ia_page",
       "target": "src_app_ia_page_iapage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/dashboard/[perfil]/page.tsx",
-      "source_location": "L29",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_dashboard_perfil_page",
-      "target": "src_app_dashboard_perfil_page_dashboardperfilpage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/dashboard/[perfil]/page.tsx",
-      "source_location": "L19",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_dashboard_perfil_page",
-      "target": "src_app_dashboard_perfil_page_generatestaticparams"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/dashboard/[perfil]/page.tsx",
-      "source_location": "L23",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_dashboard_perfil_page",
-      "target": "src_app_dashboard_perfil_page_heatcell"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/dashboard/[perfil]/page.tsx",
-      "source_location": "L17",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_dashboard_perfil_page",
-      "target": "src_lib_data_perfil"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/dashboard/[perfil]/page.tsx",
-      "source_location": "L17",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_dashboard_perfil_page",
-      "target": "src_lib_data_perfil_equipedousuario"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/dashboard/[perfil]/page.tsx",
-      "source_location": "L223",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_dashboard_perfil_page_dashboardperfilpage",
-      "target": "src_app_dashboard_perfil_page_heatcell"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/app/dashboard/[perfil]/page.tsx",
-      "source_location": "L40",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_app_dashboard_perfil_page_dashboardperfilpage",
-      "target": "src_lib_data_perfil_equipedousuario"
     },
     {
       "relation": "contains",
@@ -12444,5 +12521,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "9305480ea83f0899aa21da27732dedb261fb27ec"
+  "built_at_commit": "fd4890df08e9a901ced8b06c54e15f701c4becb1"
 }

@@ -1,16 +1,16 @@
 # Graph Report - apex-saude-next  (2026-08-03)
 
 ## Corpus Check
-- 112 files · ~479,206 words
+- 113 files · ~479,610 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 489 nodes · 619 edges · 48 communities (31 shown, 17 thin omitted)
+- 493 nodes · 622 edges · 49 communities (31 shown, 18 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 1 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `9305480e`
+- Built from commit: `fd4890df`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -60,6 +60,7 @@
 - ia-client.tsx
 - page.tsx
 - checklist-interativa.tsx
+- perfil.ts
 
 ## God Nodes (most connected - your core abstractions)
 1. `Relatório das páginas — ÁPEX Saúde Next` - 18 edges
@@ -88,7 +89,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (48 total, 17 thin omitted)
+## Communities (49 total, 18 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.07
@@ -199,21 +200,21 @@ Cohesion: 0.40
 Nodes (4): Regra, Schema alternativo (nao usado), Schema ativo (producao), Schemas SQL — qual usar
 
 ### Community 42 - "page.tsx"
-Cohesion: 0.43
-Nodes (4): DashboardPerfilPage(), heatCell(), equipeDoUsuario, supabase
+Cohesion: 0.36
+Nodes (5): DashboardPerfilPage(), heatCell(), supabase, valoresReaisDoUsuario(), ValorIndicador
 
 ## Knowledge Gaps
-- **206 isolated node(s):** `Onde estamos`, `O que os concorrentes entregam que a gente não entrega`, `Diferencial competitivo possível`, `Fase 2.1 — Fundação (aqui → 2 semanas)`, `Fase 2.2 — Listas Nominais (2-3 semanas)` (+201 more)
+- **209 isolated node(s):** `supabase`, `ValorIndicador`, `Onde estamos`, `O que os concorrentes entregam que a gente não entrega`, `Diferencial competitivo possível` (+204 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **17 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **18 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `devDependencies` connect `Community 6` to `Community 5`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **What connects `Onde estamos`, `O que os concorrentes entregam que a gente não entrega`, `Diferencial competitivo possível` to the rest of the system?**
-  _206 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `supabase`, `ValorIndicador`, `Onde estamos` to the rest of the system?**
+  _209 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.07482993197278912 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**

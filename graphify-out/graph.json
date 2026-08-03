@@ -4,15 +4,70 @@
   "graph": {},
   "nodes": [
     {
+      "label": "ia-client.tsx",
+      "file_type": "code",
+      "source_file": "src/app/ia/ia-client.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_ia_ia_client",
+      "community": 45,
+      "community_name": "ia-client.tsx",
+      "norm_label": "ia-client.tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "src/app/ia/ia-client.tsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "src_app_ia_ia_client_props",
+      "community": 45,
+      "community_name": "ia-client.tsx",
+      "norm_label": "props"
+    },
+    {
+      "label": "IaClient()",
+      "file_type": "code",
+      "source_file": "src/app/ia/ia-client.tsx",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "src_app_ia_ia_client_iaclient",
+      "community": 45,
+      "community_name": "ia-client.tsx",
+      "norm_label": "iaclient()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/ia/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_ia_page",
+      "community": 45,
+      "community_name": "ia-client.tsx",
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "IaPage()",
+      "file_type": "code",
+      "source_file": "src/app/ia/page.tsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "src_app_ia_page_iapage",
+      "community": 45,
+      "community_name": "ia-client.tsx",
+      "norm_label": "iapage()"
+    },
+    {
       "label": "page.tsx",
       "file_type": "code",
       "source_file": "src/app/dashboard/[perfil]/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_app_dashboard_perfil_page",
       "community": 42,
       "community_name": "page.tsx",
-      "norm_label": "page.tsx"
+      "norm_label": "page.tsx",
+      "id": "src_app_dashboard_perfil_page"
     },
     {
       "label": "generateStaticParams()",
@@ -20,10 +75,10 @@
       "source_file": "src/app/dashboard/[perfil]/page.tsx",
       "source_location": "L19",
       "_origin": "ast",
-      "id": "src_app_dashboard_perfil_page_generatestaticparams",
       "community": 42,
       "community_name": "page.tsx",
-      "norm_label": "generatestaticparams()"
+      "norm_label": "generatestaticparams()",
+      "id": "src_app_dashboard_perfil_page_generatestaticparams"
     },
     {
       "label": "heatCell()",
@@ -31,10 +86,10 @@
       "source_file": "src/app/dashboard/[perfil]/page.tsx",
       "source_location": "L23",
       "_origin": "ast",
-      "id": "src_app_dashboard_perfil_page_heatcell",
       "community": 42,
       "community_name": "page.tsx",
-      "norm_label": "heatcell()"
+      "norm_label": "heatcell()",
+      "id": "src_app_dashboard_perfil_page_heatcell"
     },
     {
       "label": "DashboardPerfilPage()",
@@ -42,10 +97,10 @@
       "source_file": "src/app/dashboard/[perfil]/page.tsx",
       "source_location": "L29",
       "_origin": "ast",
-      "id": "src_app_dashboard_perfil_page_dashboardperfilpage",
       "community": 42,
       "community_name": "page.tsx",
-      "norm_label": "dashboardperfilpage()"
+      "norm_label": "dashboardperfilpage()",
+      "id": "src_app_dashboard_perfil_page_dashboardperfilpage"
     },
     {
       "label": "dashboard.ts",
@@ -53,10 +108,10 @@
       "source_file": "src/lib/data/dashboard.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_lib_data_dashboard",
       "community": 42,
       "community_name": "page.tsx",
-      "norm_label": "dashboard.ts"
+      "norm_label": "dashboard.ts",
+      "id": "src_lib_data_dashboard"
     },
     {
       "label": "supabase",
@@ -64,10 +119,10 @@
       "source_file": "src/lib/data/dashboard.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "src_lib_data_dashboard_supabase",
       "community": 42,
       "community_name": "page.tsx",
-      "norm_label": "supabase"
+      "norm_label": "supabase",
+      "id": "src_lib_data_dashboard_supabase"
     },
     {
       "label": "ValorIndicador",
@@ -75,10 +130,10 @@
       "source_file": "src/lib/data/dashboard.ts",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "src_lib_data_dashboard_valorindicador",
       "community": 42,
       "community_name": "page.tsx",
-      "norm_label": "valorindicador"
+      "norm_label": "valorindicador",
+      "id": "src_lib_data_dashboard_valorindicador"
     },
     {
       "label": "valoresReaisDoUsuario()",
@@ -86,10 +141,10 @@
       "source_file": "src/lib/data/dashboard.ts",
       "source_location": "L22",
       "_origin": "ast",
-      "id": "src_lib_data_dashboard_valoresreaisdousuario",
       "community": 42,
       "community_name": "page.tsx",
-      "norm_label": "valoresreaisdousuario()"
+      "norm_label": "valoresreaisdousuario()",
+      "id": "src_lib_data_dashboard_valoresreaisdousuario"
     },
     {
       "label": "plano-evolucao-v2.md",
@@ -860,61 +915,6 @@
       "community_name": "page.tsx",
       "norm_label": "guiaequipepage()",
       "id": "src_app_guias_equipe_page_guiaequipepage"
-    },
-    {
-      "label": "ia-client.tsx",
-      "file_type": "code",
-      "source_file": "src/app/ia/ia-client.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 45,
-      "community_name": "ia-client.tsx",
-      "norm_label": "ia-client.tsx",
-      "id": "src_app_ia_ia_client"
-    },
-    {
-      "label": "Props",
-      "file_type": "code",
-      "source_file": "src/app/ia/ia-client.tsx",
-      "source_location": "L9",
-      "_origin": "ast",
-      "community": 45,
-      "community_name": "ia-client.tsx",
-      "norm_label": "props",
-      "id": "src_app_ia_ia_client_props"
-    },
-    {
-      "label": "IaClient()",
-      "file_type": "code",
-      "source_file": "src/app/ia/ia-client.tsx",
-      "source_location": "L13",
-      "_origin": "ast",
-      "community": 45,
-      "community_name": "ia-client.tsx",
-      "norm_label": "iaclient()",
-      "id": "src_app_ia_ia_client_iaclient"
-    },
-    {
-      "label": "page.tsx",
-      "file_type": "code",
-      "source_file": "src/app/ia/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 45,
-      "community_name": "ia-client.tsx",
-      "norm_label": "page.tsx",
-      "id": "src_app_ia_page"
-    },
-    {
-      "label": "IaPage()",
-      "file_type": "code",
-      "source_file": "src/app/ia/page.tsx",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 45,
-      "community_name": "ia-client.tsx",
-      "norm_label": "iapage()",
-      "id": "src_app_ia_page_iapage"
     },
     {
       "label": "perfil.ts",
@@ -5439,13 +5439,70 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/app/ia/ia-client.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_ia_ia_client",
+      "target": "src_app_ia_ia_client_iaclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/ia/ia-client.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_ia_ia_client",
+      "target": "src_app_ia_ia_client_props",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/ia/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_ia_page",
+      "target": "src_app_ia_ia_client",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/ia/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_ia_page",
+      "target": "src_app_ia_ia_client_iaclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/ia/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_app_ia_page",
+      "target": "src_app_ia_page_iapage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/app/dashboard/[perfil]/page.tsx",
       "source_location": "L29",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_dashboard_perfil_page",
-      "target": "src_app_dashboard_perfil_page_dashboardperfilpage",
-      "confidence_score": 1.0
+      "target": "src_app_dashboard_perfil_page_dashboardperfilpage"
     },
     {
       "relation": "contains",
@@ -5454,9 +5511,9 @@
       "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_dashboard_perfil_page",
-      "target": "src_app_dashboard_perfil_page_generatestaticparams",
-      "confidence_score": 1.0
+      "target": "src_app_dashboard_perfil_page_generatestaticparams"
     },
     {
       "relation": "contains",
@@ -5465,9 +5522,9 @@
       "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_dashboard_perfil_page",
-      "target": "src_app_dashboard_perfil_page_heatcell",
-      "confidence_score": 1.0
+      "target": "src_app_dashboard_perfil_page_heatcell"
     },
     {
       "relation": "imports_from",
@@ -5477,9 +5534,9 @@
       "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_dashboard_perfil_page",
-      "target": "src_lib_data_dashboard",
-      "confidence_score": 1.0
+      "target": "src_lib_data_dashboard"
     },
     {
       "relation": "imports",
@@ -5489,9 +5546,9 @@
       "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_dashboard_perfil_page",
-      "target": "src_lib_data_dashboard_valoresreaisdousuario",
-      "confidence_score": 1.0
+      "target": "src_lib_data_dashboard_valoresreaisdousuario"
     },
     {
       "relation": "calls",
@@ -5501,9 +5558,9 @@
       "source_location": "L223",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_app_dashboard_perfil_page_dashboardperfilpage",
-      "target": "src_app_dashboard_perfil_page_heatcell",
-      "confidence_score": 1.0
+      "target": "src_app_dashboard_perfil_page_heatcell"
     },
     {
       "relation": "calls",
@@ -5524,9 +5581,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_data_dashboard",
-      "target": "src_lib_data_dashboard_supabase",
-      "confidence_score": 1.0
+      "target": "src_lib_data_dashboard_supabase"
     },
     {
       "relation": "contains",
@@ -5535,9 +5592,9 @@
       "source_location": "L22",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_data_dashboard",
-      "target": "src_lib_data_dashboard_valoresreaisdousuario",
-      "confidence_score": 1.0
+      "target": "src_lib_data_dashboard_valoresreaisdousuario"
     },
     {
       "relation": "contains",
@@ -5546,9 +5603,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_lib_data_dashboard",
-      "target": "src_lib_data_dashboard_valorindicador",
-      "confidence_score": 1.0
+      "target": "src_lib_data_dashboard_valorindicador"
     },
     {
       "relation": "contains",
@@ -6508,63 +6565,6 @@
       "confidence_score": 1.0,
       "source": "src_app_guias_equipe_page",
       "target": "src_app_guias_equipe_page_planos"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/ia/ia-client.tsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_ia_ia_client",
-      "target": "src_app_ia_ia_client_iaclient"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/ia/ia-client.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_ia_ia_client",
-      "target": "src_app_ia_ia_client_props"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/ia/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_ia_page",
-      "target": "src_app_ia_ia_client"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/ia/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_ia_page",
-      "target": "src_app_ia_ia_client_iaclient"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/ia/page.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_app_ia_page",
-      "target": "src_app_ia_page_iapage"
     },
     {
       "relation": "contains",
@@ -12521,5 +12521,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "fd4890df08e9a901ced8b06c54e15f701c4becb1"
+  "built_at_commit": "c1266550d94d4832e8306e1d3f7ba66cda93fb39"
 }

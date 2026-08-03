@@ -60,7 +60,9 @@ export default async function GerencialPage() {
                 <tr><td colSpan={5} className="py-8 text-center text-on-surface-variant">Nenhuma equipe com dados cadastrados.</td></tr>
               ) : equipes.map((r) => (
                 <tr key={r.equipeId} className="hover:bg-surface-container-low/80">
-                  <td className="py-3.5 px-4 font-medium text-on-surface">{r.equipeNome}</td>
+                  <td className="py-3.5 px-4 font-medium text-on-surface">
+                    <Link href={`/equipes/${r.equipeId}`} className="hover:text-primary hover:underline">{r.equipeNome}</Link>
+                  </td>
                   <td className="py-3.5 px-4 text-on-surface-variant uppercase text-xs font-semibold">
                     <Link href={`/paineis/${r.tipo}`} className="hover:text-primary underline-offset-2 hover:underline">{r.tipo}</Link>
                   </td>
