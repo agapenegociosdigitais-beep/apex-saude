@@ -1,0 +1,500 @@
+{
+  "communities": {
+    "0": [
+      "src_app_dashboard_perfil_page",
+      "src_app_dashboard_perfil_page_dashboardperfilpage",
+      "src_app_dashboard_perfil_page_generatestaticparams",
+      "src_app_ia_page",
+      "src_app_ia_page_iapage",
+      "src_components_dashboard_checklist_card",
+      "src_components_dashboard_checklist_card_checklistcard",
+      "src_components_dashboard_checklist_card_checklistcardprops",
+      "src_components_dashboard_indicador_card",
+      "src_components_dashboard_indicador_card_indicadorcard",
+      "src_components_dashboard_indicador_card_indicadorcardprops",
+      "src_components_dashboard_indicador_card_status_styles",
+      "src_lib_mock_equipes_equipeconfig",
+      "src_lib_mock_indicadores",
+      "src_lib_mock_indicadores_dicaindicador",
+      "src_lib_mock_indicadores_formatarmeta",
+      "src_lib_mock_indicadores_formatarvalor",
+      "src_lib_mock_indicadores_hashstr",
+      "src_lib_mock_indicadores_iconetendencia",
+      "src_lib_mock_indicadores_mesanterior",
+      "src_lib_mock_indicadores_progressopercentual",
+      "src_lib_mock_indicadores_status_label",
+      "src_lib_mock_indicadores_statusdoindicador",
+      "src_lib_mock_indicadores_statusindicador",
+      "src_lib_mock_indicadores_tendencia",
+      "src_lib_mock_indicadores_ultimosmeses",
+      "src_lib_mock_indicadores_valormock",
+      "src_lib_mock_perfis",
+      "src_lib_mock_perfis_indicadorconfig",
+      "src_lib_mock_perfis_isperfilid",
+      "src_lib_mock_perfis_perfil_ids",
+      "src_lib_mock_perfis_perfilconfig",
+      "src_lib_mock_perfis_perfilid",
+      "src_lib_mock_perfis_perfillink",
+      "src_lib_mock_tests_indicadores_test",
+      "src_lib_mock_tests_indicadores_test_ind_escala10",
+      "src_lib_mock_tests_indicadores_test_ind_invertido",
+      "src_lib_mock_tests_indicadores_test_ind_padrao"
+    ],
+    "1": [
+      "src_app_api_integracao_pec_config_route",
+      "src_app_api_integracao_pec_config_route_get",
+      "src_app_api_integracao_pec_config_route_post",
+      "src_app_api_integracao_pec_sincronizar_route",
+      "src_app_api_integracao_pec_sincronizar_route_post",
+      "src_app_api_integracao_pec_status_route",
+      "src_app_api_integracao_pec_status_route_get",
+      "src_lib_pec_connector_connection",
+      "src_lib_pec_connector_connection_executarquery",
+      "src_lib_pec_connector_connection_fecharconexao",
+      "src_lib_pec_connector_connection_fechartodasconexoes",
+      "src_lib_pec_connector_connection_getpool",
+      "src_lib_pec_connector_connection_pools",
+      "src_lib_pec_connector_connection_testarconexao",
+      "src_lib_pec_connector_connection_validarschema",
+      "src_lib_pec_connector_index",
+      "src_lib_pec_connector_queries",
+      "src_lib_pec_connector_queries_getindicadoressuportados",
+      "src_lib_pec_connector_queries_getquery",
+      "src_lib_pec_connector_queries_pec_indicador_queries",
+      "src_lib_pec_connector_sync",
+      "src_lib_pec_connector_sync_calcularvalorindicador",
+      "src_lib_pec_connector_sync_sincronizarindicadores",
+      "src_lib_pec_connector_sync_sincronizarmunicipio",
+      "src_lib_pec_connector_types",
+      "src_lib_pec_connector_types_codigos_procedimentos",
+      "src_lib_pec_connector_types_integracaopecconfig",
+      "src_lib_pec_connector_types_pecfichaatendimentoindividual",
+      "src_lib_pec_connector_types_pecfichaatendimentoodontologico",
+      "src_lib_pec_connector_types_pecfichaprocedimentos",
+      "src_lib_pec_connector_types_pecindicadormapping",
+      "src_lib_pec_connector_types_pecversao",
+      "src_lib_pec_connector_types_periodocalculo",
+      "src_lib_pec_connector_types_syncresult",
+      "src_lib_pec_connector_types_tipoconexao",
+      "src_lib_supabase_server",
+      "src_lib_supabase_server_criarclientesupabase"
+    ],
+    "2": [
+      "src_app_admin_page",
+      "src_app_admin_page_adminpage",
+      "src_app_admin_page_e",
+      "src_app_admin_page_estados",
+      "src_app_admin_page_ind",
+      "src_app_admin_page_m",
+      "src_app_admin_page_u",
+      "src_app_login_page",
+      "src_app_login_page_loginpage",
+      "src_app_page",
+      "src_app_page_homepage",
+      "src_components_dashboard_dashboard_header",
+      "src_components_dashboard_dashboard_header_dashboardheader",
+      "src_components_dashboard_dashboard_header_perfil_icon",
+      "src_components_dashboard_dashboard_header_role_label",
+      "src_components_dashboard_insights_panel",
+      "src_components_dashboard_insights_panel_equiperesumo",
+      "src_components_dashboard_insights_panel_gerarinsights",
+      "src_components_dashboard_insights_panel_insight",
+      "src_components_dashboard_insights_panel_insightspanel",
+      "src_components_home_redirect",
+      "src_components_home_redirect_homeredirect",
+      "src_components_perfil_guard",
+      "src_components_perfil_guard_perfilguard",
+      "src_lib_hooks_useuser",
+      "src_lib_hooks_useuser_userdata",
+      "src_lib_hooks_useuser_useuser",
+      "src_lib_supabase_client",
+      "src_lib_supabase_client_criarclientebrowser",
+      "src_lib_supabase_client_supabaseconfigurado"
+    ],
+    "3": [
+      "ref_dom",
+      "ref_dom_iterable",
+      "ref_esnext",
+      "ref_mts",
+      "ref_next_dev_types_ts",
+      "ref_next_env_d_ts",
+      "ref_next_types_ts",
+      "ref_node_modules",
+      "ref_ts",
+      "ref_tsx",
+      "tsconfig",
+      "tsconfig_compileroptions",
+      "tsconfig_compileroptions_allowjs",
+      "tsconfig_compileroptions_esmoduleinterop",
+      "tsconfig_compileroptions_incremental",
+      "tsconfig_compileroptions_isolatedmodules",
+      "tsconfig_compileroptions_jsx",
+      "tsconfig_compileroptions_lib",
+      "tsconfig_compileroptions_module",
+      "tsconfig_compileroptions_moduleresolution",
+      "tsconfig_compileroptions_noemit",
+      "tsconfig_compileroptions_paths",
+      "tsconfig_compileroptions_plugins",
+      "tsconfig_compileroptions_resolvejsonmodule",
+      "tsconfig_compileroptions_skiplibcheck",
+      "tsconfig_compileroptions_strict",
+      "tsconfig_compileroptions_target",
+      "tsconfig_exclude",
+      "tsconfig_include"
+    ],
+    "4": [
+      "src_app_gerencial_page",
+      "src_app_gerencial_page_gerencialpage",
+      "src_app_simulador_page",
+      "src_app_simulador_page_classificacoes",
+      "src_app_simulador_page_repassecenario",
+      "src_app_simulador_page_simuladorpage",
+      "src_app_simulador_page_tipos",
+      "src_lib_mock_equipes_equipeid",
+      "src_lib_mock_municipio",
+      "src_lib_mock_municipio_equipeinstancia",
+      "src_lib_mock_municipio_indicadoresdotipo",
+      "src_lib_mock_municipio_municipio_mock",
+      "src_lib_mock_municipio_municipioconfig",
+      "src_lib_mock_nota",
+      "src_lib_mock_nota_calcularnotaequipe",
+      "src_lib_mock_nota_classificacaodanota",
+      "src_lib_mock_repasse",
+      "src_lib_mock_repasse_fator_classificacao",
+      "src_lib_mock_repasse_formatarreais",
+      "src_lib_mock_repasse_repasse_base_mensal",
+      "src_lib_mock_repasse_repassedaequipe",
+      "src_lib_mock_repasse_repassedomunicipio",
+      "src_lib_mock_repasse_repasseequipe",
+      "src_lib_mock_tests_nota_test",
+      "src_lib_mock_tests_repasse_test"
+    ],
+    "5": [
+      "next",
+      "package",
+      "package_dependencies",
+      "package_dependencies_next",
+      "package_dependencies_pg",
+      "package_dependencies_react",
+      "package_dependencies_react_dom",
+      "package_dependencies_supabase_ssr",
+      "package_dependencies_supabase_supabase_js",
+      "package_name",
+      "package_private",
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_dev",
+      "package_scripts_lint",
+      "package_scripts_start",
+      "package_scripts_test",
+      "package_version",
+      "pg",
+      "react",
+      "react_dom",
+      "supabase_ssr",
+      "supabase_supabase_js"
+    ],
+    "6": [
+      "eslint",
+      "eslint_config_next",
+      "package_devdependencies",
+      "package_devdependencies_eslint",
+      "package_devdependencies_eslint_config_next",
+      "package_devdependencies_tailwindcss",
+      "package_devdependencies_tailwindcss_postcss",
+      "package_devdependencies_types_node",
+      "package_devdependencies_types_pg",
+      "package_devdependencies_types_react",
+      "package_devdependencies_types_react_dom",
+      "package_devdependencies_typescript",
+      "package_devdependencies_vitest",
+      "tailwindcss",
+      "tailwindcss_postcss",
+      "types_node",
+      "types_pg",
+      "types_react",
+      "types_react_dom",
+      "typescript",
+      "vitest"
+    ],
+    "7": [
+      "src_app_guias_equipe_checklist_interativa",
+      "src_app_guias_equipe_checklist_interativa_checklistinterativa",
+      "src_app_guias_equipe_checklist_interativa_props",
+      "src_app_guias_equipe_page",
+      "src_app_guias_equipe_page_generatestaticparams",
+      "src_app_guias_equipe_page_guiaequipepage",
+      "src_app_paineis_equipe_page",
+      "src_app_paineis_equipe_page_generatestaticparams",
+      "src_app_paineis_equipe_page_painelequipepage",
+      "src_lib_mock_equipes",
+      "src_lib_mock_equipes_equipe_ids",
+      "src_lib_mock_equipes_isequipeid",
+      "src_lib_mock_equipes_nomedomembro",
+      "src_lib_mock_guias_content",
+      "src_lib_mock_guias_content_guiaindicador",
+      "src_lib_mock_guias_content_guias"
+    ],
+    "8": [
+      "src_app_api_admin_municipios_route",
+      "src_app_api_admin_municipios_route_delete",
+      "src_app_api_admin_municipios_route_get",
+      "src_app_api_admin_municipios_route_municipiorow",
+      "src_app_api_admin_municipios_route_post",
+      "src_app_api_admin_municipios_route_put",
+      "src_app_api_admin_municipios_route_supabase",
+      "src_app_api_admin_municipios_route_unidaderow"
+    ],
+    "9": [
+      "src_lib_supabase_middleware",
+      "src_lib_supabase_middleware_config",
+      "src_lib_supabase_middleware_ispublica",
+      "src_lib_supabase_middleware_publicas",
+      "src_lib_supabase_middleware_updatesession",
+      "src_middleware",
+      "src_middleware_config",
+      "src_middleware_middleware"
+    ],
+    "10": [
+      "src_app_api_admin_equipes_route",
+      "src_app_api_admin_equipes_route_delete",
+      "src_app_api_admin_equipes_route_get",
+      "src_app_api_admin_equipes_route_post",
+      "src_app_api_admin_equipes_route_put",
+      "src_app_api_admin_equipes_route_supabase"
+    ],
+    "11": [
+      "src_app_api_admin_unidades_route",
+      "src_app_api_admin_unidades_route_delete",
+      "src_app_api_admin_unidades_route_get",
+      "src_app_api_admin_unidades_route_post",
+      "src_app_api_admin_unidades_route_put",
+      "src_app_api_admin_unidades_route_supabase"
+    ],
+    "12": [
+      "src_app_api_admin_usuarios_route",
+      "src_app_api_admin_usuarios_route_delete",
+      "src_app_api_admin_usuarios_route_get",
+      "src_app_api_admin_usuarios_route_post",
+      "src_app_api_admin_usuarios_route_put",
+      "src_app_api_admin_usuarios_route_supabase"
+    ],
+    "13": [
+      "src_app_layout",
+      "src_app_layout_cormorant",
+      "src_app_layout_dmmono",
+      "src_app_layout_dmsans",
+      "src_app_layout_metadata",
+      "src_app_layout_rootlayout"
+    ],
+    "14": [
+      "scripts_pec_sync",
+      "scripts_pec_sync_conectar_pec",
+      "scripts_pec_sync_enviar_supabase",
+      "scripts_pec_sync_executar_queries",
+      "scripts_pec_sync_main"
+    ],
+    "15": [
+      "src_app_api_admin_indicadores_route",
+      "src_app_api_admin_indicadores_route_get",
+      "src_app_api_admin_indicadores_route_put",
+      "src_app_api_admin_indicadores_route_supabase"
+    ],
+    "16": [
+      "src_app_proposta_page",
+      "src_app_proposta_page_incluso",
+      "src_app_proposta_page_planos",
+      "src_app_proposta_page_propostapage"
+    ],
+    "17": [
+      "eslint_config",
+      "eslint_config_eslintconfig"
+    ],
+    "18": [
+      "next_config",
+      "next_config_nextconfig"
+    ],
+    "19": [
+      "postcss_config",
+      "postcss_config_config"
+    ],
+    "20": [
+      "scripts_setup_vps",
+      "scripts_setup_vps_sh__entry"
+    ],
+    "21": [
+      "src_app_privacidade_page",
+      "src_app_privacidade_page_privacidadepage"
+    ]
+  },
+  "cohesion": {
+    "0": 0.12660028449502134,
+    "1": 0.12912912912912913,
+    "2": 0.10574712643678161,
+    "3": 0.06896551724137931,
+    "4": 0.2,
+    "5": 0.08695652173913043,
+    "6": 0.09523809523809523,
+    "7": 0.21666666666666667,
+    "8": 0.25,
+    "9": 0.39285714285714285,
+    "10": 0.3333333333333333,
+    "11": 0.3333333333333333,
+    "12": 0.3333333333333333,
+    "13": 0.3333333333333333,
+    "14": 0.7,
+    "15": 0.5,
+    "16": 0.5,
+    "17": 1.0,
+    "18": 1.0,
+    "19": 1.0,
+    "20": 1.0,
+    "21": 1.0
+  },
+  "gods": [
+    {
+      "id": "tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 16
+    },
+    {
+      "id": "src_lib_mock_indicadores_valormock",
+      "label": "valorMock()",
+      "degree": 12
+    },
+    {
+      "id": "src_lib_supabase_server_criarclientesupabase",
+      "label": "criarClienteSupabase()",
+      "degree": 10
+    },
+    {
+      "id": "src_lib_hooks_useuser_useuser",
+      "label": "useUser()",
+      "degree": 9
+    },
+    {
+      "id": "src_app_dashboard_perfil_page_dashboardperfilpage",
+      "label": "DashboardPerfilPage()",
+      "degree": 8
+    },
+    {
+      "id": "src_lib_mock_indicadores_statusdoindicador",
+      "label": "statusDoIndicador()",
+      "degree": 8
+    },
+    {
+      "id": "src_lib_mock_nota_classificacaodanota",
+      "label": "classificacaoDaNota()",
+      "degree": 8
+    },
+    {
+      "id": "src_lib_mock_perfis_indicadorconfig",
+      "label": "IndicadorConfig",
+      "degree": 8
+    },
+    {
+      "id": "src_app_paineis_equipe_page_painelequipepage",
+      "label": "PainelEquipePage()",
+      "degree": 7
+    },
+    {
+      "id": "src_components_dashboard_dashboard_header_dashboardheader",
+      "label": "DashboardHeader()",
+      "degree": 7
+    }
+  ],
+  "surprises": [
+    {
+      "source": "GET()",
+      "target": "criarClienteSupabase()",
+      "source_files": [
+        "src/app/api/integracao/pec/config/route.ts",
+        "src/lib/supabase/server.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "peripheral node `GET()` unexpectedly reaches hub `criarClienteSupabase()`"
+    },
+    {
+      "source": "GET()",
+      "target": "criarClienteSupabase()",
+      "source_files": [
+        "src/app/api/integracao/pec/status/route.ts",
+        "src/lib/supabase/server.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "peripheral node `GET()` unexpectedly reaches hub `criarClienteSupabase()`"
+    },
+    {
+      "source": "GuiaEquipePage()",
+      "target": "isEquipeId()",
+      "source_files": [
+        "src/app/guias/[equipe]/page.tsx",
+        "src/lib/mock/equipes.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "peripheral node `GuiaEquipePage()` unexpectedly reaches hub `isEquipeId()`"
+    },
+    {
+      "source": "PainelEquipePage()",
+      "target": "statusDoIndicador()",
+      "source_files": [
+        "src/app/paineis/[equipe]/page.tsx",
+        "src/lib/mock/indicadores.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "PainelEquipePage()",
+      "target": "valorMock()",
+      "source_files": [
+        "src/app/paineis/[equipe]/page.tsx",
+        "src/lib/mock/indicadores.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `devDependencies` connect `Community 6` to `Community 5`?",
+      "why": "High betweenness centrality (0.016) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `DashboardHeader()` connect `Community 2` to `Community 0`, `Community 4`, `Community 7`?",
+      "why": "High betweenness centrality (0.012) - this node is a cross-community bridge."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `eslintConfig`, `nextConfig`, `name` to the rest of the system?",
+      "why": "95 weakly-connected nodes found - possible documentation gaps or missing edges."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 0` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.12660028449502134 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 1` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.12912912912912913 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 2` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.10574712643678161 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 3` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.06896551724137931 - nodes in this community are weakly interconnected."
+    }
+  ]
+}

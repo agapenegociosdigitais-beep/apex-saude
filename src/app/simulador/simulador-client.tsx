@@ -1,10 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { FATOR_CLASSIFICACAO, REPASSE_BASE_MENSAL, formatarReais } from '@/lib/mock/repasse'
+import { FIXO_MENSAL, QUALIDADE_MENSAL, formatarReais } from '@/lib/mock/repasse'
 import type { EquipeId } from '@/lib/mock/equipes'
 
-const CLASSIFICACOES = Object.keys(FATOR_CLASSIFICACAO)
+const CLASSIFICACOES = Object.keys(QUALIDADE_MENSAL)
 const TIPOS: { id: EquipeId; nome: string }[] = [
   { id: 'esf', nome: 'eSF / eAP' },
   { id: 'esb', nome: 'eSB' },
@@ -12,8 +12,11 @@ const TIPOS: { id: EquipeId; nome: string }[] = [
 ]
 
 function repasseCenario(equipes: Record<EquipeId, number>, classificacao: string): number {
-  const fator = FATOR_CLASSIFICACAO[classificacao] ?? 0
-  return TIPOS.reduce((s, t) => s + equipes[t.id] * REPASSE_BASE_MENSAL[t.id], 0) * fator
+  return TIPOS.reduce((s, t) => {
+    const fixo = FIXO_MENSAL[t.id];
+    const qualidade = QUALIDADE_MENSAL[classificacao] ?? 0;
+    return s + equipes[t.id] * (fixo + qualidade);
+  }, 0);
 }
 
 interface Props {

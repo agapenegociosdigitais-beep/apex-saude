@@ -1,0 +1,15 @@
+Credenciais apex-saude-next (geradas em 02/08/2026)
+Trocar depois do primeiro login. NAO commitar este arquivo.
+
+dentista@teste.com
+  senha: GMTIOLfC2GCq!1
+  status: 200
+
+joao@gmail.com
+  senha: H4MxSoINvhgF!1
+  status: 200
+
+agapenegociosdigitais@gmail.com
+  senha: mvqXWgmyGkW7!1
+  status: 200
+

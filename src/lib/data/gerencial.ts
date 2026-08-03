@@ -1,10 +1,12 @@
 /**
  * Dados reais do Supabase para a página Gerencial (Fase 2).
- * Substitui src/lib/mock/repasse.ts — a lógica de cálculo de nota
- * é a mesma (média ponderada de ratio valor/meta), mas os valores
- * vêm de valores_indicadores no banco, não de mock determinístico.
+ * Usa valores de repasse baseados na Portaria GM/MS 3.493/2024:
+ * - Componente Fixo: R$/equipe/mês por tipo
+ * - Componente Qualidade: R$/equipe/mês por classificação (Ótimo/Bom/Suficiente/Regular)
+ * - Capitação Ponderada: R$ per capita/mês
  */
 import { createClient } from '@supabase/supabase-js'
+import { FIXO_MENSAL, QUALIDADE_MENSAL } from '@/lib/mock/repasse'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -19,13 +21,11 @@ export interface RepasseEquipe {
   nota: number
   classificacao: string
   estilo: string
-  baseMensal: number
-  repasseMensal: number
+  fixoMensal: number
+  qualidadeMensal: number
+  totalMensal: number
   perdaMensal: number
 }
-
-const REPASSE_BASE: Record<string, number> = { esf: 38000, esb: 14000, emulti: 22000 }
-const FATOR: Record<string, number> = { 'Ótimo': 1, 'Bom': 0.85, 'Suficiente': 0.7, 'Regular': 0.4 }
 
 function classificacao(nota: number): { label: string; estilo: string } {
   if (nota >= 8.5) return { label: 'Ótimo', estilo: 'bg-emerald-100 text-emerald-700' }
@@ -36,22 +36,18 @@ function classificacao(nota: number): { label: string; estilo: string } {
 
 export async function dadosGerencial(): Promise<{
   equipes: RepasseEquipe[]
-  totalMensal: number
+  totalMensal: number  // Fixo + Qualidade de todas as equipes
   perdaAnual: number
   notaMedia: number
 }> {
-  // 1. Buscar equipes ativas
   const { data: equipes } = await supabase.from('equipes').select('id,nome,tipo').eq('ativa', true)
   if (!equipes?.length) return { equipes: [], totalMensal: 0, perdaAnual: 0, notaMedia: 0 }
 
-  // 2. Buscar indicadores
-  const { data: indicadores } = await supabase.from('indicadores').select('id,codigo,peso,meta,invertido,escala10,grupo')
+  const { data: indicadores } = await supabase.from('indicadores').select('id,codigo,peso,meta,invertido')
 
-  // 3. Para cada equipe, buscar o último valor de cada indicador
   const resultados: RepasseEquipe[] = []
 
   for (const eq of equipes) {
-    // Filtrar indicadores relevantes pelo grupo (aproximação — no mock era por tipo de equipe)
     const { data: valores } = await supabase
       .from('valores_indicadores')
       .select('indicador_id,valor')
@@ -59,13 +55,10 @@ export async function dadosGerencial(): Promise<{
       .order('periodo', { ascending: false })
       .limit(100)
 
-    if (!valores?.length) continue
-
-    // Calcular nota: média ponderada do ratio valor/meta
     let somaPesos = 0
     let somaPonderada = 0
 
-    for (const val of valores) {
+    for (const val of valores || []) {
       const ind = indicadores?.find(i => i.id === val.indicador_id)
       if (!ind) continue
       const ratio = ind.invertido
@@ -77,34 +70,24 @@ export async function dadosGerencial(): Promise<{
 
     const nota = somaPesos > 0 ? Math.round((somaPonderada / somaPesos) * 100) / 10 : 0
     const cls = classificacao(nota)
-    const base = REPASSE_BASE[eq.tipo] ?? 22000
-    const fator = FATOR[cls.label] ?? 0
-    const repasse = Math.round(base * fator)
-    const perda = base - repasse
+    const fixo = FIXO_MENSAL[eq.tipo as keyof typeof FIXO_MENSAL] ?? 6000
+    const qualidade = QUALIDADE_MENSAL[cls.label] ?? 0
+    const teto = fixo + QUALIDADE_MENSAL['Ótimo']
 
     resultados.push({
-      equipeId: eq.id,
-      equipeNome: eq.nome,
-      tipo: eq.tipo,
-      nota,
-      classificacao: cls.label,
-      estilo: cls.estilo,
-      baseMensal: base,
-      repasseMensal: repasse,
-      perdaMensal: perda,
+      equipeId: eq.id, equipeNome: eq.nome, tipo: eq.tipo, nota,
+      classificacao: cls.label, estilo: cls.estilo,
+      fixoMensal: fixo, qualidadeMensal: qualidade,
+      totalMensal: fixo + qualidade,
+      perdaMensal: teto - (fixo + qualidade),
     })
   }
 
-  const totalMensal = resultados.reduce((s, r) => s + r.repasseMensal, 0)
+  const totalMensal = resultados.reduce((s, r) => s + r.totalMensal, 0)
   const perdaMensal = resultados.reduce((s, r) => s + r.perdaMensal, 0)
   const notaMedia = resultados.length > 0
     ? Math.round((resultados.reduce((s, r) => s + r.nota, 0) / resultados.length) * 10) / 10
     : 0
 
-  return {
-    equipes: resultados,
-    totalMensal,
-    perdaAnual: perdaMensal * 12,
-    notaMedia,
-  }
+  return { equipes: resultados, totalMensal, perdaAnual: perdaMensal * 12, notaMedia }
 }

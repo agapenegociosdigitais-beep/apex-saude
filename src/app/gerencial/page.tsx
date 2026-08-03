@@ -67,7 +67,7 @@ export default async function GerencialPage() {
                   <td className="py-3.5 px-4 font-mono">{r.nota.toFixed(1).replace('.', ',')}</td>
                   <td className="py-3.5 px-4"><span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${r.estilo}`}>{r.classificacao}</span></td>
                   <td className="py-3.5 px-4 text-right font-mono">
-                    {formatarReais(r.repasseMensal)}
+                    {formatarReais(r.totalMensal)}
                     {r.perdaMensal > 0 && <span className="text-error text-xs ml-1">(-{formatarReais(r.perdaMensal)})</span>}
                   </td>
                 </tr>

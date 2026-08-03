@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
-  FATOR_CLASSIFICACAO,
-  REPASSE_BASE_MENSAL,
+  FIXO_MENSAL,
+  QUALIDADE_MENSAL,
   formatarReais,
   repasseDaEquipe,
   repasseDoMunicipio,
@@ -9,27 +9,28 @@ import {
 import { MUNICIPIO_MOCK } from '../municipio';
 
 describe('repasseDaEquipe', () => {
-  it('repasse nunca excede a base e perda = base - repasse', () => {
+  it('total = fixo + qualidade e perda = teto - total', () => {
     for (const equipe of MUNICIPIO_MOCK.equipes) {
       const r = repasseDaEquipe(equipe);
-      expect(r.repasseMensal).toBeLessThanOrEqual(r.baseMensal);
-      expect(r.perdaMensal).toBe(r.baseMensal - r.repasseMensal);
-      expect(r.baseMensal).toBe(REPASSE_BASE_MENSAL[equipe.tipo]);
+      expect(r.totalMensal).toBe(r.fixoMensal + r.qualidadeMensal);
+      const teto = FIXO_MENSAL[equipe.tipo] + QUALIDADE_MENSAL['Ótimo'];
+      expect(r.perdaMensal).toBe(teto - r.totalMensal);
+      expect(r.fixoMensal).toBe(FIXO_MENSAL[equipe.tipo]);
     }
   });
 
-  it('classificação Ótimo teria fator 1 (tabela de fatores íntegra)', () => {
-    expect(FATOR_CLASSIFICACAO['Ótimo']).toBe(1);
-    expect(FATOR_CLASSIFICACAO.Regular).toBeLessThan(FATOR_CLASSIFICACAO.Bom);
+  it('classificação Ótimo = qualidade máxima (R$ 9.000)', () => {
+    expect(QUALIDADE_MENSAL['Ótimo']).toBe(9000);
+    expect(QUALIDADE_MENSAL.Regular).toBeLessThan(QUALIDADE_MENSAL.Bom);
   });
 });
 
 describe('repasseDoMunicipio', () => {
   it('totais batem com a soma das equipes', () => {
     const r = repasseDoMunicipio(MUNICIPIO_MOCK.equipes);
-    const somaRepasse = r.porEquipe.reduce((s, e) => s + e.repasseMensal, 0);
+    const somaTotal = r.porEquipe.reduce((s, e) => s + e.totalMensal, 0);
     const somaPerda = r.porEquipe.reduce((s, e) => s + e.perdaMensal, 0);
-    expect(r.totalMensal).toBe(somaRepasse);
+    expect(r.totalMensal).toBe(somaTotal);
     expect(r.perdaMensal).toBe(somaPerda);
     expect(r.perdaAnual).toBe(somaPerda * 12);
   });
@@ -43,7 +44,7 @@ describe('repasseDoMunicipio', () => {
 
 describe('formatarReais', () => {
   it('formata com separador de milhar pt-BR', () => {
-    expect(formatarReais(38000)).toBe('R$ 38.000');
+    expect(formatarReais(8300)).toBe('R$ 8.300');
     expect(formatarReais(0)).toBe('R$ 0');
   });
 });
