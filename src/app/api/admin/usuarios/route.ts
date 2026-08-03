@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js';
 import { requireAdmin } from '@/lib/admin-guard';
+import crypto from 'crypto'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -48,10 +49,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Email, nome e município obrigatórios' }, { status: 400 })
   }
 
-  // Criar no auth.users
+  // Criar no auth.users (senha aleatoria se nao especificada)
+  const senha = password || crypto.randomUUID().slice(0, 12)
   const { data: authUser, error: authErr } = await supabase.auth.admin.createUser({
     email,
-    password: password || 'mudar123',
+    password: senha,
     email_confirm: true,
     user_metadata: { nome, role: role || 'profissional', perfil: perfil_id || 'medico' },
   })
@@ -72,7 +74,7 @@ export async function POST(req: NextRequest) {
 
   if (dbErr) return NextResponse.json({ error: dbErr.message }, { status: 500 })
 
-  return NextResponse.json({ ok: true, senha: password || 'mudar123' }, { status: 201 })
+  return NextResponse.json({ ok: true, senha }, { status: 201 })
 }
 
 export async function PUT(req: NextRequest) {

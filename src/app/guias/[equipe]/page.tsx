@@ -37,7 +37,7 @@ export default async function GuiaEquipePage({ params }: { params: Promise<{ equ
     <AppShell active="painel">
       <header className="mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-on-surface">{guia.titulo}</h1>
-        <p className="mt-2 text-on-surface-variant leading-relaxed max-w-3xl">{guia.introducao}</p>
+        <p className="mt-2 text-on-surface-variant leading-relaxed max-w-3xl">{guia.introducao} <Link href={`/paineis/${equipe}`} className="text-primary underline">Ver dados reais (Fase 2) →</Link></p>
       </header>
 
       <div className="space-y-5 max-w-3xl">
