@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { requireAdmin } from '@/lib/admin-guard';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -8,6 +9,7 @@ const supabase = createClient(
 );
 
 export async function GET(req: NextRequest) {
+  const guard = await requireAdmin(); if (guard) return guard;
   const unidadeId = req.nextUrl.searchParams.get('unidade_id');
   const municipioId = req.nextUrl.searchParams.get('municipio_id');
   let q = supabase.from('equipes').select('*, unidades_saude(nome)').order('nome');
@@ -19,6 +21,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const guard = await requireAdmin(); if (guard) return guard;
   const { municipio_id, unidade_id, codigo_ine, nome, tipo } = await req.json();
   const { data, error } = await supabase.from('equipes')
     .insert({ municipio_id, unidade_id, codigo_ine: codigo_ine || nome.replace(/\s/g,'_'), nome, tipo })
@@ -28,6 +31,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
+  const guard = await requireAdmin(); if (guard) return guard;
   const { id, nome, tipo, ativa, codigo_ine } = await req.json();
   const { error } = await supabase.from('equipes').update({ nome, tipo, ativa, codigo_ine }).eq('id', id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
@@ -35,6 +39,7 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  const guard = await requireAdmin(); if (guard) return guard;
   const id = req.nextUrl.searchParams.get('id');
   const { error } = await supabase.from('equipes').delete().eq('id', id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });

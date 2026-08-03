@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js';
+import { requireAdmin } from '@/lib/admin-guard';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -8,6 +9,7 @@ const supabase = createClient(
 )
 
 export async function GET(req: NextRequest) {
+  const guard = await requireAdmin(); if (guard) return guard;
   const municipioId = req.nextUrl.searchParams.get('municipio_id')
   const unidadeId = req.nextUrl.searchParams.get('unidade_id')
 
@@ -38,6 +40,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const guard = await requireAdmin(); if (guard) return guard;
   const body = await req.json()
   const { email, nome, role, municipio_id, unidade_id, equipe_id, perfil_id, password } = body
 
@@ -73,6 +76,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
+  const guard = await requireAdmin(); if (guard) return guard;
   const body = await req.json()
   const { id, nome, email, role, perfil_id, municipio_id, unidade_id, equipe_id } = body
   if (!id) return NextResponse.json({ error: 'ID obrigatório' }, { status: 400 })
@@ -93,6 +97,7 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  const guard = await requireAdmin(); if (guard) return guard;
   const id = req.nextUrl.searchParams.get('id')
   if (!id) return NextResponse.json({ error: 'ID obrigatório' }, { status: 400 })
 

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { requireAdmin } from '@/lib/admin-guard';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -10,7 +11,8 @@ const supabase = createClient(
 interface MunicipioRow { id: string; nome: string; uf: string; codigo_ibge: string; populacao: number; unidades_saude?: UnidadeRow[] }
 interface UnidadeRow { id: string; municipio_id: string; nome: string; tipo: string; ativa: boolean }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const guard = await requireAdmin(); if (guard) return guard;
   const { data: municipios, error } = await supabase
     .from('municipios').select('*, unidades_saude(*)').order('nome');
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
@@ -26,6 +28,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const guard = await requireAdmin(); if (guard) return guard;
   const { nome, uf, codigo_ibge, populacao } = await req.json();
   if (!nome || !uf) return NextResponse.json({ error: 'Nome e UF obrigatórios' }, { status: 400 });
   const { data: mun, error } = await supabase.from('municipios')
@@ -37,6 +40,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
+  const guard = await requireAdmin(); if (guard) return guard;
   const { id, nome, uf, codigo_ibge, populacao } = await req.json();
   const { error } = await supabase.from('municipios').update({ nome, uf, codigo_ibge, populacao }).eq('id', id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
@@ -44,6 +48,7 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  const guard = await requireAdmin(); if (guard) return guard;
   const id = req.nextUrl.searchParams.get('id');
   if (!id) return NextResponse.json({ error: 'ID obrigatório' }, { status: 400 });
   

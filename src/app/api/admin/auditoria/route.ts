@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js';
+import { requireAdmin } from '@/lib/admin-guard';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -11,7 +12,8 @@ const supabase = createClient(
  * POST /api/admin/auditoria
  * Registra evento de auditoria (login, config PEC, etc.)
  */
-export async function POST(req: NextRequest) {
+export async function DELETE(req: NextRequest) {
+  const guard = await requireAdmin(); if (guard) return guard;
   try {
     const { acao, tabela, dados } = await req.json()
     const { error } = await supabase.from('auditoria_log').insert({
