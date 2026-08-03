@@ -4,18 +4,20 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { PERFIS, PERFIL_IDS, type PerfilId } from '@/lib/mock/perfis'
 import { formatarMeta, statusDoIndicador, valorMock } from '@/lib/mock/indicadores'
-import type { EquipeDoUsuario } from '@/lib/data/perfil'
 
 interface Props {
-  minhaEquipe: EquipeDoUsuario | null
+  equipeNome: string | null
+  municipioNome: string | null
+  nota: number | null
+  valoresReais: Record<string, number> | null  // codigo → valor real do Supabase
 }
 
-export function IaClient({ minhaEquipe }: Props) {
+export function IaClient({ equipeNome, municipioNome, nota, valoresReais }: Props) {
   const [perfilId, setPerfilId] = useState<PerfilId>('medico')
   const perfil = PERFIS[perfilId]
 
   const avaliados = perfil.indicadores.map((ind) => {
-    const valor = valorMock(perfilId, ind)
+    const valor = valoresReais?.[ind.id] ?? valorMock(perfilId, ind)
     return { ind, valor, status: statusDoIndicador(valor, ind) }
   })
   const criticos = avaliados.filter((a) => a.status !== 'otimo')
@@ -25,17 +27,16 @@ export function IaClient({ minhaEquipe }: Props) {
       <header className="mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-on-surface">Plano de ação PDCA</h1>
         <p className="mt-1 text-on-surface-variant">
-          Motor de regras sobre seus indicadores · IA generativa na Fase 3
+          Motor de regras sobre seus indicadores · Dados reais quando disponíveis
         </p>
       </header>
 
-      {/* Equipe real (Fase 2) */}
-      {minhaEquipe && (
+      {equipeNome && (
         <div className="bg-green-50 border border-green-300 rounded-lg p-4 mb-6 flex gap-3 items-center">
-          <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded">FASE 2</span>
+          <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded">DADOS REAIS</span>
           <span className="text-sm text-on-surface">
-            <strong>{minhaEquipe.equipeNome}</strong> · {minhaEquipe.municipioNome} · nota{' '}
-            <strong>{minhaEquipe.nota.toFixed(1).replace('.', ',')}</strong>
+            <strong>{equipeNome}</strong> · {municipioNome} · nota{' '}
+            <strong>{nota?.toFixed(1).replace('.', ',')}</strong>
           </span>
         </div>
       )}
@@ -63,7 +64,9 @@ export function IaClient({ minhaEquipe }: Props) {
         </div>
       ) : (
         <div className="grid gap-6">
-          {criticos.map(({ ind, valor, status }) => (
+          {criticos.map(({ ind, valor, status }) => {
+            const isReal = valoresReais?.[ind.id] !== undefined
+            return (
             <div key={ind.id} className="rounded-xl bg-surface border border-outline-variant/40 p-6 shadow-ambient">
               <div className="flex items-center gap-3 mb-4">
                 <span className={`px-2 py-0.5 rounded text-xs font-bold ${
@@ -72,6 +75,7 @@ export function IaClient({ minhaEquipe }: Props) {
                   {status === 'regular' ? '⚠️ Regular' : '🔴 Crítico'}
                 </span>
                 <h3 className="font-semibold text-on-surface">{ind.id} — {ind.nome}</h3>
+                {isReal && <span className="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded">real</span>}
               </div>
               <div className="grid sm:grid-cols-2 gap-4 mb-4 text-sm">
                 <div>
@@ -83,8 +87,6 @@ export function IaClient({ minhaEquipe }: Props) {
                   <strong className="font-mono">{formatarMeta(ind)}</strong>
                 </div>
               </div>
-
-              {/* Plano de ação sugerido */}
               <div className="bg-surface-container-low rounded-lg p-4">
                 <h4 className="font-semibold text-sm text-on-surface mb-2">📋 Plano de ação sugerido</h4>
                 <div className="grid gap-2 text-sm">
@@ -111,13 +113,13 @@ export function IaClient({ minhaEquipe }: Props) {
                 </div>
               </div>
             </div>
-          ))}
+          )})}
         </div>
       )}
 
       <p className="mt-8 text-xs text-on-surface-variant border-t border-outline-variant/30 pt-6">
-        Motor de regras determinístico (mock). Na Fase 3, um LLM local (via OmniRoute) gerará planos
-        personalizados por equipe com base nos dados reais do PEC.{' '}
+        Motor de regras determinístico. Na Fase 3, LLM local (via OmniRoute) gerará planos
+        personalizados com dados reais do PEC.{' '}
         <Link href="/paineis/esf" className="text-primary underline">Ver painéis reais →</Link>
       </p>
     </>
