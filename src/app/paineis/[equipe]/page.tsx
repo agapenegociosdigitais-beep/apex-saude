@@ -6,6 +6,7 @@ import { EQUIPES, EQUIPE_IDS, isEquipeId, nomeDoMembro } from '@/lib/mock/equipe
 import { PERFIS } from '@/lib/mock/perfis'
 import { statusDoIndicador, valorMock } from '@/lib/mock/indicadores'
 import { calcularNotaEquipe, classificacaoDaNota } from '@/lib/mock/nota'
+import { equipesReaisPorTipo } from '@/lib/data/equipes'
 
 export function generateStaticParams() {
   return EQUIPE_IDS.map((equipe) => ({ equipe }))
@@ -22,6 +23,12 @@ export default async function PainelEquipePage({
   const config = EQUIPES[equipe]
   const nota = calcularNotaEquipe(`equipe-${equipe}`, config.indicadores)
   const classificacao = classificacaoDaNota(nota)
+
+  // Dados reais do Supabase (Fase 2)
+  const equipesReais = await equipesReaisPorTipo(equipe)
+  const mediaReal = equipesReais.length > 0
+    ? Math.round((equipesReais.reduce((s, e) => s + e.nota, 0) / equipesReais.length) * 10) / 10
+    : null
 
   return (
     <AppShell active="painel">
@@ -92,6 +99,43 @@ export default async function PainelEquipePage({
           <span className="material-symbols-outlined text-base">arrow_forward</span>
         </Link>
       </div>
+
+      {/* Fase 2: equipes reais do Supabase */}
+      {equipesReais.length > 0 && (
+        <section className="mt-10 border-t border-outline-variant/30 pt-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded">FASE 2</span>
+            <h2 className="text-lg font-semibold text-on-surface">Equipes reais cadastradas</h2>
+            {mediaReal !== null && (
+              <span className="text-sm text-on-surface-variant">
+                ({equipesReais.length} equipes · média {mediaReal.toFixed(1).replace('.', ',')})
+              </span>
+            )}
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {equipesReais.map((eq) => {
+              const cls = eq.nota >= 8.5 ? 'bg-emerald-100 text-emerald-700'
+                : eq.nota >= 7 ? 'bg-blue-100 text-blue-700'
+                : eq.nota >= 5 ? 'bg-amber-100 text-amber-700'
+                : 'bg-red-100 text-red-700'
+              return (
+                <div key={eq.id} className="rounded-lg border border-outline-variant/30 bg-surface p-4 flex justify-between items-center">
+                  <div>
+                    <p className="font-medium text-on-surface text-sm">{eq.nome}</p>
+                    <p className="text-xs text-on-surface-variant">{eq.municipioNome} · {eq.tipo.toUpperCase()}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-mono font-bold text-on-surface">{eq.nota.toFixed(1).replace('.', ',')}</p>
+                    <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${cls}`}>
+                      {eq.nota >= 8.5 ? 'Ótimo' : eq.nota >= 7 ? 'Bom' : eq.nota >= 5 ? 'Suficiente' : 'Regular'}
+                    </span>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </section>
+      )}
     </AppShell>
   )
 }
