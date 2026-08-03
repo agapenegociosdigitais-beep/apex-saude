@@ -20,5 +20,6 @@ export const config = {
     '/equipes/:path*',
     '/gestao/:path*',
     '/api/admin/:path*',
+    '/api/integracao/:path*',
   ],
 }
